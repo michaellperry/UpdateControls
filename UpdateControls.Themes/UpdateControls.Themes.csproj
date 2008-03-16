@@ -1,0 +1,167 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UpdateControls.Themes</RootNamespace>
+    <AssemblyName>UpdateControls.Themes</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\UpdateControls.Themes.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\UpdateControls.Themes.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Delegates.cs" />
+    <Compile Include="GraphicsUtil\GraphicsUtil.cs" />
+    <Compile Include="Inertia\GlideScroller.cs" />
+    <Compile Include="Inertia\InertialProperty.cs" />
+    <Compile Include="OrientationType.cs" />
+    <Compile Include="Forms\ThemedCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\ThemedCheckBox.Designer.cs">
+      <DependentUpon>ThemedCheckBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ThemedRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\ThemedRadioButton.Designer.cs">
+      <DependentUpon>ThemedRadioButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ThemedTabDeck.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\ThemedTabDeck.Designer.cs">
+      <DependentUpon>ThemedTabDeck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Renderers\AlignmentFlags.cs" />
+    <Compile Include="Renderers\GlideScrollRenderer.cs" />
+    <Compile Include="Renderers\StaticTextRenderer.cs" />
+    <Compile Include="Renderers\TabRenderer.cs" />
+    <Compile Include="Forms\Logo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Renderers\HeaderRenderer.cs" />
+    <Compile Include="Renderers\LogoRenderer.cs" />
+    <Compile Include="DefaultTheme.cs" />
+    <Compile Include="Forms\Header.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Header.Designer.cs">
+      <DependentUpon>Header.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Theme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Theme.Designer.cs">
+      <DependentUpon>Theme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ThemedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\ThemedButton.Designer.cs">
+      <DependentUpon>ThemedButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicsUtil\GraphicsStateSaver.cs" />
+    <Compile Include="PointF3D.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderers\Renderer.cs" />
+    <Compile Include="Renderers\RendererControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Renderers\RendererController.cs" />
+    <Compile Include="Renderers\ScrollingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Renderers\ScrollingRendererControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Renderers\ThemedButtonRenderer.cs" />
+    <Compile Include="Solid\SolidShapeRoundedRectangle.cs" />
+    <Compile Include="Solid\HLSColor.cs" />
+    <Compile Include="Solid\SolidCache.cs" />
+    <Compile Include="SolidDescriptor.cs" />
+    <Compile Include="SolidDescriptorEditable.cs" />
+    <Compile Include="Solid\SolidDescriptorEditor.cs" />
+    <Compile Include="Solid\SolidDescriptorEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Solid\SolidDescriptorEditorForm.Designer.cs">
+      <DependentUpon>SolidDescriptorEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Solid\SolidShape.cs" />
+    <Compile Include="Solid\SolidShapeEllipse.cs" />
+    <Compile Include="Solid\SolidShapeLozenge.cs" />
+    <Compile Include="Solid\SolidShapeSphere.cs" />
+    <Compile Include="Solid\SolidShapeTab.cs" />
+    <Compile Include="Solid\SolidShapeTile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UpdateControls.Forms\UpdateControls.Forms.csproj">
+      <Project>{82338022-D5A1-40B5-8953-E578FF607FCE}</Project>
+      <Name>UpdateControls.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">
+      <Project>{FFA4FF30-E11F-476F-A305-EC9FD624C752}</Project>
+      <Name>UpdateControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Solid\SolidDescriptorEditorForm.resx">
+      <DependentUpon>SolidDescriptorEditorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\ToolboxImages\Header.png" />
+    <EmbeddedResource Include="Forms\ToolboxImages\Logo.png" />
+    <EmbeddedResource Include="Forms\ToolboxImages\Theme.png" />
+    <EmbeddedResource Include="Forms\ToolboxImages\ThemedButton.png" />
+    <EmbeddedResource Include="Forms\ToolboxImages\ThemedCheckBox.png" />
+    <EmbeddedResource Include="Forms\ToolboxImages\ThemedRadioButton.png" />
+    <EmbeddedResource Include="Forms\ToolboxImages\ThemedTabDeck.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+if exist "$(TargetPath)" if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
+  </PropertyGroup>
+</Project>
