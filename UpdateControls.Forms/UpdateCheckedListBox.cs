@@ -13,7 +13,6 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Windows.Forms;
 
 namespace UpdateControls.Forms
@@ -45,8 +44,8 @@ namespace UpdateControls.Forms
 				_getItemText = getItemText;
 				_getItemCheckState = getItemCheckState;
 				_setItemCheckState = setItemCheckState;
-				_depText = new Dependent( new UpdateProcedure(UpdateText) );
-				_depCheckState = new Dependent( new UpdateProcedure(UpdateCheckState) );
+				_depText = new Dependent( UpdateText );
+				_depCheckState = new Dependent( UpdateCheckState );
 			}
 
 			public void Dispose()
@@ -161,7 +160,7 @@ namespace UpdateControls.Forms
 		private Dependent _depItems;
 		private Dependent _depItemCheckState;
 
-		private Dynamic _dynItemCheckState = new Dynamic();
+		private Independent _dynItemCheckState = new Independent();
 
 		private int _updating = 0;
 
@@ -171,9 +170,9 @@ namespace UpdateControls.Forms
 		public UpdateCheckedListBox()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
-			_depItems = new Dependent( new UpdateProcedure(UpdateItems) );
-			_depItemCheckState = new Dependent( new UpdateProcedure(UpdateItemCheckState) );
+			_depEnabled = new Dependent( UpdateEnabled );
+			_depItems = new Dependent( UpdateItems );
+			_depItemCheckState = new Dependent( UpdateItemCheckState );
 		}
 
 		private void UpdateEnabled()
@@ -200,8 +199,11 @@ namespace UpdateControls.Forms
 
 					// Recycle the collection of items.
 					ArrayList newItems = new ArrayList( base.Items.Count );
-                    using (RecycleBin<CheckedListBoxItem> recycleBin = new RecycleBin<CheckedListBoxItem>(base.Items))
+                    using (var recycleBin = new RecycleBin<CheckedListBoxItem>())
 					{
+                        foreach (CheckedListBoxItem item in base.Items)
+                            recycleBin.AddObject(item);
+
 						// Extract each item from the recycle bin.
 						foreach ( object item in GetItems() )
 						{
@@ -385,9 +387,9 @@ namespace UpdateControls.Forms
 			get
 			{
 				_depItems.OnGet();
-				return new UpdateControls.Util.ReadOnlyListDecorator(
+				return new UpdateControls.Forms.Util.ReadOnlyListDecorator(
 					base.Items,
-					new UpdateControls.Util.MapDelegate(Map) );
+					new UpdateControls.Forms.Util.MapDelegate(Map));
 			}
 		}
 
@@ -400,9 +402,9 @@ namespace UpdateControls.Forms
 			get
 			{
 				_depItemCheckState.OnGet();
-				return new UpdateControls.Util.ReadOnlyListDecorator(
+				return new UpdateControls.Forms.Util.ReadOnlyListDecorator(
 					base.CheckedItems,
-					new UpdateControls.Util.MapDelegate(Map) );
+					new UpdateControls.Forms.Util.MapDelegate(Map));
 			}
 		}
 

@@ -45,10 +45,10 @@ namespace UpdateControls.Themes.Forms
 
         private Theme _theme = null;
         private bool _accept = false;
-        private Dynamic _dynTheme = new Dynamic();
-        private Dynamic _dynSize = new Dynamic();
-        private Dynamic _dynFocused = new Dynamic();
-        private Dynamic _dynAccept = new Dynamic();
+        private Independent _dynTheme = new Independent();
+        private Independent _dynSize = new Independent();
+        private Independent _dynFocused = new Independent();
+        private Independent _dynAccept = new Independent();
 
         private class RendererContext : ThemedButtonRenderer.Context
         {
@@ -99,7 +99,7 @@ namespace UpdateControls.Themes.Forms
 
         public ThemedButton()
         {
-            _depEnabled = new Dependent(new UpdateProcedure(UpdateEnabled));
+            _depEnabled = new Dependent(UpdateEnabled);
             _renderer = new ThemedButtonRenderer(new RendererContext(this), SolidShapeLozenge.Instance);
             this.SetStyle(ControlStyles.StandardDoubleClick, false);
             InitializeComponent();

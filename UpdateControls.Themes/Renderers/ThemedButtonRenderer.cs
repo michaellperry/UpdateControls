@@ -47,7 +47,7 @@ namespace UpdateControls.Themes.Renderers
         private bool _inside = false;
         private bool _down = false;
         private bool _keyDown = false;
-        private Dynamic _dynState = new Dynamic();
+        private Independent _dynState = new Independent();
 
         private Image _image;
         private Rectangle _rectangle;

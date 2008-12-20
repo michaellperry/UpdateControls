@@ -26,7 +26,7 @@ namespace UpdateControls.Themes
         private SolidDescriptorEditor _editor = null;
 
         [NonSerialized]
-        Dynamic _dynEditor = new Dynamic();
+        Independent _dynEditor = new Independent();
 
         public SolidDescriptorEditable()
         {
@@ -46,7 +46,7 @@ namespace UpdateControls.Themes
         public void Attach(SolidDescriptorEditor editor)
         {
             System.Diagnostics.Debug.Assert(_editor == null);
-            if (_dynEditor == null) _dynEditor = new Dynamic();
+            if (_dynEditor == null) _dynEditor = new Independent();
             _dynEditor.OnSet();
             _editor = editor;
         }
@@ -54,7 +54,7 @@ namespace UpdateControls.Themes
         public void Detach(SolidDescriptorEditor editor)
         {
             System.Diagnostics.Debug.Assert(_editor == editor);
-            if (_dynEditor == null) _dynEditor = new Dynamic();
+            if (_dynEditor == null) _dynEditor = new Independent();
             _dynEditor.OnSet();
             _editor = null;
         }
@@ -63,7 +63,7 @@ namespace UpdateControls.Themes
         {
             get
             {
-                if (_dynEditor == null) _dynEditor = new Dynamic();
+                if (_dynEditor == null) _dynEditor = new Independent();
                 _dynEditor.OnGet();
                 if (_editor != null)
                     return _editor.WorkingValue;

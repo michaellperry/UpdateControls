@@ -58,7 +58,7 @@ namespace UpdateControls.Installer
 
                     // Install the add-in.
                     AddInInstallerUtility addInUtility = new AddInInstallerUtility(logWriter);
-                    addInUtility.InstallAddIn(stateSaver, targetDir, "UpdateControls.VSAddIn", utility.VisualStudioVersion);
+                    addInUtility.InstallAddIn(stateSaver, targetDir, "UpdateControls.VSAddIn", utility);
                 }
                 catch (Exception x)
                 {

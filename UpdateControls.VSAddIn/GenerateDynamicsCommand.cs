@@ -19,7 +19,7 @@ namespace UpdateControls.VSAddIn
 {
     class GenerateDynamicsCommand
     {
-        public static void GenerateDynamicProperties(DTE2 application)
+        public static void GenerateIndependentProperties(DTE2 application)
         {
             ProjectItem projItem = application.ActiveDocument.ProjectItem;
             TextSelection selection = (TextSelection)application.ActiveDocument.Selection;
@@ -77,7 +77,7 @@ namespace UpdateControls.VSAddIn
                     // Scan for the end of the block of dynamic sentries.
                     selection.MoveToLineAndOffset(selection.TopLine + 1, 1, false);
                     selection.LineDown(true, 1);
-                    while (!selection.IsEmpty && producer.IsDynamicSentry(selection.Text))
+                    while (!selection.IsEmpty && producer.IsIndependentSentry(selection.Text))
                     {
                         selection.MoveToLineAndOffset(selection.BottomLine, 1, false);
                         selection.LineDown(true, 1);

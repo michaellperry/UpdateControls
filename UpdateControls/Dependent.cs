@@ -10,27 +10,12 @@
  **********************************************************************/
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
 namespace UpdateControls
 {
-	/// <summary>
-	/// A procedure that gathers information and calculates the value of a
-	/// dependent field.
-	/// <seealso cref="Dependent"/>
-	/// </summary>
-	/// <remarks>
-	/// This class is for advanced use of the library. Update controls already define
-	/// the Dependent sentries you will need for most applications.
-	/// <para/>
-	/// An update procedure determines the value of a dependent field.
-	/// Create a <see cref="Dependent"/> sentry to control the field and call the update
-	/// procedure whenever it needs to be brought up-to-date.
-	/// </remarks>
-	public delegate void UpdateProcedure();
-
 	/// <summary>
 	/// A sentry that controls a dependent field.
 	/// <seealso cref="UpdateProcedure"/>
@@ -71,7 +56,7 @@ namespace UpdateControls
 	/// 		public MyCalculatedObject( MyDynamicObject someOtherObject )
 	/// 		{
 	/// 			_someOtherObject = someOtherObject;
-	/// 			_depText = new Dependent( new UpdateProcedure(UpdateText) );
+	/// 			_depText = new Dependent( UpdateText );
 	/// 		}
 	/// 
 	/// 		private void UpdateText()
@@ -118,7 +103,7 @@ namespace UpdateControls
         /// <summary>
         /// Event fired when the intermediate cache is unloaded.
         /// </summary>
-        public event Notice Unloaded;
+        public event Action Unloaded;
         /// <summary>
         /// Event fired when the dependent becomes out-of-date.
         /// <remarks>
@@ -128,21 +113,21 @@ namespace UpdateControls
         /// OnGet, or it could signal a thread that will call OnGet.
         /// </remarks>
         /// </summary>
-        public event Notice Invalidated;
+        public event Action Invalidated;
 
-        private static LocalDataStoreSlot _currentUpdateSlot = Thread.AllocateDataSlot();
+		private static LocalDataStoreSlot _currentUpdateSlot = Thread.AllocateDataSlot();
 
 		internal static Dependent GetCurrentUpdate()
 		{
-			return (Dependent)Thread.GetData( _currentUpdateSlot );
+			return (Dependent)Thread.GetData(_currentUpdateSlot);
 		}
-		private static void SetCurrentUpdate( Dependent dependent )
+		private static void SetCurrentUpdate(Dependent dependent)
 		{
-			Thread.SetData( _currentUpdateSlot, dependent );
+			Thread.SetData(_currentUpdateSlot, dependent);
 		}
 
 		internal Precedent _base = new Precedent();
-		private UpdateProcedure _update;
+		private Action _update;
 		private enum StatusType
 		{
 			OUT_OF_DATE,
@@ -152,21 +137,21 @@ namespace UpdateControls
             DISPOSED
 		};
 		private StatusType _status;
-		private ArrayList _precedents;
+		private List<Precedent> _precedents;
 
 		/// <summary>
 		/// Creates a new dependent sentry with a given update procedure.
 		/// <seealso cref="UpdateProcedure"/>
 		/// </summary>
 		/// <param name="update">The procedure that updates the value of the controled field.</param>
-		public Dependent( UpdateProcedure update )
+		public Dependent( Action update )
 		{
 			_update = update;
 			_status = StatusType.OUT_OF_DATE;
-			_precedents = new ArrayList();
+			_precedents = new List<Precedent>();
 
-            _base.GainDependent += new Notice(_base_GainDependent);
-            _base.LooseDependent += new Notice(_base_LooseDependent);
+            _base.GainDependent += _base_GainDependent;
+            _base.LooseDependent += _base_LooseDependent;
         }
 
 		/// <summary>
@@ -215,6 +200,22 @@ namespace UpdateControls
                 lock ( _precedents )
                 {
                     return _status == StatusType.UP_TO_DATE;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Read only property that is true when the dependent is not updating.
+        /// </summary>
+        public bool IsNotUpdating
+        {
+            get
+            {
+                lock (_precedents)
+                {
+                    return
+                        _status != StatusType.UPDATING &&
+                        _status != StatusType.UPDATING_AND_OUT_OF_DATE;
                 }
             }
         }

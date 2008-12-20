@@ -39,7 +39,7 @@ namespace UpdateControls.Forms
 			{
 				_tag = tag;
 				_getItemText = getItemText;
-				_depText = new Dependent( new UpdateProcedure(UpdateText) );
+				_depText = new Dependent( UpdateText );
 			}
 
 			public void Dispose()
@@ -131,9 +131,9 @@ namespace UpdateControls.Forms
 		private Dependent _depItems;
 		private Dependent _depSelectedItem;
 
-		private Dynamic _dynModified = new Dynamic();
-		private Dynamic _dynSelectedItem = new Dynamic();
-        private Dynamic _dynError = new Dynamic();
+		private Independent _dynModified = new Independent();
+		private Independent _dynSelectedItem = new Independent();
+        private Independent _dynError = new Independent();
 
 		private int _updating = 0;
 		private bool _modified = false;
@@ -146,10 +146,10 @@ namespace UpdateControls.Forms
 		public UpdateComboBox()
 		{
             // Create all dependent sentries.
-			_depText = new Dependent( new UpdateProcedure(UpdateText) );
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
-			_depItems = new Dependent( new UpdateProcedure(UpdateItems) );
-			_depSelectedItem = new Dependent( new UpdateProcedure(UpdateSelectedItem) );
+			_depText = new Dependent( UpdateText );
+			_depEnabled = new Dependent( UpdateEnabled );
+			_depItems = new Dependent( UpdateItems );
+			_depSelectedItem = new Dependent( UpdateSelectedItem );
 		}
 
 		private void UpdateText()
@@ -207,8 +207,11 @@ namespace UpdateControls.Forms
 				{
 					// Recycle the collection of items.
 					ArrayList newItems = new ArrayList( base.Items.Count );
-                    using (RecycleBin<ComboBoxItem> recycleBin = new RecycleBin<ComboBoxItem>(base.Items))
+                    using (var recycleBin = new RecycleBin<ComboBoxItem>())
 					{
+                        foreach (ComboBoxItem item in base.Items)
+                            recycleBin.AddObject(item);
+
 						// Extract each item from the recycle bin.
 						foreach ( object item in GetItems() )
 						{
@@ -486,9 +489,9 @@ namespace UpdateControls.Forms
 			get
 			{
 				_depItems.OnGet();
-				return new UpdateControls.Util.ReadOnlyListDecorator(
+				return new UpdateControls.Forms.Util.ReadOnlyListDecorator(
 					base.Items,
-					new UpdateControls.Util.MapDelegate(Map) );
+					new UpdateControls.Forms.Util.MapDelegate(Map));
 			}
         }
 

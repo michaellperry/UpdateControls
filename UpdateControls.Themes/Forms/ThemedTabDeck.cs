@@ -107,11 +107,11 @@ namespace UpdateControls.Themes.Forms
         private bool _canReorder = true;
         private bool _hasImages = false;
         private bool _ownsImages = false;
-        private Dynamic _dynOrientation = new Dynamic();
-        private Dynamic _dynTheme = new Dynamic();
-        private Dynamic _dynCanClose = new Dynamic();
-        private Dynamic _dynHasImages = new Dynamic();
-        private Dynamic _dynOwnsImages = new Dynamic();
+        private Independent _dynOrientation = new Independent();
+        private Independent _dynTheme = new Independent();
+        private Independent _dynCanClose = new Independent();
+        private Independent _dynHasImages = new Independent();
+        private Independent _dynOwnsImages = new Independent();
 
         /// <summary>The position of the tabs relative to the content.</summary>
         /// <remarks>
@@ -595,14 +595,15 @@ namespace UpdateControls.Themes.Forms
         private Rectangle _contentBounds;
         private Dependent _depItems;
         private Dependent _depContents;
-        private Dynamic _dynSelectedItem = new Dynamic();
+        private Independent _dynSelectedItem = new Independent();
         private Dependent _depSelectedItemContent;
-        private Dynamic _dynSize = new Dynamic();
+        private Independent _dynSize = new Independent();
         private Dependent _depContentBounds;
 
         private bool ChangeSelectedItem(object item)
         {
             _depItems.OnGet();
+
             if (!Object.Equals(item, _selectedItem) && _items.Contains(item))
             {
                 _dynSelectedItem.OnSet();
@@ -636,8 +637,11 @@ namespace UpdateControls.Themes.Forms
         {
             // Create a content holder for each item.
             _depItems.OnGet();
-            using (RecycleBin<ItemContent> bin = new RecycleBin<ItemContent>(_contents.Values))
+            using (var bin = new RecycleBin<ItemContent>())
             {
+                foreach (ItemContent item in _contents.Values)
+                    bin.AddObject(item);
+
                 _contents.Clear();
                 foreach (object item in _items)
                     _contents.Add(item, bin.Extract(new ItemContent(this, item)));
@@ -806,7 +810,7 @@ namespace UpdateControls.Themes.Forms
         private object _dragItem = null;
         private Point _dragStart;
         private Point _dragPosition;
-        private Dynamic _dynDrag = new Dynamic();
+        private Independent _dynDrag = new Independent();
 
         // Dependent
         private int _range;
@@ -894,6 +898,7 @@ namespace UpdateControls.Themes.Forms
             bool hasImages = HasImages;
 
             _depItems.OnGet();
+
             foreach (object item in _items)
             {
                 // Measure each item at rest.
@@ -997,8 +1002,11 @@ namespace UpdateControls.Themes.Forms
         private void UpdateInertialPosition()
         {
             _depItems.OnGet();
-            using (RecycleBin<InertialRectangle> bin = new RecycleBin<InertialRectangle>(_inertialPosition.Values))
+            using (var bin = new RecycleBin<InertialRectangle>())
             {
+                foreach (InertialRectangle rectangle in _inertialPosition.Values)
+                    bin.AddObject(rectangle);
+
                 _inertialPosition.Clear();
                 foreach (object tag in _items)
                     _inertialPosition[tag] = bin.Extract(new InertialRectangle(this, tag));

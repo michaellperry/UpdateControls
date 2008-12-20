@@ -50,8 +50,8 @@ namespace UpdateControls.Forms
 		public UpdateLabel()
 		{
             // Create all dependent sentries.
-			_depText = new Dependent( new UpdateProcedure(UpdateText) );
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
+			_depText = new Dependent( UpdateText );
+			_depEnabled = new Dependent( UpdateEnabled );
 		}
 
 		private void UpdateText()

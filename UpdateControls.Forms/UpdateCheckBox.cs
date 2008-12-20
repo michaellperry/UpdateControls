@@ -57,7 +57,7 @@ namespace UpdateControls.Forms
 		private Dependent _depChecked;
 		private Dependent _depEnabled;
 
-		private Dynamic _dynChecked = new Dynamic();
+		private Independent _dynChecked = new Independent();
 
 		private int _updating = 0;
 
@@ -67,8 +67,8 @@ namespace UpdateControls.Forms
 		public UpdateCheckBox()
 		{
 			// Create all dependent sentries.
-			_depChecked = new Dependent( new UpdateProcedure(UpdateChecked) );
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
+			_depChecked = new Dependent( UpdateChecked );
+			_depEnabled = new Dependent( UpdateEnabled );
 		}
 
 		private void UpdateChecked()

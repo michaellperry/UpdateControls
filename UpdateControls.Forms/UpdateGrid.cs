@@ -11,11 +11,12 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
+using UpdateControls.Forms.Util;
 
 namespace UpdateControls.Forms
 {
@@ -164,7 +165,7 @@ namespace UpdateControls.Forms
                 _table = table;
                 _tag = tag;
                 _updateController = updateController;
-                _depValue = new Dependent(new UpdateProcedure(UpdateValue));
+                _depValue = new Dependent(UpdateValue);
             }
 
 			public void Dispose()
@@ -432,7 +433,7 @@ namespace UpdateControls.Forms
 		private Dependent _depColumns;
 		private Dependent _depItems;
 		private Dependent _depItemValue;
-        private Dynamic _dynSelection = new Dynamic();
+        private Independent _dynSelection = new Independent();
 
         private ColumnDefinitions _columnDefinitions;
         private DataTable _table;
@@ -452,10 +453,10 @@ namespace UpdateControls.Forms
             _table.RowDeleting += new DataRowChangeEventHandler(OnRowDeleting);
 
 			// Create all dependent sentries.
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
-			_depColumns = new Dependent( new UpdateProcedure(UpdateColumns) );
-			_depItems = new Dependent( new UpdateProcedure(UpdateItems) );
-			_depItemValue = new Dependent( new UpdateProcedure(UpdateItemValue) );
+			_depEnabled = new Dependent( UpdateEnabled );
+			_depColumns = new Dependent( UpdateColumns );
+			_depItems = new Dependent( UpdateItems );
+			_depItemValue = new Dependent( UpdateItemValue );
 		}
 
         private void OnColumnChanged(object sender, DataColumnChangeEventArgs e)
@@ -551,10 +552,8 @@ namespace UpdateControls.Forms
                 if (GetItems != null)
                 {
                     // Recycle the collection of items.
-                    using (RecycleBin<DependentDataRow> recycleBin = new RecycleBin<DependentDataRow>(_rows))
+                    using (var recycleBin = _rows.Recycle())
                     {
-                        _rows.Clear();
-
                         int rowIndex = 0;
                         // Extract each item from the recycle bin.
                         foreach (object item in GetItems())

@@ -45,6 +45,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_3391E8764A3F302A7180118903D819A8"
+        "OwnerKey" = "8:_DC058A123F8082735707C38E07EC412F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3391E8764A3F302A7180118903D819A8"
+        "OwnerKey" = "8:_CE50E3AB4B644A618FF1D15AA98D356D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3391E8764A3F302A7180118903D819A8"
+        "OwnerKey" = "8:_811C51B977774E389ED7A18EF42B7342"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4289AF4B70014D52B0BC4B00B007C9CC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -87,26 +105,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A1696ECA474203519780AC36896764C0"
-        "OwnerKey" = "8:_A4D7BA223F7F201841BC5B23AE95717F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A1696ECA474203519780AC36896764C0"
-        "OwnerKey" = "8:_811C51B977774E389ED7A18EF42B7342"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_A4C88C01A20245DC97E53CDF4CBEE9DD"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A4D7BA223F7F201841BC5B23AE95717F"
-        "OwnerKey" = "8:_811C51B977774E389ED7A18EF42B7342"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -123,14 +123,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CE50E3AB4B644A618FF1D15AA98D356D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D073A034FADBF12A8C2267AFD05FDF8D"
         "OwnerKey" = "8:_5E1F0B3DCF2BAF7E94159558EF3A3CF5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D9F2865A5B8E4268A79F12BD4800AAA2"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_DC058A123F8082735707C38E07EC412F"
+        "OwnerKey" = "8:_811C51B977774E389ED7A18EF42B7342"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -143,6 +149,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_811C51B977774E389ED7A18EF42B7342"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CE50E3AB4B644A618FF1D15AA98D356D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -166,13 +178,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A4D7BA223F7F201841BC5B23AE95717F"
+        "OwnerKey" = "8:_DC058A123F8082735707C38E07EC412F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A1696ECA474203519780AC36896764C0"
+        "OwnerKey" = "8:_3391E8764A3F302A7180118903D819A8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -387,6 +399,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3391E8764A3F302A7180118903D819A8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:UpdateControls, Version=2.0.0.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_3391E8764A3F302A7180118903D819A8"
+                    {
+                    "Name" = "8:UpdateControls.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:UpdateControls.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4289AF4B70014D52B0BC4B00B007C9CC"
             {
             "SourcePath" = "8:Banner.bmp"
@@ -498,37 +541,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A1696ECA474203519780AC36896764C0"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:UpdateControls, Version=1.4.0.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A1696ECA474203519780AC36896764C0"
-                    {
-                    "Name" = "8:UpdateControls.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:UpdateControls.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A4C88C01A20245DC97E53CDF4CBEE9DD"
             {
             "SourcePath" = "8:..\\UpdateControls.VSAddIn\\UpdateControls.VSAddIn.2008.AddIn"
@@ -547,37 +559,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A4D7BA223F7F201841BC5B23AE95717F"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:UpdateControls.Forms, Version=1.4.0.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A4D7BA223F7F201841BC5B23AE95717F"
-                    {
-                    "Name" = "8:UpdateControls.Forms.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:UpdateControls.Forms.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D073A034FADBF12A8C2267AFD05FDF8D"
@@ -600,10 +581,21 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D9F2865A5B8E4268A79F12BD4800AAA2"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DC058A123F8082735707C38E07EC412F"
             {
-            "SourcePath" = "8:..\\UpdateControls.VSAddIn\\UpdateControls.VSAddIn.2005.AddIn"
-            "TargetName" = "8:UpdateControls.VSAddIn.2005.AddIn"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:UpdateControls.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_DC058A123F8082735707C38E07EC412F"
+                    {
+                    "Name" = "8:UpdateControls.Forms.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:UpdateControls.Forms.dll"
+            "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
             "Condition" = "8:"
@@ -617,7 +609,7 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E95F983F7D374F4EA91503EC14B2C0F8"
@@ -675,7 +667,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Update Controls"
         "ProductCode" = "8:{21895377-E0E3-4CC3-BB8D-B3C9CC799236}"
-        "PackageCode" = "8:{63C4036A-3258-4A0A-9E72-5AC63D625545}"
+        "PackageCode" = "8:{DBC8912A-B817-47F5-9E1D-3C1E8B89AB60}"
         "UpgradeCode" = "8:{6A039DC8-9BCA-4C58-8C06-9C4AE8AA3AC0}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -1235,7 +1227,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2731936208754FE6AC695586936B19A7"
             {
-            "SourcePath" = "8:..\\UpdateControls.Installer\\obj\\Release\\UpdateControls.Installer.dll"
+            "SourcePath" = "8:..\\UpdateControls.Installer\\obj\\Debug\\UpdateControls.Installer.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
@@ -1263,7 +1255,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_811C51B977774E389ED7A18EF42B7342"
             {
-            "SourcePath" = "8:..\\UpdateControls.Themes\\obj\\Release\\UpdateControls.Themes.dll"
+            "SourcePath" = "8:..\\UpdateControls.Themes\\obj\\Debug\\UpdateControls.Themes.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
@@ -1291,7 +1283,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8F682260514C4ED998BD84C08F1AACE9"
             {
-            "SourcePath" = "8:..\\UpdateControls\\bin\\Release\\UpdateControls.XML"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
@@ -1319,7 +1311,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A6F27830BCFC4D6B8F048785546826CF"
             {
-            "SourcePath" = "8:..\\UpdateControls\\obj\\Release\\UpdateControls.dll"
+            "SourcePath" = "8:..\\UpdateControls\\obj\\Debug\\UpdateControls.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
@@ -1347,7 +1339,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A7111BDC54604271A239B11EE874AC8C"
             {
-            "SourcePath" = "8:..\\UpdateControls.VSAddIn\\obj\\Release\\UpdateControls.VSAddIn.dll"
+            "SourcePath" = "8:..\\UpdateControls.VSAddIn\\obj\\Debug\\UpdateControls.VSAddIn.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
@@ -1375,7 +1367,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BE9C51863696425EB60BB47EC0932060"
             {
-            "SourcePath" = "8:..\\UpdateControls.Forms\\bin\\Release\\UpdateControls.Forms.XML"
+            "SourcePath" = "8:..\\UpdateControls.Forms\\bin\\Debug\\UpdateControls.Forms.XML"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
@@ -1403,7 +1395,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_CB69BAACA3E34AEF808EB0FF24F8657B"
             {
-            "SourcePath" = "8:..\\UpdateControls.Themes\\bin\\Release\\UpdateControls.Themes.XML"
+            "SourcePath" = "8:..\\UpdateControls.Themes\\bin\\Debug\\UpdateControls.Themes.XML"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
@@ -1424,6 +1416,34 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Documentation"
             "OutputProjectGuid" = "8:{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_CE50E3AB4B644A618FF1D15AA98D356D"
+            {
+            "SourcePath" = "8:..\\UpdateControls.XAML\\obj\\Debug\\UpdateControls.XAML.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A7EAD48C16C64753A7FFBA7814AD3489"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{E4496FFF-165F-4008-8766-4DD086F5D3EC}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

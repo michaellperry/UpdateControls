@@ -34,7 +34,7 @@ namespace UpdateControls.Themes.Inertia
         private int _range = 0;         // The maximum on the y axis.
         private int _width = 0;         // The maximum on the x axis.
 
-        private Dynamic _dynState = new Dynamic();
+        private Independent _dynState = new Independent();
         private Dependent _depRange;
         private Dependent _depWidth;
 

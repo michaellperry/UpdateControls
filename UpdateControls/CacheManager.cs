@@ -9,8 +9,7 @@
  * 
  **********************************************************************/
 
-using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace UpdateControls
 {
@@ -34,8 +33,8 @@ namespace UpdateControls
 			}
 		}
 
-		private ArrayList _fresh = new ArrayList();
-		private ArrayList _stale = new ArrayList();
+		private List<Cache> _fresh = new List<Cache>();
+		private List<Cache> _stale = new List<Cache>();
 
 		private CacheManager()
 		{
@@ -43,13 +42,13 @@ namespace UpdateControls
 
 		public void Age()
 		{
-			ArrayList toUnload = null;
+			List<Cache> toUnload = null;
 			lock ( this )
 			{
 				// Age the fresh caches.
 				toUnload = _stale;
 				_stale = _fresh;
-				_fresh = new ArrayList();
+				_fresh = new List<Cache>();
 			}
 			// Unload the stale caches.
 			foreach ( Cache cache in toUnload )

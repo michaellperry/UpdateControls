@@ -10,15 +10,11 @@
  **********************************************************************/
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace UpdateControls
 {
-	/// <summary>
-	/// </summary>
-	public delegate void Notice();
-
 	/// <summary>
 	/// Base class for <see cref="Dynamic"/> and <see cref="Dependent"/> sentries.
 	/// </summary>
@@ -28,17 +24,16 @@ namespace UpdateControls
 	/// </remarks>
 	internal class Precedent
 	{
-		private ArrayList _dependents;		// of Dependent.
+		private List<Dependent> _dependents = new List<Dependent>();
 
-		public event Notice GainDependent;
-		public event Notice LooseDependent;
+		public event Action GainDependent;
+		public event Action LooseDependent;
 
 		/// <summary>
 		/// Creates a new precedent sentry.
 		/// </summary>
 		public Precedent()
 		{
-			_dependents = new ArrayList();
 		}
 
 		/// <summary>

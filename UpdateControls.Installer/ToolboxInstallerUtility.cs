@@ -35,15 +35,9 @@ namespace UpdateControls.Installer
 
     class ToolboxInstallerUtility : IOleMessageFilter
     {
-        public enum VisualStudioVersionID
-        {
-            VS2005,
-            VS2008
-        }
-
         private TextWriter _logWriter;
-        private DTE _dte;
-        private VisualStudioVersionID _visualStudioVersion;
+        private DTE _dte2008;
+        private bool _has2008;
         private Solution2 _solution;
         private Project _proj;
         private EnvDTE.Window _window;
@@ -59,47 +53,45 @@ namespace UpdateControls.Installer
             Register();
 
             // Create an instance of the VS IDE.
-            if (MakeDTE("VisualStudio.DTE.8.0", VisualStudioVersionID.VS2005))
-                _logWriter.WriteLine("{0}: Created DTE for Visual Studio 2005.", DateTime.Now);
-            else if (MakeDTE("VisualStudio.DTE.9.0", VisualStudioVersionID.VS2008))
+            _has2008 = (_dte2008 = MakeDTE("VisualStudio.DTE.9.0")) != null;
+            if (_has2008)
                 _logWriter.WriteLine("{0}: Created DTE for Visual Studio 2008.", DateTime.Now);
-            else
+            if (!_has2008)
                 _logWriter.WriteLine("{0}: Failed to create DTE.", DateTime.Now);
         }
 
-        private bool MakeDTE(string progId, VisualStudioVersionID visualStudioVersion)
+        public bool Has2008
+        {
+            get { return _has2008; }
+        }
+
+        private DTE MakeDTE(string progId)
         {
             Type type = System.Type.GetTypeFromProgID(progId);
             if (type == null)
-                return false;
+                return null;
             DTE dte = (DTE)System.Activator.CreateInstance(type, true);
-            if (dte == null)
-                return false;
-
-            _dte = dte;
-            _visualStudioVersion = visualStudioVersion;
-            return true;
+            return dte;
         }
 
         public void Cleanup()
         {
-            if (_dte != null)
-            {
-                _dte.Quit();
-                Marshal.ReleaseComObject(_dte);
+            CloseDTE(_dte2008);
 
-                Revoke();
+            Revoke();
 
-                // to ensure the dte object is actually released, and the devenv.exe process terminates.
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-            }
+            // to ensure the dte object is actually released, and the devenv.exe process terminates.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
-        public VisualStudioVersionID VisualStudioVersion
+        private void CloseDTE(DTE dte)
         {
-            get { return _visualStudioVersion; }
-            set { _visualStudioVersion = value; }
+            if (dte != null)
+            {
+                Retry(() => dte.Quit());
+                Marshal.ReleaseComObject(dte);
+            }
         }
 
         private delegate void TryMe();
@@ -133,14 +125,19 @@ namespace UpdateControls.Installer
         
         public void InstallControl(string ctrlPath, string tabName)
         {
-            if (_dte != null)
+            InstallControl(ctrlPath, tabName, _dte2008);
+        }
+
+        private void InstallControl(string ctrlPath, string tabName, DTE dte)
+        {
+            if (dte != null)
             {
                 // create a temporary winform project;
                 string tmpFile = Path.GetFileNameWithoutExtension(Path.GetTempFileName());
                 string tmpDir = string.Format("{0}{1}", Path.GetTempPath(), tmpFile);
                 Retry(delegate()
                 {
-                    _solution = _dte.Solution as Solution2;
+                    _solution = dte.Solution as Solution2;
                 });
                 string templatePath = _solution.GetProjectTemplate("WindowsApplication.zip", "CSharp");
                 Retry(delegate()
@@ -152,7 +149,7 @@ namespace UpdateControls.Installer
                 // add the control to the toolbox.
                 Retry(delegate()
                 {
-                    _window = _dte.Windows.Item(EnvDTE.Constants.vsWindowKindToolbox);
+                    _window = dte.Windows.Item(EnvDTE.Constants.vsWindowKindToolbox);
                 });
                 Retry(delegate()
                 {
@@ -175,7 +172,7 @@ namespace UpdateControls.Installer
                 _logWriter.WriteLine("{0}: Added controls to tab.", DateTime.Now, tmpDir);
                 Retry(delegate()
                 {
-                    _dte.Solution.Close(false);
+                    dte.Solution.Close(false);
                 });
                 _logWriter.WriteLine("{0}: Closed solution.", DateTime.Now, tmpDir);
 
@@ -185,11 +182,16 @@ namespace UpdateControls.Installer
 
         public void UninstallControl(string tabName)
         {
-            if (_dte != null)
+            UninstallControl(tabName, _dte2008);
+        }
+
+        private void UninstallControl(string tabName, DTE dte)
+        {
+            if (dte != null)
             {
                 Retry(delegate()
                 {
-                    _window = _dte.Windows.Item(EnvDTE.Constants.vsWindowKindToolbox);
+                    _window = dte.Windows.Item(EnvDTE.Constants.vsWindowKindToolbox);
                 });
                 Retry(delegate()
                 {

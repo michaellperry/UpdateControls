@@ -32,12 +32,24 @@ namespace UpdateControls.Installer
             _logWriter = logWriter;
         }
 
-        public void InstallAddIn(IDictionary savedState, string assemblyPath, string assemblyName, ToolboxInstallerUtility.VisualStudioVersionID visualStudioVersion)
+        public void InstallAddIn(IDictionary savedState, string assemblyPath, string assemblyName, ToolboxInstallerUtility installer)
+        {
+            if (installer.Has2008)
+            {
+                _logWriter.WriteLine("{0}: Installing add-in for Visual Studio 2008.", DateTime.Now);
+                InstallAddIn(savedState, assemblyPath, assemblyName, "2008");
+            }
+            if (!installer.Has2008)
+            {
+                _logWriter.WriteLine("{0}: No version of Visual Studio was found.", DateTime.Now);
+            }
+        }
+
+        private void InstallAddIn(IDictionary savedState, string assemblyPath, string assemblyName, string edition)
         {
             // Setup .addin path and assembly path
-            string edition = visualStudioVersion == ToolboxInstallerUtility.VisualStudioVersionID.VS2005 ? "2005" : "2008";
             string addinTargetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                "Visual Studio " + edition + @"\Addins" );
+                "Visual Studio " + edition + @"\Addins");
             string addinControlFileName = assemblyName + "." + edition + ".Addin";
             string addinAssemblyFileName = assemblyName + ".dll";
             _logWriter.WriteLine("{0}: Installing add-in target={1}, control file={2}, assembly file={3}.",
@@ -108,7 +120,7 @@ namespace UpdateControls.Installer
                 File.Copy(sourceFile, targetFile, true);
 
                 // Save AddinPath to be used in Uninstall or Rollback
-                savedState.Add("AddinPath", targetFile);
+                savedState.Add("AddinPath" + edition, targetFile);
             }
             catch (Exception ex)
             {
@@ -118,23 +130,31 @@ namespace UpdateControls.Installer
 
         public void RemoveAddIn(IDictionary savedState)
         {
-            try
+            RemoveAddIn(savedState, "2008");
+        }
+
+        private void RemoveAddIn(IDictionary savedState, string edition)
+        {
+            if (savedState.Contains("AddinPath" + edition))
             {
-                string fileName = (string)savedState["AddinPath"];
-                _logWriter.WriteLine("{0}: Deleting add-in file {1}.", DateTime.Now, fileName);
-                if (File.Exists(fileName))
+                string fileName = (string)savedState["AddinPath" + edition];
+                try
                 {
-                    File.Delete(fileName);
-                    _logWriter.WriteLine("{0}: Success.", DateTime.Now);
+                    _logWriter.WriteLine("{0}: Deleting add-in file {1}.", DateTime.Now, fileName);
+                    if (File.Exists(fileName))
+                    {
+                        File.Delete(fileName);
+                        _logWriter.WriteLine("{0}: Success.", DateTime.Now);
+                    }
+                    else
+                    {
+                        _logWriter.WriteLine("{0}: Add-in file does not exist.", DateTime.Now);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    _logWriter.WriteLine("{0}: Add-in file does not exist.", DateTime.Now);
+                    _logWriter.WriteLine("{0}: Failed to delete add-in file: {1}", DateTime.Now, ex.ToString());
                 }
-            }
-            catch (Exception ex)
-            {
-                _logWriter.WriteLine("{0}: Failed to delete add-in file: {1}", DateTime.Now, ex.ToString());
             }
         }
     }

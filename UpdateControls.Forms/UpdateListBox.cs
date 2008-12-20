@@ -45,8 +45,8 @@ namespace UpdateControls.Forms
 				_getItemText = getItemText;
 				_getItemSelected = getItemSelected;
 				_setItemSelected = setItemSelected;
-				_depText = new Dependent( new UpdateProcedure(UpdateText) );
-				_depSelected = new Dependent( new UpdateProcedure(UpdateSelected) );
+				_depText = new Dependent( UpdateText );
+				_depSelected = new Dependent( UpdateSelected );
 			}
 
 			public void Dispose()
@@ -161,7 +161,7 @@ namespace UpdateControls.Forms
 		private Dependent _depItems;
 		private Dependent _depSelectedItem;
 
-		private Dynamic _dynSelectedItem = new Dynamic();
+		private Independent _dynSelectedItem = new Independent();
 
 		private int _updating = 0;
 
@@ -171,9 +171,9 @@ namespace UpdateControls.Forms
 		public UpdateListBox()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
-			_depItems = new Dependent( new UpdateProcedure(UpdateItems) );
-			_depSelectedItem = new Dependent( new UpdateProcedure(UpdateSelectedItem) );
+			_depEnabled = new Dependent( UpdateEnabled );
+			_depItems = new Dependent( UpdateItems );
+			_depSelectedItem = new Dependent( UpdateSelectedItem );
 		}
 
 		private void UpdateEnabled()
@@ -192,8 +192,11 @@ namespace UpdateControls.Forms
 				{
 					// Recycle the collection of items.
 					ArrayList newItems = new ArrayList( base.Items.Count );
-                    using (RecycleBin<ListBoxItem> recycleBin = new RecycleBin<ListBoxItem>(base.Items))
+                    using (var recycleBin = new RecycleBin<ListBoxItem>())
 					{
+                        foreach (ListBoxItem item in base.Items)
+                            recycleBin.AddObject(item);
+
 						// Extract each item from the recycle bin.
 						foreach ( object item in GetItems() )
 						{
@@ -416,9 +419,9 @@ namespace UpdateControls.Forms
 			get
 			{
 				_depItems.OnGet();
-				return new UpdateControls.Util.ReadOnlyListDecorator(
+				return new UpdateControls.Forms.Util.ReadOnlyListDecorator(
 					base.Items,
-					new UpdateControls.Util.MapDelegate(Map) );
+					new UpdateControls.Forms.Util.MapDelegate(Map));
 			}
         }
 
@@ -480,9 +483,9 @@ namespace UpdateControls.Forms
 			get
 			{
 				_depSelectedItem.OnGet();
-				return new UpdateControls.Util.ReadOnlyListDecorator(
+				return new UpdateControls.Forms.Util.ReadOnlyListDecorator(
 					base.SelectedItems,
-					new UpdateControls.Util.MapDelegate(Map) );
+					new UpdateControls.Forms.Util.MapDelegate(Map));
 			}
         }
 

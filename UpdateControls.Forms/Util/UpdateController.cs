@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace UpdateControls
+namespace UpdateControls.Forms.Util
 {
     /// <summary>
     /// Protects update methods against reentrancy.
@@ -30,16 +30,28 @@ namespace UpdateControls
     /// </summary>
     public class UpdateController
     {
+		private class DisposeHelper : IDisposable
+		{
+			private UpdateController _updateController;
+
+			public DisposeHelper(UpdateController updateContoller)
+			{
+				_updateController = updateContoller;
+			}
+
+			public void Dispose()
+			{
+				--_updateController._updating;
+			}
+		}
+
         private int _updating = 0;
 
         public bool NotUpdating { get { return _updating == 0; } }
         public IDisposable BeginUpdating()
         {
             ++_updating;
-            return new DisposeHelper(delegate()
-            {
-                --_updating;
-            });
+            return new DisposeHelper(this);
         }
     }
 }

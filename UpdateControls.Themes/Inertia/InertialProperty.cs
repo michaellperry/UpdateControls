@@ -32,7 +32,7 @@ namespace UpdateControls.Themes.Inertia
 
         // Dynamic
         private long _ticks = 0;
-        private Dynamic _dynTicks = new Dynamic();
+        private Independent _dynTicks = new Independent();
 
         // Dependent
         private float _targetValue;

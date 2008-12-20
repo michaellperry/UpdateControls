@@ -53,8 +53,8 @@ namespace UpdateControls.Forms
 		public UpdateRadioButton()
 		{
             // Create all dependent sentries.
-			_depChecked = new Dependent( new UpdateProcedure(UpdateChecked) );
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
+			_depChecked = new Dependent( UpdateChecked );
+			_depEnabled = new Dependent( UpdateEnabled );
 
 			// Turn off AutoCheck by default.
 			base.AutoCheck = false;

@@ -70,13 +70,13 @@ namespace UpdateControls.Themes.Forms
         private ContentAlignment _checkAlign = ContentAlignment.MiddleLeft;
         private ContentAlignment _textAlign = ContentAlignment.MiddleLeft;
         private bool _accept = false;
-        private Dynamic _dynUncheckedTheme = new Dynamic();
-        private Dynamic _dynCheckedTheme = new Dynamic();
-        private Dynamic _dynTextAlign = new Dynamic();
-        private Dynamic _dynCheckAlign = new Dynamic();
-        private Dynamic _dynSize = new Dynamic();
-        private Dynamic _dynFocused = new Dynamic();
-        private Dynamic _dynAccept = new Dynamic();
+        private Independent _dynUncheckedTheme = new Independent();
+        private Independent _dynCheckedTheme = new Independent();
+        private Independent _dynTextAlign = new Independent();
+        private Independent _dynCheckAlign = new Independent();
+        private Independent _dynSize = new Independent();
+        private Independent _dynFocused = new Independent();
+        private Independent _dynAccept = new Independent();
 
         private class ButtonRendererContext : ThemedButtonRenderer.Context
         {

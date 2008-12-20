@@ -33,10 +33,10 @@ namespace UpdateControls.Test
         private bool _requirePhone = false;
         private Company _employer = null;
 
-        private Dynamic _dynName = new Dynamic();
-        private Dynamic _dynPhone = new Dynamic();
-        private Dynamic _dynRequirePhone = new Dynamic();
-        private Dynamic _dynEmployer = new Dynamic();
+        private Independent _dynName = new Independent();
+        private Independent _dynPhone = new Independent();
+        private Independent _dynRequirePhone = new Independent();
+        private Independent _dynEmployer = new Independent();
 
         private static Regex[] ValidPhone = new Regex[] {
             new Regex(@"(?'area'\d{3})\s*(?'exchange'\d{3})\s*(?'num'\d{4})", RegexOptions.Singleline),

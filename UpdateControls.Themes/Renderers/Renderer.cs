@@ -13,6 +13,7 @@ using System;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace UpdateControls.Themes.Renderers
 {
@@ -26,13 +27,11 @@ namespace UpdateControls.Themes.Renderers
             _depChildRenderers = new Dependent(delegate()
             {
                 // Recycle the renderers.
-                using (RecycleBin<Renderer> bin = new RecycleBin<Renderer>(_childRenderers))
+                using (var bin = _childRenderers.Recycle())
                 {
-                    _childRenderers.Clear();
-                    foreach (Renderer renderer in GetChildRenderers())
-                    {
-                        _childRenderers.Add(bin.Extract(renderer));
-                    }
+                    _childRenderers.AddRange(
+                        from r in GetChildRenderers()
+                        select bin.Extract(r));
                 }
             });
         }

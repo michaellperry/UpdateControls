@@ -49,16 +49,14 @@ namespace UpdateControls.Themes.Forms
         private Dependent _depEnabled;
         private Dependent _depDisplayFocus;
 
-        private UpdateController _updateController = new UpdateController();
-
         private Theme _theme = null;
         private string _text = string.Empty;
         private bool _displayFocus = false;
         private ContentAlignment _textAlign = ContentAlignment.MiddleCenter;
-        private Dynamic _dynTheme = new Dynamic();
-        private Dynamic _dynSize = new Dynamic();
-        private Dynamic _dynText = new Dynamic();
-        private Dynamic _dynTextAlign = new Dynamic();
+        private Independent _dynTheme = new Independent();
+        private Independent _dynSize = new Independent();
+        private Independent _dynText = new Independent();
+        private Independent _dynTextAlign = new Independent();
 
         private class RendererContext : HeaderRenderer.Context
         {
@@ -109,8 +107,8 @@ namespace UpdateControls.Themes.Forms
 
         public Header()
         {
-            _depText = new Dependent(new UpdateProcedure(UpdateText));
-            _depEnabled = new Dependent(new UpdateProcedure(UpdateEnabled));
+            _depText = new Dependent(UpdateText);
+            _depEnabled = new Dependent(UpdateEnabled);
             _depDisplayFocus = new Dependent(UpdateDisplayFocus);
             _renderer = new HeaderRenderer(new RendererContext(this));
             InitializeComponent();
@@ -140,16 +138,13 @@ namespace UpdateControls.Themes.Forms
 
         private void UpdateText()
         {
-            using (_updateController.BeginUpdating())
+            // Get the text from the event.
+            if (GetText != null)
+                base.Text = GetText();
+            else // Or the property if there is no event.
             {
-                // Get the text from the event.
-                if (GetText != null)
-                    base.Text = GetText();
-                else // Or the property if there is no event.
-                {
-                    _dynText.OnGet();
-                    base.Text = _text;
-                }
+                _dynText.OnGet();
+                base.Text = _text;
             }
         }
 
@@ -208,7 +203,7 @@ namespace UpdateControls.Themes.Forms
         {
             get
             {
-                if (_updateController.NotUpdating)
+                if (_depText.IsNotUpdating)
                     _depText.OnGet();
                 return base.Text;
             }

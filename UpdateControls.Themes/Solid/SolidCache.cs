@@ -45,9 +45,9 @@ namespace UpdateControls.Themes.Solid
             _shape = shape;
             _getSize = getSize;
             _getDescriptor = getDescriptor;
-            _depSize = new Dependent(new UpdateProcedure(UpdateSize));
-            _depDescriptor = new Dependent(new UpdateProcedure(UpdateDescriptor));
-            _depImage = new Dependent(new UpdateProcedure(UpdateImage));
+            _depSize = new Dependent(UpdateSize);
+            _depDescriptor = new Dependent(UpdateDescriptor);
+            _depImage = new Dependent(UpdateImage);
         }
 
         public Size Size

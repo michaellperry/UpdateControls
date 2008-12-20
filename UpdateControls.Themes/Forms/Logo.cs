@@ -28,9 +28,9 @@ namespace UpdateControls.Themes.Forms
 
         private Theme _theme = null;
         private Color _helixColor = DefaultHelixColor;
-        private Dynamic _dynTheme = new Dynamic();
-        private Dynamic _dynHelixColor = new Dynamic();
-        private Dynamic _dynSize = new Dynamic();
+        private Independent _dynTheme = new Independent();
+        private Independent _dynHelixColor = new Independent();
+        private Independent _dynSize = new Independent();
 
         private class LogoRendererContext : LogoRenderer.Context
         {

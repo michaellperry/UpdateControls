@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace UpdateControls.Util
+namespace UpdateControls.Forms.Util
 {
 	/// <summary>
 	/// A delegate for mapping source to target objects.

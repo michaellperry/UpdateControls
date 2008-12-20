@@ -93,7 +93,7 @@ namespace UpdateControls.Forms
         private IDictionary<Control, string> _getErrorMethod = new Dictionary<Control, string>();
 
         // Turn validation on and off.
-        private Dynamic _dynValidation = new Dynamic();
+        private Independent _dynValidation = new Independent();
         private bool _validation = true;
 
         // Visible sentry to update error text.
@@ -104,14 +104,14 @@ namespace UpdateControls.Forms
 
         public UpdateErrorProvider()
         {
-            _visErrorText = new Dependent(new UpdateProcedure(UpdateError));
+            _visErrorText = new Dependent(UpdateError);
             InitializeComponent();
             Application.Idle += new EventHandler(Application_Idle);
         }
 
         public UpdateErrorProvider(IContainer container)
         {
-            _visErrorText = new Dependent(new UpdateProcedure(UpdateError));
+            _visErrorText = new Dependent(UpdateError);
             container.Add(this);
 
             InitializeComponent();

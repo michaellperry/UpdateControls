@@ -83,11 +83,6 @@ namespace UpdateControls.Test
             this.theme1.ColorSelected = System.Drawing.Color.BlanchedAlmond;
             this.theme1.FontBody = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.theme1.FontHeader = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold);
-            this.theme1.SolidDisabled = ((UpdateControls.Themes.SolidDescriptorEditable)(resources.GetObject("theme1.SolidDisabled")));
-            this.theme1.SolidFocused = ((UpdateControls.Themes.SolidDescriptorEditable)(resources.GetObject("theme1.SolidFocused")));
-            this.theme1.SolidHover = ((UpdateControls.Themes.SolidDescriptorEditable)(resources.GetObject("theme1.SolidHover")));
-            this.theme1.SolidPressed = ((UpdateControls.Themes.SolidDescriptorEditable)(resources.GetObject("theme1.SolidPressed")));
-            this.theme1.SolidRegular = ((UpdateControls.Themes.SolidDescriptorEditable)(resources.GetObject("theme1.SolidRegular")));
             // 
             // topRadioButton
             // 

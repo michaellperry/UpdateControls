@@ -14,23 +14,23 @@ using System;
 namespace UpdateControls
 {
 	/// <summary>
-	/// A sentry that controls a dynamic field.
+	/// A sentry that controls an independent field.
 	/// </summary>
 	/// <threadsafety static="true" instance="true"/>
 	/// <remarks>
-	/// A dynamic field is one whose value can be changed externally at
-	/// any time. Create one Dynamic sentry for each dynamic field in
+	/// An independent field is one whose value can be changed externally at
+	/// any time. Create one Independent sentry for each independent field in
 	/// your object.
 	/// </remarks>
-	/// <example>A class using Dynamic sentries.
+	/// <example>A class using Independent sentries.
 	/// <code language="C">
 	///	public class Contact
 	///	{
 	///		private string _name = "";
 	///		private string _emailAddress = "";
 	///		
-	///		private Dynamic _dynName = new Dynamic();
-	///		private Dynamic _dynEmailAddress = new Dynamic();
+    ///		private Independent _indName = new Independent();
+    ///		private Independent _indEmailAddress = new Independet();
 	///
 	///		public Contact()
 	///		{
@@ -40,12 +40,12 @@ namespace UpdateControls
 	///		{
 	///			get
 	///			{
-	///				_dynName.OnGet();
+	///				_indName.OnGet();
 	///				return _name;
 	///			}
 	///			set
 	///			{
-	///				_dynName.OnSet();
+	///				_indName.OnSet();
 	///				_name = value;
 	///			}
 	///		}
@@ -54,12 +54,12 @@ namespace UpdateControls
 	///		{
 	///			get
 	///			{
-	///				_dynEmailAddress.OnGet();
+	///				_indEmailAddress.OnGet();
 	///				return _emailAddress;
 	///			}
 	///			set
 	///			{
-	///				_dynEmailAddress.OnSet();
+	///				_indEmailAddress.OnSet();
 	///				_emailAddress = value;
 	///			}
 	///		}
@@ -70,37 +70,37 @@ namespace UpdateControls
     ///		Private _name As String = ""
     ///		Private _emailAddress As String = ""
     ///
-    ///		Private _dynName As New Dynamic()
-    ///		Private _dynEmailAddress As New Dynamic()
+    ///		Private _indName As New Independent()
+    ///		Private _indEmailAddress As New Independent()
     ///
     ///		Public Sub New()
     ///		End Sub
     ///
     ///		Public Property Name() As String
     ///			Get
-    ///				_dynName.OnGet()
+    ///				_indName.OnGet()
     ///				Return _name
     ///			End Get
     ///			Set
-    ///				_dynName.OnSet()
+    ///				_indName.OnSet()
     ///				_name = value
     ///			End Set
     ///		End Property
     ///
     ///		Public Property EmailAddress() As String
     ///			Get
-    ///				_dynEmailAddress.OnGet()
+    ///				_indEmailAddress.OnGet()
     ///				Return _emailAddress
     ///			End Get
     ///			Set
-    ///				_dynEmailAddress.OnSet()
+    ///				_indEmailAddress.OnSet()
     ///				_emailAddress = value
     ///			End Set
     ///		End Property
     ///	End Class
     /// </code>
 	/// </example>
-	public class Dynamic
+	public class Independent
 	{
 		private Precedent _base = new Precedent();
 
@@ -110,13 +110,13 @@ namespace UpdateControls
 		/// </summary>
 		/// <remarks>
 		/// Any dependent fields that are currently updating will depend upon
-		/// this dynamic; when the dynamic changes, the dependent becomes
+		/// this field; when the field changes, the dependent becomes
 		/// out-of-date.
 		/// </remarks>
 		public void OnGet()
 		{
 			// Establish dependency between the current update
-			// and this attribute.
+			// and this field.
 			_base.RecordDependent();
 		}
 
@@ -125,12 +125,12 @@ namespace UpdateControls
 		/// sentry controls.
 		/// </summary>
 		/// <remarks>
-		/// Any dependent fields that depend upon this dynamic will become
+		/// Any dependent fields that depend upon this field will become
 		/// out-of-date.
 		/// </remarks>
 		public void OnSet()
 		{
-			// When a dynamic attribute canges,
+			// When an independent field canges,
 			// its dependents become out-of-date.
 			_base.MakeDependentsOutOfDate();
 		}
@@ -139,7 +139,7 @@ namespace UpdateControls
 		/// True if any other fields depend upon this one.
 		/// </summary>
 		/// <remarks>
-		/// If any dependent field has used this dynamic field while updating,
+		/// If any dependent field has used this independent field while updating,
 		/// then HasDependents is true. When that dependent becomes out-of-date,
 		/// however, it no longer depends upon this field.
 		/// <para/>
@@ -158,8 +158,11 @@ namespace UpdateControls
 		}
 
 		/// <summary>
+        /// Event fired when the first dependent references this field. This event only
+        /// fires when HasDependents goes from false to true. If the field already
+        /// has dependents, then this event does not fire.
 		/// </summary>
-		public event Notice GainDependent
+		public event Action GainDependent
 		{
 			add
 			{
@@ -172,8 +175,13 @@ namespace UpdateControls
 		}
 
 		/// <summary>
+        /// Event fired when the last dependent goes out-of-date. This event
+        /// only fires when HasDependents goes from true to false. If the field has
+        /// other dependents, then this event does not fire. If the dependent is
+        /// currently updating and it still depends upon this field, then the
+        /// GainDependent event will be fired immediately.
 		/// </summary>
-		public event Notice LooseDependent
+		public event Action LooseDependent
 		{
 			add
 			{

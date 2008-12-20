@@ -10,7 +10,7 @@
  **********************************************************************/
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace UpdateControls
 {
@@ -120,7 +120,7 @@ namespace UpdateControls
 	/// 		_network = network;
 	/// 		// Create a dependent sentry to control the collection.
 	/// 		_depLocatedDevices = new Dependent(
-	/// 			new UpdateProcedure(UpdateLocatedDevices) );
+	/// 			UpdateLocatedDevices );
 	/// 	}
 	/// 
 	/// 	// The collection is dependent, and therefore read-only.
@@ -152,7 +152,7 @@ namespace UpdateControls
 	public class RecycleBin<T> : IDisposable
         where T : IDisposable
 	{
-		private Hashtable _recyclableObjects = new Hashtable();
+		private List<T> _recyclableObjects = new List<T>();
 
 		/// <summary>
 		/// Creates an empty recycle bin.
@@ -167,28 +167,12 @@ namespace UpdateControls
 		}
 
 		/// <summary>
-		/// Creates a recycle bin containing recyclable objects.
-		/// </summary>
-		/// <param name="objects">A collection of objects to add to the bin.</param>
-		/// <remarks>
-		/// After the objects are added to the bin, the dependent collection
-		/// should be cleared. Then it can be repopulated by extraction from
-		/// the bin.
-		/// </remarks>
-		public RecycleBin( IEnumerable objects )
-		{
-			// Take all objects into the recycle bin.
-			foreach ( IDisposable recyclableObject in objects )
-				_recyclableObjects.Add( recyclableObject, recyclableObject );
-		}
-
-		/// <summary>
 		/// Add an object to the recycle bin.
 		/// </summary>
 		/// <param name="recyclableObject">The object to put in the recycle bin.</param>
 		public void AddObject( T recyclableObject )
 		{
-			_recyclableObjects.Add( recyclableObject, recyclableObject );
+			_recyclableObjects.Add( recyclableObject );
 		}
 
 		/// <summary>
@@ -201,8 +185,8 @@ namespace UpdateControls
 		public T Extract( T prototype )
 		{
 			// See if a matching object is already in the recycle bin.
-			object match = _recyclableObjects[ prototype ];
-			if ( match == null )
+			int index = _recyclableObjects.IndexOf(prototype);
+			if ( index == -1 )
 			{
 				// No, so use the prototype.
 				return prototype;
@@ -211,8 +195,9 @@ namespace UpdateControls
 			{
 				// Yes, so extract it.
                 prototype.Dispose();
-				_recyclableObjects.Remove( match );
-				return (T)match;
+				T match = _recyclableObjects[index];
+				_recyclableObjects.RemoveAt( index );
+				return match;
 			}
 		}
 
@@ -227,7 +212,7 @@ namespace UpdateControls
 		/// </remarks>
 		public void Dispose()
 		{
-			foreach ( IDisposable obj in _recyclableObjects.Keys )
+			foreach ( T obj in _recyclableObjects )
 			{
 				obj.Dispose();
 			}

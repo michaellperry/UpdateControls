@@ -51,7 +51,7 @@ namespace UpdateControls.Forms
 			InitializeComponent();
 
 			// Create all dependent sentries.
-			_depUpdate = new Dependent( new UpdateProcedure(DoUpdate) );
+			_depUpdate = new Dependent( DoUpdate );
 
 			// Register idle-time updates.
 			Application.Idle += new EventHandler(Application_Idle);
@@ -65,7 +65,7 @@ namespace UpdateControls.Forms
             InitializeComponent();
 
 			// Create all dependent sentries.
-			_depUpdate = new Dependent( new UpdateProcedure(DoUpdate) );
+			_depUpdate = new Dependent( DoUpdate );
 
 			// Register idle-time updates.
 			Application.Idle += new EventHandler(Application_Idle);

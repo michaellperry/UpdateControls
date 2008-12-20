@@ -38,18 +38,18 @@ namespace UpdateControls.Themes.Forms
         private Color _colorOdd = DefaultTheme.DefaultColorOdd;
         private Color _colorSelected = DefaultTheme.DefaultColorSelected;
 
-        private Dynamic _dynSolidDisabled = new Dynamic();
-        private Dynamic _dynSolidRegular = new Dynamic();
-        private Dynamic _dynSolidHover = new Dynamic();
-        private Dynamic _dynSolidFocused = new Dynamic();
-        private Dynamic _dynSolidPressed = new Dynamic();
-        private Dynamic _dynFontHeader = new Dynamic();
-        private Dynamic _dynFontBody = new Dynamic();
-        private Dynamic _dynColorHeader = new Dynamic();
-        private Dynamic _dynColorBody = new Dynamic();
-        private Dynamic _dynColorEven = new Dynamic();
-        private Dynamic _dynColorOdd = new Dynamic();
-        private Dynamic _dynColorSelected = new Dynamic();
+        private Independent _dynSolidDisabled = new Independent();
+        private Independent _dynSolidRegular = new Independent();
+        private Independent _dynSolidHover = new Independent();
+        private Independent _dynSolidFocused = new Independent();
+        private Independent _dynSolidPressed = new Independent();
+        private Independent _dynFontHeader = new Independent();
+        private Independent _dynFontBody = new Independent();
+        private Independent _dynColorHeader = new Independent();
+        private Independent _dynColorBody = new Independent();
+        private Independent _dynColorEven = new Independent();
+        private Independent _dynColorOdd = new Independent();
+        private Independent _dynColorSelected = new Independent();
 
         public Theme() : this(null)
         {

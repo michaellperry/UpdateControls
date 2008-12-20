@@ -92,8 +92,8 @@ namespace UpdateControls.Themes.Renderers
 
             private GetSize _getPageSize;
             private GetSize _getWindowSize;
-            private Dynamic _dynEnabled = new Dynamic();
-            private Dynamic _dynInfo = new Dynamic();
+            private Independent _dynEnabled = new Independent();
+            private Independent _dynInfo = new Independent();
 
             public ScrollInfo(GetSize getPageSize, GetSize getWindowSize)
             {
@@ -157,9 +157,9 @@ namespace UpdateControls.Themes.Renderers
             _horizontal = new ScrollInfo(GetHorizontalPageSize, GetHorizontalWindowSize);
             _vertical = new ScrollInfo(GetVerticalPageSize, GetVerticalWindowSize);
 
-            _depHorizontal = new Dependent(new UpdateProcedure(UpdateHorizontal));
-            _depVertical = new Dependent(new UpdateProcedure(UpdateVertical));
-            _depStyle = new Dependent(new UpdateProcedure(UpdateStyle));
+            _depHorizontal = new Dependent(UpdateHorizontal);
+            _depVertical = new Dependent(UpdateVertical);
+            _depStyle = new Dependent(UpdateStyle);
         }
 
         protected override void WndProc(ref Message m)

@@ -48,7 +48,7 @@ namespace UpdateControls.Forms
 			private Dependent _depNodes;
 			private Dependent _depRecursive;
 
-			private Dynamic _dynWasExpanded = new Dynamic();
+			private Independent _dynWasExpanded = new Independent();
             private bool _wasExpanded = false;
 
 			private int _updating = 0;
@@ -57,10 +57,10 @@ namespace UpdateControls.Forms
 			{
 				base.Tag = tag;
 				_itemDelegates = itemDelegates;
-				_depText = new Dependent( new UpdateProcedure(UpdateText) );
-				_depImageIndex = new Dependent( new UpdateProcedure(UpdateImageIndex) );
-				_depNodes = new Dependent( new UpdateProcedure(UpdateNodes) );
-				_depRecursive = new Dependent( new UpdateProcedure(UpdateRecursive) );
+				_depText = new Dependent( UpdateText );
+				_depImageIndex = new Dependent( UpdateImageIndex );
+				_depNodes = new Dependent( UpdateNodes );
+				_depRecursive = new Dependent( UpdateRecursive );
 			}
 
 			public void Dispose()
@@ -145,8 +145,11 @@ namespace UpdateControls.Forms
                 {
                     // Recycle the collection of items.
                     ArrayList newItems = new ArrayList(base.Nodes.Count);
-                    using (RecycleBin<DependentTreeNode> recycleBin = new RecycleBin<DependentTreeNode>(base.Nodes))
+                    using (var recycleBin = new RecycleBin<DependentTreeNode>())
                     {
+                        foreach (DependentTreeNode node in base.Nodes)
+                            recycleBin.AddObject(node);
+
                         // Extract each item from the recycle bin.
                         foreach (object item in _itemDelegates.GetSubItems(base.Tag))
                         {
@@ -279,7 +282,7 @@ namespace UpdateControls.Forms
 		private Dependent _depRecursive;
 		private Dependent _depSelectedNode;
 
-		private Dynamic _dynSelectedNode = new Dynamic();
+		private Independent _dynSelectedNode = new Independent();
 
 		private int _updating = 0;
 
@@ -291,10 +294,10 @@ namespace UpdateControls.Forms
 		public UpdateTreeView()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
-			_depNodes = new Dependent( new UpdateProcedure(UpdateNodes) );
-			_depRecursive = new Dependent( new UpdateProcedure(UpdateRecursive) );
-			_depSelectedNode = new Dependent( new UpdateProcedure(UpdateSelectedNode) );
+			_depEnabled = new Dependent( UpdateEnabled );
+			_depNodes = new Dependent( UpdateNodes );
+			_depRecursive = new Dependent( UpdateRecursive );
+			_depSelectedNode = new Dependent( UpdateSelectedNode );
 		}
 
 		/// <summary>
@@ -380,8 +383,11 @@ namespace UpdateControls.Forms
 				{
 					// Recycle the collection of items.
 					ArrayList newItems = new ArrayList( base.Nodes.Count );
-					using ( RecycleBin<DependentTreeNode> recycleBin = new RecycleBin<DependentTreeNode>( base.Nodes ) )
+					using ( var recycleBin = new RecycleBin<DependentTreeNode>() )
 					{
+                        foreach (DependentTreeNode node in base.Nodes)
+                            recycleBin.AddObject(node);
+
 						// Extract each item from the recycle bin.
 						foreach ( object item in GetItems() )
 						{

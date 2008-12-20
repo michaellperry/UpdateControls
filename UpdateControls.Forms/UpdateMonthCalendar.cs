@@ -77,7 +77,7 @@ namespace UpdateControls.Forms
 		private Dependent _depMonthlyBoldedDates;
 		private Dependent _depBoldedDates;
 
-		private Dynamic _dynSelection = new Dynamic();
+		private Independent _dynSelection = new Independent();
 
 		private int _updating = 0;
 
@@ -87,11 +87,11 @@ namespace UpdateControls.Forms
 		public UpdateMonthCalendar()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
-			_depSelection = new Dependent( new UpdateProcedure(UpdateSelection) );
-			_depAnnuallyBoldedDates = new Dependent( new UpdateProcedure(UpdateAnnuallyBoldedDates) );
-			_depMonthlyBoldedDates = new Dependent( new UpdateProcedure(UpdateMonthlyBoldedDates) );
-			_depBoldedDates = new Dependent( new UpdateProcedure(UpdateBoldedDates) );
+			_depEnabled = new Dependent( UpdateEnabled );
+			_depSelection = new Dependent( UpdateSelection );
+			_depAnnuallyBoldedDates = new Dependent( UpdateAnnuallyBoldedDates );
+			_depMonthlyBoldedDates = new Dependent( UpdateMonthlyBoldedDates );
+			_depBoldedDates = new Dependent( UpdateBoldedDates );
 		}
 
 		private void UpdateEnabled()

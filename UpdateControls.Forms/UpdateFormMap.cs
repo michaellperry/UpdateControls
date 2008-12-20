@@ -41,7 +41,7 @@ namespace UpdateControls.Forms
 				_tag = tag;
 				_form = form;
 				_getObjectExists = getObjectExists;
-				_depExists = new Dependent( new UpdateProcedure(UpdateExists) );
+				_depExists = new Dependent( UpdateExists );
 
 				// Clean up when the form is closed.
 				form.Closed += new EventHandler(form_Closed);
@@ -100,7 +100,7 @@ namespace UpdateControls.Forms
 		private Hashtable _formTable = new Hashtable();
 
 		private Dependent _depForms;
-		private Dynamic _dynFormTable = new Dynamic();
+		private Independent _dynFormTable = new Independent();
 
 		/// <summary>
 		/// Creates a new dependent form map inside a container.
@@ -112,7 +112,7 @@ namespace UpdateControls.Forms
 			InitializeComponent();
 
 			// Create all dependent sentries.
-			_depForms = new Dependent( new UpdateProcedure(UpdateForms) );
+			_depForms = new Dependent( UpdateForms );
 
 			// Register idle-time updates.
 			Application.Idle += new EventHandler(Application_Idle);
@@ -126,7 +126,7 @@ namespace UpdateControls.Forms
 			InitializeComponent();
 
 			// Create all dependent sentries.
-			_depForms = new Dependent( new UpdateProcedure(UpdateForms) );
+			_depForms = new Dependent( UpdateForms );
 
 			// Register idle-time updates.
 			Application.Idle += new EventHandler(Application_Idle);

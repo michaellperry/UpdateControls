@@ -28,9 +28,9 @@ namespace UpdateControls.Themes.Solid
         private SolidCache _tabCache;
         private SolidCache _ellipseCache;
 
-        private Dynamic _dynSize = new Dynamic();
-        private Dynamic _dynDescriptor = new Dynamic();
-        private Dynamic _dynSelectedPreview = new Dynamic();
+        private Independent _dynSize = new Independent();
+        private Independent _dynDescriptor = new Independent();
+        private Independent _dynSelectedPreview = new Independent();
         private Dependent _depTileImage;
         private Dependent _depTabImage;
         private Dependent _depEllipseImage;

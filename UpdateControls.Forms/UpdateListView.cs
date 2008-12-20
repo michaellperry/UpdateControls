@@ -16,6 +16,7 @@ using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UpdateControls.Forms
 {
@@ -209,8 +210,8 @@ namespace UpdateControls.Forms
 			private Dependent _depImageIndex;
 			private Dependent _depSubItems;
 
-			private Dynamic _dynSelected = new Dynamic();
-			private Dynamic _dynChecked = new Dynamic();
+			private Independent _dynSelected = new Independent();
+			private Independent _dynChecked = new Independent();
 
 			private bool _selected = false;
 			private bool _checked = false;
@@ -878,13 +879,11 @@ namespace UpdateControls.Forms
             if (GetGroups != null)
             {
                 // Recycle the groups.
-                using (RecycleBin<DependentListViewGroup> bin = new RecycleBin<DependentListViewGroup>(_groups))
+                using (var bin = _groups.Recycle())
                 {
-                    _groups.Clear();
-                    foreach (object groupTag in GetGroups())
-                    {
-                        _groups.Add(bin.Extract(new DependentListViewGroup(groupTag, _groupDelegates, this)));
-                    }
+                    _groups.AddRange(
+                        from object g in GetGroups()
+                        select bin.Extract(new DependentListViewGroup(g, _groupDelegates, this)));
                 }
 
                 // Organize the list view groups.
@@ -915,8 +914,11 @@ namespace UpdateControls.Forms
 				{
 					// Recycle the collection of items.
 					ArrayList newItems = new ArrayList( base.Items.Count );
-                    using (RecycleBin<DependentListViewItem> recycleBin = new RecycleBin<DependentListViewItem>(base.Items))
+                    using (var recycleBin = new RecycleBin<DependentListViewItem>())
 					{
+                        foreach (DependentListViewItem item in base.Items)
+                            recycleBin.AddObject(item);
+
 						// Extract each item from the recycle bin.
 						foreach ( object item in GetItems() )
 						{
@@ -1137,9 +1139,9 @@ namespace UpdateControls.Forms
 			get
 			{
 				_depItems.OnGet();
-				return new UpdateControls.Util.ReadOnlyListDecorator(
+				return new UpdateControls.Forms.Util.ReadOnlyListDecorator(
 					base.Items,
-					new UpdateControls.Util.MapDelegate(Map) );
+					new UpdateControls.Forms.Util.MapDelegate(Map));
 			}
 		}
 
@@ -1199,9 +1201,9 @@ namespace UpdateControls.Forms
 			get
 			{
 				_depItemSelected.OnGet();
-				return new UpdateControls.Util.ReadOnlyListDecorator(
+				return new UpdateControls.Forms.Util.ReadOnlyListDecorator(
 					base.SelectedItems,
-					new UpdateControls.Util.MapDelegate(Map) );
+					new UpdateControls.Forms.Util.MapDelegate(Map));
 			}
 		}
 
@@ -1227,9 +1229,9 @@ namespace UpdateControls.Forms
 			get
 			{
 				_depItemChecked.OnGet();
-				return new UpdateControls.Util.ReadOnlyListDecorator(
+				return new UpdateControls.Forms.Util.ReadOnlyListDecorator(
 					base.CheckedItems,
-					new UpdateControls.Util.MapDelegate(Map) );
+					new UpdateControls.Forms.Util.MapDelegate(Map));
 			}
 		}
 

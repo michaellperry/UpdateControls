@@ -48,7 +48,7 @@ namespace UpdateControls.Forms
 
 		private Dependent _depEnabled;
 		private Dependent _depValue;
-		private Dynamic _dynValue = new Dynamic();
+		private Independent _dynValue = new Independent();
 
 		private int _updating = 0;
 
@@ -58,8 +58,8 @@ namespace UpdateControls.Forms
 		public UpdateDateTimePicker()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( new UpdateProcedure(UpdateEnabled) );
-			_depValue = new Dependent( new UpdateProcedure(UpdateValue) );
+			_depEnabled = new Dependent( UpdateEnabled );
+			_depValue = new Dependent( UpdateValue );
 		}
 
 		private void UpdateEnabled()
