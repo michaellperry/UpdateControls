@@ -14,13 +14,13 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
+using System.Collections;
 
 namespace UpdateControls.XAML
 {
     [MarkupExtensionReturnType(typeof(object))]
     public class UpdateExtension : MarkupExtension
     {
-        private ValueDependencyObject _valueObject;
         private string _path;
         private BindingMode _mode;
         private UpdateSourceTrigger _updateSourceTrigger;
@@ -59,8 +59,16 @@ namespace UpdateControls.XAML
                 FrameworkElement targetObject = target.TargetObject as FrameworkElement;
                 if (targetObject != null && targetProperty != null)
                 {
-                    _valueObject = new ValueDependencyObject(_path, targetObject, targetProperty);
-                    return _valueObject.ProvideValue(serviceProvider);
+                    if (typeof(IEnumerable).Equals(targetProperty.PropertyType))
+                    {
+                        ValueObservableCollection collection = new ValueObservableCollection(_path, targetObject, targetProperty);
+                        return collection.ProvideValue(serviceProvider);
+                    }
+                    else
+                    {
+                        ValueDependencyObject valueObject = new ValueDependencyObject(_path, targetObject, targetProperty);
+                        return valueObject.ProvideValue(serviceProvider);
+                    }
                 }
             }
 
