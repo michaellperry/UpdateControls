@@ -20,35 +20,34 @@ namespace UpdateControls.XAML
     [MarkupExtensionReturnType(typeof(object))]
     public class UpdateExtension : MarkupExtension
     {
-        private FrameworkElement _targetObject;
-        private DependencyProperty _targetProperty;
-
         private ValueDependencyObject _valueObject;
-        private Binding _binding = new Binding();
+        private string _path;
+        private BindingMode _mode;
+        private UpdateSourceTrigger _updateSourceTrigger;
 
         public UpdateExtension(string path)
         {
-            _valueObject = new ValueDependencyObject(path);
+            _path = path;
         }
 
 		public string Path
 		{
-			get { return _valueObject.Path; }
-			set { _valueObject.Path = value; }
+			get { return _path; }
+			set { _path = value; }
 		}
 
         [DefaultValue(BindingMode.TwoWay)]
         public BindingMode Mode
         {
-            get { return _binding.Mode; }
-            set { _binding.Mode = value; }
+            get { return _mode; }
+            set { _mode = value; }
         }
 
 		[DefaultValue(UpdateSourceTrigger.Default)]
 		public UpdateSourceTrigger UpdateSourceTrigger
 		{
-			get { return _binding.UpdateSourceTrigger; }
-            set { _binding.UpdateSourceTrigger = value; }
+            get { return _updateSourceTrigger; }
+            set { _updateSourceTrigger = value; }
 		}
 
         public override object ProvideValue(IServiceProvider serviceProvider)
@@ -56,25 +55,16 @@ namespace UpdateControls.XAML
             IProvideValueTarget target = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
             if (target != null)
             {
-                _targetProperty = target.TargetProperty as DependencyProperty;
-                _targetObject = target.TargetObject as FrameworkElement;
-                if (_targetObject != null && _targetProperty != null)
+                DependencyProperty targetProperty = target.TargetProperty as DependencyProperty;
+                FrameworkElement targetObject = target.TargetObject as FrameworkElement;
+                if (targetObject != null && targetProperty != null)
                 {
-                    // Register for notification when the data context changes.
-                    _targetObject.DataContextChanged += DataContextChanged;
-                    _valueObject.DataContext = _targetObject.DataContext;
+                    _valueObject = new ValueDependencyObject(_path, targetObject, targetProperty);
+                    return _valueObject.ProvideValue(serviceProvider);
                 }
             }
 
-            // Bind to the value dependency property.
-            _binding.Source = _valueObject;
-            _binding.Path = new PropertyPath("Value");
-            return _binding.ProvideValue(serviceProvider);
-        }
-
-        private void DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            _valueObject.DataContext = _targetObject.DataContext;
+            return this;
         }
     }
 }

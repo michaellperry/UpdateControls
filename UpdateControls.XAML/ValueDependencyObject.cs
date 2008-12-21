@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Data;
 
 namespace UpdateControls.XAML
 {
@@ -19,6 +20,11 @@ namespace UpdateControls.XAML
 
         private string _path;
         private object _dataContext;
+
+        private FrameworkElement _targetObject;
+        private DependencyProperty _targetProperty;
+        private Binding _binding = new Binding();
+
         private Independent _indDataContext = new Independent();
         private Dependent _depValue;
 
@@ -26,13 +32,15 @@ namespace UpdateControls.XAML
         private MethodInfo _setMethod;
         private Dependent _depMethodInfo;
 
-        public ValueDependencyObject(string path)
+        public ValueDependencyObject(string path, FrameworkElement targetObject, DependencyProperty targetProperty)
         {
             _path = path;
+            _targetObject = targetObject;
+            _targetProperty = targetProperty;
+
             _depMethodInfo = new Dependent(UpdateMethodInfo);
             _depValue = new Dependent(UpdateValue);
             _depValue.Invalidated += ValueInvalidated;
-            _depValue.OnGet();
         }
 
         public string Path
@@ -41,10 +49,35 @@ namespace UpdateControls.XAML
             set { _path = value; }
         }
 
-        public object DataContext
+        public BindingMode Mode
         {
-            get { _indDataContext.OnGet(); return _dataContext; }
-            set { _indDataContext.OnSet(); _dataContext = value; }
+            set { _binding.Mode = value; }
+        }
+
+        public UpdateSourceTrigger UpdateSourceTrigger
+        {
+            set { _binding.UpdateSourceTrigger = value; }
+        }
+
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            // Register for notification when the data context changes.
+            _targetObject.DataContextChanged += DataContextChanged;
+            _dataContext = _targetObject.DataContext;
+
+            // Initialize the property value.
+            _depValue.OnGet();
+
+            // Bind to the value dependency property.
+            _binding.Source = this;
+            _binding.Path = new PropertyPath("Value");
+            return _binding.ProvideValue(serviceProvider);
+        }
+
+        private void DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            _indDataContext.OnSet();
+            _dataContext = _targetObject.DataContext;
         }
 
         private void UpdateMethodInfo()
