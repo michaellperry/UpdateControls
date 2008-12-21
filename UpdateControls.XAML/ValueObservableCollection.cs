@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Collections;
 using System.Windows.Threading;
 using System.Threading;
+using UpdateControls;
 
 namespace UpdateControls.XAML
 {
@@ -109,14 +110,34 @@ namespace UpdateControls.XAML
             if (_getMethod != null)
             {
                 IEnumerable value = (IEnumerable)_getMethod.Invoke(_dataContext, null);
-                _collection.Clear();
-                if (value != null)
+
+                // Create a list of new items.
+                List<ObservableCollectionItem> items = new List<ObservableCollectionItem>();
+
+                // Dump all previous items into a recycle bin.
+                using (RecycleBin<ObservableCollectionItem> bin = new RecycleBin<ObservableCollectionItem>())
                 {
-                    // TODO: Object recycling.
-                    foreach (object obj in value)
+                    foreach (object oldItem in _collection)
+                        bin.AddObject(new ObservableCollectionItem(_collection, oldItem, true));
+
+                    // Add new objects to the list.
+                    if (value != null)
                     {
-                        _collection.Add(obj);
+                        foreach (object obj in value)
+                        {
+                            items.Add(bin.Extract(new ObservableCollectionItem(_collection, obj, false)));
+                        }
                     }
+
+                    // All deleted items are removed from the collection at this point.
+                }
+
+                // Ensure that all items are added to the list.
+                int index = 0;
+                foreach (ObservableCollectionItem item in items)
+                {
+                    item.EnsureInCollection(index);
+                    ++index;
                 }
             }
         }
