@@ -2,6 +2,8 @@ using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UpdateControls.XAML
 {
@@ -18,7 +20,7 @@ namespace UpdateControls.XAML
             ((ValueDependencyObject)obj).OnValueChanged();
         }
 
-        private string _path;
+        private List<PathSegment> _segments;
         private object _dataContext;
 
         private FrameworkElement _targetObject;
@@ -28,13 +30,15 @@ namespace UpdateControls.XAML
         private Independent _indDataContext = new Independent();
         private Dependent _depValue;
 
-        private MethodInfo _getMethod;
-        private MethodInfo _setMethod;
         private Dependent _depMethodInfo;
+		private Type _previousDataContextType = null;
 
         public ValueDependencyObject(string path, FrameworkElement targetObject, DependencyProperty targetProperty)
         {
-            _path = path;
+			// Parse the dotted identifier syntax.
+			_segments = (from identifier in path.Split('.')
+				select new PathSegment(identifier)).ToList();
+
             _targetObject = targetObject;
             _targetProperty = targetProperty;
 
@@ -76,54 +80,74 @@ namespace UpdateControls.XAML
 
         private void UpdateMethodInfo()
         {
-            _getMethod = null;
-            _setMethod = null;
-
             _indDataContext.OnGet();
             if (_dataContext != null)
             {
-                // Find the property identified by path.
-                Type contextType = _dataContext.GetType();
-                MemberInfo[] member = contextType.GetMember(_path);
-                if (member != null && member.Length == 1)
-                {
-                    PropertyInfo propertyInfo = member[0] as PropertyInfo;
-                    if (propertyInfo != null && propertyInfo.CanRead)
-                    {
-                        _getMethod = propertyInfo.GetGetMethod();
-                        _setMethod = propertyInfo.GetSetMethod();
-                    }
-                }
+                // Get the method info of each segment in the path.
+				Type contextType = _dataContext.GetType();
+				if (!Object.Equals(contextType, _previousDataContextType))
+				{
+					_previousDataContextType = contextType;
+					foreach (PathSegment segment in _segments)
+						contextType = segment.CacheMethodInfo(contextType);
+				}
             }
         }
 
         private void UpdateValue()
         {
             _depMethodInfo.OnGet();
-            if (_getMethod != null)
-            {
-                object value = _getMethod.Invoke(_dataContext, null);
-                if (value == null)
-                    value = DependencyProperty.UnsetValue;
-                SetValue(_valueProperty, value);
-            }
-        }
+			object value = _dataContext;
+			foreach (PathSegment segment in _segments)
+			{
+				// Get the value of each property in the chain.
+				if (segment.CanGet)
+					value = segment.Get(value);
+				else
+					return;
+			}
+
+			// If we made it to the end, put the property value into the bound source.
+			if (value == null)
+				value = DependencyProperty.UnsetValue;
+			SetValue(_valueProperty, value);
+		}
 
         private void ValueInvalidated()
         {
             Dispatcher.BeginInvoke(new Action(() => _depValue.OnGet()));
         }
 
-        private void OnValueChanged()
-        {
-            if (_depValue.IsNotUpdating)
-            {
-                _depMethodInfo.OnGet();
-                if (_setMethod != null)
-                {
-                    _setMethod.Invoke(_dataContext, new object[] { GetValue(_valueProperty) });
-                }
-            }
-        }
+		private void OnValueChanged()
+		{
+			if (_depValue.IsNotUpdating)
+			{
+				_depMethodInfo.OnGet();
+				object value = _dataContext;
+				int count = _segments.Count;
+				foreach (PathSegment segment in _segments)
+				{
+					// Short circuit path traversal on null.
+					if (value == null)
+						return;
+
+					--count;
+					if (count == 0)
+					{
+						// When we reach the final segment, set the property value.
+						if (segment.CanSet)
+							segment.Set(value, GetValue(_valueProperty));
+					}
+					else
+					{
+						// Follow each leading segment down the property chain.
+						if (segment.CanGet)
+							value = segment.Get(value);
+						else
+							return;
+					}
+				}
+			}
+		}
     }
 }

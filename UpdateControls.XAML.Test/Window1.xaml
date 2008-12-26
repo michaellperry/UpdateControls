@@ -15,17 +15,17 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="First Name:"/>
         <UserControl Grid.Row="0" Grid.Column="1" Padding="3">
-            <TextBox Text="{u:Update FirstName}"/>
+            <TextBox Text="{u:Update Person.FirstName}"/>
         </UserControl>
         <Label Grid.Row="1" Grid.Column="0" Content="Last Name:"/>
         <UserControl Grid.Row="1" Grid.Column="1" Padding="3">
-            <TextBox Text="{u:Update LastName}"/>
+            <TextBox Text="{u:Update Person.LastName}"/>
         </UserControl>
         <Label Grid.Row="2" Grid.Column="0" Content="Display As:"/>
         <UserControl Grid.Row="2" Grid.Column="1" Padding="3">
-            <ComboBox SelectedIndex="{u:Update DisplayStrategy}">
-                <ComboBoxItem Content="{u:Update FirstLast}" />
-                <ComboBoxItem Content="{u:Update LastFirst}"/>
+            <ComboBox SelectedIndex="{u:Update Person.DisplayStrategy}">
+                <ComboBoxItem Content="{u:Update Person.FirstLast}" />
+                <ComboBoxItem Content="{u:Update Person.LastFirst}"/>
             </ComboBox>
         </UserControl>
     </Grid>

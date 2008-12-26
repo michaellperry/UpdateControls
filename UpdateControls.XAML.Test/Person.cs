@@ -37,5 +37,20 @@ namespace UpdateControls.XAML.Test
         }
         // End generated code --------------------------------
         #endregion
-    }
+
+		public string FirstLast
+		{
+			get { return FirstName + " " + LastName; }
+		}
+
+		public string LastFirst
+		{
+			get { return LastName + ", " + FirstName; }
+		}
+
+		public string Display
+		{
+			get { return DisplayStrategy == 0 ? FirstLast : LastFirst; }
+		}
+	}
 }

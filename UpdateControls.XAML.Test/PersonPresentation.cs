@@ -15,37 +15,14 @@ namespace UpdateControls.XAML.Test
 			_person = person;
         }
 
-        public string FirstName
-        {
-            get { return _person.FirstName; }
-            set { _person.FirstName = value; }
-        }
-
-        public string LastName
-        {
-            get { return _person.LastName; }
-            set { _person.LastName = value; }
-        }
-
-        public int DisplayStrategy
-        {
-            get { return _person.DisplayStrategy; }
-            set { _person.DisplayStrategy = value; }
-        }
-
-        public string FirstLast
-        {
-            get { return _person.FirstName + " " + _person.LastName; }
-        }
-
-        public string LastFirst
-        {
-            get { return _person.LastName + ", " + _person.FirstName; }
-        }
+		public Person Person
+		{
+			get { return _person; }
+		}
 
         public string Title
         {
-            get { return "Person - " + (DisplayStrategy == 0 ? FirstLast : LastFirst); }
+            get { return "Person - " + _person.Display; }
         }
     }
 }
