@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="FieldParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsingParserTest.cs" />

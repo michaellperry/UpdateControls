@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="Delegates.cs" />
     <Compile Include="GraphicsUtil\GraphicsUtil.cs" />
     <Compile Include="Inertia\GlideScroller.cs" />

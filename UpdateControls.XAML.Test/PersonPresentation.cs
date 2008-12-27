@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿/**********************************************************************
+ * 
+ * Update Controls .NET
+ * Copyright 2008 Mallard Software Designs
+ * Licensed under LGPL
+ * 
+ * http://updatecontrols.net
+ * http://www.codeplex.com/updatecontrols/
+ * 
+ **********************************************************************/
+
 
 namespace UpdateControls.XAML.Test
 {

@@ -1,9 +1,19 @@
+/**********************************************************************
+ * 
+ * Update Controls .NET
+ * Copyright 2008 Mallard Software Designs
+ * Licensed under LGPL
+ * 
+ * http://updatecontrols.net
+ * http://www.codeplex.com/updatecontrols/
+ * 
+ **********************************************************************/
+
 using System;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
+using System.Windows.Data;
 
 namespace UpdateControls.XAML
 {

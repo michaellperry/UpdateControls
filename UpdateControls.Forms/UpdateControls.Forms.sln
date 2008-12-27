@@ -23,6 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML.Test", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "..\UpdateControls.XAML\UpdateControls.XAML.csproj", "{E4496FFF-165F-4008-8766-4DD086F5D3EC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{B26D3BB9-C5C9-4EA8-8776-783029D46BD9}"
+	ProjectSection(SolutionItems) = preProject
+		..\Solution Files\CommonProperties.cs = ..\Solution Files\CommonProperties.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 12

@@ -72,6 +72,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="Person.cs" />
     <Compile Include="PersonPresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -10,11 +10,11 @@
  **********************************************************************/
 
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
-using System.Collections;
 
 namespace UpdateControls.XAML
 {

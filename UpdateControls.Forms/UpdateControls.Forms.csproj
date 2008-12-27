@@ -54,6 +54,9 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="Delegates.cs" />
     <Compile Include="UpdateButton.cs">
       <SubType>Component</SubType>

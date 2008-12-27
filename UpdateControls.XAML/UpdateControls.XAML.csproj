@@ -60,6 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="ObservableCollectionItem.cs" />
     <Compile Include="PathSegment.cs" />
     <Compile Include="UpdateExtension.cs" />
