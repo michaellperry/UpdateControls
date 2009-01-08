@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:u="clr-namespace:UpdateControls.XAML;assembly=UpdateControls.XAML"
     Title="{u:Update Title}" Height="300" Width="300">
-    <Grid>
+    <Grid DataContext="{u:Update Person}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -14,19 +14,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="First Name:"/>
-        <UserControl Grid.Row="0" Grid.Column="1" Padding="3">
-            <TextBox Text="{u:Update Person.FirstName}"/>
-        </UserControl>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{u:Update FirstName}" Margin="3"/>
         <Label Grid.Row="1" Grid.Column="0" Content="Last Name:"/>
-        <UserControl Grid.Row="1" Grid.Column="1" Padding="3">
-            <TextBox Text="{u:Update Person.LastName}"/>
-        </UserControl>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{u:Update LastName}" Margin="3"/>
         <Label Grid.Row="2" Grid.Column="0" Content="Display As:"/>
-        <UserControl Grid.Row="2" Grid.Column="1" Padding="3">
-            <ComboBox SelectedIndex="{u:Update Person.DisplayStrategy}">
-                <ComboBoxItem Content="{u:Update Person.FirstLast}" />
-                <ComboBoxItem Content="{u:Update Person.LastFirst}"/>
-            </ComboBox>
-        </UserControl>
+        <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="{u:Update DisplayStrategy}" Margin="3">
+            <ComboBoxItem Content="{u:Update FirstLast}" />
+            <ComboBoxItem Content="{u:Update LastFirst}"/>
+        </ComboBox>
     </Grid>
 </Window>

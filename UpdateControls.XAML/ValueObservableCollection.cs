@@ -34,7 +34,6 @@ namespace UpdateControls.XAML
         private object _dataContext;
 
         private FrameworkElement _targetObject;
-        private DependencyProperty _targetProperty;
         private Binding _binding = new Binding();
 
         private ObservableCollection<object> _collection = new ObservableCollection<object>();
@@ -44,11 +43,10 @@ namespace UpdateControls.XAML
         private MethodInfo _getMethod;
         private Dependent _depMethodInfo;
 
-        public ValueObservableCollection(string path, FrameworkElement targetObject, DependencyProperty targetProperty)
+        public ValueObservableCollection(string path, FrameworkElement targetObject)
         {
             _path = path;
             _targetObject = targetObject;
-            _targetProperty = targetProperty;
 
             _depMethodInfo = new Dependent(UpdateMethodInfo);
             _depValue = new Dependent(UpdateValue);

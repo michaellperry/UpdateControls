@@ -34,7 +34,6 @@ namespace UpdateControls.XAML
         private object _dataContext;
 
         private FrameworkElement _targetObject;
-        private DependencyProperty _targetProperty;
         private Binding _binding = new Binding();
 
         private Independent _indDataContext = new Independent();
@@ -43,14 +42,13 @@ namespace UpdateControls.XAML
         private Dependent _depMethodInfo;
 		private Type _previousDataContextType = null;
 
-        public ValueDependencyObject(string path, FrameworkElement targetObject, DependencyProperty targetProperty)
+        public ValueDependencyObject(string path, FrameworkElement targetObject)
         {
 			// Parse the dotted identifier syntax.
 			_segments = (from identifier in path.Split('.')
 				select new PathSegment(identifier)).ToList();
 
             _targetObject = targetObject;
-            _targetProperty = targetProperty;
 
             _depMethodInfo = new Dependent(UpdateMethodInfo);
             _depValue = new Dependent(UpdateValue);

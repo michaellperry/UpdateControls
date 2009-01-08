@@ -57,18 +57,27 @@ namespace UpdateControls.XAML
             {
                 DependencyProperty targetProperty = target.TargetProperty as DependencyProperty;
                 FrameworkElement targetObject = target.TargetObject as FrameworkElement;
-                if (targetObject != null && targetProperty != null)
+
+				// If I am bound to the DataContext property, then I have to operate within the context of the parent.
+				if (targetObject != null && targetProperty == FrameworkElement.DataContextProperty)
+				{
+					targetObject = targetObject.Parent as FrameworkElement;
+					if (targetObject == null)
+						return null;
+				}
+
+				if (targetObject != null && targetProperty != null)
                 {
-                    if (typeof(IEnumerable).Equals(targetProperty.PropertyType))
-                    {
-                        ValueObservableCollection collection = new ValueObservableCollection(_path, targetObject, targetProperty);
-                        return collection.ProvideValue(serviceProvider);
-                    }
-                    else
-                    {
-                        ValueDependencyObject valueObject = new ValueDependencyObject(_path, targetObject, targetProperty);
-                        return valueObject.ProvideValue(serviceProvider);
-                    }
+					if (typeof(IEnumerable).Equals(targetProperty.PropertyType))
+					{
+						ValueObservableCollection collection = new ValueObservableCollection(_path, targetObject);
+						return collection.ProvideValue(serviceProvider);
+					}
+					else
+					{
+						ValueDependencyObject valueObject = new ValueDependencyObject(_path, targetObject);
+						return valueObject.ProvideValue(serviceProvider);
+					}
                 }
             }
 
