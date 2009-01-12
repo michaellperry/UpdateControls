@@ -76,7 +76,9 @@
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
     <Compile Include="Person.cs" />
-    <Compile Include="PersonPresentation.cs" />
+    <Compile Include="PersonList.cs" />
+    <Compile Include="PersonListNavigation.cs" />
+    <Compile Include="PersonListPresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

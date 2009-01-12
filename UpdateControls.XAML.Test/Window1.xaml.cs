@@ -19,10 +19,25 @@ namespace UpdateControls.XAML.Test
 	/// </summary>
 	public partial class Window1 : Window
 	{
+        private PersonListPresentation _personListPresentation =
+            new PersonListPresentation(new PersonList(), new PersonListNavigation());
+
 		public Window1()
 		{
 			InitializeComponent();
-			DataContext = new PersonPresentation(new Person());
+            DataContext = _personListPresentation;
 		}
-	}
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Person newPerson = _personListPresentation.PersonList.NewPerson();
+            _personListPresentation.Navigation.SelectedPerson = newPerson;
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_personListPresentation.Navigation.SelectedPerson != null)
+                _personListPresentation.PersonList.DeletePerson(_personListPresentation.Navigation.SelectedPerson);
+        }
+    }
 }

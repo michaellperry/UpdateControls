@@ -2,25 +2,55 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:u="clr-namespace:UpdateControls.XAML;assembly=UpdateControls.XAML"
+    xmlns:local="clr-namespace:UpdateControls.XAML.Test"
     Title="{u:Update Title}" Height="300" Width="300">
-    <Grid DataContext="{u:Update Person}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="First Name:"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{u:Update FirstName}" Margin="3"/>
-        <Label Grid.Row="1" Grid.Column="0" Content="Last Name:"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{u:Update LastName}" Margin="3"/>
-        <Label Grid.Row="2" Grid.Column="0" Content="Display As:"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="{u:Update DisplayStrategy}" Margin="3">
-            <ComboBoxItem Content="{u:Update FirstLast}" />
-            <ComboBoxItem Content="{u:Update LastFirst}"/>
-        </ComboBox>
-    </Grid>
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel>
+        <ListBox ItemsSource="{u:Update PersonList.People}" SelectedItem="{u:Update Navigation.SelectedPerson}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <ListBoxItem Content="{u:Update Display}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Add" Click="AddButton_Click"/>
+            <Button Content="Delete" Click="DeleteButton_Click"/>
+        </StackPanel>
+
+        <Grid DataContext="{u:Update Navigation.SelectedPerson}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="First Name:"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{u:Update FirstName}"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Last Name:"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{u:Update LastName}"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Display As:"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="{u:Update DisplayStrategy}">
+                <ComboBoxItem Content="{u:Update FirstLast}" />
+                <ComboBoxItem Content="{u:Update LastFirst}"/>
+            </ComboBox>
+        </Grid>
+
+    </StackPanel>
 </Window>

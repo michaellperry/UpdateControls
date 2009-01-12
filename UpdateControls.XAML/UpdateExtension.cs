@@ -70,12 +70,12 @@ namespace UpdateControls.XAML
                 {
 					if (typeof(IEnumerable).Equals(targetProperty.PropertyType))
 					{
-						ValueObservableCollection collection = new ValueObservableCollection(_path, targetObject);
+                        ValueObservableCollection collection = new ValueObservableCollection(_path, targetObject, BindingMode.OneWay, _updateSourceTrigger);
 						return collection.ProvideValue(serviceProvider);
 					}
 					else
 					{
-						ValueDependencyObject valueObject = new ValueDependencyObject(_path, targetObject);
+                        ValueDependencyObject valueObject = new ValueDependencyObject(_path, targetObject, _mode, _updateSourceTrigger);
 						return valueObject.ProvideValue(serviceProvider);
 					}
                 }
