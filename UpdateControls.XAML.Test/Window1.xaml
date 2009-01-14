@@ -51,6 +51,10 @@
                 <ComboBoxItem Content="{u:Update LastFirst}"/>
             </ComboBox>
         </Grid>
+        
+        <StackPanel Orientation="Horizontal">
+            <Button Content="New Window" Click="NewWindow_Click" />
+        </StackPanel>
 
     </StackPanel>
 </Window>

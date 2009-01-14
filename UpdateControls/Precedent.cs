@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace UpdateControls
 {
@@ -24,7 +25,7 @@ namespace UpdateControls
 	/// </remarks>
 	internal class Precedent
 	{
-		private List<Dependent> _dependents = new List<Dependent>();
+		private List<WeakReference> _dependents = new List<WeakReference>();
 
 		public event Action GainDependent;
 		public event Action LooseDependent;
@@ -52,7 +53,7 @@ namespace UpdateControls
 					bool gain = false;
 					if ( _dependents.Count == 0 && GainDependent != null )
 						gain = true;
-					_dependents.Add( update );
+					_dependents.Add( new WeakReference(update) );
 					if ( gain )
 						GainDependent();
 				}
@@ -76,18 +77,24 @@ namespace UpdateControls
 			// When I make a dependent out-of-date, it will
 			// call RemoveDependent, thereby removing it from
 			// the list.
-			lock ( _dependents )
+			lock (_dependents)
 			{
-				while ( _dependents.Count > 0 )
-					((Dependent)_dependents[0]).MakeOutOfDate();
+				while (_dependents.Count > 0)
+				{
+					Dependent dependent = (Dependent)_dependents[0].Target;
+					if (dependent != null)
+						dependent.MakeOutOfDate();
+					else
+						_dependents.RemoveAt(0);
+				}
 			}
 		}
 
 		public void RemoveDependent( Dependent dependent )
 		{
 			int before = _dependents.Count;
-			_dependents.Remove( dependent );
-			Debug.Assert( _dependents.Count == before-1, "Dependent was not found in the collection." );
+			_dependents.RemoveAll(r => r.Target == dependent || !r.IsAlive);
+			Debug.Assert( _dependents.Count < before, "Dependent was not found in the collection." );
 			if ( _dependents.Count == 0 && LooseDependent != null )
 				LooseDependent();
 		}
