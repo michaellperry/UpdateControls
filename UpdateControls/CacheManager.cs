@@ -10,6 +10,8 @@
  **********************************************************************/
 
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace UpdateControls
 {
@@ -33,8 +35,8 @@ namespace UpdateControls
 			}
 		}
 
-		private List<Cache> _fresh = new List<Cache>();
-		private List<Cache> _stale = new List<Cache>();
+		private List<WeakReference> _fresh = new List<WeakReference>();
+		private List<WeakReference> _stale = new List<WeakReference>();
 
 		private CacheManager()
 		{
@@ -42,17 +44,21 @@ namespace UpdateControls
 
 		public void Age()
 		{
-			List<Cache> toUnload = null;
+			List<WeakReference> toUnload = null;
 			lock ( this )
 			{
 				// Age the fresh caches.
 				toUnload = _stale;
 				_stale = _fresh;
-				_fresh = new List<Cache>();
+				_fresh = new List<WeakReference>();
 			}
 			// Unload the stale caches.
-			foreach ( Cache cache in toUnload )
-				cache.Unload();
+			foreach (WeakReference reference in toUnload)
+			{
+				Cache cache = (Cache)reference.Target;
+				if (cache != null)
+					cache.Unload();
+			}
 		}
 
 		public void Retire( Cache cache )
@@ -60,7 +66,7 @@ namespace UpdateControls
 			lock ( this )
 			{
 				// Add the cache to the "fresh" MRU.
-				_fresh.Add( cache );
+				_fresh.Add( new WeakReference(cache) );
 			}
 		}
 
@@ -69,8 +75,8 @@ namespace UpdateControls
 			lock ( this )
 			{
 				// Remove the cache from the MRUs.
-				_fresh.Remove( cache );
-				_stale.Remove( cache );
+				_fresh.RemoveAll(r => r.Target == cache || !r.IsAlive);
+				_stale.RemoveAll(r => r.Target == cache || !r.IsAlive);
 			}
 		}
 	}

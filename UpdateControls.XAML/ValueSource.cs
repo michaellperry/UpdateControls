@@ -10,13 +10,13 @@ namespace UpdateControls.XAML
     class ValueSource
     {
         private List<PathSegment> _segments;
-        private FrameworkElement _targetObject;
+        private WeakReference _targetObject;
         private Action<object> _onUpdateValue;
         private Func<object> _onGetValue;
         private Binding _binding = new Binding();
 
-        private object _dataContext;
-        private object _sourceObject;
+		private WeakReference _dataContext = new WeakReference(null);
+		private WeakReference _sourceObject = new WeakReference(null);
 
         private Independent _indDataContext = new Independent();
         private Dependent _depSourceObject;
@@ -31,7 +31,7 @@ namespace UpdateControls.XAML
             _segments = (from identifier in path.Split('.')
                          select new PathSegment(identifier)).ToList();
 
-            _targetObject = targetObject;
+            _targetObject = new WeakReference(targetObject);
             _binding.Mode = mode;
             _binding.UpdateSourceTrigger = updateSourceTrigger;
             _onUpdateValue = onUpdateValue;
@@ -51,8 +51,12 @@ namespace UpdateControls.XAML
         public object ProvideValue(IServiceProvider serviceProvider, object source)
         {
             // Register for notification when the data context changes.
-            _targetObject.DataContextChanged += DataContextChanged;
-            _dataContext = _targetObject.DataContext;
+			FrameworkElement targetObject = (FrameworkElement)_targetObject.Target;
+			if (targetObject != null)
+			{
+				targetObject.DataContextChanged += DataContextChanged;
+				_dataContext.Target = targetObject.DataContext;
+			}
 
             // Initialize the property value.
             _depValue.OnGet();
@@ -65,28 +69,33 @@ namespace UpdateControls.XAML
 
         private void DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            _indDataContext.OnSet();
-            _dataContext = _targetObject.DataContext;
+			FrameworkElement targetObject = (FrameworkElement)_targetObject.Target;
+			if (targetObject != null)
+			{
+				_indDataContext.OnSet();
+				_dataContext.Target = targetObject.DataContext;
+			}
         }
 
         private void UpdateSourceObject()
         {
             _indDataContext.OnGet();
             // See if the data context is a DataSourceProvider.
-            DataSourceProvider dataSourceProvider = _dataContext as DataSourceProvider;
+            DataSourceProvider dataSourceProvider = _dataContext.Target as DataSourceProvider;
             if (dataSourceProvider != null)
-                _sourceObject = dataSourceProvider.Data;
+                _sourceObject.Target = dataSourceProvider.Data;
             else
-                _sourceObject = _dataContext;
+                _sourceObject.Target = _dataContext.Target;
         }
 
         private void UpdateMethodInfo()
         {
             _depSourceObject.OnGet();
-            if (_sourceObject != null)
+			object sourceObject = _sourceObject.Target;
+            if (sourceObject != null)
             {
                 // Get the method info of each segment in the path.
-                Type contextType = _sourceObject.GetType();
+                Type contextType = sourceObject.GetType();
                 if (!Object.Equals(contextType, _previousDataContextType))
                 {
                     _previousDataContextType = contextType;
@@ -99,7 +108,7 @@ namespace UpdateControls.XAML
         private void UpdateValue()
         {
             _depMethodInfo.OnGet();
-            object value = _sourceObject;
+            object value = _sourceObject.Target;
             foreach (PathSegment segment in _segments)
             {
                 if (value == null)
@@ -125,7 +134,7 @@ namespace UpdateControls.XAML
             if (_depValue.IsNotUpdating)
             {
                 _depMethodInfo.OnGet();
-                object context = _sourceObject;
+                object context = _sourceObject.Target;
                 int count = _segments.Count;
                 foreach (PathSegment segment in _segments)
                 {
