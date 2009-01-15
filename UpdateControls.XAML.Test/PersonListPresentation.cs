@@ -18,9 +18,9 @@ namespace UpdateControls.XAML.Test
 		private PersonList _personList;
         private PersonListNavigation _navigation;
 
-        public PersonListPresentation(PersonList person, PersonListNavigation navigation)
+        public PersonListPresentation(PersonList personList, PersonListNavigation navigation)
         {
-			_personList = person;
+			_personList = personList;
             _navigation = navigation;
         }
 

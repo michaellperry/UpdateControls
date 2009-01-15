@@ -47,7 +47,8 @@ namespace UpdateControls.XAML.Test
 
 		private void NewWindow_Click(object sender, RoutedEventArgs e)
 		{
-			new Window1(_personListPresentation).Show();
+			// Create a new window using the same person list but a new navigation model.
+			new Window1(new PersonListPresentation(_personListPresentation.PersonList, new PersonListNavigation())).Show();
 			System.GC.Collect();
 		}
     }
