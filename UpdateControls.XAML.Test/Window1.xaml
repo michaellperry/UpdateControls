@@ -31,26 +31,28 @@
             <Button Content="Delete" IsEnabled="{u:Update Navigation.IsPersonSelected}" Click="DeleteButton_Click"/>
         </StackPanel>
 
-        <Grid IsEnabled="{u:Update Navigation.IsPersonSelected}" DataContext="{u:Update Navigation.SelectedPerson}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Content="First Name:"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{u:Update FirstName}"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="Last Name:"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{u:Update LastName}"/>
-            <Label Grid.Row="2" Grid.Column="0" Content="Display As:"/>
-            <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="{u:Update DisplayStrategy}">
-                <ComboBoxItem Content="{u:Update FirstLast}" />
-                <ComboBoxItem Content="{u:Update LastFirst}"/>
-            </ComboBox>
-        </Grid>
+        <StackPanel IsEnabled="{u:Update Navigation.IsPersonSelected}">
+            <Grid DataContext="{u:Update Navigation.SelectedPerson}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="First Name:"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{u:Update FirstName}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Last Name:"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{u:Update LastName}"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Display As:"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="{u:Update DisplayStrategy}">
+                    <ComboBoxItem Content="{u:Update FirstLast}" />
+                    <ComboBoxItem Content="{u:Update LastFirst}"/>
+                </ComboBox>
+            </Grid>
+        </StackPanel>
         
         <StackPanel Orientation="Horizontal">
             <Button Content="New Window" Click="NewWindow_Click" />
