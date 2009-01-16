@@ -28,10 +28,10 @@
 
         <StackPanel Orientation="Horizontal">
             <Button Content="Add" Click="AddButton_Click"/>
-            <Button Content="Delete" Click="DeleteButton_Click"/>
+            <Button Content="Delete" IsEnabled="{u:Update Navigation.IsPersonSelected}" Click="DeleteButton_Click"/>
         </StackPanel>
 
-        <Grid DataContext="{u:Update Navigation.SelectedPerson}">
+        <Grid IsEnabled="{u:Update Navigation.IsPersonSelected}" DataContext="{u:Update Navigation.SelectedPerson}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

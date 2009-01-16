@@ -18,5 +18,10 @@ namespace UpdateControls.XAML.Test
         }
         // End generated code --------------------------------
         #endregion
+
+		public bool IsPersonSelected
+		{
+			get { return SelectedPerson != null; }
+		}
     }
 }
