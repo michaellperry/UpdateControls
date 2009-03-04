@@ -27,8 +27,8 @@
         </ListBox>
 
         <StackPanel Orientation="Horizontal">
-            <Button Content="Add" Click="AddButton_Click"/>
-            <Button Content="Delete" IsEnabled="{u:Update Navigation.IsPersonSelected}" Click="DeleteButton_Click"/>
+            <Button Content="Add" Command="{u:Update AddPerson}"/>
+            <Button Content="Delete" Command="{u:Update DeletePerson}"/>
         </StackPanel>
 
         <StackPanel IsEnabled="{u:Update Navigation.IsPersonSelected}">

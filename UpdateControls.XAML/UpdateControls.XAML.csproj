@@ -63,6 +63,7 @@
     <Compile Include="..\Solution Files\CommonProperties.cs">
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
+    <Compile Include="MakeCommand.cs" />
     <Compile Include="ObservableCollectionItem.cs" />
     <Compile Include="PathSegment.cs" />
     <Compile Include="UpdateExtension.cs" />

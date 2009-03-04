@@ -19,37 +19,24 @@ namespace UpdateControls.XAML.Test
 	/// </summary>
 	public partial class Window1 : Window
 	{
-        private PersonListPresentation _personListPresentation;
+        PersonList _personList;
 
-		public Window1() :
-			this(new PersonListPresentation(new PersonList(), new PersonListNavigation()))
-		{
-		}
-
-		public Window1(PersonListPresentation personListPresentation)
-		{
-			_personListPresentation = personListPresentation;
-			InitializeComponent();
-			DataContext = _personListPresentation;
-		}
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        // Create a new window with a new person list.
+        public Window1() : this(new PersonList())
         {
-            Person newPerson = _personListPresentation.PersonList.NewPerson();
-            _personListPresentation.Navigation.SelectedPerson = newPerson;
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        public Window1(PersonList personList)
         {
-            if (_personListPresentation.Navigation.SelectedPerson != null)
-                _personListPresentation.PersonList.DeletePerson(_personListPresentation.Navigation.SelectedPerson);
+            InitializeComponent();
+            _personList = personList;
+            DataContext = new PersonListPresentation(_personList, new PersonListNavigation());
         }
 
-		private void NewWindow_Click(object sender, RoutedEventArgs e)
-		{
-			// Create a new window using the same person list but a new navigation model.
-			new Window1(new PersonListPresentation(_personListPresentation.PersonList, new PersonListNavigation())).Show();
-			System.GC.Collect();
-		}
+        private void NewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a new window using the same person list.
+            new Window1(_personList).Show();
+        }
     }
 }

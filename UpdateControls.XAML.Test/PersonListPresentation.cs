@@ -9,7 +9,7 @@
  * 
  **********************************************************************/
 
-using System;
+using System.Windows.Input;
 
 namespace UpdateControls.XAML.Test
 {
@@ -42,6 +42,31 @@ namespace UpdateControls.XAML.Test
                 if (_navigation != null && _navigation.SelectedPerson != null)
                     personDisplay = _navigation.SelectedPerson.Display;
                 return "Person - " + personDisplay;
+            }
+        }
+
+        public ICommand AddPerson
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(() =>
+                    {
+                        Navigation.SelectedPerson = PersonList.NewPerson();
+                    });
+            }
+        }
+
+        public ICommand DeletePerson
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => Navigation.SelectedPerson != null)
+                    .Do(() =>
+                    {
+                        PersonList.DeletePerson(Navigation.SelectedPerson);
+                    });
             }
         }
     }
