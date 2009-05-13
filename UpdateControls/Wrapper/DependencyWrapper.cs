@@ -68,22 +68,5 @@ namespace UpdateControls.Wrapper
         {
             get { return _wrappedObject; }
         }
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-            if (obj == this)
-                return true;
-            if (!(obj is DependencyWrapper<ObjectType>))
-                return false;
-            DependencyWrapper<ObjectType> that = (DependencyWrapper<ObjectType>)obj;
-            return Object.Equals(this._wrappedObject, that._wrappedObject);
-        }
-
-        public override int GetHashCode()
-        {
-            return _wrappedObject.GetHashCode();
-        }
     }
 }
