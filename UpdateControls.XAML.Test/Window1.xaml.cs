@@ -30,7 +30,7 @@ namespace UpdateControls.XAML.Test
         {
             InitializeComponent();
             _personList = personList;
-            DataContext = new PersonListPresentation(_personList, new PersonListNavigation());
+            DataContext = ForView.Wrap(new PersonListPresentation(_personList, new PersonListNavigation()));
         }
 
         private void NewWindow_Click(object sender, RoutedEventArgs e)
