@@ -28,7 +28,7 @@ namespace UpdateControls
             return
                 wrappedObject == null
                     ? null
-                    : new DependencyWrapper<ObjectType>(wrappedObject);
+                    : new ObjectInstance<ObjectType>(wrappedObject);
         }
     }
 }

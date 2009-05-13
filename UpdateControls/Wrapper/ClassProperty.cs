@@ -11,10 +11,11 @@
 
 using System.Reflection;
 using System.Windows;
+using System;
 
 namespace UpdateControls.Wrapper
 {
-    class DependencyPropertyWrapper<ObjectType>
+    class DependencyPropertyWrapper<ObjectType> : IClassProperty
     {
         private PropertyInfo _propertyInfo;
         private DependencyProperty _dependencyProperty;
@@ -30,7 +31,7 @@ namespace UpdateControls.Wrapper
                 _dependencyProperty = DependencyProperty.Register(
                     _propertyInfo.Name,
                     _propertyInfo.PropertyType,
-                    typeof(DependencyWrapper<ObjectType>),
+                    typeof(ObjectInstance<ObjectType>),
                     new PropertyMetadata(OnPropertyChanged));
             }
             else
@@ -38,22 +39,23 @@ namespace UpdateControls.Wrapper
                 _dependencyProperty = DependencyProperty.Register(
                     _propertyInfo.Name,
                     _propertyInfo.PropertyType,
-                    typeof(DependencyWrapper<ObjectType>),
+                    typeof(ObjectInstance<ObjectType>),
                     new PropertyMetadata(null));
             }
         }
 
         // Called when the user edits the property. Sets the property in the wrapped object.
-        private void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-        {
-            // Get the wrapped object.
-            ObjectType wrappedObject = ((DependencyWrapper<ObjectType>)obj).WrappedObject;
+		private void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+		{
+			// Get the wrapped object.
+			object wrappedObject = ((ObjectInstance<ObjectType>)obj).WrappedObject;
 
-            // Set the property in the wrapped object.
-            _propertyInfo.SetValue(wrappedObject, obj.GetValue(_dependencyProperty), null);
-        }
+			// Set the property in the wrapped object.
+			object value = obj.GetValue(_dependencyProperty);
+			_propertyInfo.SetValue(wrappedObject, value, null);
+		}
 
-        public void UpdateProperty(DependencyWrapper<ObjectType> obj, ObjectType wrappedObject)
+        public void UpdateProperty(DependencyObject obj, object wrappedObject)
         {
             // Get the property from the wrapped object.
             object value = _propertyInfo.GetValue(wrappedObject, null);

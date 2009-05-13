@@ -14,11 +14,11 @@ using System.Linq;
 
 namespace UpdateControls.Wrapper
 {
-    class DependencyClassWrapper<ObjectType>
+    class ClassInstance<ObjectType>
     {
         private List<DependencyPropertyWrapper<ObjectType>> _propertyWrappers;
 
-        public DependencyClassWrapper()
+        public ClassInstance()
         {
             // Create a wrapper for each non-collection property.
             _propertyWrappers = typeof(ObjectType)
