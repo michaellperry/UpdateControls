@@ -20,15 +20,14 @@ namespace UpdateControls
         /// All of the properties of the object are available for
         /// data binding with automatic updates.
         /// </summary>
-        /// <typeparam name="ObjectType">DO NOT SPECIFY!</typeparam>
         /// <param name="wrappedObject">The object to wrap for the view.</param>
         /// <returns>An object suitable for data binding.</returns>
-        public static object Wrap<ObjectType>(ObjectType wrappedObject)
+        public static object Wrap(object wrappedObject)
         {
             return
                 wrappedObject == null
                     ? null
-                    : new ObjectInstance<ObjectType>(wrappedObject);
+                    : new ObjectInstance(wrappedObject);
         }
     }
 }

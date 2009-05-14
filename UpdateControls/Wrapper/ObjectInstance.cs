@@ -16,24 +16,33 @@ using System.Linq;
 
 namespace UpdateControls.Wrapper
 {
-    public class ObjectInstance<ObjectType> : DependencyObject, IObjectInstance
+    public class ObjectInstance : DependencyObject
     {
         // Wrap the class and all of its property definitions.
-        private static ClassInstance<ObjectType> _classWrapper = new ClassInstance<ObjectType>();
+		private static Dictionary<Type, ClassInstance> _classInstanceByType = new Dictionary<Type, ClassInstance>();
 
         // Wrap the object instance.
-        private ObjectType _wrappedObject;
+        private object _wrappedObject;
 
 		// Wrap all properties.
 		private List<ObjectProperty> _properties;
 
-        public ObjectInstance(ObjectType wrappedObject)
-        {
-            _wrappedObject = wrappedObject;
+		public ObjectInstance(object wrappedObject)
+		{
+			_wrappedObject = wrappedObject;
 
-            // Create a dependent sentry to monitor each property.
-			_properties = _classWrapper.PropertyWrappers.Select(p => ObjectProperty.From(this, p, wrappedObject)).ToList();
-        }
+			// Ensure that we have a class wrapper for this type.
+			ClassInstance classInstance;
+			Type wrappedType = wrappedObject.GetType();
+			if (!_classInstanceByType.TryGetValue(wrappedType, out classInstance))
+			{
+				classInstance = new ClassInstance(wrappedType);
+				_classInstanceByType.Add(wrappedType, classInstance);
+			}
+
+			// Create a dependent sentry to monitor each property.
+			_properties = classInstance.PropertyWrappers.Select(p => ObjectProperty.From(this, p, wrappedObject)).ToList();
+		}
 
         public object WrappedObject
         {

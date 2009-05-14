@@ -11,26 +11,27 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace UpdateControls.Wrapper
 {
-    class ClassInstance<ObjectType>
+    class ClassInstance
     {
-        private List<DependencyPropertyWrapper<ObjectType>> _propertyWrappers;
+        private List<ClassProperty> _propertyWrappers;
 
-        public ClassInstance()
+        public ClassInstance(Type wrappedType)
         {
             // Create a wrapper for each non-collection property.
-            _propertyWrappers = typeof(ObjectType)
+            _propertyWrappers = wrappedType
                 .GetProperties()
                 //.Where(p =>
                 //    typeof(string).IsAssignableFrom(p.PropertyType) ||
                 //    !typeof(System.Collections.IEnumerable).IsAssignableFrom(p.PropertyType))
-                .Select(p => new DependencyPropertyWrapper<ObjectType>(p))
+                .Select(p => new ClassProperty(p))
                 .ToList();
         }
 
-        public IEnumerable<DependencyPropertyWrapper<ObjectType>> PropertyWrappers
+        public IEnumerable<ClassProperty> PropertyWrappers
         {
             get { return _propertyWrappers; }
         }

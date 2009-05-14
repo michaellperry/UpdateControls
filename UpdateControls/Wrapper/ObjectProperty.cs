@@ -20,20 +20,20 @@ namespace UpdateControls.Wrapper
         };
 
 		protected DependencyObject _dependencyObject;
-		protected IClassProperty _classProperty;
+		protected ClassProperty _classProperty;
 		protected object _wrappedObject;
 
 		public abstract object TranslateIncommingValue(object value);
 		public abstract object TranslateOutgoingValue(object value);
 
-		public ObjectProperty(DependencyObject dependencyObject, IClassProperty classProperty, object wrappedObject)
+		public ObjectProperty(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
 		{
 			_dependencyObject = dependencyObject;
 			_classProperty = classProperty;
 			_wrappedObject = wrappedObject;
 		}
 
-		public static ObjectProperty From(DependencyObject dependencyObject, IClassProperty classProperty, object wrappedObject)
+		public static ObjectProperty From(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
 		{
 			// Determine which type of object property to create.
             ObjectProperty objectProperty;

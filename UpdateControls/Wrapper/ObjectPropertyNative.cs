@@ -7,7 +7,7 @@ namespace UpdateControls.Wrapper
 	{
 		private Dependent _depProperty;
 
-		public ObjectPropertyNative(DependencyObject dependencyObject, IClassProperty classProperty, object wrappedObject)
+		public ObjectPropertyNative(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
 			: base(dependencyObject, classProperty, wrappedObject)
 		{
 			if (classProperty.CanRead)

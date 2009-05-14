@@ -15,12 +15,12 @@ using System;
 
 namespace UpdateControls.Wrapper
 {
-    class DependencyPropertyWrapper<ObjectType> : IClassProperty
+    class ClassProperty
     {
         private PropertyInfo _propertyInfo;
         private DependencyProperty _dependencyProperty;
 
-        public DependencyPropertyWrapper(PropertyInfo property)
+        public ClassProperty(PropertyInfo property)
         {
             _propertyInfo = property;
 
@@ -31,7 +31,7 @@ namespace UpdateControls.Wrapper
                 _dependencyProperty = DependencyProperty.Register(
                     _propertyInfo.Name,
                     _propertyInfo.PropertyType,
-                    typeof(ObjectInstance<ObjectType>),
+                    typeof(ObjectInstance),
                     new PropertyMetadata(OnPropertyChanged));
             }
             else
@@ -39,7 +39,7 @@ namespace UpdateControls.Wrapper
                 _dependencyProperty = DependencyProperty.Register(
                     _propertyInfo.Name,
                     _propertyInfo.PropertyType,
-                    typeof(ObjectInstance<ObjectType>),
+                    typeof(ObjectInstance),
                     new PropertyMetadata(null));
             }
         }
@@ -48,7 +48,7 @@ namespace UpdateControls.Wrapper
 		private void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
 		{
 			// Get the wrapped object.
-			object wrappedObject = ((ObjectInstance<ObjectType>)obj).WrappedObject;
+			object wrappedObject = ((ObjectInstance)obj).WrappedObject;
 
 			// Set the property in the wrapped object.
 			object value = obj.GetValue(_dependencyProperty);
