@@ -16,7 +16,8 @@ namespace UpdateControls.Wrapper
             typeof(float),
             typeof(short),
             typeof(long),
-            typeof(double)
+            typeof(double),
+			typeof(object)
         };
 
 		protected DependencyObject _dependencyObject;
@@ -36,20 +37,29 @@ namespace UpdateControls.Wrapper
 		public static ObjectProperty From(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
 		{
 			// Determine which type of object property to create.
-            ObjectProperty objectProperty;
-            if (Primitives.Contains(classProperty.PropertyType))
-            {
-                objectProperty = new ObjectPropertyNative(dependencyObject, classProperty, wrappedObject);
-            }
-            else if (typeof(IEnumerable).IsAssignableFrom(classProperty.PropertyType))
-            {
-                // TODO: Figure out what it's an IEnumerable of.
-                objectProperty = null;
-            }
-            else
-            {
-                objectProperty = new ObjectPropertyObject(dependencyObject, classProperty, wrappedObject);
-            }
+			ObjectProperty objectProperty;
+			Type propertyType = classProperty.PropertyType;
+			if (Primitives.Contains(propertyType))
+			{
+				objectProperty = new ObjectPropertyNative(dependencyObject, classProperty, wrappedObject);
+			}
+			else if (typeof(IEnumerable).IsAssignableFrom(propertyType))
+			{
+				// Figure out what it's an IEnumerable of.
+				Type itemType;
+				if (propertyType.GetGenericArguments().Length == 1)
+					itemType = propertyType.GetGenericArguments()[0];
+				else
+					itemType = typeof(object);
+				if (Primitives.Contains(itemType))
+					objectProperty = new ObjectPropertyCollectionNative(dependencyObject, classProperty, wrappedObject);
+				else
+					objectProperty = new ObjectPropertyCollectionObject(dependencyObject, classProperty, wrappedObject);
+			}
+			else
+			{
+				objectProperty = new ObjectPropertyObject(dependencyObject, classProperty, wrappedObject);
+			}
 
 			return objectProperty;
 		}
