@@ -67,6 +67,7 @@
     <Compile Include="Wrapper\IObjectInstance.cs" />
     <Compile Include="Wrapper\ObjectProperty.cs" />
     <Compile Include="Wrapper\ObjectPropertyNative.cs" />
+    <Compile Include="Wrapper\ObjectPropertyObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mallardsoft.snk" />

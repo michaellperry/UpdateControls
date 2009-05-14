@@ -68,5 +68,10 @@ namespace UpdateControls.Wrapper
         {
             get { return _propertyInfo.CanRead; }
         }
+
+        public Type PropertyType
+        {
+            get { return _propertyInfo.PropertyType; }
+        }
     }
 }
