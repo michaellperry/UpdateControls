@@ -48,23 +48,35 @@ namespace UpdateControls.Wrapper
 		private void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
 		{
 			// Get the wrapped object.
-			object wrappedObject = ((ObjectInstance)obj).WrappedObject;
+			ObjectInstance objectInstance = (ObjectInstance)obj;
+			object wrappedObject = objectInstance.WrappedObject;
+			ObjectProperty objectProperty = objectInstance.LookupProperty(this);
 
 			// Set the property in the wrapped object.
 			object value = obj.GetValue(_dependencyProperty);
-			_propertyInfo.SetValue(wrappedObject, value, null);
+			objectProperty.OnUserInput(value);
 		}
 
-        public void UpdateProperty(ObjectInstance objectInstance, object wrappedObject)
+        public void SetUserOutput(ObjectInstance objectInstance, object value)
         {
-            // Get the property from the wrapped object.
-            object value = _propertyInfo.GetValue(wrappedObject, null);
+			// Set the value into the dependency property.
             if (value == null)
                 value = DependencyProperty.UnsetValue;
             objectInstance.SetValue(_dependencyProperty, value);
         }
 
-        public bool CanRead
+		public object GetObjectValue(object wrappedObject)
+		{
+			// Get the property from the wrapped object.
+			return _propertyInfo.GetValue(wrappedObject, null);
+		}
+
+		public void SetObjectValue(object wrappedObject, object value)
+		{
+			_propertyInfo.SetValue(wrappedObject, value, null);
+		}
+
+		public bool CanRead
         {
             get { return _propertyInfo.CanRead; }
         }

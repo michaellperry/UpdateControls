@@ -48,5 +48,10 @@ namespace UpdateControls.Wrapper
         {
             get { return _wrappedObject; }
         }
-    }
+
+		internal ObjectProperty LookupProperty(ClassProperty classProperty)
+		{
+			return _properties.Single(p => p.ClassProperty == classProperty);
+		}
+	}
 }

@@ -20,16 +20,18 @@ namespace UpdateControls.Wrapper
 			typeof(object)
         };
 
-        protected ObjectInstance _objectInstance;
-		protected ClassProperty _classProperty;
-		protected object _wrappedObject;
+		public ObjectInstance ObjectInstance { get; private set; }
+		public ClassProperty ClassProperty { get; private set; }
+		public object WrappedObject { get; private set; }
 
         public ObjectProperty(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
 		{
-			_objectInstance = objectInstance;
-			_classProperty = classProperty;
-			_wrappedObject = wrappedObject;
+			ObjectInstance = objectInstance;
+			ClassProperty = classProperty;
+			WrappedObject = wrappedObject;
 		}
+
+		public abstract void OnUserInput(object value);
 
         public static ObjectProperty From(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
 		{

@@ -16,6 +16,11 @@ namespace UpdateControls.Wrapper
 		{
 		}
 
+		public override void OnUserInput(object value)
+		{
+			throw new NotSupportedException("Update Controls does not support two-way binding of collection properties.");
+		}
+
         public abstract object TranslateOutgoingValue(object value);
     }
 }
