@@ -20,28 +20,25 @@ namespace UpdateControls.Wrapper
 			typeof(object)
         };
 
-		protected DependencyObject _dependencyObject;
+        protected ObjectInstance _objectInstance;
 		protected ClassProperty _classProperty;
 		protected object _wrappedObject;
 
-		public abstract object TranslateIncommingValue(object value);
-		public abstract object TranslateOutgoingValue(object value);
-
-		public ObjectProperty(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
+        public ObjectProperty(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
 		{
-			_dependencyObject = dependencyObject;
+			_objectInstance = objectInstance;
 			_classProperty = classProperty;
 			_wrappedObject = wrappedObject;
 		}
 
-		public static ObjectProperty From(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
+        public static ObjectProperty From(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
 		{
 			// Determine which type of object property to create.
 			ObjectProperty objectProperty;
 			Type propertyType = classProperty.PropertyType;
 			if (Primitives.Contains(propertyType))
 			{
-				objectProperty = new ObjectPropertyNative(dependencyObject, classProperty, wrappedObject);
+				objectProperty = new ObjectPropertyAtomNative(objectInstance, classProperty, wrappedObject);
 			}
 			else if (typeof(IEnumerable).IsAssignableFrom(propertyType))
 			{
@@ -52,13 +49,13 @@ namespace UpdateControls.Wrapper
 				else
 					itemType = typeof(object);
 				if (Primitives.Contains(itemType))
-					objectProperty = new ObjectPropertyCollectionNative(dependencyObject, classProperty, wrappedObject);
+					objectProperty = new ObjectPropertyCollectionNative(objectInstance, classProperty, wrappedObject);
 				else
-					objectProperty = new ObjectPropertyCollectionObject(dependencyObject, classProperty, wrappedObject);
+					objectProperty = new ObjectPropertyCollectionObject(objectInstance, classProperty, wrappedObject);
 			}
 			else
 			{
-				objectProperty = new ObjectPropertyObject(dependencyObject, classProperty, wrappedObject);
+				objectProperty = new ObjectPropertyAtomObject(objectInstance, classProperty, wrappedObject);
 			}
 
 			return objectProperty;

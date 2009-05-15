@@ -8,9 +8,14 @@ namespace UpdateControls.Wrapper
 {
 	internal class ObjectPropertyCollectionNative : ObjectPropertyCollection
 	{
-		public ObjectPropertyCollectionNative(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
-			: base(dependencyObject, classProperty, wrappedObject)
+        public ObjectPropertyCollectionNative(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
+			: base(objectInstance, classProperty, wrappedObject)
 		{
 		}
-	}
+
+        public override object TranslateOutgoingValue(object value)
+        {
+            return value;
+        }
+    }
 }

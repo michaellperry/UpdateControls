@@ -55,13 +55,13 @@ namespace UpdateControls.Wrapper
 			_propertyInfo.SetValue(wrappedObject, value, null);
 		}
 
-        public void UpdateProperty(DependencyObject obj, object wrappedObject)
+        public void UpdateProperty(ObjectInstance objectInstance, object wrappedObject)
         {
             // Get the property from the wrapped object.
             object value = _propertyInfo.GetValue(wrappedObject, null);
             if (value == null)
                 value = DependencyProperty.UnsetValue;
-            obj.SetValue(_dependencyProperty, value);
+            objectInstance.SetValue(_dependencyProperty, value);
         }
 
         public bool CanRead

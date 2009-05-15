@@ -9,9 +9,14 @@ namespace UpdateControls.Wrapper
 {
     internal class ObjectPropertyCollectionObject : ObjectPropertyCollection
 	{
-		public ObjectPropertyCollectionObject(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
-			: base(dependencyObject, classProperty, wrappedObject)
+        public ObjectPropertyCollectionObject(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
+			: base(objectInstance, classProperty, wrappedObject)
 		{
 		}
-	}
+
+        public override object TranslateOutgoingValue(object value)
+        {
+            return new ObjectInstance(value);
+        }
+    }
 }

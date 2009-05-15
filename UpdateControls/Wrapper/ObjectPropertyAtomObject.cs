@@ -3,10 +3,10 @@ using System.Windows;
 
 namespace UpdateControls.Wrapper
 {
-    class ObjectPropertyObject : ObjectProperty
+    class ObjectPropertyAtomObject : ObjectPropertyAtom
     {
-        public ObjectPropertyObject(DependencyObject dependencyObject, ClassProperty classProperty, object wrappedObject)
-            : base(dependencyObject, classProperty, wrappedObject)
+        public ObjectPropertyAtomObject(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
+            : base(objectInstance, classProperty, wrappedObject)
         {
         }
 
