@@ -54,22 +54,11 @@
     </Compile>
     <Compile Include="CacheManager.cs" />
     <Compile Include="Dependent.cs" />
-    <Compile Include="ForView.cs" />
     <Compile Include="Independent.cs" />
     <Compile Include="Precedent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecycleBin.cs" />
     <Compile Include="UpdateControlsExtensions.cs" />
-    <Compile Include="Wrapper\ClassInstance.cs" />
-    <Compile Include="Wrapper\ClassProperty.cs" />
-    <Compile Include="Wrapper\ObjectInstance.cs" />
-    <Compile Include="Wrapper\ObjectProperty.cs" />
-    <Compile Include="Wrapper\ObjectPropertyAtom.cs" />
-    <Compile Include="Wrapper\ObjectPropertyCollection.cs" />
-    <Compile Include="Wrapper\ObjectPropertyAtomNative.cs" />
-    <Compile Include="Wrapper\ObjectPropertyCollectionNative.cs" />
-    <Compile Include="Wrapper\ObjectPropertyAtomObject.cs" />
-    <Compile Include="Wrapper\ObjectPropertyCollectionObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mallardsoft.snk" />

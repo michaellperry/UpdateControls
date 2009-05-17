@@ -17,16 +17,16 @@ namespace UpdateControls.Wrapper
 {
     class ClassInstance
     {
+        private Type _wrappedType;
         private List<ClassProperty> _propertyWrappers;
 
         public ClassInstance(Type wrappedType)
         {
+            _wrappedType = wrappedType;
+
             // Create a wrapper for each non-collection property.
-            _propertyWrappers = wrappedType
+            _propertyWrappers = _wrappedType
                 .GetProperties()
-                //.Where(p =>
-                //    typeof(string).IsAssignableFrom(p.PropertyType) ||
-                //    !typeof(System.Collections.IEnumerable).IsAssignableFrom(p.PropertyType))
                 .Select(p => new ClassProperty(p))
                 .ToList();
         }
@@ -34,6 +34,11 @@ namespace UpdateControls.Wrapper
         public IEnumerable<ClassProperty> PropertyWrappers
         {
             get { return _propertyWrappers; }
+        }
+
+        public override string ToString()
+        {
+            return _wrappedType.Name;
         }
     }
 }

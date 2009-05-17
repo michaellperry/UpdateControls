@@ -85,5 +85,10 @@ namespace UpdateControls.Wrapper
         {
             get { return _propertyInfo.PropertyType; }
         }
+
+        public override string ToString()
+        {
+            return String.Format("{0}.{1}", _propertyInfo.DeclaringType.Name, _propertyInfo.Name);
+        }
     }
 }

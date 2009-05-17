@@ -63,6 +63,7 @@
     <Compile Include="..\Solution Files\CommonProperties.cs">
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
+    <Compile Include="ForView.cs" />
     <Compile Include="MakeCommand.cs" />
     <Compile Include="ObservableCollectionItem.cs" />
     <Compile Include="PathSegment.cs" />
@@ -71,6 +72,16 @@
     <Compile Include="ValueDependencyObject.cs" />
     <Compile Include="ValueObservableCollection.cs" />
     <Compile Include="ValueSource.cs" />
+    <Compile Include="Wrapper\ClassInstance.cs" />
+    <Compile Include="Wrapper\ClassProperty.cs" />
+    <Compile Include="Wrapper\ObjectInstance.cs" />
+    <Compile Include="Wrapper\ObjectProperty.cs" />
+    <Compile Include="Wrapper\ObjectPropertyAtom.cs" />
+    <Compile Include="Wrapper\ObjectPropertyAtomNative.cs" />
+    <Compile Include="Wrapper\ObjectPropertyAtomObject.cs" />
+    <Compile Include="Wrapper\ObjectPropertyCollection.cs" />
+    <Compile Include="Wrapper\ObjectPropertyCollectionNative.cs" />
+    <Compile Include="Wrapper\ObjectPropertyCollectionObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">

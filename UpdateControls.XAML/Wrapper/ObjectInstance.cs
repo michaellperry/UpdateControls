@@ -53,5 +53,10 @@ namespace UpdateControls.Wrapper
 		{
 			return _properties.Single(p => p.ClassProperty == classProperty);
 		}
+
+        public override string ToString()
+        {
+            return _wrappedObject.ToString();
+        }
 	}
 }

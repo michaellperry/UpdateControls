@@ -62,5 +62,10 @@ namespace UpdateControls.Wrapper
 
 			return objectProperty;
 		}
+
+        public override string ToString()
+        {
+            return String.Format("{0}({1})", ClassProperty, WrappedObject);
+        }
 	}
 }
