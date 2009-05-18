@@ -9,7 +9,7 @@
  * 
  **********************************************************************/
 
-using UpdateControls.Wrapper;
+using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls
 {

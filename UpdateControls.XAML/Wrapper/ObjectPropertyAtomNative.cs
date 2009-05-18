@@ -1,13 +1,23 @@
-using System;
-using System.Windows;
+/**********************************************************************
+ * 
+ * Update Controls .NET
+ * Copyright 2009 Mallard Software Designs
+ * Licensed under LGPL
+ * 
+ * http://updatecontrols.net
+ * http://updatecontrolslight.codeplex.com/
+ * 
+ **********************************************************************/
 
-namespace UpdateControls.Wrapper
+using System;
+
+namespace UpdateControls.XAML.Wrapper
 {
 	class ObjectPropertyAtomNative : ObjectPropertyAtom
     {
 
-        public ObjectPropertyAtomNative(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
-			: base(objectInstance, classProperty, wrappedObject)
+        public ObjectPropertyAtomNative(ObjectInstance objectInstance, ClassProperty classProperty)
+			: base(objectInstance, classProperty)
 		{
         }
         public override object TranslateIncommingValue(object value)

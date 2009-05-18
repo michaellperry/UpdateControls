@@ -1,71 +1,39 @@
-using System;
-using System.Collections;
-using System.Windows.Threading;
-using System.Windows;
-using System.Linq;
+/**********************************************************************
+ * 
+ * Update Controls .NET
+ * Copyright 2009 Mallard Software Designs
+ * Licensed under LGPL
+ * 
+ * http://updatecontrols.net
+ * http://updatecontrolslight.codeplex.com/
+ * 
+ **********************************************************************/
 
-namespace UpdateControls.Wrapper
+using System;
+
+namespace UpdateControls.XAML.Wrapper
 {
     abstract class ObjectProperty
 	{
-        private static readonly Type[] Primitives = new Type[]
-        {
-            typeof(string),
-            typeof(int),
-            typeof(decimal),
-            typeof(float),
-            typeof(short),
-            typeof(long),
-            typeof(double),
-			typeof(object)
-        };
-
 		public ObjectInstance ObjectInstance { get; private set; }
 		public ClassProperty ClassProperty { get; private set; }
-		public object WrappedObject { get; private set; }
 
-        public ObjectProperty(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
+        public ObjectProperty(ObjectInstance objectInstance, ClassProperty classProperty)
 		{
 			ObjectInstance = objectInstance;
 			ClassProperty = classProperty;
-			WrappedObject = wrappedObject;
 		}
 
 		public abstract void OnUserInput(object value);
 
-        public static ObjectProperty From(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
+        public static ObjectProperty From(ObjectInstance objectInstance, ClassProperty classProperty)
 		{
-			// Determine which type of object property to create.
-			ObjectProperty objectProperty;
-			Type propertyType = classProperty.PropertyType;
-			if (Primitives.Contains(propertyType))
-			{
-				objectProperty = new ObjectPropertyAtomNative(objectInstance, classProperty, wrappedObject);
-			}
-			else if (typeof(IEnumerable).IsAssignableFrom(propertyType))
-			{
-				// Figure out what it's an IEnumerable of.
-				Type itemType;
-				if (propertyType.GetGenericArguments().Length == 1)
-					itemType = propertyType.GetGenericArguments()[0];
-				else
-					itemType = typeof(object);
-				if (Primitives.Contains(itemType))
-					objectProperty = new ObjectPropertyCollectionNative(objectInstance, classProperty, wrappedObject);
-				else
-					objectProperty = new ObjectPropertyCollectionObject(objectInstance, classProperty, wrappedObject);
-			}
-			else
-			{
-				objectProperty = new ObjectPropertyAtomObject(objectInstance, classProperty, wrappedObject);
-			}
-
-			return objectProperty;
+			return classProperty.MakeObjectProperty(objectInstance);
 		}
 
         public override string ToString()
         {
-            return String.Format("{0}({1})", ClassProperty, WrappedObject);
+            return String.Format("{0}({1})", ClassProperty, ObjectInstance.WrappedObject);
         }
 	}
 }

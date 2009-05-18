@@ -10,11 +10,11 @@
  **********************************************************************/
 
 using System;
-using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
-namespace UpdateControls.Wrapper
+namespace UpdateControls.XAML.Wrapper
 {
     public class ObjectInstance : DependencyObject
     {
@@ -31,17 +31,17 @@ namespace UpdateControls.Wrapper
 		{
 			_wrappedObject = wrappedObject;
 
-			// Ensure that we have a class wrapper for this type.
-			ClassInstance classInstance;
-			Type wrappedType = wrappedObject.GetType();
-			if (!_classInstanceByType.TryGetValue(wrappedType, out classInstance))
-			{
-				classInstance = new ClassInstance(wrappedType);
-				_classInstanceByType.Add(wrappedType, classInstance);
-			}
+            // Ensure that we have a class wrapper for this type.
+            ClassInstance classInstance;
+            Type wrappedType = wrappedObject.GetType();
+            if (!_classInstanceByType.TryGetValue(wrappedType, out classInstance))
+            {
+                classInstance = new ClassInstance(wrappedType);
+                _classInstanceByType.Add(wrappedType, classInstance);
+            }
 
-			// Create a dependent sentry to monitor each property.
-			_properties = classInstance.PropertyWrappers.Select(p => ObjectProperty.From(this, p, wrappedObject)).ToList();
+            // Create a wrapper around each property.
+            _properties = classInstance.PropertyWrappers.Select(p => ObjectProperty.From(this, p)).ToList();
 		}
 
         public object WrappedObject

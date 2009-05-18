@@ -1,21 +1,29 @@
-using System;
-using System.Collections;
-using System.Windows.Threading;
-using System.Windows;
-using System.Linq;
+/**********************************************************************
+ * 
+ * Update Controls .NET
+ * Copyright 2009 Mallard Software Designs
+ * Licensed under LGPL
+ * 
+ * http://updatecontrols.net
+ * http://updatecontrolslight.codeplex.com/
+ * 
+ **********************************************************************/
 
-namespace UpdateControls.Wrapper
+using System;
+using System.Collections.ObjectModel;
+
+namespace UpdateControls.XAML.Wrapper
 {
 	internal class ObjectPropertyCollectionNative : ObjectPropertyCollection
 	{
-        public ObjectPropertyCollectionNative(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
-			: base(objectInstance, classProperty, wrappedObject)
+        public ObjectPropertyCollectionNative(ObjectInstance objectInstance, ClassProperty classProperty)
+			: base(objectInstance, classProperty)
 		{
 		}
 
-        public override object TranslateOutgoingValue(object value)
+        public override CollectionItem MakeCollectionItem(ObservableCollection<object> collection, object value, bool inCollection)
         {
-            return value;
+            return new CollectionItemNative(collection, value, inCollection);
         }
     }
 }

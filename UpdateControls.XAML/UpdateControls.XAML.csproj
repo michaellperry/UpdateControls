@@ -74,6 +74,8 @@
     <Compile Include="ValueSource.cs" />
     <Compile Include="Wrapper\ClassInstance.cs" />
     <Compile Include="Wrapper\ClassProperty.cs" />
+    <Compile Include="Wrapper\CollectionItemNative.cs" />
+    <Compile Include="Wrapper\CollectionItemObject.cs" />
     <Compile Include="Wrapper\ObjectInstance.cs" />
     <Compile Include="Wrapper\ObjectProperty.cs" />
     <Compile Include="Wrapper\ObjectPropertyAtom.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Wrapper\ObjectPropertyCollection.cs" />
     <Compile Include="Wrapper\ObjectPropertyCollectionNative.cs" />
     <Compile Include="Wrapper\ObjectPropertyCollectionObject.cs" />
+    <Compile Include="Wrapper\CollectionItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">

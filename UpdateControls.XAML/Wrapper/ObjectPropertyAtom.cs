@@ -1,25 +1,32 @@
+/**********************************************************************
+ * 
+ * Update Controls .NET
+ * Copyright 2009 Mallard Software Designs
+ * Licensed under LGPL
+ * 
+ * http://updatecontrols.net
+ * http://updatecontrolslight.codeplex.com/
+ * 
+ **********************************************************************/
+
 using System;
-using System.Collections;
-using System.Windows.Threading;
-using System.Windows;
-using System.Linq;
 using UpdateControls;
 
-namespace UpdateControls.Wrapper
+namespace UpdateControls.XAML.Wrapper
 {
     internal abstract class ObjectPropertyAtom : ObjectProperty
     {
         private Dependent _depProperty;
 
-		public ObjectPropertyAtom(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
-			: base(objectInstance, classProperty, wrappedObject)
+		public ObjectPropertyAtom(ObjectInstance objectInstance, ClassProperty classProperty)
+			: base(objectInstance, classProperty)
 		{
 			if (ClassProperty.CanRead)
 			{
 				// When the property is out of date, update it from the wrapped object.
 				_depProperty = new Dependent(delegate
 				{
-					object value = ClassProperty.GetObjectValue(WrappedObject);
+					object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
 					value = TranslateOutgoingValue(value);
 					ClassProperty.SetUserOutput(ObjectInstance, value);
 				});
@@ -39,8 +46,11 @@ namespace UpdateControls.Wrapper
 
 		public override void OnUserInput(object value)
 		{
-			value = TranslateIncommingValue(value);
-			ClassProperty.SetObjectValue(WrappedObject, value);
+            if (_depProperty.IsNotUpdating)
+            {
+                value = TranslateIncommingValue(value);
+                ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+            }
 		}
 
         public abstract object TranslateIncommingValue(object value);

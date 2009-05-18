@@ -1,22 +1,39 @@
+/**********************************************************************
+ * 
+ * Update Controls .NET
+ * Copyright 2009 Mallard Software Designs
+ * Licensed under LGPL
+ * 
+ * http://updatecontrols.net
+ * http://updatecontrolslight.codeplex.com/
+ * 
+ **********************************************************************/
+
 using System;
-using System.Collections;
-using System.Windows.Threading;
-using System.Windows;
-using System.Linq;
 using System.Collections.ObjectModel;
 
-namespace UpdateControls.Wrapper
+namespace UpdateControls.XAML.Wrapper
 {
     internal class ObjectPropertyCollectionObject : ObjectPropertyCollection
 	{
-        public ObjectPropertyCollectionObject(ObjectInstance objectInstance, ClassProperty classProperty, object wrappedObject)
-			: base(objectInstance, classProperty, wrappedObject)
+        public ObjectPropertyCollectionObject(ObjectInstance objectInstance, ClassProperty classProperty)
+			: base(objectInstance, classProperty)
 		{
 		}
 
-        public override object TranslateOutgoingValue(object value)
+        public override CollectionItem MakeCollectionItem(ObservableCollection<object> collection, object value, bool inCollection)
         {
-            return new ObjectInstance(value);
+            // If it's already in the collection, it's already wrapped.
+            if (inCollection)
+                return new CollectionItemObject(
+                    collection,
+                    (ObjectInstance)value,
+                    inCollection);
+            else
+                return new CollectionItemObject(
+                    collection,
+                    value == null ? null : new ObjectInstance(value),
+                    inCollection);
         }
     }
 }
