@@ -42,15 +42,16 @@ namespace UpdateControls.XAML.Wrapper
         };
 
         private PropertyInfo _propertyInfo;
-        private Type _wrappedType;
+        private Type _objectInstanceType;
+		private Type _valueType;
         private Func<IObjectInstance, ObjectProperty> _makeObjectProperty;
         private ConstructorInfo _objectInstanceConstructor;
 
-        public ClassProperty(PropertyInfo property, Type wrappedType)
+        public ClassProperty(PropertyInfo property, Type objectInstanceType)
             : base(property.Name, null)
         {
             _propertyInfo = property;
-            _wrappedType = wrappedType;
+            _objectInstanceType = objectInstanceType;
 
             // Determine which type of object property to create.
             Type propertyType = property.PropertyType;
@@ -95,24 +96,7 @@ namespace UpdateControls.XAML.Wrapper
                     .GetConstructor(new Type[] { typeof(object) });
             }
 
-            // Register a dependency property. XAML can bind to this by name, even though
-            // there is no CLR property to be found.
-            //if (_propertyInfo.CanWrite)
-            //{
-            //    _dependencyProperty = DependencyProperty.Register(
-            //        _propertyInfo.Name,
-            //        valueType,
-            //        typeof(ObjectInstance<>).MakeGenericType(wrappedType),
-            //        new PropertyMetadata(OnPropertyChanged));
-            //}
-            //else
-            //{
-            //    _dependencyProperty = DependencyProperty.Register(
-            //        _propertyInfo.Name,
-            //        valueType,
-            //        typeof(ObjectInstance<>).MakeGenericType(wrappedType),
-            //        new PropertyMetadata(null));
-            //}
+			_valueType = valueType;
         }
 
         public ObjectProperty MakeObjectProperty(IObjectInstance objectInstance)
@@ -143,7 +127,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override Type PropertyType
         {
-            get { return _propertyInfo.PropertyType; }
+            get { return _valueType; }
         }
 
         public override string ToString()
@@ -158,7 +142,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override Type ComponentType
         {
-            get { return _wrappedType; }
+            get { return _objectInstanceType; }
         }
 
         public override object GetValue(object component)

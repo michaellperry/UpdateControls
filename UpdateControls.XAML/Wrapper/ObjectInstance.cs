@@ -20,7 +20,7 @@ namespace UpdateControls.XAML.Wrapper
     public class ObjectInstance<TWrappedObjectType> : IObjectInstance, INotifyPropertyChanged
     {
         // Wrap the class and all of its property definitions.
-		private static ClassInstance _classInstance = new ClassInstance(typeof(TWrappedObjectType));
+		private static ClassInstance _classInstance = new ClassInstance(typeof(TWrappedObjectType), typeof(ObjectInstance<TWrappedObjectType>));
 
         // Wrap the object instance.
         private object _wrappedObject;

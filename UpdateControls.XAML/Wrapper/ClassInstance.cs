@@ -22,14 +22,14 @@ namespace UpdateControls.XAML.Wrapper
         private List<ClassProperty> _classProperties;
         private PropertyDescriptorCollection _propertyDescriptors;
 
-        public ClassInstance(Type wrappedType)
+        public ClassInstance(Type wrappedType, Type objectInstanceType)
         {
             _wrappedType = wrappedType;
 
             // Create a wrapper for each non-collection property.
             _classProperties = _wrappedType
                 .GetProperties()
-                .Select(p => new ClassProperty(p, _wrappedType))
+                .Select(p => new ClassProperty(p, objectInstanceType))
                 .ToList();
             _propertyDescriptors = new PropertyDescriptorCollection(_classProperties.ToArray());
         }

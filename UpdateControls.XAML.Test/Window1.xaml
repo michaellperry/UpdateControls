@@ -17,7 +17,7 @@
     </Window.Resources>
 
     <StackPanel>
-        <ListBox ItemsSource="{Binding PersonList.People}" SelectedIndex="{Binding SelectedPersonIndex}">
+        <ListBox ItemsSource="{Binding PersonList.People}" SelectedItem="{Binding Navigation.SelectedPerson}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <ListBoxItem Content="{Binding Display}"/>
