@@ -5,7 +5,7 @@
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
- * http://updatecontrolslight.codeplex.com/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
@@ -13,20 +13,21 @@ using System;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    abstract class ObjectProperty
+    public abstract class ObjectProperty
 	{
-		public ObjectInstance ObjectInstance { get; private set; }
+		public IObjectInstance ObjectInstance { get; private set; }
 		public ClassProperty ClassProperty { get; private set; }
 
-        public ObjectProperty(ObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectProperty(IObjectInstance objectInstance, ClassProperty classProperty)
 		{
 			ObjectInstance = objectInstance;
 			ClassProperty = classProperty;
 		}
 
 		public abstract void OnUserInput(object value);
+        public abstract object Value { get; }
 
-        public static ObjectProperty From(ObjectInstance objectInstance, ClassProperty classProperty)
+        public static ObjectProperty From(IObjectInstance objectInstance, ClassProperty classProperty)
 		{
 			return classProperty.MakeObjectProperty(objectInstance);
 		}

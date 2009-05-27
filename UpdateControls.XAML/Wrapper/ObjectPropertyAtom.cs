@@ -5,20 +5,22 @@
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
- * http://updatecontrolslight.codeplex.com/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
 using System;
 using UpdateControls;
+using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
     internal abstract class ObjectPropertyAtom : ObjectProperty
     {
         private Dependent _depProperty;
+        private object _value;
 
-		public ObjectPropertyAtom(ObjectInstance objectInstance, ClassProperty classProperty)
+		public ObjectPropertyAtom(IObjectInstance objectInstance, ClassProperty classProperty)
 			: base(objectInstance, classProperty)
 		{
 			if (ClassProperty.CanRead)
@@ -27,13 +29,13 @@ namespace UpdateControls.XAML.Wrapper
 				_depProperty = new Dependent(delegate
 				{
 					object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
-					value = TranslateOutgoingValue(value);
-					ClassProperty.SetUserOutput(ObjectInstance, value);
+					_value = TranslateOutgoingValue(value);
+                    ObjectInstance.FirePropertyChanged(ClassProperty.Name);
 				});
 				// When the property becomes out of date, trigger an update.
 				Action triggerUpdate = new Action(delegate
 				{
-					ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+                    Dispatcher.CurrentDispatcher.BeginInvoke(new Action(delegate
 					{
 						_depProperty.OnGet();
 					}));
@@ -52,6 +54,11 @@ namespace UpdateControls.XAML.Wrapper
                 ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
             }
 		}
+
+        public override object Value
+        {
+            get { return _value; }
+        }
 
         public abstract object TranslateIncommingValue(object value);
         public abstract object TranslateOutgoingValue(object value);

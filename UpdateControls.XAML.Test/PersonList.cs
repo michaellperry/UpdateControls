@@ -28,7 +28,7 @@ namespace UpdateControls.XAML.Test
             _people.Remove(person);
         }
 
-        public IEnumerable<Person> People
+        public IList<Person> People
         {
             get { _indPeople.OnGet(); return _people; }
         }

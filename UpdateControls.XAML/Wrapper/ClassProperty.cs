@@ -5,7 +5,7 @@
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
- * http://updatecontrolslight.codeplex.com/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
@@ -15,31 +15,42 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class ClassProperty
+    public class ClassProperty : PropertyDescriptor
     {
         private static readonly Type[] Primitives = new Type[]
         {
-            typeof(string),
-            typeof(int),
+            typeof(bool),
+            typeof(byte),
+            typeof(sbyte),
+            typeof(char),
             typeof(decimal),
-            typeof(float),
-            typeof(short),
-            typeof(long),
             typeof(double),
+            typeof(float),
+            typeof(int),
+            typeof(uint),
+            typeof(long),
+            typeof(ulong),
 			typeof(object),
+            typeof(short),
+            typeof(ushort),
+            typeof(string),
             typeof(ICommand)
         };
 
         private PropertyInfo _propertyInfo;
-        private DependencyProperty _dependencyProperty;
-        private Func<ObjectInstance, ObjectProperty> _makeObjectProperty;
+        private Type _wrappedType;
+        private Func<IObjectInstance, ObjectProperty> _makeObjectProperty;
+        private ConstructorInfo _objectInstanceConstructor;
 
-        public ClassProperty(PropertyInfo property)
+        public ClassProperty(PropertyInfo property, Type wrappedType)
+            : base(property.Name, null)
         {
             _propertyInfo = property;
+            _wrappedType = wrappedType;
 
             // Determine which type of object property to create.
             Type propertyType = property.PropertyType;
@@ -62,61 +73,56 @@ namespace UpdateControls.XAML.Wrapper
                     _makeObjectProperty = objectInstance =>
                         new ObjectPropertyCollectionNative(objectInstance, this);
                 else
+                {
                     _makeObjectProperty = objectInstance =>
                         new ObjectPropertyCollectionObject(objectInstance, this);
+
+                    // Find the type of object instance based on the item type.
+                    _objectInstanceConstructor = typeof(ObjectInstance<>)
+                        .MakeGenericType(itemType)
+                        .GetConstructor(new Type[] { typeof(object) });
+                }
                 valueType = typeof(IEnumerable);
             }
             else
             {
                 _makeObjectProperty = objectInstance =>
                     new ObjectPropertyAtomObject(objectInstance, this);
-                valueType = typeof(ObjectInstance);
+                valueType = typeof(ObjectInstance<>).MakeGenericType(propertyType);
+
+                // Find the type of object instance based on the property type.
+                _objectInstanceConstructor = valueType
+                    .GetConstructor(new Type[] { typeof(object) });
             }
 
             // Register a dependency property. XAML can bind to this by name, even though
             // there is no CLR property to be found.
-            if (_propertyInfo.CanWrite)
-            {
-                _dependencyProperty = DependencyProperty.Register(
-                    _propertyInfo.Name,
-                    valueType,
-                    typeof(ObjectInstance),
-                    new PropertyMetadata(OnPropertyChanged));
-            }
-            else
-            {
-                _dependencyProperty = DependencyProperty.Register(
-                    _propertyInfo.Name,
-                    valueType,
-                    typeof(ObjectInstance),
-                    new PropertyMetadata(null));
-            }
+            //if (_propertyInfo.CanWrite)
+            //{
+            //    _dependencyProperty = DependencyProperty.Register(
+            //        _propertyInfo.Name,
+            //        valueType,
+            //        typeof(ObjectInstance<>).MakeGenericType(wrappedType),
+            //        new PropertyMetadata(OnPropertyChanged));
+            //}
+            //else
+            //{
+            //    _dependencyProperty = DependencyProperty.Register(
+            //        _propertyInfo.Name,
+            //        valueType,
+            //        typeof(ObjectInstance<>).MakeGenericType(wrappedType),
+            //        new PropertyMetadata(null));
+            //}
         }
 
-        public ObjectProperty MakeObjectProperty(ObjectInstance objectInstance)
+        public ObjectProperty MakeObjectProperty(IObjectInstance objectInstance)
         {
             return _makeObjectProperty(objectInstance);
         }
 
-        // Called when the user edits the property. Sets the property in the wrapped object.
-		private void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-		{
-			// Get the wrapped object.
-			ObjectInstance objectInstance = (ObjectInstance)obj;
-			object wrappedObject = objectInstance.WrappedObject;
-			ObjectProperty objectProperty = objectInstance.LookupProperty(this);
-
-			// Set the property in the wrapped object.
-			object value = obj.GetValue(_dependencyProperty);
-			objectProperty.OnUserInput(value);
-		}
-
-        public void SetUserOutput(ObjectInstance objectInstance, object value)
+        public object MakeObjectInstance(object wrappedObject)
         {
-			// Set the value into the dependency property.
-            if (value == null)
-                value = DependencyProperty.UnsetValue;
-            objectInstance.SetValue(_dependencyProperty, value);
+            return _objectInstanceConstructor.Invoke(new object[] { wrappedObject });
         }
 
 		public object GetObjectValue(object wrappedObject)
@@ -135,7 +141,7 @@ namespace UpdateControls.XAML.Wrapper
             get { return _propertyInfo.CanRead; }
         }
 
-        public Type PropertyType
+        public override Type PropertyType
         {
             get { return _propertyInfo.PropertyType; }
         }
@@ -143,6 +149,48 @@ namespace UpdateControls.XAML.Wrapper
         public override string ToString()
         {
             return String.Format("{0}.{1}", _propertyInfo.DeclaringType.Name, _propertyInfo.Name);
+        }
+
+        public override bool CanResetValue(object component)
+        {
+            return false;
+        }
+
+        public override Type ComponentType
+        {
+            get { return _wrappedType; }
+        }
+
+        public override object GetValue(object component)
+        {
+            return GetObjectProperty(component).Value;
+        }
+
+        public override bool IsReadOnly
+        {
+            get { return !_propertyInfo.CanWrite; }
+        }
+
+        public override void ResetValue(object component)
+        {
+        }
+
+        public override void SetValue(object component, object value)
+        {
+            GetObjectProperty(component).OnUserInput(value);
+        }
+
+        public override bool ShouldSerializeValue(object component)
+        {
+            return false;
+        }
+
+        private ObjectProperty GetObjectProperty(object component)
+        {
+            // Find the object property.
+            IObjectInstance objectInstance = ((IObjectInstance)component);
+            ObjectProperty objectProperty = objectInstance.LookupProperty(this);
+            return objectProperty;
         }
     }
 }

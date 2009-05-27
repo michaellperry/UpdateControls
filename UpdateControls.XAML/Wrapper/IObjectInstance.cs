@@ -10,19 +10,15 @@
  **********************************************************************/
 
 using System;
+using System.Windows;
 
 namespace UpdateControls.XAML.Wrapper
 {
-	internal class ObjectPropertyCollectionNative : ObjectPropertyCollection
-	{
-        public ObjectPropertyCollectionNative(IObjectInstance objectInstance, ClassProperty classProperty)
-			: base(objectInstance, classProperty)
-		{
-		}
-
-        public override object TranslateOutgoingValue(object value)
-        {
-            return value;
-        }
+    public interface IObjectInstance
+    {
+        ClassInstance ClassInstance { get; }
+        object WrappedObject { get; }
+        ObjectProperty LookupProperty(ClassProperty classProperty);
+        void FirePropertyChanged(string name);
     }
 }

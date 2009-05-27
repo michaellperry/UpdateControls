@@ -5,7 +5,7 @@
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
- * http://updatecontrolslight.codeplex.com/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -21,14 +22,11 @@ namespace UpdateControls.XAML.Wrapper
 		private ObservableCollection<object> _collection = new ObservableCollection<object>();
         private Dependent _depCollection;
 
-        public ObjectPropertyCollection(ObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectPropertyCollection(IObjectInstance objectInstance, ClassProperty classProperty)
 			: base(objectInstance, classProperty)
 		{
             if (ClassProperty.CanRead)
             {
-                // Bind to the observable collection.
-                ClassProperty.SetUserOutput(ObjectInstance, _collection);
-
                 // When the collection is out of date, update it from the wrapped object.
                 _depCollection = new Dependent(OnUpdateCollection);
 
@@ -52,11 +50,11 @@ namespace UpdateControls.XAML.Wrapper
             using (RecycleBin<CollectionItem> bin = new RecycleBin<CollectionItem>())
             {
                 foreach (object oldItem in _collection)
-                    bin.AddObject(MakeCollectionItem(_collection, oldItem, true));
+                    bin.AddObject(new CollectionItem(_collection, oldItem, true));
                 // Add new objects to the list.
                 if (sourceCollection != null)
                     foreach (object obj in sourceCollection)
-                        items.Add(bin.Extract(MakeCollectionItem(_collection, obj, false)));
+                        items.Add(bin.Extract(new CollectionItem(_collection, TranslateOutgoingValue(obj), false)));
                 // All deleted items are removed from the collection at this point.
             }
             // Ensure that all items are added to the list.
@@ -70,7 +68,7 @@ namespace UpdateControls.XAML.Wrapper
 
         private void TriggerUpdate()
         {
-            ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(delegate
             {
                 _depCollection.OnGet();
             }));
@@ -81,6 +79,11 @@ namespace UpdateControls.XAML.Wrapper
 			throw new NotSupportedException("Update Controls does not support two-way binding of collection properties.");
 		}
 
-        public abstract CollectionItem MakeCollectionItem(ObservableCollection<object> collection, object value, bool inCollection);
+        public override object Value
+        {
+            get { return _collection; }
+        }
+
+        public abstract object TranslateOutgoingValue(object value);
     }
 }

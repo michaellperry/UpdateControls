@@ -5,7 +5,7 @@
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
- * http://updatecontrolslight.codeplex.com/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
@@ -21,13 +21,14 @@ namespace UpdateControls
         /// data binding with automatic updates.
         /// </summary>
         /// <param name="wrappedObject">The object to wrap for the view.</param>
+        /// <typeparam name="TWrappedObjectType">!!!DO NOT SPECIFY!!!</typeparam>
         /// <returns>An object suitable for data binding.</returns>
-        public static object Wrap(object wrappedObject)
+        public static object Wrap<TWrappedObjectType>(TWrappedObjectType wrappedObject)
         {
             return
                 wrappedObject == null
                     ? null
-                    : new ObjectInstance(wrappedObject);
+                    : new ObjectInstance<TWrappedObjectType>(wrappedObject);
         }
     }
 }

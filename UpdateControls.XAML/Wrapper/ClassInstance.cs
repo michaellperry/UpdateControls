@@ -5,35 +5,43 @@
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
- * http://updatecontrolslight.codeplex.com/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class ClassInstance
+    public class ClassInstance : CustomTypeDescriptor
     {
         private Type _wrappedType;
-        private List<ClassProperty> _propertyWrappers;
+        private List<ClassProperty> _classProperties;
+        private PropertyDescriptorCollection _propertyDescriptors;
 
         public ClassInstance(Type wrappedType)
         {
             _wrappedType = wrappedType;
 
             // Create a wrapper for each non-collection property.
-            _propertyWrappers = _wrappedType
+            _classProperties = _wrappedType
                 .GetProperties()
-                .Select(p => new ClassProperty(p))
+                .Select(p => new ClassProperty(p, _wrappedType))
                 .ToList();
+            _propertyDescriptors = new PropertyDescriptorCollection(_classProperties.ToArray());
         }
 
-        public IEnumerable<ClassProperty> PropertyWrappers
+        public IEnumerable<ClassProperty> ClassProperties
         {
-            get { return _propertyWrappers; }
+            get { return _classProperties; }
+        }
+
+        public override PropertyDescriptorCollection GetProperties()
+        {
+            return _propertyDescriptors;
         }
 
         public override string ToString()

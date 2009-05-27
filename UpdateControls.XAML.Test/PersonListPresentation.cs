@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System.Windows.Input;
+using System.Linq;
 
 namespace UpdateControls.XAML.Test
 {
@@ -43,6 +44,12 @@ namespace UpdateControls.XAML.Test
                     personDisplay = _navigation.SelectedPerson.Display;
                 return "Person - " + personDisplay;
             }
+        }
+
+        public int SelectedPersonIndex
+        {
+            get { return _personList.People.IndexOf(_navigation.SelectedPerson); }
+            set { _navigation.SelectedPerson = 0 <= value && value < _personList.People.Count ? _personList.People.ElementAt(value) : null; }
         }
 
         public ICommand AddPerson

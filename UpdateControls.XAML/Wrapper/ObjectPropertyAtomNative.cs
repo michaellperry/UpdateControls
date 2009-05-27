@@ -5,7 +5,7 @@
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
- * http://updatecontrolslight.codeplex.com/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
@@ -16,7 +16,7 @@ namespace UpdateControls.XAML.Wrapper
 	class ObjectPropertyAtomNative : ObjectPropertyAtom
     {
 
-        public ObjectPropertyAtomNative(ObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectPropertyAtomNative(IObjectInstance objectInstance, ClassProperty classProperty)
 			: base(objectInstance, classProperty)
 		{
         }
