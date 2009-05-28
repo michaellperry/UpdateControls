@@ -11,7 +11,7 @@
 
 using UpdateControls.XAML.Wrapper;
 
-namespace UpdateControls
+namespace UpdateControls.XAML
 {
     public static class ForView
     {

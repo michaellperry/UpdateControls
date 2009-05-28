@@ -7,7 +7,11 @@ namespace UpdateControls.XAML.Wrapper
     {
         public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
         {
-            return ((IObjectInstance)instance).ClassInstance;
+            IObjectInstance objectInstance = instance as IObjectInstance;
+            if (objectInstance != null)
+                return objectInstance.ClassInstance;
+
+            return new ClassInstance(objectType, typeof(ObjectInstance<>).MakeGenericType(objectType));
         }
     }
 }
