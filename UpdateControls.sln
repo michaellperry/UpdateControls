@@ -1,0 +1,124 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "UpdateControls\UpdateControls.csproj", "{FFA4FF30-E11F-476F-A305-EC9FD624C752}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Forms", "UpdateControls.Forms\UpdateControls.Forms.csproj", "{82338022-D5A1-40B5-8953-E578FF607FCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "UpdateControls.XAML\UpdateControls.XAML.csproj", "{E4496FFF-165F-4008-8766-4DD086F5D3EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML.Test", "UpdateControls.XAML.Test\UpdateControls.XAML.Test.csproj", "{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Themes", "UpdateControls.Themes\UpdateControls.Themes.csproj", "{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Themes.UnitTest", "UpdateControls.Themes.UnitTest\UpdateControls.Themes.UnitTest.csproj", "{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.VSAddIn", "UpdateControls.VSAddIn\UpdateControls.VSAddIn.csproj", "{2CAC380D-CA27-498B-BDF1-7170986E57C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.VSAddIn.UnitTest", "UpdateControls.VSAddIn.UnitTest\UpdateControls.VSAddIn.UnitTest.csproj", "{438467D4-D992-4F48-89C8-F359A2911838}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Test", "UpdateControls.Test\UpdateControls.Test.csproj", "{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Installer", "UpdateControls.Installer\UpdateControls.Installer.csproj", "{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "UpdateControls.Setup", "UpdateControls.Setup\UpdateControls.Setup.vdproj", "{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{5336474D-B2D9-49D9-A0BA-15F1FD2D2B81}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Files\CommonProperties.cs = Solution Files\CommonProperties.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 12
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs07.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = UpdateControls\\UpdateControls.csproj
+		SccProjectName1 = UpdateControls
+		SccLocalPath1 = UpdateControls
+		SccProjectUniqueName2 = UpdateControls.Forms\\UpdateControls.Forms.csproj
+		SccProjectName2 = UpdateControls.Forms
+		SccLocalPath2 = UpdateControls.Forms
+		SccProjectUniqueName3 = UpdateControls.XAML\\UpdateControls.XAML.csproj
+		SccProjectName3 = UpdateControls.XAML
+		SccLocalPath3 = UpdateControls.XAML
+		SccProjectUniqueName4 = UpdateControls.XAML.Test\\UpdateControls.XAML.Test.csproj
+		SccProjectName4 = UpdateControls.XAML.Test
+		SccLocalPath4 = UpdateControls.XAML.Test
+		SccProjectUniqueName5 = UpdateControls.Themes\\UpdateControls.Themes.csproj
+		SccProjectName5 = UpdateControls.Themes
+		SccLocalPath5 = UpdateControls.Themes
+		SccProjectUniqueName6 = UpdateControls.Themes.UnitTest\\UpdateControls.Themes.UnitTest.csproj
+		SccProjectName6 = UpdateControls.Themes.UnitTest
+		SccLocalPath6 = UpdateControls.Themes.UnitTest
+		SccProjectUniqueName7 = UpdateControls.VSAddIn\\UpdateControls.VSAddIn.csproj
+		SccProjectName7 = UpdateControls.VSAddIn
+		SccLocalPath7 = UpdateControls.VSAddIn
+		SccProjectUniqueName8 = UpdateControls.VSAddIn.UnitTest\\UpdateControls.VSAddIn.UnitTest.csproj
+		SccProjectName8 = UpdateControls.VSAddIn.UnitTest
+		SccLocalPath8 = UpdateControls.VSAddIn.UnitTest
+		SccProjectUniqueName9 = UpdateControls.Test\\UpdateControls.Test.csproj
+		SccProjectName9 = UpdateControls.Test
+		SccLocalPath9 = UpdateControls.Test
+		SccProjectUniqueName10 = UpdateControls.Installer\\UpdateControls.Installer.csproj
+		SccProjectName10 = UpdateControls.Installer
+		SccLocalPath10 = UpdateControls.Installer
+		SccProjectUniqueName11 = UpdateControls.Setup\\UpdateControls.Setup.vdproj
+		SccProjectName11 = UpdateControls.Setup
+		SccLocalPath11 = UpdateControls.Setup
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFA4FF30-E11F-476F-A305-EC9FD624C752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA4FF30-E11F-476F-A305-EC9FD624C752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA4FF30-E11F-476F-A305-EC9FD624C752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA4FF30-E11F-476F-A305-EC9FD624C752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82338022-D5A1-40B5-8953-E578FF607FCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82338022-D5A1-40B5-8953-E578FF607FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82338022-D5A1-40B5-8953-E578FF607FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82338022-D5A1-40B5-8953-E578FF607FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4496FFF-165F-4008-8766-4DD086F5D3EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4496FFF-165F-4008-8766-4DD086F5D3EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4496FFF-165F-4008-8766-4DD086F5D3EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4496FFF-165F-4008-8766-4DD086F5D3EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CAC380D-CA27-498B-BDF1-7170986E57C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CAC380D-CA27-498B-BDF1-7170986E57C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CAC380D-CA27-498B-BDF1-7170986E57C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CAC380D-CA27-498B-BDF1-7170986E57C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{438467D4-D992-4F48-89C8-F359A2911838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{438467D4-D992-4F48-89C8-F359A2911838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{438467D4-D992-4F48-89C8-F359A2911838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{438467D4-D992-4F48-89C8-F359A2911838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Debug|Any CPU.ActiveCfg = Debug
+		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Debug|Any CPU.Build.0 = Debug
+		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Release|Any CPU.ActiveCfg = Release
+		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Release|Any CPU.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
