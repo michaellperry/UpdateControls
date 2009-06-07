@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using UpdateControls.XAML.Wrapper;
+using System.Windows.Threading;
 
 namespace UpdateControls.XAML
 {
@@ -28,7 +29,7 @@ namespace UpdateControls.XAML
             return
                 wrappedObject == null
                     ? null
-                    : new ObjectInstance<TWrappedObjectType>(wrappedObject);
+                    : new ObjectInstance<TWrappedObjectType>(wrappedObject, Dispatcher.CurrentDispatcher);
         }
     }
 }

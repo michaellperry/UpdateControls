@@ -11,6 +11,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -18,6 +19,7 @@ namespace UpdateControls.XAML.Wrapper
     {
         ClassInstance ClassInstance { get; }
         object WrappedObject { get; }
+        Dispatcher Dispatcher { get; }
         ObjectProperty LookupProperty(ClassProperty classProperty);
         void FirePropertyChanged(string name);
     }

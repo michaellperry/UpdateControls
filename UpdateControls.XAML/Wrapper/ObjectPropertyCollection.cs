@@ -68,7 +68,7 @@ namespace UpdateControls.XAML.Wrapper
 
         private void TriggerUpdate()
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(delegate
+            ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
             {
                 _depCollection.OnGet();
             }));

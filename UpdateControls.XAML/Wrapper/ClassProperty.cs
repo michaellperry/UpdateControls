@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -81,7 +82,7 @@ namespace UpdateControls.XAML.Wrapper
                     // Find the type of object instance based on the item type.
                     _objectInstanceConstructor = typeof(ObjectInstance<>)
                         .MakeGenericType(itemType)
-                        .GetConstructor(new Type[] { typeof(object) });
+                        .GetConstructor(new Type[] { typeof(object), typeof(Dispatcher) });
                 }
                 valueType = typeof(IEnumerable);
             }
@@ -93,7 +94,7 @@ namespace UpdateControls.XAML.Wrapper
 
                 // Find the type of object instance based on the property type.
                 _objectInstanceConstructor = valueType
-                    .GetConstructor(new Type[] { typeof(object) });
+                    .GetConstructor(new Type[] { typeof(object), typeof(Dispatcher) });
             }
 
 			_valueType = valueType;
@@ -104,9 +105,9 @@ namespace UpdateControls.XAML.Wrapper
             return _makeObjectProperty(objectInstance);
         }
 
-        public object MakeObjectInstance(object wrappedObject)
+        public object MakeObjectInstance(object wrappedObject, Dispatcher dispatcher)
         {
-            return _objectInstanceConstructor.Invoke(new object[] { wrappedObject });
+            return _objectInstanceConstructor.Invoke(new object[] { wrappedObject, dispatcher });
         }
 
 		public object GetObjectValue(object wrappedObject)

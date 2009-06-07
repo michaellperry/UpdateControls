@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -25,12 +26,16 @@ namespace UpdateControls.XAML.Wrapper
         // Wrap the object instance.
         private object _wrappedObject;
 
+        // The dispatcher for the view that I'm attached to.
+        private Dispatcher _dispatcher;
+
 		// Wrap all properties.
 		private List<ObjectProperty> _properties;
 
-		public ObjectInstance(object wrappedObject)
+		public ObjectInstance(object wrappedObject, Dispatcher dispatcher)
 		{
 			_wrappedObject = wrappedObject;
+            _dispatcher = dispatcher;
 
             // Create a wrapper around each property.
             _properties = _classInstance.ClassProperties.Select(p => ObjectProperty.From(this, p)).ToList();
@@ -46,8 +51,13 @@ namespace UpdateControls.XAML.Wrapper
             get { return _wrappedObject; }
         }
 
-		public ObjectProperty LookupProperty(ClassProperty classProperty)
-		{
+        public Dispatcher Dispatcher
+        {
+            get { return _dispatcher; }
+        }
+
+        public ObjectProperty LookupProperty(ClassProperty classProperty)
+        {
 			return _properties.Single(p => p.ClassProperty == classProperty);
 		}
 
