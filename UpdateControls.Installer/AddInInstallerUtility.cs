@@ -32,17 +32,10 @@ namespace UpdateControls.Installer
             _logWriter = logWriter;
         }
 
-        public void InstallAddIn(IDictionary savedState, string assemblyPath, string assemblyName, ToolboxInstallerUtility installer)
+        public void InstallAddIn(IDictionary savedState, string assemblyPath, string assemblyName)
         {
-            if (installer.Has2008)
-            {
-                _logWriter.WriteLine("{0}: Installing add-in for Visual Studio 2008.", DateTime.Now);
-                InstallAddIn(savedState, assemblyPath, assemblyName, "2008");
-            }
-            if (!installer.Has2008)
-            {
-                _logWriter.WriteLine("{0}: No version of Visual Studio was found.", DateTime.Now);
-            }
+            _logWriter.WriteLine("{0}: Installing add-in for Visual Studio 2008.", DateTime.Now);
+            InstallAddIn(savedState, assemblyPath, assemblyName, "2008");
         }
 
         private void InstallAddIn(IDictionary savedState, string assemblyPath, string assemblyName, string edition)

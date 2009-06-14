@@ -37,6 +37,10 @@ namespace UpdateControls.Installer
             {
                 try
                 {
+                    // Install the add-in.
+                    AddInInstallerUtility addInUtility = new AddInInstallerUtility(logWriter);
+                    addInUtility.InstallAddIn(stateSaver, targetDir, "UpdateControls.VSAddIn");
+
                     // Add the update controls to the toolbox.
                     if (!File.Exists(formsPath))
                         throw new Exception(string.Format("Target file not found: {0}", formsPath));
@@ -55,10 +59,6 @@ namespace UpdateControls.Installer
                     utility.InstallControl(themesPath, "Update Controls Themes");
 
                     utility.Cleanup();
-
-                    // Install the add-in.
-                    AddInInstallerUtility addInUtility = new AddInInstallerUtility(logWriter);
-                    addInUtility.InstallAddIn(stateSaver, targetDir, "UpdateControls.VSAddIn", utility);
                 }
                 catch (Exception x)
                 {

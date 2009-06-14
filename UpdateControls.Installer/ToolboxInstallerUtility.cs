@@ -67,11 +67,20 @@ namespace UpdateControls.Installer
 
         private DTE MakeDTE(string progId)
         {
-            Type type = System.Type.GetTypeFromProgID(progId);
-            if (type == null)
+            try
+            {
+                Type type = System.Type.GetTypeFromProgID(progId);
+                if (type == null)
+                    return null;
+                DTE dte = null;
+                Retry(() => { dte = (DTE)System.Activator.CreateInstance(type, true); });
+                return dte;
+            }
+            catch (Exception x)
+            {
+                _logWriter.WriteLine("{0}: {1}", DateTime.Now, x.ToString());
                 return null;
-            DTE dte = (DTE)System.Activator.CreateInstance(type, true);
-            return dte;
+            }
         }
 
         public void Cleanup()
@@ -98,7 +107,8 @@ namespace UpdateControls.Installer
 
         private void Retry(TryMe tryMe)
         {
-            while (true)
+            int count = 3;
+            while (count > 0)
             {
                 try
                 {
@@ -110,6 +120,7 @@ namespace UpdateControls.Installer
                     if ((uint)x.ErrorCode == 0x8001010A)
                     {
                         System.Threading.Thread.Sleep(5000);
+                        --count;
                         continue;
                     }
                     throw;
