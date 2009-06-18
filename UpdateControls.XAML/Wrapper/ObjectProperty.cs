@@ -26,7 +26,6 @@ namespace UpdateControls.XAML.Wrapper
 
 		public abstract void OnUserInput(object value);
         public abstract object Value { get; }
-        public abstract void TouchValue();
 
         public static ObjectProperty From(IObjectInstance objectInstance, ClassProperty classProperty)
         {

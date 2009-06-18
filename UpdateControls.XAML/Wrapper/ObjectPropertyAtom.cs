@@ -19,6 +19,7 @@ namespace UpdateControls.XAML.Wrapper
     {
         private Dependent _depProperty;
         private object _value;
+		private bool _firePropertyChanged = false;
 
 		public ObjectPropertyAtom(IObjectInstance objectInstance, ClassProperty classProperty)
 			: base(objectInstance, classProperty)
@@ -30,7 +31,9 @@ namespace UpdateControls.XAML.Wrapper
 				{
 					object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
 					_value = TranslateOutgoingValue(value);
-                    ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+					if (_firePropertyChanged)
+	                    ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+					_firePropertyChanged = true;
 				});
 				// When the property becomes out of date, trigger an update.
 				Action triggerUpdate = new Action(delegate
@@ -42,7 +45,7 @@ namespace UpdateControls.XAML.Wrapper
 				});
 				_depProperty.Invalidated += triggerUpdate;
 				// The property is out of date right now, so trigger the first update.
-				triggerUpdate();
+				_depProperty.Touch();
 			}
 		}
 
@@ -58,11 +61,6 @@ namespace UpdateControls.XAML.Wrapper
         public override object Value
         {
             get { return _value; }
-        }
-
-        public override void TouchValue()
-        {
-            _depProperty.Touch();
         }
 
         public abstract object TranslateIncommingValue(object value);

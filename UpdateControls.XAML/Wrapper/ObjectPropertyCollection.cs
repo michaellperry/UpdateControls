@@ -34,7 +34,7 @@ namespace UpdateControls.XAML.Wrapper
                 _depCollection.Invalidated += TriggerUpdate;
 
                 // The property is out of date right now, so trigger the first update.
-                TriggerUpdate();
+                _depCollection.Touch();
             }
         }
 
@@ -82,11 +82,6 @@ namespace UpdateControls.XAML.Wrapper
         public override object Value
         {
             get { return _collection; }
-        }
-
-        public override void TouchValue()
-        {
-            _depCollection.Touch();
         }
 
         public abstract object TranslateOutgoingValue(object value);

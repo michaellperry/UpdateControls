@@ -20,7 +20,7 @@
         <ListBox ItemsSource="{Binding PersonList.People}" SelectedItem="{Binding Navigation.SelectedPerson}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <ListBoxItem Content="{Binding Display}"/>
+                    <TextBlock Text="{Binding Display}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

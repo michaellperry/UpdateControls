@@ -22,6 +22,5 @@ namespace UpdateControls.XAML.Wrapper
         Dispatcher Dispatcher { get; }
         ObjectProperty LookupProperty(ClassProperty classProperty);
         void FirePropertyChanged(string name);
-        void TouchAllProperties();
     }
 }
