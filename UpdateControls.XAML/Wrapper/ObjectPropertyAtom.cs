@@ -60,6 +60,11 @@ namespace UpdateControls.XAML.Wrapper
             get { return _value; }
         }
 
+        public override void TouchValue()
+        {
+            _depProperty.Touch();
+        }
+
         public abstract object TranslateIncommingValue(object value);
         public abstract object TranslateOutgoingValue(object value);
 	}

@@ -48,6 +48,11 @@ namespace UpdateControls.XAML.Wrapper
                 // Insert the item in the correct position.
                 _collection.Insert(index, _item);
             }
+
+            // Touch all the properties to ensure that they get loaded.
+            IObjectInstance obj = _item as IObjectInstance;
+            if (obj != null)
+                obj.TouchAllProperties();
         }
 
         public override int GetHashCode()

@@ -10,8 +10,6 @@
  **********************************************************************/
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System;
 
 [assembly: AssemblyDescription("")]
@@ -20,5 +18,5 @@ using System;
 [assembly: AssemblyCopyright("Copyright 2009 Mallard Software Designs, Licensed under LGPL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2.0.4.1")]
-[assembly: AssemblyFileVersion("2.0.4.1")]
+[assembly: AssemblyVersion("2.0.4.2")]
+[assembly: AssemblyFileVersion("2.0.4.2")]

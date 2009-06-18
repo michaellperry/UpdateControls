@@ -221,6 +221,17 @@ namespace UpdateControls
             }
         }
 
+        /// <summary>
+        /// Bring the dependent up-to-date, but don't take a dependency on it. This is
+        /// useful for pre-loading properties of an object as it is created. It avoids
+        /// the appearance of a list populated with empty objects while properties
+        /// of that object are loaded.
+        /// </summary>
+        public void Touch()
+        {
+            MakeUpToDate();
+        }
+
 		internal void MakeOutOfDate()
 		{
 			lock ( _precedents )

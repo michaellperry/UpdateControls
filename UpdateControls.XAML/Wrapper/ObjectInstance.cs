@@ -89,6 +89,12 @@ namespace UpdateControls.XAML.Wrapper
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
+        public void TouchAllProperties()
+        {
+            foreach (ObjectProperty property in _properties)
+                property.TouchValue();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
