@@ -19,24 +19,21 @@ namespace UpdateControls.XAML.Test
 	/// </summary>
 	public partial class Window1 : Window
 	{
-        PersonList _personList;
-
-        // Create a new window with a new person list.
-        public Window1() : this(new PersonList())
-        {
-        }
-
-        public Window1(PersonList personList)
-        {
-            InitializeComponent();
-            _personList = personList;
-            DataContext = ForView.Wrap(new PersonListPresentation(_personList, new PersonListNavigation()));
-        }
-
-        private void NewWindow_Click(object sender, RoutedEventArgs e)
-        {
-            // Create a new window using the same person list.
-            new Window1(_personList).Show();
-        }
-    }
+		public Window1()
+		{
+			InitializeComponent();
+			ContactList contactList = new ContactList();
+			Person mike = contactList.NewPerson();
+			mike.First = "Michael";
+			mike.Last = "Perry";
+			mike.Gender = GenderEnum.Male;
+			Person jenny = contactList.NewPerson();
+			jenny.First = "Jennifer";
+			jenny.Last = "Perry";
+			jenny.Gender = GenderEnum.Female;
+			mike.Spouse = jenny;
+			jenny.Spouse = mike;
+			DataContext = ForView.Wrap(new ContactListViewModel(contactList, new ContactListNavigationModel()));
+		}
+	}
 }
