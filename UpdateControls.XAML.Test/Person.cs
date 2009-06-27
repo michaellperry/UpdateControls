@@ -38,7 +38,7 @@ namespace UpdateControls.XAML.Test
 		public Person Spouse
 		{
 			get { _indSpouse.OnGet(); return _spouse; }
-			set { _indSpouse.OnSet(); _spouse = value; }
+			private set { _indSpouse.OnSet(); _spouse = value; }
 		}
 		// End generated code --------------------------------
 		#endregion
@@ -47,5 +47,29 @@ namespace UpdateControls.XAML.Test
 		{
 			get { return string.Format("{0}, {1}", Last, First); }
 		}
+
+        public static void Marry(Person a, Person b)
+        {
+            // If either person is already married,
+            // annul that marriage.
+            if (a != null && a.Spouse != null)
+            {
+                a.Spouse.Spouse = null;
+                a.Spouse = null;
+            }
+
+            if (b != null && b.Spouse != null)
+            {
+                b.Spouse.Spouse = null;
+                b.Spouse = null;
+            }
+
+            // Marry the two people
+            if (a != null && b != null)
+            {
+                a.Spouse = b;
+                b.Spouse = a;
+            }
+        }
 	}
 }

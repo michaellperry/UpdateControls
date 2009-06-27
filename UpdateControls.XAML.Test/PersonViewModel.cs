@@ -38,18 +38,24 @@ namespace UpdateControls.XAML.Test
 			set { _person.Gender = value == "Male" ? GenderEnum.Male : GenderEnum.Female; }
 		}
 
-		public PersonViewModel Spouse
+		public SpouseViewModel Spouse
 		{
-			get { return PersonViewModel.Wrap(_person.Spouse, _contactList); }
-			set { _person.Spouse = PersonViewModel.Unwrap(value); }
+			get { return SpouseViewModel.Wrap(_person.Spouse); }
+			set { Person.Marry(_person, SpouseViewModel.Unwrap(value)); }
 		}
 
-		public IEnumerable<PersonViewModel> PotentialSpouses
+		public IEnumerable<SpouseViewModel> PotentialSpouses
 		{
 			get
 			{
-				// Return all people of the opposite gender.
-				return _contactList.People.Where(p => p.Gender != _person.Gender).Select(p => PersonViewModel.Wrap(p, _contactList));
+                return
+                    // Return all people of the opposite gender.
+                    // Include an option to be unmarried.
+                    new List<Person>() { null }
+                    .Union(_contactList.People
+                        .Where(p => p.Gender != _person.Gender)
+                    )
+                    .Select(p => SpouseViewModel.Wrap(p));
 			}
 		}
 
@@ -60,11 +66,7 @@ namespace UpdateControls.XAML.Test
             PersonViewModel that = obj as PersonViewModel;
             if (that == null)
                 return false;
-            bool objectEquals = Object.Equals(this._person, that._person);
-            if (objectEquals)
-                return true;
-            else
-                return false;
+            return Object.Equals(this._person, that._person);
         }
 
 		public override int GetHashCode()

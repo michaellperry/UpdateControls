@@ -73,6 +73,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Command="{Binding NewPerson}">New Person</Button>
             <Button Command="{Binding DeletePerson}">Delete Person</Button>
+            <Button Name="NewWindow" Click="NewWindow_Click">New Window</Button>
         </StackPanel>
     </Grid>
 </Window>

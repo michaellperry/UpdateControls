@@ -40,7 +40,7 @@ namespace UpdateControls.XAML.Wrapper
                 // Insert the item into the correct position.
                 _collection.Insert(index, _item);
             }
-            else if (!_collection[index].Equals(_item))
+            else if (!object.Equals(_collection[index], _item))
             {
                 // Remove the item from the old position.
                 _collection.Remove(_item);
