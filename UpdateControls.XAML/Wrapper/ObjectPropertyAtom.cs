@@ -11,7 +11,6 @@
 
 using System;
 using UpdateControls;
-using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -40,8 +39,11 @@ namespace UpdateControls.XAML.Wrapper
 				{
                     ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
 					{
-						_depProperty.OnGet();
-					}));
+                        using (NotificationGate.BeginOutbound())
+                        {
+                            _depProperty.OnGet();
+                        }
+                    }));
 				});
 				_depProperty.Invalidated += triggerUpdate;
 			}
@@ -49,7 +51,7 @@ namespace UpdateControls.XAML.Wrapper
 
 		public override void OnUserInput(object value)
 		{
-            if (_depProperty.IsNotUpdating)
+            if (NotificationGate.IsInbound)
             {
                 value = TranslateIncommingValue(value);
                 ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
@@ -58,7 +60,14 @@ namespace UpdateControls.XAML.Wrapper
 
         public override object Value
         {
-			get { _depProperty.OnGet(); return _value; }
+            get
+            {
+                using (NotificationGate.BeginOutbound())
+                {
+                    _depProperty.OnGet();
+                }
+                return _value;
+            }
         }
 
         public abstract object TranslateIncommingValue(object value);

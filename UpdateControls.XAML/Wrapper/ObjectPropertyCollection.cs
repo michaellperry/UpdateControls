@@ -13,7 +13,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -67,7 +66,10 @@ namespace UpdateControls.XAML.Wrapper
         {
             ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
             {
-                _depCollection.OnGet();
+                using (NotificationGate.BeginOutbound())
+                {
+                    _depCollection.OnGet();
+                }
             }));
         }
 
@@ -78,7 +80,14 @@ namespace UpdateControls.XAML.Wrapper
 
         public override object Value
         {
-			get { _depCollection.OnGet(); return _collection; }
+            get
+            {
+                using (NotificationGate.BeginOutbound())
+                {
+                    _depCollection.OnGet();
+                }
+                return _collection;
+            }
         }
 
         public abstract object TranslateOutgoingValue(object value);

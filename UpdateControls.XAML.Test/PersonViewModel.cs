@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace UpdateControls.XAML.Test
 {
@@ -54,15 +53,19 @@ namespace UpdateControls.XAML.Test
 			}
 		}
 
-		public override bool Equals(object obj)
-		{
-			if (obj == this)
-				return true;
-			PersonViewModel that = obj as PersonViewModel;
-			if (that == null)
-				return false;
-			return Object.Equals(this._person, that._person);
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+                return true;
+            PersonViewModel that = obj as PersonViewModel;
+            if (that == null)
+                return false;
+            bool objectEquals = Object.Equals(this._person, that._person);
+            if (objectEquals)
+                return true;
+            else
+                return false;
+        }
 
 		public override int GetHashCode()
 		{
