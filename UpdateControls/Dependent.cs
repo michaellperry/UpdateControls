@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Linq;
 
 namespace UpdateControls
 {
@@ -138,7 +137,7 @@ namespace UpdateControls
             DISPOSED
 		};
 		private StatusType _status;
-		private List<WeakReference> _precedents;
+		private List<Precedent> _precedents;
 
 		/// <summary>
 		/// Creates a new dependent sentry with a given update procedure.
@@ -149,7 +148,7 @@ namespace UpdateControls
 		{
 			_update = update;
 			_status = StatusType.OUT_OF_DATE;
-			_precedents = new List<WeakReference>();
+			_precedents = new List<Precedent>();
 
             _base.GainDependent += _base_GainDependent;
             _base.LooseDependent += _base_LooseDependent;
@@ -240,9 +239,8 @@ namespace UpdateControls
 					_status == StatusType.UPDATING )
 				{
 					// Tell all precedents to forget about me.
-					foreach ( WeakReference reference in _precedents )
+					foreach ( Precedent precedent in _precedents )
 					{
-						Precedent precedent = (Precedent)reference.Target;
 						if (precedent != null)
 							precedent.RemoveDependent( this );
 					}
@@ -322,9 +320,9 @@ namespace UpdateControls
 			{
 				if ( _status == StatusType.UPDATING )
 				{
-					if ( _precedents.Any(r => r.Target == precedent) )
+					if ( _precedents.Contains(precedent) )
 						return false;
-					_precedents.Add( new WeakReference(precedent) );
+					_precedents.Add( precedent );
 					return true;
 				}
 				else if ( _status != StatusType.UPDATING_AND_OUT_OF_DATE )

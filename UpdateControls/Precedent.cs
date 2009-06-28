@@ -25,7 +25,7 @@ namespace UpdateControls
 	/// </remarks>
 	internal class Precedent
 	{
-		private List<WeakReference> _dependents = new List<WeakReference>();
+		private List<Dependent> _dependents = new List<Dependent>();
 
 		public event Action GainDependent;
 		public event Action LooseDependent;
@@ -53,7 +53,7 @@ namespace UpdateControls
 					bool gain = false;
 					if ( _dependents.Count == 0 && GainDependent != null )
 						gain = true;
-					_dependents.Add( new WeakReference(update) );
+					_dependents.Add( update );
 					if ( gain )
 						GainDependent();
 				}
@@ -81,7 +81,7 @@ namespace UpdateControls
 			{
 				while (_dependents.Count > 0)
 				{
-					Dependent dependent = (Dependent)_dependents[0].Target;
+					Dependent dependent = _dependents[0];
 					if (dependent != null)
 						dependent.MakeOutOfDate();
 					else
@@ -93,7 +93,7 @@ namespace UpdateControls
 		public void RemoveDependent( Dependent dependent )
 		{
 			int before = _dependents.Count;
-			_dependents.RemoveAll(r => r.Target == dependent || !r.IsAlive);
+			_dependents.Remove(dependent);
 			Debug.Assert( _dependents.Count < before, "Dependent was not found in the collection." );
 			if ( _dependents.Count == 0 && LooseDependent != null )
 				LooseDependent();
