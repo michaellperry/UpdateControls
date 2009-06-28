@@ -18,5 +18,5 @@ using System;
 [assembly: AssemblyCopyright("Copyright 2009 Mallard Software Designs, Licensed under LGPL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2.0.4.2")]
-[assembly: AssemblyFileVersion("2.0.4.2")]
+[assembly: AssemblyVersion("2.0.4.3")]
+[assembly: AssemblyFileVersion("2.0.4.3")]
