@@ -23,35 +23,9 @@ namespace UpdateControls.XAML.Wrapper
     {
         private static readonly Type[] Primitives = new Type[]
         {
-            typeof(bool),
-            typeof(byte),
-            typeof(sbyte),
-            typeof(char),
-            typeof(decimal),
-            typeof(double),
-            typeof(float),
-            typeof(int),
-            typeof(uint),
-            typeof(long),
-            typeof(ulong),
 			typeof(object),
-            typeof(short),
-            typeof(ushort),
             typeof(string),
-            typeof(ICommand),
-            typeof(bool?),
-            typeof(byte?),
-            typeof(sbyte?),
-            typeof(char?),
-            typeof(decimal?),
-            typeof(double?),
-            typeof(float?),
-            typeof(int?),
-            typeof(uint?),
-            typeof(long?),
-            typeof(ulong?),
-            typeof(short?),
-            typeof(ushort?)
+            typeof(ICommand)
         };
 
         private PropertyInfo _propertyInfo;
@@ -69,7 +43,7 @@ namespace UpdateControls.XAML.Wrapper
             // Determine which type of object property to create.
             Type propertyType = property.PropertyType;
             Type valueType;
-            if (Primitives.Contains(propertyType))
+			if (IsPrimitive(propertyType))
             {
                 _makeObjectProperty = objectInstance =>
                     new ObjectPropertyAtomNative(objectInstance, this);
@@ -83,7 +57,7 @@ namespace UpdateControls.XAML.Wrapper
                     itemType = propertyType.GetGenericArguments()[0];
                 else
                     itemType = typeof(object);
-                if (Primitives.Contains(itemType))
+                if (IsPrimitive(itemType))
                     _makeObjectProperty = objectInstance =>
                         new ObjectPropertyCollectionNative(objectInstance, this);
                 else
@@ -189,5 +163,14 @@ namespace UpdateControls.XAML.Wrapper
             ObjectProperty objectProperty = objectInstance.LookupProperty(this);
             return objectProperty;
         }
-    }
+
+		private static bool IsPrimitive(Type type)
+		{
+			return
+				type.IsValueType ||
+				type.IsPrimitive ||
+				(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ||
+				Primitives.Contains(type);
+		}
+	}
 }
