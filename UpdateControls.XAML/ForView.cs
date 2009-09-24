@@ -31,5 +31,20 @@ namespace UpdateControls.XAML
                     ? null
                     : new ObjectInstance<TWrappedObjectType>(wrappedObject, Dispatcher.CurrentDispatcher);
         }
+
+        /// <summary>
+        /// Unwrap a DataContext to get back to the original object.
+        /// </summary>
+        /// <typeparam name="TWrappedObjectType">The type of the object that was wrapped.</typeparam>
+        /// <param name="dataContext">The DataContext previously wrapped.</param>
+        /// <returns>The object originally wrapped, or null.</returns>
+        public static TWrappedObjectType Unwrap<TWrappedObjectType>(object dataContext)
+        {
+            ObjectInstance<TWrappedObjectType> wrapper = dataContext as ObjectInstance<TWrappedObjectType>;
+            return
+                wrapper == null
+                    ? default(TWrappedObjectType)
+                    : (TWrappedObjectType)wrapper.WrappedObject;
+        }
     }
 }
