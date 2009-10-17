@@ -36,5 +36,10 @@ namespace UpdateControls.XAML.Wrapper
         {
             return String.Format("{0}({1})", ClassProperty, ObjectInstance.WrappedObject);
         }
+
+        protected object WrapObject(object value)
+        {
+            return ClassProperty.MakeObjectInstance(value, ObjectInstance.Dispatcher);
+        }
 	}
 }

@@ -70,14 +70,26 @@ namespace UpdateControls
 			}
 		}
 
-		public void Revive( Cache cache )
-		{
-			lock ( this )
-			{
-				// Remove the cache from the MRUs.
-				_fresh.RemoveAll(r => r.Target == cache || !r.IsAlive);
-				_stale.RemoveAll(r => r.Target == cache || !r.IsAlive);
-			}
-		}
-	}
+        public void Revive(Cache cache)
+        {
+            lock (this)
+            {
+                // Remove the cache from the MRUs.
+                RemoveFromList(cache, _fresh);
+                RemoveFromList(cache, _stale);
+            }
+        }
+
+        private static void RemoveFromList(Cache cache, List<WeakReference> list)
+        {
+            for (int i = 0; i < list.Count; )
+            {
+                WeakReference r = list[i];
+                if (r.Target == cache || !r.IsAlive)
+                    list.RemoveAt(i);
+                else
+                    ++i;
+            }
+        }
+    }
 }

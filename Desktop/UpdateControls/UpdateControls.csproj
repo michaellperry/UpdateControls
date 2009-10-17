@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="CacheManager.cs" />
     <Compile Include="Dependent.cs" />
+    <Compile Include="Dependent.CurrentUpdate.cs" />
     <Compile Include="Independent.cs" />
     <Compile Include="Precedent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 
 namespace UpdateControls
 {
@@ -98,7 +97,7 @@ namespace UpdateControls
 	/// End Class
 	/// </code>
 	/// </example>
-	public sealed class Dependent : Cache
+	public partial class Dependent : Cache
 	{
         /// <summary>
         /// Event fired when the intermediate cache is unloaded.
@@ -114,17 +113,6 @@ namespace UpdateControls
         /// </remarks>
         /// </summary>
         public event Action Invalidated;
-
-		private static LocalDataStoreSlot _currentUpdateSlot = Thread.AllocateDataSlot();
-
-		internal static Dependent GetCurrentUpdate()
-		{
-			return (Dependent)Thread.GetData(_currentUpdateSlot);
-		}
-		private static void SetCurrentUpdate(Dependent dependent)
-		{
-			Thread.SetData(_currentUpdateSlot, dependent);
-		}
 
 		internal Precedent _base = new Precedent();
 		private Action _update;
@@ -278,7 +266,7 @@ namespace UpdateControls
 				formerStatus == StatusType.UPDATING_AND_OUT_OF_DATE )
 			{
 				// Report cycles.
-				Trace.WriteLine( string.Format("Cycle discovered during update: {0}", Environment.StackTrace) );
+                ReportCycles();
                 //MLP: Don't throw, because this will mask any exception in an update which caused reentrance.
 				//throw new InvalidOperationException( "Cycle discovered during update." );
 			}
@@ -347,5 +335,7 @@ namespace UpdateControls
             if (Unloaded != null)
                 Unloaded();
         }
+
+        static partial void ReportCycles();
     }
 }

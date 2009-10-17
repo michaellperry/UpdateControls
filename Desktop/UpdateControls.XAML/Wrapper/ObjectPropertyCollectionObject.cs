@@ -22,7 +22,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override object TranslateOutgoingValue(object value)
         {
-            return value == null ? null : ClassProperty.MakeObjectInstance(value, ObjectInstance.Dispatcher);
+            return value == null ? null : WrapObject(value);
         }
     }
 }
