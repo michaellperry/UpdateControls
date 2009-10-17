@@ -32,9 +32,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{EA17
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight", "Silverlight", "{446B5CE8-FE2A-447C-A095-1E5FE68350C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light", "Silverlight\UpdateControls.Light\UpdateControls.Light.csproj", "{BB6E8A4F-6031-4386-A7E2-45DF90C92556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light.Demo", "Silverlight\UpdateControls.Light.Demo\UpdateControls.Light.Demo.csproj", "{A5424374-189E-4A60-8A91-50AB72E67059}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UpdateControls.Light.Demo.VB", "Silverlight\UpdateControls.Light.Demo.VB\UpdateControls.Light.Demo.VB.vbproj", "{A43E60A2-EF18-4252-A8B3-253D6600B558}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
+		SccNumberOfProjects = 15
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs07.codeplex.com/
 		SccLocalPath0 = .
@@ -82,6 +88,18 @@ Global
 		SccProjectTopLevelParentUniqueName11 = UpdateControls.sln
 		SccProjectName11 = Desktop/UpdateControls.Setup
 		SccLocalPath11 = Desktop\\UpdateControls.Setup
+		SccProjectUniqueName12 = Silverlight\\UpdateControls.Light\\UpdateControls.Light.csproj
+		SccProjectTopLevelParentUniqueName12 = UpdateControls.sln
+		SccProjectName12 = Silverlight/UpdateControls.Light
+		SccLocalPath12 = Silverlight\\UpdateControls.Light
+		SccProjectUniqueName13 = Silverlight\\UpdateControls.Light.Demo\\UpdateControls.Light.Demo.csproj
+		SccProjectTopLevelParentUniqueName13 = UpdateControls.sln
+		SccProjectName13 = Silverlight/UpdateControls.Light.Demo
+		SccLocalPath13 = Silverlight\\UpdateControls.Light.Demo
+		SccProjectUniqueName14 = Silverlight\\UpdateControls.Light.Demo.VB\\UpdateControls.Light.Demo.VB.vbproj
+		SccProjectTopLevelParentUniqueName14 = UpdateControls.sln
+		SccProjectName14 = Silverlight/UpdateControls.Light.Demo.VB
+		SccLocalPath14 = Silverlight\\UpdateControls.Light.Demo.VB
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -132,22 +150,37 @@ Global
 		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Debug|Any CPU.Build.0 = Debug
 		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Release|Any CPU.ActiveCfg = Release
 		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Release|Any CPU.Build.0 = Release
+		{BB6E8A4F-6031-4386-A7E2-45DF90C92556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB6E8A4F-6031-4386-A7E2-45DF90C92556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB6E8A4F-6031-4386-A7E2-45DF90C92556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB6E8A4F-6031-4386-A7E2-45DF90C92556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5424374-189E-4A60-8A91-50AB72E67059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5424374-189E-4A60-8A91-50AB72E67059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5424374-189E-4A60-8A91-50AB72E67059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5424374-189E-4A60-8A91-50AB72E67059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A43E60A2-EF18-4252-A8B3-253D6600B558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A43E60A2-EF18-4252-A8B3-253D6600B558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A43E60A2-EF18-4252-A8B3-253D6600B558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A43E60A2-EF18-4252-A8B3-253D6600B558}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5336474D-B2D9-49D9-A0BA-15F1FD2D2B81} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{FFA4FF30-E11F-476F-A305-EC9FD624C752} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{82338022-D5A1-40B5-8953-E578FF607FCE} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{E4496FFF-165F-4008-8766-4DD086F5D3EC} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{2CAC380D-CA27-498B-BDF1-7170986E57C1} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{438467D4-D992-4F48-89C8-F359A2911838} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{E4496FFF-165F-4008-8766-4DD086F5D3EC} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{5336474D-B2D9-49D9-A0BA-15F1FD2D2B81} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{FFA4FF30-E11F-476F-A305-EC9FD624C752} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{BB6E8A4F-6031-4386-A7E2-45DF90C92556} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
+		{A5424374-189E-4A60-8A91-50AB72E67059} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
+		{A43E60A2-EF18-4252-A8B3-253D6600B558} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
 	EndGlobalSection
 EndGlobal

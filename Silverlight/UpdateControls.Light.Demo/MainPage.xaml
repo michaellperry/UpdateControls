@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="UpdateControls.Light.Demo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:my="clr-namespace:UpdateControls.Light.Demo"
+    Width="400" Height="300" Margin="3">
+    <UserControl.Resources>
+        <DataTemplate x:Key="InvoiceTemplate">
+            <TextBlock Text="{Binding Number}"/>
+        </DataTemplate>
+        <Style x:Key="InvoiceListBox" TargetType="ListBox">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style x:Key="InvoiceButton" TargetType="Button">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style x:Key="Label" TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style x:Key="NameTextBox" TargetType="TextBox">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Width" Value="314"/>
+        </Style>
+        <Style x:Key="SummaryTextBlock" TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Width" Value="314"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Customer:"/>
+            <TextBox Style="{StaticResource NameTextBox}" Text="{Binding CustomerName, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <ListBox 
+                Style="{StaticResource InvoiceListBox}"
+                ItemsSource="{Binding UnpaidInvoices}" 
+                SelectedItem="{Binding SelectedUnpaidInvoice, Mode=TwoWay}"
+                ItemTemplate="{StaticResource InvoiceTemplate}"/>
+            <StackPanel Orientation="Vertical">
+                <Button 
+                    Style="{StaticResource InvoiceButton}"
+                    Content="Paid &gt;&gt;" 
+                    my:ButtonService.Command="{Binding AddPaidInvoices}"/>
+                <Button 
+                    Style="{StaticResource InvoiceButton}"
+                    Content="&lt;&lt; Unpaid" 
+                    my:ButtonService.Command="{Binding RemovePaidInvoices}"/>
+            </StackPanel>
+            <ListBox 
+                Style="{StaticResource InvoiceListBox}"
+                ItemsSource="{Binding PaidInvoices}" 
+                SelectedItem="{Binding SelectedPaidInvoice, Mode=TwoWay}"
+                ItemTemplate="{StaticResource InvoiceTemplate}"/>
+        </StackPanel>
+        <TextBlock Style="{StaticResource SummaryTextBlock}" Text="{Binding Summary}"/>
+    </StackPanel>
+</UserControl>
