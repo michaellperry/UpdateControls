@@ -21,9 +21,12 @@ namespace UpdateControls.XAML.Wrapper
         private Type _wrappedType;
         private List<ClassProperty> _classProperties;
         private PropertyDescriptorCollection _propertyDescriptors;
+        private List<ClassEvent> _classEvents;
+        private EventDescriptorCollection _eventDescriptors;
 
         public ClassInstance(Type wrappedType, Type objectInstanceType)
         {
+            System.Diagnostics.Debug.WriteLine(string.Format("new ClassInstance({0}, {1})", wrappedType, objectInstanceType));
             _wrappedType = wrappedType;
 
             // Create a wrapper for each non-collection property.
@@ -32,6 +35,13 @@ namespace UpdateControls.XAML.Wrapper
                 .Select(p => new ClassProperty(p, objectInstanceType))
                 .ToList();
             _propertyDescriptors = new PropertyDescriptorCollection(_classProperties.ToArray());
+
+            // Create a pass-through for each event.
+            _classEvents = _wrappedType
+                .GetEvents()
+                .Select(e => new ClassEvent(e))
+                .ToList();
+            _eventDescriptors = new EventDescriptorCollection(_classEvents.ToArray());
         }
 
         public IEnumerable<ClassProperty> ClassProperties
@@ -42,6 +52,16 @@ namespace UpdateControls.XAML.Wrapper
         public override PropertyDescriptorCollection GetProperties()
         {
             return _propertyDescriptors;
+        }
+
+        public override EventDescriptorCollection GetEvents()
+        {
+            return _eventDescriptors;
+        }
+
+        public override EventDescriptorCollection GetEvents(Attribute[] attributes)
+        {
+            return _eventDescriptors;
         }
 
         public override string ToString()

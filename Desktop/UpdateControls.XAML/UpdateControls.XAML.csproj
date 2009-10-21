@@ -66,6 +66,7 @@
     <Compile Include="ValueDependencyObject.cs" />
     <Compile Include="ValueObservableCollection.cs" />
     <Compile Include="ValueSource.cs" />
+    <Compile Include="Wrapper\ClassEvent.cs" />
     <Compile Include="Wrapper\ClassInstance.cs" />
     <Compile Include="Wrapper\ClassInstanceProvider.cs" />
     <Compile Include="Wrapper\ClassProperty.cs" />

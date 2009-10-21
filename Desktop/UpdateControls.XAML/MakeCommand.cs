@@ -66,6 +66,7 @@ namespace UpdateControls.XAML
             public bool CanExecute(object parameter)
             {
                 // Just returning the flag. The flag gets set elsewhere.
+                _depCanExecute.OnGet();
                 return _canExecute;
             }
 
