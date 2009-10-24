@@ -11,10 +11,12 @@
 
 using System;
 using System.Collections;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
@@ -26,6 +28,13 @@ namespace UpdateControls.XAML.Wrapper
 			typeof(object),
             typeof(string),
             typeof(ICommand)
+        };
+
+        private static readonly Type[] Bindables = new Type[]
+        {
+            typeof(DependencyObject),
+            typeof(INotifyPropertyChanged),
+            typeof(INotifyCollectionChanged)
         };
 
         private PropertyInfo _propertyInfo;
@@ -166,11 +175,13 @@ namespace UpdateControls.XAML.Wrapper
 
 		private static bool IsPrimitive(Type type)
 		{
-			return
-				type.IsValueType ||
-				type.IsPrimitive ||
-				(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ||
-				Primitives.Contains(type);
+            return
+                type.IsValueType ||
+                type.IsPrimitive ||
+                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ||
+                Primitives.Contains(type) ||
+                // Don't wrap objects that are already bindable
+                Bindables.Any(b => b.IsAssignableFrom(type));
 		}
 	}
 }
