@@ -10,17 +10,12 @@
  **********************************************************************/
 
 using System;
-using System.ComponentModel;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using UpdateControls;
+using System.ComponentModel;
+using System.Drawing;
 using UpdateControls.Forms;
 using UpdateControls.Themes.Renderers;
-using System.Drawing;
-using System.Collections;
-using System.Runtime.InteropServices;
-using UpdateControls.Themes.Inertia;
 using WinForms = System.Windows.Forms;
 
 namespace UpdateControls.Themes.Forms
@@ -37,7 +32,7 @@ namespace UpdateControls.Themes.Forms
         /// <summary>Constructs a themed tab deck.</summary>
         public ThemedTabDeck()
         {
-            _inertialRange = new InertialProperty(GetRange, delegate() { return true; });
+            _inertialRange = new InertialProperty(GetRange);
             _depItems = new Dependent(UpdateItems);
             _depContents = new Dependent(UpdateContents);
             _depSelectedItemContent = new Dependent(UpdateSelectedItemContent);
@@ -48,11 +43,11 @@ namespace UpdateControls.Themes.Forms
 
             InitializeComponent();
 
-            this.DoubleBuffered = true;
-            this.Size = new Size(300, 200);
+            DoubleBuffered = true;
+            Size = new Size(300, 200);
 
-            _timer = new System.Windows.Forms.Timer();
-            _timer.Tick += new EventHandler(OnTimer);
+            _timer = new WinForms.Timer();
+            _timer.Tick += OnTimer;
             _timer.Interval = 50;
 
             _glideScrollRenderer = new GlideScrollRenderer(new GlideScrollRendererContext(this));
@@ -468,7 +463,7 @@ namespace UpdateControls.Themes.Forms
         /// <param name="msg">The windows message</param>
         /// <param name="keyData">The key that was pressed</param>
         /// <returns>True if the message was handled.</returns>
-        protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData)
+        protected override bool ProcessCmdKey(ref WinForms.Message msg, WinForms.Keys keyData)
         {
             if (msg.Msg == WM_KEYDOWN)
             {
@@ -529,7 +524,7 @@ namespace UpdateControls.Themes.Forms
         {
             private ThemedTabDeck _owner;
             private object _item;
-            private System.Windows.Forms.Control _content = null;
+            private WinForms.Control _content = null;
             private Dependent _depContent;
 
             public ItemContent(ThemedTabDeck owner, object item)
@@ -550,7 +545,7 @@ namespace UpdateControls.Themes.Forms
                     _content = _owner.CreateContent(_item);
             }
 
-            public System.Windows.Forms.Control Content
+            public WinForms.Control Content
             {
                 get { _depContent.OnGet(); return _content; }
             }
@@ -664,7 +659,7 @@ namespace UpdateControls.Themes.Forms
             }
             if (_selectedItemContent != null)
             {
-                System.Windows.Forms.Control content = _selectedItemContent.Content;
+                WinForms.Control content = _selectedItemContent.Content;
                 if (content != null)
                 {
                     content.Parent = this;
@@ -706,7 +701,7 @@ namespace UpdateControls.Themes.Forms
             // Reposition the selected item content.
             if (_selectedItemContent != null)
             {
-                System.Windows.Forms.Control content = _selectedItemContent.Content;
+                WinForms.Control content = _selectedItemContent.Content;
                 if (content != null)
                     content.Bounds = _contentBounds;
             }
@@ -732,13 +727,13 @@ namespace UpdateControls.Themes.Forms
         {
             private ThemedTabDeck _owner;
             private object _tag;
-            private Inertia.InertialProperty _location;
+            private InertialProperty _location;
 
             public InertialRectangle(ThemedTabDeck owner, object tag)
             {
                 _owner = owner;
                 _tag = tag;
-                _location = new Inertia.InertialProperty(GetTargetValue, GetHasInertia);
+                _location = new InertialProperty(GetTargetValue, GetHasInertia);
             }
 
             private float GetTargetValue()
@@ -758,9 +753,9 @@ namespace UpdateControls.Themes.Forms
                 return !Object.Equals(_tag, _owner._dragItem);
             }
 
-            public bool OnTimer(long ticks)
+            public bool OnTimer()
             {
-                return _location.OnTimer(ticks);
+                return _location.OnTimer();
             }
 
             public Rectangle Position
@@ -823,7 +818,7 @@ namespace UpdateControls.Themes.Forms
         private Dependent _depFloatingPosition;
         private Dependent _depInertialPosition;
 
-        private System.Windows.Forms.Timer _timer;
+        private WinForms.Timer _timer;
 
         /// <summary>Returns the object represented by the selected tab</summary>
         /// <returns>A member of the collection returned from <see cref="GetItems"/> that is represented
@@ -1016,11 +1011,10 @@ namespace UpdateControls.Themes.Forms
         private void OnTimer(object sender, EventArgs e)
         {
             // Notify all inertial rectangles of the time.
-            long ticks = Inertia.InertialProperty.GetTickCount();
             _depInertialPosition.OnGet();
-            bool changed = _inertialRange.OnTimer(ticks);
+            bool changed = _inertialRange.OnTimer();
             foreach (InertialRectangle r in _inertialPosition.Values)
-                changed = r.OnTimer(ticks) || changed;
+                changed = r.OnTimer() || changed;
 
             // Stop the timer if nothing is changing.
             if (!changed)
@@ -1059,7 +1053,7 @@ namespace UpdateControls.Themes.Forms
 
         private int MeasureItemWidth(object item)
         {
-            return System.Windows.Forms.TextRenderer.MeasureText(GetText(item), DefaultTheme.FontHeader(Theme)).Width;
+            return WinForms.TextRenderer.MeasureText(GetText(item), DefaultTheme.FontHeader(Theme)).Width;
         }
 
         private int MeasureItemHeight()

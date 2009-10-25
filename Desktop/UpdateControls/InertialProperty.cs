@@ -10,25 +10,18 @@
  **********************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using UpdateControls.Forms;
-using System.Runtime.InteropServices;
 
-namespace UpdateControls.Themes.Inertia
+namespace UpdateControls
 {
     public class InertialProperty : IDisposable
     {
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern int GetTickCount();
-
         // Constant
         private const float SPEED = 0.003F;
         private const float EPSILON = 1e-6F;
 
         // Definitive
-        private GetFloatDelegate _getTargetValue;
-        private GetBoolDelegate _getHasInertia;
+        private Func<float> _getTargetValue;
+        private Func<bool> _getHasInertia;
 
         // Dynamic
         private long _ticks = 0;
@@ -49,7 +42,12 @@ namespace UpdateControls.Themes.Inertia
         private float _value;
         private Dependent _depValue;
 
-        public InertialProperty(GetFloatDelegate getTargetValue, GetBoolDelegate getHasInertia)
+        public InertialProperty(Func<float> getTargetValue)
+            : this(getTargetValue, () => true)
+        {
+        }
+
+        public InertialProperty(Func<float> getTargetValue, Func<bool> getHasInertia)
         {
             _getTargetValue = getTargetValue;
             _getHasInertia = getHasInertia;
@@ -68,7 +66,7 @@ namespace UpdateControls.Themes.Inertia
         {
             // If we're currently at rest, start the timer.
             if (_atRest)
-                _ticks = GetTickCount();
+                _ticks = Environment.TickCount;
 
             _depTargetValue.OnGet();
             if (!_initialized)
@@ -91,9 +89,10 @@ namespace UpdateControls.Themes.Inertia
                 // Get the starting state using the previous parameters.
                 float y0;
                 float yp0;
-                if (_ticks < _targetTicks)
+                long relativeToEnd = unchecked(_ticks - _targetTicks);
+                if (relativeToEnd < 0)
                 {
-                    float x = (_ticks - _targetTicks) * SPEED;
+                    float x = relativeToEnd * SPEED;
                     y0 = _a * (2.0F * x + 3.0F) * x * x + _c;
                     yp0 = _a * (6.0F * x + 6.0F) * x;
                 }
@@ -116,7 +115,7 @@ namespace UpdateControls.Themes.Inertia
                 }
                 _a = (y0 - _targetValue) / ((2.0F * x0 + 3.0F) * x0 * x0);
                 _c = _targetValue;
-                _targetTicks = _ticks - (long)(x0 / SPEED);
+                _targetTicks = unchecked(_ticks - (long)(x0 / SPEED));
             }
 
             _atRest = false;
@@ -129,7 +128,8 @@ namespace UpdateControls.Themes.Inertia
             {
                 // Calculate the current value based on the current time and the parameters of the curve.
                 _dynTicks.OnGet();
-                if (_ticks >= _targetTicks)
+                long relativeToEnd = unchecked(_ticks - _targetTicks);
+                if (relativeToEnd >= 0)
                 {
                     // We've reached the target. Stop moving.
                     _atRest = true;
@@ -138,15 +138,15 @@ namespace UpdateControls.Themes.Inertia
                 else
                 {
                     // Determine the current position based on how much time is left.
-                    float x = (_ticks - _targetTicks) * SPEED;
+                    float x = relativeToEnd * SPEED;
                     _value = _a * (2.0F * x + 3.0F) * x * x + _c;
                 }
             }
         }
 
-        public bool OnTimer(long ticks)
+        public bool OnTimer()
         {
-            _ticks = ticks;
+            _ticks = Environment.TickCount;
             _depParameters.OnGet();
             if (!_atRest)
             {

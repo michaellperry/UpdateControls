@@ -58,7 +58,6 @@
     <Compile Include="Delegates.cs" />
     <Compile Include="GraphicsUtil\GraphicsUtil.cs" />
     <Compile Include="Inertia\GlideScroller.cs" />
-    <Compile Include="Inertia\InertialProperty.cs" />
     <Compile Include="OrientationType.cs" />
     <Compile Include="Forms\ThemedCheckBox.cs">
       <SubType>Component</SubType>

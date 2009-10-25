@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML.Test", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Themes", "Desktop\UpdateControls.Themes\UpdateControls.Themes.csproj", "{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Themes.UnitTest", "Desktop\UpdateControls.Themes.UnitTest\UpdateControls.Themes.UnitTest.csproj", "{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.VSAddIn", "Desktop\UpdateControls.VSAddIn\UpdateControls.VSAddIn.csproj", "{2CAC380D-CA27-498B-BDF1-7170986E57C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.VSAddIn.UnitTest", "Desktop\UpdateControls.VSAddIn.UnitTest\UpdateControls.VSAddIn.UnitTest.csproj", "{438467D4-D992-4F48-89C8-F359A2911838}"
@@ -40,7 +38,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UpdateControls.Light.Demo.V
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 15
+		SccNumberOfProjects = 14
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs07.codeplex.com/
 		SccLocalPath0 = .
@@ -68,38 +66,34 @@ Global
 		SccProjectTopLevelParentUniqueName6 = UpdateControls.sln
 		SccProjectName6 = Desktop/UpdateControls.Test
 		SccLocalPath6 = Desktop\\UpdateControls.Test
-		SccProjectUniqueName7 = Desktop\\UpdateControls.Themes.UnitTest\\UpdateControls.Themes.UnitTest.csproj
+		SccProjectUniqueName7 = Desktop\\UpdateControls.VSAddIn.UnitTest\\UpdateControls.VSAddIn.UnitTest.csproj
 		SccProjectTopLevelParentUniqueName7 = UpdateControls.sln
-		SccProjectName7 = Desktop/UpdateControls.Themes.UnitTest
-		SccLocalPath7 = Desktop\\UpdateControls.Themes.UnitTest
-		SccProjectUniqueName8 = Desktop\\UpdateControls.VSAddIn.UnitTest\\UpdateControls.VSAddIn.UnitTest.csproj
+		SccProjectName7 = Desktop/UpdateControls.VSAddIn.UnitTest
+		SccLocalPath7 = Desktop\\UpdateControls.VSAddIn.UnitTest
+		SccProjectUniqueName8 = Desktop\\UpdateControls.XAML.Test\\UpdateControls.XAML.Test.csproj
 		SccProjectTopLevelParentUniqueName8 = UpdateControls.sln
-		SccProjectName8 = Desktop/UpdateControls.VSAddIn.UnitTest
-		SccLocalPath8 = Desktop\\UpdateControls.VSAddIn.UnitTest
-		SccProjectUniqueName9 = Desktop\\UpdateControls.XAML.Test\\UpdateControls.XAML.Test.csproj
+		SccProjectName8 = Desktop/UpdateControls.XAML.Test
+		SccLocalPath8 = Desktop\\UpdateControls.XAML.Test
+		SccProjectUniqueName9 = Desktop\\UpdateControls.Installer\\UpdateControls.Installer.csproj
 		SccProjectTopLevelParentUniqueName9 = UpdateControls.sln
-		SccProjectName9 = Desktop/UpdateControls.XAML.Test
-		SccLocalPath9 = Desktop\\UpdateControls.XAML.Test
-		SccProjectUniqueName10 = Desktop\\UpdateControls.Installer\\UpdateControls.Installer.csproj
+		SccProjectName9 = Desktop/UpdateControls.Installer
+		SccLocalPath9 = Desktop\\UpdateControls.Installer
+		SccProjectUniqueName10 = Desktop\\UpdateControls.Setup\\UpdateControls.Setup.vdproj
 		SccProjectTopLevelParentUniqueName10 = UpdateControls.sln
-		SccProjectName10 = Desktop/UpdateControls.Installer
-		SccLocalPath10 = Desktop\\UpdateControls.Installer
-		SccProjectUniqueName11 = Desktop\\UpdateControls.Setup\\UpdateControls.Setup.vdproj
+		SccProjectName10 = Desktop/UpdateControls.Setup
+		SccLocalPath10 = Desktop\\UpdateControls.Setup
+		SccProjectUniqueName11 = Silverlight\\UpdateControls.Light\\UpdateControls.Light.csproj
 		SccProjectTopLevelParentUniqueName11 = UpdateControls.sln
-		SccProjectName11 = Desktop/UpdateControls.Setup
-		SccLocalPath11 = Desktop\\UpdateControls.Setup
-		SccProjectUniqueName12 = Silverlight\\UpdateControls.Light\\UpdateControls.Light.csproj
+		SccProjectName11 = Silverlight/UpdateControls.Light
+		SccLocalPath11 = Silverlight\\UpdateControls.Light
+		SccProjectUniqueName12 = Silverlight\\UpdateControls.Light.Demo\\UpdateControls.Light.Demo.csproj
 		SccProjectTopLevelParentUniqueName12 = UpdateControls.sln
-		SccProjectName12 = Silverlight/UpdateControls.Light
-		SccLocalPath12 = Silverlight\\UpdateControls.Light
-		SccProjectUniqueName13 = Silverlight\\UpdateControls.Light.Demo\\UpdateControls.Light.Demo.csproj
+		SccProjectName12 = Silverlight/UpdateControls.Light.Demo
+		SccLocalPath12 = Silverlight\\UpdateControls.Light.Demo
+		SccProjectUniqueName13 = Silverlight\\UpdateControls.Light.Demo.VB\\UpdateControls.Light.Demo.VB.vbproj
 		SccProjectTopLevelParentUniqueName13 = UpdateControls.sln
-		SccProjectName13 = Silverlight/UpdateControls.Light.Demo
-		SccLocalPath13 = Silverlight\\UpdateControls.Light.Demo
-		SccProjectUniqueName14 = Silverlight\\UpdateControls.Light.Demo.VB\\UpdateControls.Light.Demo.VB.vbproj
-		SccProjectTopLevelParentUniqueName14 = UpdateControls.sln
-		SccProjectName14 = Silverlight/UpdateControls.Light.Demo.VB
-		SccLocalPath14 = Silverlight\\UpdateControls.Light.Demo.VB
+		SccProjectName13 = Silverlight/UpdateControls.Light.Demo.VB
+		SccLocalPath13 = Silverlight\\UpdateControls.Light.Demo.VB
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,10 +120,6 @@ Global
 		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2CAC380D-CA27-498B-BDF1-7170986E57C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CAC380D-CA27-498B-BDF1-7170986E57C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CAC380D-CA27-498B-BDF1-7170986E57C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -171,7 +161,6 @@ Global
 		{E4496FFF-165F-4008-8766-4DD086F5D3EC} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{0F935F95-D9C7-4CEA-B15A-57BEEC1B5BFA} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{C3FF7BD4-C459-4D86-B6FA-5FDEC5729281} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{2CAC380D-CA27-498B-BDF1-7170986E57C1} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{438467D4-D992-4F48-89C8-F359A2911838} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
