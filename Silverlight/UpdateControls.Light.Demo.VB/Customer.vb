@@ -1,4 +1,6 @@
-﻿Public Class Customer
+﻿Imports UpdateControls
+
+Public Class Customer
     Dim _name As String
     Dim _invoices As List(Of Invoice)
 
