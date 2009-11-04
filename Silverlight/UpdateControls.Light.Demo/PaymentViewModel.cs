@@ -28,9 +28,11 @@ namespace UpdateControls.Light.Demo
             get
             {
                 return _payment.Customer.Name + ": " +
-                    _payment.PaidInvoices
-                        .Select(i => i.Number)
-                        .Aggregate((invoices, invoice) => invoices + ", " + invoice);
+					(_payment.PaidInvoices.Any() ?
+						_payment.PaidInvoices
+							.Select(i => i.Number)
+							.Aggregate((invoices, invoice) => invoices + ", " + invoice) :
+						string.Empty);
             }
         }
 
