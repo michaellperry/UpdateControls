@@ -154,11 +154,20 @@ namespace UpdateControls
 		public void OnGet()
 		{
 			// Ensure that the attribute is up-to-date.
-			MakeUpToDate();
-
-			// Establish dependency between the current update
-			// and this attribute.
-			_base.RecordDependent();
+			if (MakeUpToDate())
+			{
+				// Establish dependency between the current update
+				// and this attribute.
+				_base.RecordDependent();
+			}
+			else
+			{
+				// We're still not up-to-date (because of a concurrent change).
+				// The current update should similarly not be up-to-date.
+				Dependent currentUpdate = GetCurrentUpdate();
+				if (currentUpdate != null)
+					currentUpdate.MakeOutOfDate();
+			}
 		}
 
 		/// <summary>
@@ -249,9 +258,11 @@ namespace UpdateControls
 			}
 		}
 
-		internal void MakeUpToDate()
+		internal bool MakeUpToDate()
 		{
 			StatusType formerStatus;
+			bool isUpToDate = true;
+
 			lock ( _precedents )
 			{
 				// Get the former status.
@@ -262,44 +273,49 @@ namespace UpdateControls
 					_status = StatusType.UPDATING;
 			}
 
-			if ( formerStatus == StatusType.UPDATING ||
-				formerStatus == StatusType.UPDATING_AND_OUT_OF_DATE )
+			if (formerStatus == StatusType.UPDATING ||
+				formerStatus == StatusType.UPDATING_AND_OUT_OF_DATE)
 			{
 				// Report cycles.
-                ReportCycles();
-                //MLP: Don't throw, because this will mask any exception in an update which caused reentrance.
+				ReportCycles();
+				//MLP: Don't throw, because this will mask any exception in an update which caused reentrance.
 				//throw new InvalidOperationException( "Cycle discovered during update." );
 			}
-			else if ( formerStatus == StatusType.OUT_OF_DATE )
+			else if (formerStatus == StatusType.OUT_OF_DATE)
 			{
 				// Push myself to the update stack.
 				Dependent stack = GetCurrentUpdate();
-				SetCurrentUpdate( this );
+				SetCurrentUpdate(this);
 
 				// Update the attribute.
-                try
-                {
-                    _update();
-                }
-                finally
-                {
-                    // Pop myself off the update stack.
-                    Dependent that = GetCurrentUpdate();
-                    Debug.Assert(that == this);
-                    SetCurrentUpdate(stack);
+				try
+				{
+					_update();
+				}
+				finally
+				{
+					// Pop myself off the update stack.
+					Dependent that = GetCurrentUpdate();
+					Debug.Assert(that == this);
+					SetCurrentUpdate(stack);
 
-                    lock (_precedents)
-                    {
-                        // Look for changes since the update began.
-                        if (_status == StatusType.UPDATING)
-                            _status = StatusType.UP_TO_DATE;
-                        else if (_status == StatusType.UPDATING_AND_OUT_OF_DATE)
-                            _status = StatusType.OUT_OF_DATE;
-                        else
-                            Debug.Assert(false, "Unexpected state in MakeUpToDate");
-                    }
-                }
+					lock (_precedents)
+					{
+						// Look for changes since the update began.
+						if (_status == StatusType.UPDATING)
+							_status = StatusType.UP_TO_DATE;
+						else if (_status == StatusType.UPDATING_AND_OUT_OF_DATE)
+						{
+							_status = StatusType.OUT_OF_DATE;
+							isUpToDate = false;
+						}
+						else
+							Debug.Assert(false, "Unexpected state in MakeUpToDate");
+					}
+				}
 			}
+
+			return isUpToDate;
 		}
 
 		internal bool AddPrecedent( Precedent precedent )
