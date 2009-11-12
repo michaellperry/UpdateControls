@@ -1,4 +1,5 @@
 
+using System;
 namespace UpdateControls.UnitTest
 {
 	public class SourceData
@@ -11,10 +12,18 @@ namespace UpdateControls.UnitTest
 
 		public int SourceProperty
 		{
-			get { _indSourceProperty.OnGet(); return _sourceProperty; }
+			get
+			{
+				_indSourceProperty.OnGet();
+				int result = _sourceProperty;
+				if (AfterGet != null) AfterGet();
+				return result;
+			}
 			set { _indSourceProperty.OnSet(); _sourceProperty = value; }
 		}
 		// End generated code --------------------------------
 		#endregion
+
+		public event Action AfterGet;
 	}
 }

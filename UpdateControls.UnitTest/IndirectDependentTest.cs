@@ -1,8 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UpdateControls.UnitTest
 {
@@ -84,6 +80,35 @@ namespace UpdateControls.UnitTest
 			int fetch = _dependent.DependentProperty;
 			_source.SourceProperty = 4;
 			Assert.AreEqual(4, _dependent.DependentProperty);
+		}
+
+		[TestMethod]
+		public void PrecedentIsOnlyAskedOnce()
+		{
+			int getCount = 0;
+			_source.AfterGet += () => ++getCount;
+
+			_source.SourceProperty = 3;
+			int fetch = _dependent.DependentProperty;
+			fetch = _dependent.DependentProperty;
+
+			Assert.AreEqual(1, getCount);
+		}
+
+		[TestMethod]
+		public void PrecedentIsAskedAgainAfterChange()
+		{
+			int getCount = 0;
+			_source.AfterGet += () => ++getCount;
+
+			_source.SourceProperty = 3;
+			int fetch = _dependent.DependentProperty;
+			fetch = _dependent.DependentProperty;
+			_source.SourceProperty = 4;
+			fetch = _dependent.DependentProperty;
+			fetch = _dependent.DependentProperty;
+
+			Assert.AreEqual(2, getCount);
 		}
 	}
 }

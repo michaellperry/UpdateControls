@@ -42,7 +42,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectConcurrencyTest.cs" />
     <Compile Include="DirectDependent.cs" />
+    <Compile Include="IndirectConcurrencyTest.cs" />
     <Compile Include="IndirectDependent.cs" />
     <Compile Include="IndirectDependentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
