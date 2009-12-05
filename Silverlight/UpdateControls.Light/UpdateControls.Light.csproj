@@ -71,9 +71,6 @@
     <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectPropertyCollectionObject.cs">
       <Link>XAML\Wrapper\ObjectPropertyCollectionObject.cs</Link>
     </Compile>
-    <Compile Include="..\..\Desktop\UpdateControls\CacheManager.cs">
-      <Link>CacheManager.cs</Link>
-    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Dependent.cs">
       <Link>Dependent.cs</Link>
     </Compile>

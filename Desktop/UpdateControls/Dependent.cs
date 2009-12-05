@@ -97,12 +97,8 @@ namespace UpdateControls
 	/// End Class
 	/// </code>
 	/// </example>
-	public partial class Dependent : Cache
+	public partial class Dependent
 	{
-        /// <summary>
-        /// Event fired when the intermediate cache is unloaded.
-        /// </summary>
-        public event Action Unloaded;
         /// <summary>
         /// Event fired when the dependent becomes out-of-date.
         /// <remarks>
@@ -137,9 +133,6 @@ namespace UpdateControls
 			_update = update;
 			_status = StatusType.OUT_OF_DATE;
 			_precedents = new List<Precedent>();
-
-            _base.GainDependent += _base_GainDependent;
-            _base.LooseDependent += _base_LooseDependent;
         }
 
 		/// <summary>
@@ -334,23 +327,6 @@ namespace UpdateControls
 				return false;
 			}
 		}
-
-        private void _base_GainDependent()
-        {
-            CacheManager.Instance.Revive(this);
-        }
-
-        private void _base_LooseDependent()
-        {
-            CacheManager.Instance.Retire(this);
-        }
-
-        public void Unload()
-        {
-            Dispose();
-            if (Unloaded != null)
-                Unloaded();
-        }
 
         static partial void ReportCycles();
     }

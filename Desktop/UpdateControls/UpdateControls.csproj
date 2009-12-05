@@ -52,7 +52,6 @@
     <Compile Include="..\Solution Files\CommonProperties.cs">
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
-    <Compile Include="CacheManager.cs" />
     <Compile Include="Dependent.cs" />
     <Compile Include="Dependent.CurrentUpdate.cs" />
     <Compile Include="Independent.cs" />
