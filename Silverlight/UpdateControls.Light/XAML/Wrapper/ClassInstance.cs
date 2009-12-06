@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -26,7 +27,7 @@ namespace UpdateControls.XAML.Wrapper
 
             // Create a wrapper for each non-collection property.
             _classProperties = _wrappedType
-                .GetProperties()
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Select(p => new ClassProperty(p, _wrappedType))
                 .ToList();
         }
