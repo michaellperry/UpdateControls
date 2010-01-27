@@ -10,7 +10,6 @@
  **********************************************************************/
 
 using System;
-using System.Threading;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -22,24 +21,10 @@ namespace UpdateControls.XAML
     /// taking no parameters into both methods. A lambda expression taking no parameters
     /// looks like this: () => &lt;condition or {statement}&gt;
     /// </summary>
-    public static class MakeCommand
+    public static partial class MakeCommand
     {
         private class Command : ICommand
         {
-            //////////////////////////////////////////////////////////////
-            // Static stuff
-
-            // A callback that calls TriggerUpdate on the Command object.
-            private static SendOrPostCallback _callback = new SendOrPostCallback(TriggerUpdate);
-
-            private static void TriggerUpdate(object obj)
-            {
-                ((Command)obj).TriggerUpdate();
-            }
-
-            //////////////////////////////////////////////////////////////
-            // Non-static stuff
-
             // The condition under which it can execute, and the action to execute.
             private Func<bool> _canExecuteFunction;
             private Action _execute;
@@ -48,10 +33,15 @@ namespace UpdateControls.XAML
             private bool _canExecute = false;
             private Dependent _depCanExecute;
 
+            // The dispatcher of the UI thread.
+            private Dispatcher _dispatcher;
+
             public Command(Func<bool> canExecute, Action execute)
             {
                 _canExecuteFunction = canExecute;
                 _execute = execute;
+
+                _dispatcher = MakeCommand.GetDispatcher();
 
                 // Create a dependent sentry to control the "can execute" flag.
                 _depCanExecute = new Dependent(UpdateCanExecute);
@@ -90,7 +80,7 @@ namespace UpdateControls.XAML
                 // When the "can execute" flag is invalidated, we need to queue
                 // up a call to update it. This will cause the UI thread to
                 // call TriggerUpdate (below) when everything settles down.
-                DispatcherSynchronizationContext.Current.Post(_callback, this);
+                _dispatcher.BeginInvoke(new Action(TriggerUpdate));
             }
 
             private void TriggerUpdate()

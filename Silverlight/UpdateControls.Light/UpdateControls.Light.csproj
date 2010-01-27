@@ -89,6 +89,7 @@
     <Compile Include="Dependent.CurrentUpdate.cs" />
     <Compile Include="ForView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XAML\MakeCommand.GetDispatcher.cs" />
     <Compile Include="XAML\Wrapper\ClassInstance.cs" />
     <Compile Include="XAML\Wrapper\ClassProperty.cs" />
     <Compile Include="XAML\Wrapper\IObjectInstance.cs" />
