@@ -51,9 +51,9 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="First Name:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding First}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding First, ValidatesOnDataErrors=True}"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Last Name:"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Last}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Last, ValidatesOnDataErrors=True}"/>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Gender:"/>
                 <ComboBox Grid.Row="2" Grid.Column="1" Text="{Binding Gender}">
                     <ComboBoxItem>Male</ComboBoxItem>

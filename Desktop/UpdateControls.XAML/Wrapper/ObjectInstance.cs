@@ -18,7 +18,7 @@ using System.Windows.Threading;
 namespace UpdateControls.XAML.Wrapper
 {
     [TypeDescriptionProvider(typeof(ClassInstanceProvider))]
-    public class ObjectInstance<TWrappedObjectType> : IObjectInstance, INotifyPropertyChanged
+    public class ObjectInstance<TWrappedObjectType> : IObjectInstance, INotifyPropertyChanged, IDataErrorInfo
     {
         // Wrap the class and all of its property definitions.
 		private static ClassInstance _classInstance = new ClassInstance(typeof(TWrappedObjectType), typeof(ObjectInstance<TWrappedObjectType>));
@@ -90,5 +90,23 @@ namespace UpdateControls.XAML.Wrapper
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-    }
+
+		public string Error
+		{
+			get
+			{
+				IDataErrorInfo wrappedObject = _wrappedObject as IDataErrorInfo;
+				return wrappedObject != null ? wrappedObject.Error : null;
+			}
+		}
+
+		public string this[string columnName]
+		{
+			get
+			{
+				IDataErrorInfo wrappedObject = _wrappedObject as IDataErrorInfo;
+				return wrappedObject != null ? wrappedObject[columnName] : null;
+			}
+		}
+	}
 }
