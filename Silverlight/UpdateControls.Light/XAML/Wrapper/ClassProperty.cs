@@ -154,6 +154,11 @@ namespace UpdateControls.XAML.Wrapper
 			_propertyInfo.SetValue(wrappedObject, value, null);
 		}
 
+		public string Name
+		{
+			get { return _propertyInfo.Name; }
+		}
+
 		public bool CanRead
         {
             get { return _propertyInfo.CanRead; }

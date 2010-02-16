@@ -11,6 +11,7 @@
 
 using System;
 using UpdateControls;
+using System.ComponentModel.DataAnnotations;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -52,7 +53,8 @@ namespace UpdateControls.XAML.Wrapper
             if (NotificationGate.IsInbound)
             {
                 value = TranslateIncommingValue(value);
-                ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+				Validator.ValidateProperty(value, new ValidationContext(ObjectInstance.WrappedObject, null, null) { MemberName = ClassProperty.Name });
+				ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
             }
 		}
 
