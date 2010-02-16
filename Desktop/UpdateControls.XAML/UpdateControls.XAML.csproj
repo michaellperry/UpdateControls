@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MakeCommand.GetDispatcher.cs" />
+    <Compile Include="WrappedType.cs" />
     <None Include="Mallardsoft.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

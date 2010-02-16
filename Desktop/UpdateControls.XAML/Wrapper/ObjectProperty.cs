@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System;
+using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -39,7 +40,10 @@ namespace UpdateControls.XAML.Wrapper
 
         protected object WrapObject(object value)
         {
-            return ClassProperty.MakeObjectInstance(value, ObjectInstance.Dispatcher);
-        }
+            return typeof(ObjectInstance<>)
+				.MakeGenericType(value.GetType())
+				.GetConstructor(new Type[] { typeof(object), typeof(Dispatcher) })
+				.Invoke(new object[] { value, ObjectInstance.Dispatcher });
+		}
 	}
 }
