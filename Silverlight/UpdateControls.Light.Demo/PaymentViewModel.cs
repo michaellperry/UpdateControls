@@ -6,44 +6,14 @@ using UpdateControls.XAML;
 
 namespace UpdateControls.Light.Demo
 {
-    public class PaymentViewModel
-    {
-        private Payment _payment;
-        private PaymentNavigationModel _navigation;
+    public class PaymentViewModel : PaymentViewModelBase
+	{
+		private PaymentNavigationModel _navigation;
 
         public PaymentViewModel(Payment payment, PaymentNavigationModel navigation)
+			: base(payment)
         {
-            _payment = payment;
             _navigation = navigation;
-        }
-
-        public string CustomerName
-        {
-            get { return _payment.Customer.Name; }
-            set { _payment.Customer.Name = value; }
-        }
-
-        public string Summary
-        {
-            get
-            {
-                return _payment.Customer.Name + ": " +
-					(_payment.PaidInvoices.Any() ?
-						_payment.PaidInvoices
-							.Select(i => i.Number)
-							.Aggregate((invoices, invoice) => invoices + ", " + invoice) :
-						string.Empty);
-            }
-        }
-
-        public IEnumerable<Invoice> PaidInvoices
-        {
-            get { return _payment.PaidInvoices; }
-        }
-
-        public IEnumerable<Invoice> UnpaidInvoices
-        {
-            get { return _payment.Customer.Invoices.Except(_payment.PaidInvoices); }
         }
 
         public Invoice SelectedPaidInvoice
@@ -66,7 +36,7 @@ namespace UpdateControls.Light.Demo
                     .When(() => _navigation.SelectedUnpaidInvoice != null)
                     .Do(() =>
                     {
-                        _payment.AddPaidInvoice(_navigation.SelectedUnpaidInvoice);
+                        Payment.AddPaidInvoice(_navigation.SelectedUnpaidInvoice);
                         _navigation.SelectedPaidInvoice = _navigation.SelectedUnpaidInvoice;
                         _navigation.SelectedUnpaidInvoice = null;
                     });
@@ -81,7 +51,7 @@ namespace UpdateControls.Light.Demo
                     .When(() => _navigation.SelectedPaidInvoice != null)
                     .Do(() =>
                     {
-                        _payment.RemovePaidInvoice(_navigation.SelectedPaidInvoice);
+                        Payment.RemovePaidInvoice(_navigation.SelectedPaidInvoice);
                         _navigation.SelectedUnpaidInvoice = _navigation.SelectedPaidInvoice;
                         _navigation.SelectedPaidInvoice = null;
                     });

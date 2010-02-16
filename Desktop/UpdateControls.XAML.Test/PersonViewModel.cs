@@ -5,44 +5,14 @@ using System.ComponentModel;
 
 namespace UpdateControls.XAML.Test
 {
-	public class PersonViewModel : IDataErrorInfo
+    public class PersonViewModel : PersonViewModelBase, IDataErrorInfo
 	{
-		private Person _person;
 		private ContactList _contactList;
 
 		private PersonViewModel(Person person, ContactList contactList)
+			: base(person)
 		{
-			_person = person;
 			_contactList = contactList;
-		}
-
-		public string First
-		{
-			get { return _person.First; }
-			set { _person.First = value; }
-		}
-
-		public string Last
-		{
-			get { return _person.Last; }
-			set { _person.Last = value; }
-		}
-
-		public string FullName
-		{
-			get { return _person.FullName; }
-		}
-
-		public string Gender
-		{
-			get { return _person.Gender == GenderEnum.Male ? "Male" : "Female"; }
-			set { _person.Gender = value == "Male" ? GenderEnum.Male : GenderEnum.Female; }
-		}
-
-		public SpouseViewModel Spouse
-		{
-			get { return SpouseViewModel.Wrap(_person.Spouse); }
-			set { Person.Marry(_person, SpouseViewModel.Unwrap(value)); }
 		}
 
 		public IEnumerable<SpouseViewModel> PotentialSpouses
@@ -54,25 +24,10 @@ namespace UpdateControls.XAML.Test
                     // Include an option to be unmarried.
                     new List<Person>() { null }
                     .Union(_contactList.People
-                        .Where(p => p.Gender != _person.Gender)
+                        .Where(p => p.Gender != Person.Gender)
                     )
                     .Select(p => SpouseViewModel.Wrap(p));
 			}
-		}
-
-        public override bool Equals(object obj)
-        {
-            if (obj == this)
-                return true;
-            PersonViewModel that = obj as PersonViewModel;
-            if (that == null)
-                return false;
-            return Object.Equals(this._person, that._person);
-        }
-
-		public override int GetHashCode()
-		{
-			return _person.GetHashCode();
 		}
 
 		public static PersonViewModel Wrap(Person person, ContactList contactList)
@@ -88,7 +43,7 @@ namespace UpdateControls.XAML.Test
 			if (viewModel == null)
 				return null;
 			else
-				return viewModel._person;
+				return viewModel.Person;
 		}
 
 		public string Error

@@ -74,6 +74,7 @@
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentNavigationModel.cs" />
     <Compile Include="PaymentViewModel.cs" />
+    <Compile Include="PaymentViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
