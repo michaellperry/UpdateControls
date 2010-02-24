@@ -39,12 +39,13 @@ namespace UpdateControls.XAML
         /// <param name="dataContext">The DataContext previously wrapped.</param>
         /// <returns>The object originally wrapped, or null.</returns>
         public static TWrappedObjectType Unwrap<TWrappedObjectType>(object dataContext)
+            where TWrappedObjectType : class
         {
-            ObjectInstance<TWrappedObjectType> wrapper = dataContext as ObjectInstance<TWrappedObjectType>;
+            IObjectInstance wrapper = dataContext as IObjectInstance;
             return
                 wrapper == null
                     ? default(TWrappedObjectType)
-                    : (TWrappedObjectType)wrapper.WrappedObject;
+                    : wrapper.WrappedObject as TWrappedObjectType;
         }
     }
 }
