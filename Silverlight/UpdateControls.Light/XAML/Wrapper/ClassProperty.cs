@@ -40,7 +40,6 @@ namespace UpdateControls.XAML.Wrapper
         private PropertyInfo _propertyInfo;
         private DependencyProperty _dependencyProperty;
         private Func<IObjectInstance, ObjectProperty> _makeObjectProperty;
-        private ConstructorInfo _objectInstanceConstructor;
 
         public ClassProperty(PropertyInfo property, Type wrappedType)
         {
@@ -70,12 +69,6 @@ namespace UpdateControls.XAML.Wrapper
                 {
                     _makeObjectProperty = objectInstance =>
                         new ObjectPropertyCollectionObject(objectInstance, this);
-
-                    // Find the type of object instance based on the item type.
-                    _objectInstanceConstructor = typeof(ObjectInstance<>)
-                        .MakeGenericType(itemType)
-                        .GetConstructors()
-                        .Single();
                 }
                 valueType = typeof(IEnumerable);
             }
@@ -84,11 +77,6 @@ namespace UpdateControls.XAML.Wrapper
                 _makeObjectProperty = objectInstance =>
                     new ObjectPropertyAtomObject(objectInstance, this);
                 valueType = typeof(ObjectInstance<>).MakeGenericType(propertyType);
-
-                // Find the type of object instance based on the property type.
-                _objectInstanceConstructor = valueType
-                    .GetConstructors()
-                    .Single();
             }
 
             // Register a dependency property. XAML can bind to this by name, even though
@@ -114,11 +102,6 @@ namespace UpdateControls.XAML.Wrapper
         public ObjectProperty MakeObjectProperty(IObjectInstance objectInstance)
         {
             return _makeObjectProperty(objectInstance);
-        }
-
-        public object MakeObjectInstance(object wrappedObject, IDictionary<object, IObjectInstance> wrapperByObject)
-        {
-            return _objectInstanceConstructor.Invoke(new object[] { wrappedObject, wrapperByObject });
         }
 
         // Called when the user edits the property. Sets the property in the wrapped object.

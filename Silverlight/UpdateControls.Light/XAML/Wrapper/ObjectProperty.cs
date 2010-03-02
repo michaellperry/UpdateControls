@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System;
+using System.Linq;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -43,7 +44,13 @@ namespace UpdateControls.XAML.Wrapper
             if (ObjectInstance.WrapperByObject.TryGetValue(value, out wrapper))
                 return wrapper;
             else
-                return ClassProperty.MakeObjectInstance(value, ObjectInstance.WrapperByObject);
+            {
+                return typeof(ObjectInstance<>)
+                    .MakeGenericType(value.GetType())
+                    .GetConstructors()
+                    .Single()
+                    .Invoke(new object[] { value, ObjectInstance.WrapperByObject });
+            }
         }
 	}
 }

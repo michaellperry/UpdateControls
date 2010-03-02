@@ -11,6 +11,8 @@
 
 using System.Collections.Generic;
 using UpdateControls.XAML.Wrapper;
+using System;
+using System.Linq;
 
 namespace UpdateControls
 {
@@ -26,10 +28,11 @@ namespace UpdateControls
         /// <returns>An object suitable for data binding.</returns>
         public static object Wrap<TWrappedObjectType>(TWrappedObjectType wrappedObject)
         {
-            return
-                wrappedObject == null
-                    ? null
-                    : new ObjectInstance<TWrappedObjectType>(wrappedObject, new Dictionary<object, IObjectInstance>());
+            return typeof(ObjectInstance<>)
+                .MakeGenericType(wrappedObject.GetType())
+                .GetConstructors()
+                .Single()
+                .Invoke(new object[] { wrappedObject, new Dictionary<object, IObjectInstance>() });
         }
 
         /// <summary>
@@ -39,12 +42,13 @@ namespace UpdateControls
         /// <param name="dataContext">The DataContext previously wrapped.</param>
         /// <returns>The object originally wrapped, or null.</returns>
         public static TWrappedObjectType Unwrap<TWrappedObjectType>(object dataContext)
+            where TWrappedObjectType : class
         {
-            ObjectInstance<TWrappedObjectType> wrapper = dataContext as ObjectInstance<TWrappedObjectType>;
+            IObjectInstance wrapper = dataContext as IObjectInstance;
             return
                 wrapper == null
                     ? default(TWrappedObjectType)
-                    : (TWrappedObjectType)wrapper.WrappedObject;
+                    : wrapper.WrappedObject as TWrappedObjectType;
         }
     }
 }

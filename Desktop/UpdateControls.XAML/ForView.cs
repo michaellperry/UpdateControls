@@ -11,6 +11,7 @@
 
 using UpdateControls.XAML.Wrapper;
 using System.Windows.Threading;
+using System;
 
 namespace UpdateControls.XAML
 {
@@ -26,10 +27,10 @@ namespace UpdateControls.XAML
         /// <returns>An object suitable for data binding.</returns>
         public static object Wrap<TWrappedObjectType>(TWrappedObjectType wrappedObject)
         {
-            return
-                wrappedObject == null
-                    ? null
-                    : new ObjectInstance<TWrappedObjectType>(wrappedObject, Dispatcher.CurrentDispatcher);
+            return typeof(ObjectInstance<>)
+				.MakeGenericType(wrappedObject.GetType())
+				.GetConstructor(new Type[] { typeof(object), typeof(Dispatcher) })
+				.Invoke(new object[] { wrappedObject, Dispatcher.CurrentDispatcher });
         }
 
         /// <summary>
