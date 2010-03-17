@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace UpdateControls.XAML.Test
 {
-    public class SpouseViewModel
+    public class SpouseViewModel : ISpouseViewModel
     {
         private Person _spouse;
 
@@ -14,7 +11,12 @@ namespace UpdateControls.XAML.Test
             _spouse = spouse;
         }
 
-        public string FullName
+		public Person Spouse
+		{
+			get { return _spouse; }
+		}
+
+		public string FullName
         {
             get { return _spouse == null ? "unmarried" : _spouse.FullName; }
         }
@@ -39,12 +41,12 @@ namespace UpdateControls.XAML.Test
             return new SpouseViewModel(spouse);
         }
 
-        public static Person Unwrap(SpouseViewModel viewModel)
+        public static Person Unwrap(ISpouseViewModel viewModel)
         {
             if (viewModel == null)
                 return null;
             else
-                return viewModel._spouse;
+                return viewModel.Spouse;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace UpdateControls.XAML.Test
 			set { _person.Gender = value == "Male" ? GenderEnum.Male : GenderEnum.Female; }
 		}
 
-		public SpouseViewModel Spouse
+		public ISpouseViewModel Spouse
 		{
 			get { return SpouseViewModel.Wrap(_person.Spouse); }
 			set { Person.Marry(_person, SpouseViewModel.Unwrap(value)); }

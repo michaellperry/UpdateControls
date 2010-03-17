@@ -71,6 +71,7 @@
     <Compile Include="ContactListNavigationModel.cs" />
     <Compile Include="ContactListViewModel.cs" />
     <Compile Include="GenderEnum.cs" />
+    <Compile Include="ISpouseViewModel.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonViewModel.cs" />
     <Compile Include="PersonViewModelBase.cs" />

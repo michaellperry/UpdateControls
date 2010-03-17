@@ -15,7 +15,7 @@ namespace UpdateControls.XAML.Test
 			_contactList = contactList;
 		}
 
-		public IEnumerable<SpouseViewModel> PotentialSpouses
+		public IEnumerable<ISpouseViewModel> PotentialSpouses
 		{
 			get
 			{
@@ -26,7 +26,7 @@ namespace UpdateControls.XAML.Test
                     .Union(_contactList.People
                         .Where(p => p.Gender != Person.Gender)
                     )
-                    .Select(p => SpouseViewModel.Wrap(p));
+                    .Select(p => (ISpouseViewModel)SpouseViewModel.Wrap(p));
 			}
 		}
 
