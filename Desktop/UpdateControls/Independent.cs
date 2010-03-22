@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System;
+using System.Diagnostics;
 
 namespace UpdateControls
 {
@@ -130,6 +131,11 @@ namespace UpdateControls
 		/// </remarks>
 		public void OnSet()
 		{
+			// Verify that dependents are not changing independents, as that
+			// could be a logical circular dependency.
+			if (Dependent.GetCurrentUpdate() != null)
+				Debug.Assert(false, "An independent was changed while updating a dependent.");
+
 			// When an independent field canges,
 			// its dependents become out-of-date.
 			_base.MakeDependentsOutOfDate();
