@@ -333,7 +333,7 @@ namespace UpdateControls.Forms
                 _depGroup.OnGet();
             }
 
-            private void UpdateGroup()
+            public void UpdateGroup()
             {
                 ++_updating;
                 try
@@ -933,6 +933,8 @@ namespace UpdateControls.Forms
 					{
 						base.Items.Clear();
 						base.Items.AddRange( (ListViewItem[])newItems.ToArray( typeof(ListViewItem) ) );
+                        foreach (DependentListViewItem item in newItems)
+                            item.UpdateGroup();
 					}
 					finally
 					{
