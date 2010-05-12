@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("UpdateControls.Light")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Mallard Software Designs")]
+[assembly: AssemblyCompany("Michael L Perry")]
 [assembly: AssemblyProduct("UpdateControls.Light")]
-[assembly: AssemblyCopyright("Copyright 2009 Mallard Software Designs, Licensed under LGPL")]
+[assembly: AssemblyCopyright("Copyright 2010 Michael L Perry, Licensed under LGPL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

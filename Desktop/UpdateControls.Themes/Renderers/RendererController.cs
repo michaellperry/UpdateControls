@@ -1,7 +1,7 @@
 /**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2008 Mallard Software Designs
+ * Copyright 2010 Michael L Perry
  * Licensed under LGPL
  * 
  * http://updatecontrols.net

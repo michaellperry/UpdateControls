@@ -1,7 +1,7 @@
 /**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2008 Mallard Software Designs
+ * Copyright 2010 Michael L Perry
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
@@ -36,6 +36,8 @@ namespace UpdateControls.Installer
         {
             _logWriter.WriteLine("{0}: Installing add-in for Visual Studio 2008.", DateTime.Now);
             InstallAddIn(savedState, assemblyPath, assemblyName, "2008");
+            _logWriter.WriteLine("{0}: Installing add-in for Visual Studio 2010.", DateTime.Now);
+            InstallAddIn(savedState, assemblyPath, assemblyName, "2010");
         }
 
         private void InstallAddIn(IDictionary savedState, string assemblyPath, string assemblyName, string edition)

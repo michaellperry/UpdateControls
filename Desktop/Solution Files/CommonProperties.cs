@@ -1,7 +1,7 @@
 ﻿/**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2008 Mallard Software Designs
+ * Copyright 2010 Michael L Perry
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
@@ -14,9 +14,9 @@ using System;
 
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Mallard Software Designs")]
-[assembly: AssemblyCopyright("Copyright 2009 Mallard Software Designs, Licensed under LGPL")]
+[assembly: AssemblyCompany("Michael L Perry")]
+[assembly: AssemblyCopyright("Copyright 2010 Michael L Perry, Licensed under LGPL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2.0.5.1")]
-[assembly: AssemblyFileVersion("2.0.5.1")]
+[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]

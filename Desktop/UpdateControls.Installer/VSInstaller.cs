@@ -1,7 +1,7 @@
 /**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2008 Mallard Software Designs
+ * Copyright 2010 Michael L Perry
  * Licensed under LGPL
  * 
  * http://updatecontrols.net
@@ -73,7 +73,7 @@ namespace UpdateControls.Installer
         {
             string targetDir = savedState.Contains("TargetDir") ?
                 (string)savedState["TargetDir"] :
-                @"C:\Program Files\Mallard Software Designs\Update Controls";
+                @"C:\Program Files\Michael L Perry\Update Controls";
             string formsPath = Path.Combine(targetDir, "UpdateControls.Forms.dll");
             using (TextWriter logWriter = new StreamWriter(formsPath + ".install.log", true))
             {
@@ -106,7 +106,7 @@ namespace UpdateControls.Installer
         {
             string targetDir = savedState.Contains("TargetDir") ?
                 (string)savedState["TargetDir"] :
-                @"C:\Program Files\Mallard Software Designs\Update Controls";
+                @"C:\Program Files\Michael L Perry\Update Controls";
             string formsPath = Path.Combine(targetDir, "UpdateControls.Forms.dll");
             using (TextWriter logWriter = new StreamWriter(formsPath + ".install.log", true))
             {
