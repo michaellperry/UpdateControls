@@ -18,6 +18,8 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Mallardsoft.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +53,9 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Desktop\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls.XAML\MakeCommand.cs">
       <Link>XAML\MakeCommand.cs</Link>
     </Compile>
@@ -98,6 +103,9 @@
     <Compile Include="XAML\Wrapper\ObjectProperty.cs" />
     <Compile Include="XAML\Wrapper\ObjectPropertyAtom.cs" />
     <Compile Include="XAML\Wrapper\ObjectPropertyCollection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mallardsoft.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

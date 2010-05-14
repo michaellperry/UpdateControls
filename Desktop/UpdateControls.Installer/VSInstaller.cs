@@ -30,9 +30,10 @@ namespace UpdateControls.Installer
         {
             string targetDir = Context.Parameters["TargetDir"];
             stateSaver.Add("TargetDir", targetDir);
-            Directory.CreateDirectory(targetDir);
-            string formsPath = Path.Combine(targetDir, "UpdateControls.Forms.dll");
-            string themesPath = Path.Combine(targetDir, "UpdateControls.Themes.dll");
+            string desktopDir = Path.Combine(targetDir, "Desktop");
+            Directory.CreateDirectory(desktopDir);
+            string formsPath = Path.Combine(desktopDir, "UpdateControls.Forms.dll");
+            string themesPath = Path.Combine(desktopDir, "UpdateControls.Themes.dll");
             using (TextWriter logWriter = new StreamWriter(formsPath + ".install.log", true))
             {
                 try
@@ -73,8 +74,9 @@ namespace UpdateControls.Installer
         {
             string targetDir = savedState.Contains("TargetDir") ?
                 (string)savedState["TargetDir"] :
-                @"C:\Program Files\Michael L Perry\Update Controls";
-            string formsPath = Path.Combine(targetDir, "UpdateControls.Forms.dll");
+                @"C:\Program Files\Mallard Software Designs\Update Controls";
+            string desktopDir = Path.Combine(targetDir, "Desktop");
+            string formsPath = Path.Combine(desktopDir, "UpdateControls.Forms.dll");
             using (TextWriter logWriter = new StreamWriter(formsPath + ".install.log", true))
             {
                 try
@@ -106,8 +108,9 @@ namespace UpdateControls.Installer
         {
             string targetDir = savedState.Contains("TargetDir") ?
                 (string)savedState["TargetDir"] :
-                @"C:\Program Files\Michael L Perry\Update Controls";
-            string formsPath = Path.Combine(targetDir, "UpdateControls.Forms.dll");
+                @"C:\Program Files\Mallard Software Designs\Update Controls";
+            string desktopDir = Path.Combine(targetDir, "Desktop");
+            string formsPath = Path.Combine(desktopDir, "UpdateControls.Forms.dll");
             using (TextWriter logWriter = new StreamWriter(formsPath + ".install.log", true))
             {
                 try
