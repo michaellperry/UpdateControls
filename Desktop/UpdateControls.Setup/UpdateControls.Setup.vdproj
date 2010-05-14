@@ -931,6 +931,56 @@
                                                         {
                                                         }
                                                     }
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_B4DE8097DD764E54815655E5327D9B8A"
+                                                    {
+                                                    "Name" = "8:v4.0"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_A947CF114BBA4925BFC1829547A23D7F"
+                                                            {
+                                                            "Name" = "8:AssemblyFoldersEx"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_67CFDB009BAB4543AC7260B012205DFB"
+                                                                    {
+                                                                    "Name" = "8:[Manufacturer]"
+                                                                    "Condition" = "8:"
+                                                                    "AlwaysCreate" = "11:FALSE"
+                                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                                    "Transitive" = "11:FALSE"
+                                                                        "Keys"
+                                                                        {
+                                                                        }
+                                                                        "Values"
+                                                                        {
+                                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_D3CFD3517A204BC8A487A11827387FCD"
+                                                                            {
+                                                                            "Name" = "8:"
+                                                                            "Condition" = "8:"
+                                                                            "Transitive" = "11:FALSE"
+                                                                            "ValueTypes" = "3:1"
+                                                                            "Value" = "8:[TARGETDIR]Silverlight\\"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                        }
+                                                    }
                                                 }
                                                 "Values"
                                                 {
