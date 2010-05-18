@@ -29,21 +29,23 @@ namespace UpdateControls.XAML.Wrapper
 				_depProperty = new Dependent(delegate
 				{
 					object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
-					_value = TranslateOutgoingValue(value);
-					if (_firePropertyChanged)
-	                    ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+					object translatedValue = TranslateOutgoingValue(value);
+					bool changed = !Object.Equals(_value, translatedValue);
+					_value = translatedValue;
+					if (changed && _firePropertyChanged)
+						ObjectInstance.FirePropertyChanged(ClassProperty.Name);
 					_firePropertyChanged = true;
 				});
 				// When the property becomes out of date, trigger an update.
 				Action triggerUpdate = new Action(delegate
 				{
-                    ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+					ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
 					{
-                        using (NotificationGate.BeginOutbound())
-                        {
-                            _depProperty.OnGet();
-                        }
-                    }));
+						using (NotificationGate.BeginOutbound())
+						{
+							_depProperty.OnGet();
+						}
+					}));
 				});
 				_depProperty.Invalidated += triggerUpdate;
 			}

@@ -19,13 +19,13 @@ namespace UpdateControls.XAML.Test
 		public string First
 		{
 			get { return _person.First; }
-			set { _person.First = value; }
+			set { _person.First = value.Trim(); }
 		}
 
 		public string Last
 		{
 			get { return _person.Last; }
-			set { _person.Last = value; }
+			set { _person.Last = value.Trim(); }
 		}
 
 		public string FullName
