@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,29 +44,33 @@ namespace UpdateControls.XAML.Wrapper
         private void OnUpdateCollection()
         {
             // Get the source collection from the wrapped object.
-            IEnumerable sourceCollection = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
+            IEnumerable source = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
+            List<object> sourceCollection = source.OfType<object>().ToList();
 
-            // Create a list of new items.
-            List<CollectionItem> items = new List<CollectionItem>();
+            ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+            {
+                // Create a list of new items.
+                List<CollectionItem> items = new List<CollectionItem>();
 
-            // Dump all previous items into a recycle bin.
-            using (RecycleBin<CollectionItem> bin = new RecycleBin<CollectionItem>())
-            {
-                foreach (object oldItem in _collection)
-                    bin.AddObject(new CollectionItem(_collection, oldItem, true));
-                // Add new objects to the list.
-                if (sourceCollection != null)
-                    foreach (object obj in sourceCollection)
-                        items.Add(bin.Extract(new CollectionItem(_collection, TranslateOutgoingValue(obj), false)));
-                // All deleted items are removed from the collection at this point.
-            }
-            // Ensure that all items are added to the list.
-            int index = 0;
-            foreach (CollectionItem item in items)
-            {
-                item.EnsureInCollection(index);
-                ++index;
-            }
+                // Dump all previous items into a recycle bin.
+                using (RecycleBin<CollectionItem> bin = new RecycleBin<CollectionItem>())
+                {
+                    foreach (object oldItem in _collection)
+                        bin.AddObject(new CollectionItem(_collection, oldItem, true));
+                    // Add new objects to the list.
+                    if (sourceCollection != null)
+                        foreach (object obj in sourceCollection)
+                            items.Add(bin.Extract(new CollectionItem(_collection, TranslateOutgoingValue(obj), false)));
+                    // All deleted items are removed from the collection at this point.
+                }
+                // Ensure that all items are added to the list.
+                int index = 0;
+                foreach (CollectionItem item in items)
+                {
+                    item.EnsureInCollection(index);
+                    ++index;
+                }
+            }));
         }
 
         private void TriggerUpdate()
