@@ -75,6 +75,8 @@
     <Compile Include="Person.cs" />
     <Compile Include="PersonViewModel.cs" />
     <Compile Include="PersonViewModelBase.cs" />
+    <Compile Include="PrefixID.cs" />
+    <Compile Include="PrefixViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,10 +1,16 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace UpdateControls.XAML.Test
 {
-	public class PersonViewModelBase
+    public class PersonViewModelBase
 	{
 		private Person _person;
+		private static List<PrefixViewModel> _prefixes = Enum.GetValues(typeof(PrefixID))
+			.OfType<PrefixID>()
+			.Select(p => new PrefixViewModel(p))
+			.ToList();
 
 		public PersonViewModelBase(Person person)
 		{
@@ -14,6 +20,17 @@ namespace UpdateControls.XAML.Test
 		public Person Person
 		{
 			get { return _person; }
+		}
+
+		public PrefixViewModel Prefix
+		{
+			get { return _prefixes.First(p => p.Prefix == _person.Prefix); }
+			set { _person.Prefix = value.Prefix; }
+		}
+
+		public IEnumerable<PrefixViewModel> Prefixes
+		{
+			get { return _prefixes; }
 		}
 
 		public string First
