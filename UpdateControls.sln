@@ -1,6 +1,21 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{5336474D-B2D9-49D9-A0BA-15F1FD2D2B81}"
+	ProjectSection(SolutionItems) = preProject
+		Desktop\Solution Files\CommonProperties.cs = Desktop\Solution Files\CommonProperties.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{EA175B50-0DC6-46A8-8A6B-E64931B9CA26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight3", "Silverlight3", "{446B5CE8-FE2A-447C-A095-1E5FE68350C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E48E4B4-EB32-4390-AD9A-F2424617CC48}"
+	ProjectSection(SolutionItems) = preProject
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		UpdateControls.vsmdi = UpdateControls.vsmdi
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "Desktop\UpdateControls\UpdateControls.csproj", "{FFA4FF30-E11F-476F-A305-EC9FD624C752}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Forms", "Desktop\UpdateControls.Forms\UpdateControls.Forms.csproj", "{82338022-D5A1-40B5-8953-E578FF607FCE}"
@@ -19,15 +34,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Installer", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "UpdateControls.Setup", "Desktop\UpdateControls.Setup\UpdateControls.Setup.vdproj", "{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{5336474D-B2D9-49D9-A0BA-15F1FD2D2B81}"
-	ProjectSection(SolutionItems) = preProject
-		Desktop\Solution Files\CommonProperties.cs = Desktop\Solution Files\CommonProperties.cs
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{EA175B50-0DC6-46A8-8A6B-E64931B9CA26}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight", "Silverlight", "{446B5CE8-FE2A-447C-A095-1E5FE68350C7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light", "Silverlight\UpdateControls.Light\UpdateControls.Light.csproj", "{BB6E8A4F-6031-4386-A7E2-45DF90C92556}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light.Demo", "Silverlight\UpdateControls.Light.Demo\UpdateControls.Light.Demo.csproj", "{A5424374-189E-4A60-8A91-50AB72E67059}"
@@ -36,15 +42,13 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UpdateControls.Light.Demo.V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.UnitTest", "UpdateControls.UnitTest\UpdateControls.UnitTest.csproj", "{210C6FC0-444F-4247-831D-EE1F6346BB02}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E48E4B4-EB32-4390-AD9A-F2424617CC48}"
-	ProjectSection(SolutionItems) = preProject
-		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-		UpdateControls.vsmdi = UpdateControls.vsmdi
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight4", "Silverlight4", "{8A25F37E-4875-4D86-8611-265359F21509}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light", "Silverlight4\UpdateControls.Light\UpdateControls.Light.csproj", "{9C929158-63EF-44DE-8EF4-93AF5EABEAAA}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 14
+		SccNumberOfProjects = 15
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs07.codeplex.com/
 		SccLocalPath0 = .
@@ -100,6 +104,10 @@ Global
 		SccProjectTopLevelParentUniqueName13 = UpdateControls.sln
 		SccProjectName13 = UpdateControls.UnitTest
 		SccLocalPath13 = UpdateControls.UnitTest
+		SccProjectUniqueName14 = Silverlight4\\UpdateControls.Light\\UpdateControls.Light.csproj
+		SccProjectTopLevelParentUniqueName14 = UpdateControls.sln
+		SccProjectName14 = Silverlight4/UpdateControls.Light
+		SccLocalPath14 = Silverlight4\\UpdateControls.Light
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = UpdateControls.vsmdi
@@ -142,7 +150,6 @@ Global
 		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Debug|Any CPU.ActiveCfg = Debug
-		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Debug|Any CPU.Build.0 = Debug
 		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Release|Any CPU.ActiveCfg = Release
 		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}.Release|Any CPU.Build.0 = Release
 		{BB6E8A4F-6031-4386-A7E2-45DF90C92556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -161,11 +168,18 @@ Global
 		{210C6FC0-444F-4247-831D-EE1F6346BB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210C6FC0-444F-4247-831D-EE1F6346BB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{210C6FC0-444F-4247-831D-EE1F6346BB02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C929158-63EF-44DE-8EF4-93AF5EABEAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C929158-63EF-44DE-8EF4-93AF5EABEAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C929158-63EF-44DE-8EF4-93AF5EABEAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C929158-63EF-44DE-8EF4-93AF5EABEAAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{5336474D-B2D9-49D9-A0BA-15F1FD2D2B81} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{2E48E4B4-EB32-4390-AD9A-F2424617CC48} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{FFA4FF30-E11F-476F-A305-EC9FD624C752} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{82338022-D5A1-40B5-8953-E578FF607FCE} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{E4496FFF-165F-4008-8766-4DD086F5D3EC} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{3E5C6091-88C5-4435-8B4B-FD31EAB8FE37} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
@@ -174,12 +188,10 @@ Global
 		{C866AE8C-EBFB-4A46-B42F-C8276C2B9CDB} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{5336474D-B2D9-49D9-A0BA-15F1FD2D2B81} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{FFA4FF30-E11F-476F-A305-EC9FD624C752} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{210C6FC0-444F-4247-831D-EE1F6346BB02} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
-		{2E48E4B4-EB32-4390-AD9A-F2424617CC48} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{BB6E8A4F-6031-4386-A7E2-45DF90C92556} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
 		{A5424374-189E-4A60-8A91-50AB72E67059} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
 		{A43E60A2-EF18-4252-A8B3-253D6600B558} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
+		{9C929158-63EF-44DE-8EF4-93AF5EABEAAA} = {8A25F37E-4875-4D86-8611-265359F21509}
 	EndGlobalSection
 EndGlobal

@@ -99,6 +99,14 @@ namespace UpdateControls
 	/// </example>
 	public partial class Dependent
 	{
+        [ThreadStatic]
+        private static Dependent _currentUpdate = null;
+
+        internal static Dependent GetCurrentUpdate()
+        {
+            return _currentUpdate;
+        }
+
         /// <summary>
         /// Event fired when the dependent becomes out-of-date.
         /// <remarks>
@@ -157,7 +165,7 @@ namespace UpdateControls
 			{
 				// We're still not up-to-date (because of a concurrent change).
 				// The current update should similarly not be up-to-date.
-				Dependent currentUpdate = GetCurrentUpdate();
+                Dependent currentUpdate = _currentUpdate;
 				if (currentUpdate != null)
 					currentUpdate.MakeOutOfDate();
 			}
@@ -277,8 +285,8 @@ namespace UpdateControls
 			else if (formerStatus == StatusType.OUT_OF_DATE)
 			{
 				// Push myself to the update stack.
-				Dependent stack = GetCurrentUpdate();
-				SetCurrentUpdate(this);
+				Dependent stack = _currentUpdate;
+                _currentUpdate = this;
 
 				// Update the attribute.
 				try
@@ -288,9 +296,9 @@ namespace UpdateControls
 				finally
 				{
 					// Pop myself off the update stack.
-					Dependent that = GetCurrentUpdate();
+					Dependent that = _currentUpdate;
 					Debug.Assert(that == this);
-					SetCurrentUpdate(stack);
+                    _currentUpdate = stack;
 
 					lock (_precedents)
 					{
