@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using UpdateControls.XAML;
 
 namespace UpdateControls.Light.Demo
 {
