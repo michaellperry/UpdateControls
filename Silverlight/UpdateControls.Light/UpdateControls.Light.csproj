@@ -82,6 +82,9 @@
     <Compile Include="..\..\Desktop\UpdateControls.XAML\MakeCommand.cs">
       <Link>XAML\MakeCommand.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelBase.cs">
+      <Link>XAML\ViewModelBase.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\CollectionItem.cs">
       <Link>XAML\Wrapper\CollectionItem.cs</Link>
     </Compile>
@@ -121,6 +124,7 @@
     <Compile Include="XAML\ForView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XAML\MakeCommand.GetDispatcher.cs" />
+    <Compile Include="XAML\ViewModelBase.FirePropertyChanged.cs" />
     <Compile Include="XAML\Wrapper\ClassInstance.cs" />
     <Compile Include="XAML\Wrapper\ClassProperty.cs" />
     <Compile Include="XAML\Wrapper\IObjectInstance.cs" />
