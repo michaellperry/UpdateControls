@@ -159,15 +159,15 @@ namespace UpdateControls.XAML
             return (T)property.Value;
         }
 
-        protected IEnumerable<T> Get<T>(Func<IEnumerable<T>> getMethod)
+        protected IEnumerable<T> GetCollection<T>(Func<IEnumerable<T>> getMethod)
         {
             string caller = new StackFrame(1).GetMethod().Name;
             if (!caller.StartsWith("get_"))
                 throw new ArgumentException("Only call Get from a property getter.");
-            return Get<T>(caller.Substring(4), getMethod);
+            return GetCollection<T>(caller.Substring(4), getMethod);
         }
 
-        protected IEnumerable<T> Get<T>(string propertyName, Func<IEnumerable<T>> getMethod)
+        protected IEnumerable<T> GetCollection<T>(string propertyName, Func<IEnumerable<T>> getMethod)
         {
             DependentPropertyBase property;
             if (!_dependentPropertyByName.TryGetValue(propertyName, out property))
