@@ -38,8 +38,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light", "Sil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light.Demo", "Silverlight\UpdateControls.Light.Demo\UpdateControls.Light.Demo.csproj", "{A5424374-189E-4A60-8A91-50AB72E67059}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UpdateControls.Light.Demo.VB", "Silverlight\UpdateControls.Light.Demo.VB\UpdateControls.Light.Demo.VB.vbproj", "{A43E60A2-EF18-4252-A8B3-253D6600B558}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.UnitTest", "UpdateControls.UnitTest\UpdateControls.UnitTest.csproj", "{210C6FC0-444F-4247-831D-EE1F6346BB02}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight4", "Silverlight4", "{8A25F37E-4875-4D86-8611-265359F21509}"
@@ -48,7 +46,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light", "Sil
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 15
+		SccNumberOfProjects = 14
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs07.codeplex.com/
 		SccLocalPath0 = .
@@ -96,18 +94,14 @@ Global
 		SccProjectTopLevelParentUniqueName11 = UpdateControls.sln
 		SccProjectName11 = Silverlight/UpdateControls.Light.Demo
 		SccLocalPath11 = Silverlight\\UpdateControls.Light.Demo
-		SccProjectUniqueName12 = Silverlight\\UpdateControls.Light.Demo.VB\\UpdateControls.Light.Demo.VB.vbproj
+		SccProjectUniqueName12 = UpdateControls.UnitTest\\UpdateControls.UnitTest.csproj
 		SccProjectTopLevelParentUniqueName12 = UpdateControls.sln
-		SccProjectName12 = Silverlight/UpdateControls.Light.Demo.VB
-		SccLocalPath12 = Silverlight\\UpdateControls.Light.Demo.VB
-		SccProjectUniqueName13 = UpdateControls.UnitTest\\UpdateControls.UnitTest.csproj
+		SccProjectName12 = UpdateControls.UnitTest
+		SccLocalPath12 = UpdateControls.UnitTest
+		SccProjectUniqueName13 = Silverlight4\\UpdateControls.Light\\UpdateControls.Light.csproj
 		SccProjectTopLevelParentUniqueName13 = UpdateControls.sln
-		SccProjectName13 = UpdateControls.UnitTest
-		SccLocalPath13 = UpdateControls.UnitTest
-		SccProjectUniqueName14 = Silverlight4\\UpdateControls.Light\\UpdateControls.Light.csproj
-		SccProjectTopLevelParentUniqueName14 = UpdateControls.sln
-		SccProjectName14 = Silverlight4/UpdateControls.Light
-		SccLocalPath14 = Silverlight4\\UpdateControls.Light
+		SccProjectName13 = Silverlight4/UpdateControls.Light
+		SccLocalPath13 = Silverlight4\\UpdateControls.Light
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = UpdateControls.vsmdi
@@ -160,10 +154,6 @@ Global
 		{A5424374-189E-4A60-8A91-50AB72E67059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5424374-189E-4A60-8A91-50AB72E67059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5424374-189E-4A60-8A91-50AB72E67059}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A43E60A2-EF18-4252-A8B3-253D6600B558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A43E60A2-EF18-4252-A8B3-253D6600B558}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A43E60A2-EF18-4252-A8B3-253D6600B558}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A43E60A2-EF18-4252-A8B3-253D6600B558}.Release|Any CPU.Build.0 = Release|Any CPU
 		{210C6FC0-444F-4247-831D-EE1F6346BB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{210C6FC0-444F-4247-831D-EE1F6346BB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210C6FC0-444F-4247-831D-EE1F6346BB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -191,7 +181,6 @@ Global
 		{210C6FC0-444F-4247-831D-EE1F6346BB02} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{BB6E8A4F-6031-4386-A7E2-45DF90C92556} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
 		{A5424374-189E-4A60-8A91-50AB72E67059} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
-		{A43E60A2-EF18-4252-A8B3-253D6600B558} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
 		{9C929158-63EF-44DE-8EF4-93AF5EABEAAA} = {8A25F37E-4875-4D86-8611-265359F21509}
 	EndGlobalSection
 EndGlobal

@@ -5,15 +5,15 @@ using System;
 
 namespace UpdateControls.XAML
 {
-    internal partial class DependentCollection
+    internal partial class DependentCollection<T>
     {
-        partial void TriggerUpdate()
+        partial void TriggerUpdate(Dependent depCollection)
         {
             Deployment.Current.Dispatcher.BeginInvoke(new Action(delegate
             {
                 using (NotificationGate.BeginOutbound())
                 {
-                    _depCollection.OnGet();
+                    depCollection.OnGet();
                 }
             }));
         }

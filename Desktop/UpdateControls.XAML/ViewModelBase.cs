@@ -1,13 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Collections.ObjectModel;
-using System.Collections;
-using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls.XAML
 {
+    internal class CollectionItem<T> : IDisposable
+    {
+        private ObservableCollection<T> _collection;
+        private T _item;
+        private bool _inCollection;
+
+        public CollectionItem(ObservableCollection<T> collection, T item, bool inCollection)
+        {
+            _collection = collection;
+            _item = item;
+            _inCollection = inCollection;
+        }
+
+        public void Dispose()
+        {
+            if (_inCollection)
+                _collection.Remove(_item);
+        }
+
+        public void EnsureInCollection(int index)
+        {
+            if (!_inCollection)
+            {
+                // Insert the item into the correct position.
+                _collection.Insert(index, _item);
+            }
+            else if (!object.Equals(_collection[index], _item))
+            {
+                // Remove the item from the old position.
+                _collection.Remove(_item);
+
+                // Insert the item in the correct position.
+                _collection.Insert(index, _item);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return _item.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (obj == this)
+                return true;
+            if (!(obj is CollectionItem<T>))
+                return false;
+            CollectionItem<T> that = (CollectionItem<T>)obj;
+            return Object.Equals(
+                this._item,
+                that._item);
+        }
+    }
+
     internal abstract class DependentPropertyBase
     {
         public abstract object Value { get; }
@@ -30,42 +84,42 @@ namespace UpdateControls.XAML
         }
     }
 
-    internal partial class DependentCollection : DependentPropertyBase
+    internal partial class DependentCollection<T> : DependentPropertyBase
     {
-        private Func<IEnumerable> _getMethod;
+        private Func<IEnumerable<T>> _getMethod;
         private Dependent _depCollection;
-        private ObservableCollection<object> _collection = new ObservableCollection<object>();
+        private ObservableCollection<T> _collection = new ObservableCollection<T>();
 
-        public DependentCollection(Func<IEnumerable> getMethod)
+        public DependentCollection(Func<IEnumerable<T>> getMethod)
         {
             _getMethod = getMethod;
             _depCollection = new Dependent(OnUpdateCollection);
-            _depCollection.Invalidated += () => TriggerUpdate();
+            _depCollection.Invalidated += () => TriggerUpdate(_depCollection);
             _depCollection.Touch();
         }
 
         private void OnUpdateCollection()
         {
             // Get the source collection from the wrapped object.
-            IEnumerable sourceCollection = _getMethod();
+            IEnumerable<T> sourceCollection = _getMethod();
 
             // Create a list of new items.
-            List<CollectionItem> items = new List<CollectionItem>();
+            List<CollectionItem<T>> items = new List<CollectionItem<T>>();
 
             // Dump all previous items into a recycle bin.
-            using (RecycleBin<CollectionItem> bin = new RecycleBin<CollectionItem>())
+            using (RecycleBin<CollectionItem<T>> bin = new RecycleBin<CollectionItem<T>>())
             {
-                foreach (object oldItem in _collection)
-                    bin.AddObject(new CollectionItem(_collection, oldItem, true));
+                foreach (T oldItem in _collection)
+                    bin.AddObject(new CollectionItem<T>(_collection, oldItem, true));
                 // Add new objects to the list.
                 if (sourceCollection != null)
-                    foreach (object obj in sourceCollection)
-                        items.Add(bin.Extract(new CollectionItem(_collection, obj, false)));
+                    foreach (T obj in sourceCollection)
+                        items.Add(bin.Extract(new CollectionItem<T>(_collection, obj, false)));
                 // All deleted items are removed from the collection at this point.
             }
             // Ensure that all items are added to the list.
             int index = 0;
-            foreach (CollectionItem item in items)
+            foreach (CollectionItem<T> item in items)
             {
                 item.EnsureInCollection(index);
                 ++index;
@@ -77,7 +131,7 @@ namespace UpdateControls.XAML
             get { return _collection; }
         }
 
-        partial void TriggerUpdate();
+        partial void TriggerUpdate(Dependent depCollection);
     }
 
     public partial class ViewModelBase : INotifyPropertyChanged
@@ -99,20 +153,29 @@ namespace UpdateControls.XAML
             DependentPropertyBase property;
             if (!_dependentPropertyByName.TryGetValue(propertyName, out property))
             {
-                // Determine whether the property is an atom or a collection.
-                if (typeof(IEnumerable).IsAssignableFrom(typeof(T)))
-                {
-                    // It's a collection.
-                    property = new DependentCollection(() => (IEnumerable)getMethod());
-                }
-                else
-                {
-                    // It's an atom.
-                    property = new DependentAtom<T>(() => FirePropertyChanged(propertyName), getMethod);
-                }
+                property = new DependentAtom<T>(() => FirePropertyChanged(propertyName), getMethod);
                 _dependentPropertyByName.Add(propertyName, property);
             }
             return (T)property.Value;
+        }
+
+        protected IEnumerable<T> Get<T>(Func<IEnumerable<T>> getMethod)
+        {
+            string caller = new StackFrame(1).GetMethod().Name;
+            if (!caller.StartsWith("get_"))
+                throw new ArgumentException("Only call Get from a property getter.");
+            return Get<T>(caller.Substring(4), getMethod);
+        }
+
+        protected IEnumerable<T> Get<T>(string propertyName, Func<IEnumerable<T>> getMethod)
+        {
+            DependentPropertyBase property;
+            if (!_dependentPropertyByName.TryGetValue(propertyName, out property))
+            {
+                property = new DependentCollection<T>(getMethod);
+                _dependentPropertyByName.Add(propertyName, property);
+            }
+            return (IEnumerable<T>)property.Value;
         }
 
         partial void FirePropertyChanged(string propertyName);

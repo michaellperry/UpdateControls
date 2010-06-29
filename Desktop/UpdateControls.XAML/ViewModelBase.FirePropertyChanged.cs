@@ -5,17 +5,17 @@ using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls.XAML
 {
-    internal partial class DependentCollection
+    internal partial class DependentCollection<T>
     {
         private Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
 
-        partial void TriggerUpdate()
+        partial void TriggerUpdate(Dependent depCollection)
         {
             _dispatcher.BeginInvoke(new Action(delegate
             {
                 using (NotificationGate.BeginOutbound())
                 {
-                    _depCollection.OnGet();
+                    depCollection.OnGet();
                 }
             }));
         }
