@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mallard Software Designs")]
 [assembly: AssemblyProduct("UpdateControls.Light")]
-[assembly: AssemblyCopyright("Copyright 2010 Mallard Software Designs, Licensed under LGPL")]
+[assembly: AssemblyCopyright("Copyright 2010 Mallard Software Designs, MIT License")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

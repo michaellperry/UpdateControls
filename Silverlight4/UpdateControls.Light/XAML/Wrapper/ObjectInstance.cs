@@ -2,7 +2,7 @@
  * 
  * Update Controls .NET
  * Copyright 2009 Mallard Software Designs
- * Licensed under LGPL
+ * MIT License
  * 
  * http://updatecontrols.net
  * http://updatecontrolslight.codeplex.com/

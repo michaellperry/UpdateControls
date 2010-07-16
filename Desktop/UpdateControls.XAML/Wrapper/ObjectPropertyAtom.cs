@@ -2,7 +2,7 @@
  * 
  * Update Controls .NET
  * Copyright 2010 Michael L Perry
- * Licensed under LGPL
+ * MIT License
  * 
  * http://updatecontrols.net
  * http://updatecontrols.codeplex.com/
