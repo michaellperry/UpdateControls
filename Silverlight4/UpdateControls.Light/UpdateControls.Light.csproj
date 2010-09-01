@@ -59,6 +59,9 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Desktop\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="..\..\desktop\updatecontrols.xaml\MakeCommand.cs">
       <Link>XAML\MakeCommand.cs</Link>
     </Compile>

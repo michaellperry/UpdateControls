@@ -1,7 +1,7 @@
 ﻿<Window x:Class="UpdateControls.XAML.Test.Window1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Window1" Height="300" Width="300">
+    Title="Window1" Height="316" Width="559">
 
     <Window.Resources>
         <Style TargetType="Border">
@@ -10,13 +10,20 @@
     </Window.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="250" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0">
+        <Border
+            Margin="3">
             <ListBox ItemsSource="{Binding People}" SelectedItem="{Binding SelectedPerson}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -94,5 +101,26 @@
                 <Button Name="NewWindow" Click="NewWindow_Click">New Window</Button>
             </Border>
         </StackPanel>
+        <DataGrid Grid.Column="1" Grid.RowSpan="3"
+            Margin="3"
+            DataContext="{Binding DataGridVM}"
+            ItemsSource="{Binding People}"
+            AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn
+                    Header="Prefix"
+                    ItemsSource="{Binding Prefixes}"
+                    SelectedItemBinding="{Binding Prefix}" />
+                <DataGridTextColumn
+                    Binding="{Binding First}"
+                    Header="First Name" />
+                <DataGridTextColumn
+                    Binding="{Binding Last}"
+                    Header="Last Name" />
+                <DataGridComboBoxColumn
+                    Header="Gender"
+                    SelectedItemBinding="{Binding Gender}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

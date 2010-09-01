@@ -6,7 +6,7 @@ using UpdateControls.XAML;
 
 namespace UpdateControls.XAML.Test
 {
-	public class ContactListViewModel
+    public class ContactListViewModel
 	{
 		private ContactList _contactList;
 		private ContactListNavigationModel _navigation;
@@ -16,6 +16,11 @@ namespace UpdateControls.XAML.Test
 			_contactList = contactList;
 			_navigation = navigation;
 		}
+
+        public DataGridContactListViewModel DataGridVM
+        {
+            get { return new DataGridContactListViewModel(_contactList); }
+        }
 
 		public IEnumerable<PersonViewModel> People
 		{

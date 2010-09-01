@@ -18,7 +18,7 @@ using System.Windows.Threading;
 namespace UpdateControls.XAML.Wrapper
 {
     [TypeDescriptionProvider(typeof(ClassInstanceProvider))]
-    public class ObjectInstance<TWrappedObjectType> : IObjectInstance, INotifyPropertyChanged, IDataErrorInfo
+    public class ObjectInstance<TWrappedObjectType> : IObjectInstance, INotifyPropertyChanged, IDataErrorInfo, IEditableObject
     {
         // Wrap the class and all of its property definitions.
 		private static ClassInstance _classInstance = new ClassInstance(typeof(TWrappedObjectType), typeof(ObjectInstance<TWrappedObjectType>));
@@ -108,5 +108,30 @@ namespace UpdateControls.XAML.Wrapper
 				return wrappedObject != null ? wrappedObject[columnName] : null;
 			}
 		}
-	}
+
+        #region IEditableObject Members
+
+        public void BeginEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.BeginEdit();
+        }
+
+        public void CancelEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.CancelEdit();
+        }
+
+        public void EndEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.EndEdit();
+        }
+
+        #endregion
+    }
 }

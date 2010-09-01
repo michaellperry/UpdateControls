@@ -13,10 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.ComponentModel;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public class ObjectInstance<TWrappedObjectType> : DependencyObject, IObjectInstance
+    public class ObjectInstance<TWrappedObjectType> : DependencyObject, IObjectInstance, IEditableObject
     {
         // Wrap the class and all of its property definitions.
 		private static ClassInstance _classInstance = new ClassInstance(typeof(TWrappedObjectType));
@@ -81,5 +82,30 @@ namespace UpdateControls.XAML.Wrapper
         {
             return _wrappedObject.GetHashCode();
         }
-	}
+
+        #region IEditableObject Members
+
+        public void BeginEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.BeginEdit();
+        }
+
+        public void CancelEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.CancelEdit();
+        }
+
+        public void EndEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.EndEdit();
+        }
+
+        #endregion
+    }
 }
