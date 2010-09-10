@@ -107,7 +107,7 @@
   <ItemGroup>
     <ProjectReference Include="..\UpdateControls.Light\UpdateControls.Light.csproj">
       <Project>{BB6E8A4F-6031-4386-A7E2-45DF90C92556}</Project>
-      <Name>UpdateControls.Light</Name>
+      <Name>UpdateControls.Light %28Silverlight3\UpdateControls.Light%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
