@@ -83,7 +83,7 @@ namespace UpdateControls.XAML.Wrapper
             {
                 _makeObjectProperty = objectInstance =>
                     new ObjectPropertyAtomObject(objectInstance, this);
-                valueType = typeof(ObjectInstance<>).MakeGenericType(propertyType);
+                valueType = typeof(IObjectInstance);
 
                 // Find the type of object instance based on the property type.
                 _objectInstanceConstructor = valueType
