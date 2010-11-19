@@ -119,6 +119,7 @@ namespace UpdateControls
         public event Action Invalidated;
 
 		internal Precedent _base = new Precedent();
+		private Precedent _upToDatePrecedent = new Precedent();
 		private Action _update;
 		private enum StatusType
 		{
@@ -193,13 +194,18 @@ namespace UpdateControls
         /// </summary>
         public bool IsUpToDate
         {
-            get
-            {
-                lock ( _precedents )
-                {
-                    return _status == StatusType.UP_TO_DATE;
-                }
-            }
+			get
+			{
+				lock (_precedents)
+				{
+					bool isUpToDate = _status == StatusType.UP_TO_DATE;
+					if (isUpToDate)
+						_base.RecordDependent();
+					else
+						_upToDatePrecedent.RecordDependent();
+					return isUpToDate;
+				}
+			}
         }
 
         /// <summary>
@@ -304,7 +310,10 @@ namespace UpdateControls
 					{
 						// Look for changes since the update began.
 						if (_status == StatusType.UPDATING)
+						{
 							_status = StatusType.UP_TO_DATE;
+							_upToDatePrecedent.MakeDependentsOutOfDate();
+						}
 						else if (_status == StatusType.UPDATING_AND_OUT_OF_DATE)
 						{
 							_status = StatusType.OUT_OF_DATE;
