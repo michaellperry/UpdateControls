@@ -1,40 +1,40 @@
 /**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2008 Mallard Software Designs
- * Licensed under LGPL
+ * Copyright 2010 Michael L Perry
+ * MIT License
  * 
  * http://updatecontrols.net
- * http://www.codeplex.com/updatecontrols/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UpdateControls.VSAddIn.UnitTest
 {
-    [TestFixture]
+    [TestClass]
     public class FieldParserTest
     {
         private UpdateControls.VSAddIn.FieldParser _parser;
 
-        [SetUp]
-        public void SetUp()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _parser = new FieldParser(Language.CS);
         }
 
-        [Test]
+        [TestMethod]
         public void TestNone()
         {
             Assert.AreEqual(false, _parser.IsAtom);
             Assert.AreEqual(false, _parser.IsCollection);
         }
 
-        [Test]
+		[TestMethod]
         public void TestAtom()
         {
             _parser.Line = "\t\tprivate int _number";
@@ -44,7 +44,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual("_number", _parser.Name);
         }
 
-        [Test]
+		[TestMethod]
         public void TestCollection()
         {
             _parser.Line = "\t\tprivate List<int> _numbers";
@@ -55,7 +55,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual("_numbers", _parser.Name);
         }
 
-        [Test]
+		[TestMethod]
         public void TestAtomNoModifier()
         {
             _parser.Line = "\t\tint _number";
@@ -65,7 +65,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual("_number", _parser.Name);
         }
 
-        [Test]
+		[TestMethod]
         public void TestCollectionNoModifier()
         {
             _parser.Line = "\t\tList<int> _numbers";
@@ -76,7 +76,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual("_numbers", _parser.Name);
         }
 
-        [Test]
+		[TestMethod]
         public void TestDeepCollectionNoModifier()
         {
             _parser.Line = "\t\tSystem.Collections.Generics.List<int> _numbers";

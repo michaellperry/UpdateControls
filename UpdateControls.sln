@@ -12,8 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight3", "Silverlight
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E48E4B4-EB32-4390-AD9A-F2424617CC48}"
 	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-		UpdateControls.vsmdi = UpdateControls.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+		UpdateControls1.vsmdi = UpdateControls1.vsmdi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "Desktop\UpdateControls\UpdateControls.csproj", "{FFA4FF30-E11F-476F-A305-EC9FD624C752}"
@@ -48,9 +50,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WP7", "WP7", "{306549E8-C08
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "WP7\UpdateControls\UpdateControls.csproj", "{151284DC-04CE-4175-A0F4-5FCC761AA2DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.VSAddIn.UnitTest", "Desktop\UpdateControls.VSAddIn.UnitTest\UpdateControls.VSAddIn.UnitTest.csproj", "{55743A4D-DBD8-4B34-B02A-49B8310336A0}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 15
+		SccNumberOfProjects = 16
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs07
 		SccLocalPath0 = .
@@ -110,9 +114,13 @@ Global
 		SccProjectTopLevelParentUniqueName14 = UpdateControls.sln
 		SccProjectName14 = WP7/UpdateControls
 		SccLocalPath14 = WP7\\UpdateControls
+		SccProjectUniqueName15 = Desktop\\UpdateControls.VSAddIn.UnitTest\\UpdateControls.VSAddIn.UnitTest.csproj
+		SccProjectTopLevelParentUniqueName15 = UpdateControls.sln
+		SccProjectName15 = Desktop/UpdateControls.VSAddIn.UnitTest
+		SccLocalPath15 = Desktop\\UpdateControls.VSAddIn.UnitTest
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = UpdateControls.vsmdi
+		CategoryFile = UpdateControls1.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,6 +182,10 @@ Global
 		{151284DC-04CE-4175-A0F4-5FCC761AA2DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{151284DC-04CE-4175-A0F4-5FCC761AA2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{151284DC-04CE-4175-A0F4-5FCC761AA2DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55743A4D-DBD8-4B34-B02A-49B8310336A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55743A4D-DBD8-4B34-B02A-49B8310336A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55743A4D-DBD8-4B34-B02A-49B8310336A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55743A4D-DBD8-4B34-B02A-49B8310336A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +203,7 @@ Global
 		{2A6347A0-C0BA-4D31-BB43-DFCFB798F7A7} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{87F14D96-D3CE-4C73-99D5-E89A1341E2C0} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{210C6FC0-444F-4247-831D-EE1F6346BB02} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
+		{55743A4D-DBD8-4B34-B02A-49B8310336A0} = {EA175B50-0DC6-46A8-8A6B-E64931B9CA26}
 		{BB6E8A4F-6031-4386-A7E2-45DF90C92556} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
 		{A5424374-189E-4A60-8A91-50AB72E67059} = {446B5CE8-FE2A-447C-A095-1E5FE68350C7}
 		{9C929158-63EF-44DE-8EF4-93AF5EABEAAA} = {8A25F37E-4875-4D86-8611-265359F21509}

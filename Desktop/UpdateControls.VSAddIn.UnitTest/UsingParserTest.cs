@@ -1,34 +1,34 @@
 /**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2008 Mallard Software Designs
- * Licensed under LGPL
+ * Copyright 2010 Michael L Perry
+ * MIT License
  * 
  * http://updatecontrols.net
- * http://www.codeplex.com/updatecontrols/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UpdateControls.VSAddIn;
 
 namespace UpdateControls.VSAddIn.UnitTest
 {
-    [TestFixture]
+    [TestClass]
     public class UsingParserTest
     {
         private UsingParser _usingParser;
 
-        [SetUp]
-        public void SetUp()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _usingParser = new UsingParser();
         }
 
-        [Test]
+        [TestMethod]
         public void TestNothing()
         {
             Assert.AreEqual(false, _usingParser.IsUsingUpdateControls);
@@ -36,7 +36,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual(false, _usingParser.IsNamespace);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateControls()
         {
             _usingParser.Line = "using UpdateControls;\r\n";
@@ -45,7 +45,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual(false, _usingParser.IsNamespace);
         }
 
-        [Test]
+        [TestMethod]
         public void TestWindowsForms()
         {
             _usingParser.Line = "using Windows.Forms;\r\n";
@@ -54,7 +54,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual(false, _usingParser.IsNamespace);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateControlsForms()
         {
             _usingParser.Line = "using UpdateControls.Forms;\r\n";
@@ -63,7 +63,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual(false, _usingParser.IsNamespace);
         }
 
-        [Test]
+        [TestMethod]
         public void TestBlank()
         {
             _usingParser.Line = "\r\n";
@@ -72,7 +72,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual(false, _usingParser.IsNamespace);
         }
 
-        [Test]
+        [TestMethod]
         public void TestNamespace()
         {
             _usingParser.Line = "namespace MyApp\r\n";

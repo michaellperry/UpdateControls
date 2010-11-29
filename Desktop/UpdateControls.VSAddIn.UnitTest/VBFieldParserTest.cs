@@ -1,33 +1,33 @@
 /**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2008 Mallard Software Designs
- * Licensed under LGPL
+ * Copyright 2010 Michael L Perry
+ * MIT License
  * 
  * http://updatecontrols.net
- * http://www.codeplex.com/updatecontrols/
+ * http://updatecontrols.codeplex.com/
  * 
  **********************************************************************/
 
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UpdateControls.VSAddIn.UnitTest
 {
-    [TestFixture]
+    [TestClass]
     public class VBFieldParserTest
     {
         private UpdateControls.VSAddIn.FieldParser _parser;
 
-        [SetUp]
-        public void SetUp()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _parser = new FieldParser(Language.VB);
         }
 
-        [Test]
+        [TestMethod]
         public void TestField()
         {
             _parser.Line = "\t\tPrivate _name As String = \"Aggie\"";
@@ -38,7 +38,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual("_name", _parser.Name);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCollection()
         {
             _parser.Line = "\t\tPrivate _people As New List( Of Person )";
@@ -50,7 +50,7 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual("_people", _parser.Name);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDeepCollection()
         {
             _parser.Line = "\t\tPrivate _people As New System.Collections.Generics.List( Of Person )";
