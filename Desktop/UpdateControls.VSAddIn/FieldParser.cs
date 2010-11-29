@@ -19,10 +19,10 @@ namespace UpdateControls.VSAddIn
     public class FieldParser
     {
         private static readonly Regex CSSimpleFieldExpression = new Regex(
-            @"^\s*(?<modifier>(private\s+)|(protected\s+)|(internal\s+)|(protected\s+internal\s+)|(public\s+)|())(?<type>[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_]*)*)\s+(?<name>[a-zA-Z_][a-zA-Z0-9_]*)",
+            @"^\s*(?<modifier>(private\s+)|(protected\s+)|(internal\s+)|(protected\s+internal\s+)|(public\s+)|())(?<type>[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_]*)*[?]?)\s+(?<name>[a-zA-Z_][a-zA-Z0-9_]*)",
             RegexOptions.Singleline);
         private static readonly Regex CSCollectionFieldExpression = new Regex(
-            @"^\s*(?<modifier>(private\s+)|(protected\s+)|(internal\s+)|(protected\s+internal\s+)|(public\s+)|())(?<collection>[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_]*)*)\s*[<]\s*(?<type>[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_]*)*)\s*[>]\s*(?<name>[a-zA-Z_][a-zA-Z0-9_]*)",
+			@"^\s*(?<modifier>(private\s+)|(protected\s+)|(internal\s+)|(protected\s+internal\s+)|(public\s+)|())(?<collection>[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_]*)*)\s*[<]\s*(?<type>[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_]*)*[?]?)\s*[>]\s*(?<name>[a-zA-Z_][a-zA-Z0-9_]*)",
             RegexOptions.Singleline);
 
         private static readonly Regex VBSimpleFieldExpression = new Regex(

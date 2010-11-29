@@ -45,6 +45,16 @@ namespace UpdateControls.VSAddIn.UnitTest
         }
 
 		[TestMethod]
+		public void TestNullable()
+		{
+			_parser.Line = "\t\tprivate int? _number";
+			Assert.AreEqual(true, _parser.IsAtom);
+			Assert.AreEqual(false, _parser.IsCollection);
+			Assert.AreEqual("int?", _parser.Type);
+			Assert.AreEqual("_number", _parser.Name);
+		}
+
+		[TestMethod]
         public void TestCollection()
         {
             _parser.Line = "\t\tprivate List<int> _numbers";
@@ -52,6 +62,17 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual(true, _parser.IsCollection);
             Assert.AreEqual("List", _parser.Collection);
             Assert.AreEqual("int", _parser.Type);
+            Assert.AreEqual("_numbers", _parser.Name);
+        }
+
+		[TestMethod]
+        public void TestCollectionOfNullable()
+        {
+            _parser.Line = "\t\tprivate List<int?> _numbers";
+            Assert.AreEqual(false, _parser.IsAtom);
+            Assert.AreEqual(true, _parser.IsCollection);
+            Assert.AreEqual("List", _parser.Collection);
+            Assert.AreEqual("int?", _parser.Type);
             Assert.AreEqual("_numbers", _parser.Name);
         }
 
@@ -64,6 +85,16 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual("int", _parser.Type);
             Assert.AreEqual("_number", _parser.Name);
         }
+
+		[TestMethod]
+		public void TestNullableNoModifier()
+		{
+			_parser.Line = "\t\tint? _number";
+			Assert.AreEqual(true, _parser.IsAtom);
+			Assert.AreEqual(false, _parser.IsCollection);
+			Assert.AreEqual("int?", _parser.Type);
+			Assert.AreEqual("_number", _parser.Name);
+		}
 
 		[TestMethod]
         public void TestCollectionNoModifier()
@@ -86,5 +117,16 @@ namespace UpdateControls.VSAddIn.UnitTest
             Assert.AreEqual("int", _parser.Type);
             Assert.AreEqual("_numbers", _parser.Name);
         }
-    }
+
+		[TestMethod]
+		public void TestCollectionOfNullableNoModifier()
+		{
+			_parser.Line = "\t\tList<int?> _numbers";
+			Assert.AreEqual(false, _parser.IsAtom);
+			Assert.AreEqual(true, _parser.IsCollection);
+			Assert.AreEqual("List", _parser.Collection);
+			Assert.AreEqual("int?", _parser.Type);
+			Assert.AreEqual("_numbers", _parser.Name);
+		}
+	}
 }
