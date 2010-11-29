@@ -25,19 +25,12 @@ namespace UpdateControls.XAML.Wrapper
         // Wrap the object instance.
         private object _wrappedObject;
 
-        // The collection of wrapped objects.
-        private IDictionary<object, IObjectInstance> _wrapperByObject;
-
 		// Wrap all properties.
 		private List<ObjectProperty> _properties;
 
-        public ObjectInstance(TWrappedObjectType wrappedObject, IDictionary<object, IObjectInstance> wrapperByObject)
+        public ObjectInstance(TWrappedObjectType wrappedObject)
 		{
 			_wrappedObject = wrappedObject;
-            _wrapperByObject = wrapperByObject;
-
-            // Save this wrapper in the collection.
-            _wrapperByObject.Add(wrappedObject, this);
 
             // Create a wrapper around each property.
             _properties = _classInstance.ClassProperties.Select(p => ObjectProperty.From(this, p)).ToList();
@@ -46,11 +39,6 @@ namespace UpdateControls.XAML.Wrapper
         public object WrappedObject
         {
             get { return _wrappedObject; }
-        }
-
-        public IDictionary<object, IObjectInstance> WrapperByObject
-        {
-            get { return _wrapperByObject; }
         }
 
         public ObjectProperty LookupProperty(ClassProperty classProperty)

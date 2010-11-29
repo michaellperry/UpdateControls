@@ -1,7 +1,7 @@
 ﻿/**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2009 Mallard Software Designs
+ * Copyright 2010 Michael L Perry
  * MIT License
  * 
  * http://updatecontrols.net
@@ -11,6 +11,8 @@
 
 using System.Collections.Generic;
 using UpdateControls.XAML.Wrapper;
+using System;
+using System.Linq;
 
 namespace UpdateControls.XAML
 {
@@ -22,14 +24,17 @@ namespace UpdateControls.XAML
         /// data binding with automatic updates.
         /// </summary>
         /// <param name="wrappedObject">The object to wrap for the view.</param>
-        /// <typeparam name="TWrappedObjectType">!!!DO NOT SPECIFY!!!</typeparam>
         /// <returns>An object suitable for data binding.</returns>
-        public static object Wrap<TWrappedObjectType>(TWrappedObjectType wrappedObject)
+		public static IObjectInstance Wrap(object wrappedObject)
         {
             return
                 wrappedObject == null
                     ? null
-                    : new ObjectInstance<TWrappedObjectType>(wrappedObject, new Dictionary<object, IObjectInstance>());
+					: (IObjectInstance)typeof(ObjectInstance<>)
+						.MakeGenericType(wrappedObject.GetType())
+						.GetConstructors()
+						.Single()
+						.Invoke(new object[] { wrappedObject });
         }
 
         /// <summary>
@@ -39,12 +44,13 @@ namespace UpdateControls.XAML
         /// <param name="dataContext">The DataContext previously wrapped.</param>
         /// <returns>The object originally wrapped, or null.</returns>
         public static TWrappedObjectType Unwrap<TWrappedObjectType>(object dataContext)
-        {
-            ObjectInstance<TWrappedObjectType> wrapper = dataContext as ObjectInstance<TWrappedObjectType>;
+			where TWrappedObjectType : class
+		{
+            IObjectInstance wrapper = dataContext as IObjectInstance;
             return
                 wrapper == null
-                    ? default(TWrappedObjectType)
-                    : (TWrappedObjectType)wrapper.WrappedObject;
+                    ? null
+                    : wrapper.WrappedObject as TWrappedObjectType;
         }
     }
 }

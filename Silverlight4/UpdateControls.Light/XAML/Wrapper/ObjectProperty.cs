@@ -1,7 +1,7 @@
 /**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2009 Mallard Software Designs
+ * Copyright 2010 Michael L Perry
  * MIT License
  * 
  * http://updatecontrols.net
@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System;
+using System.Linq;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -38,12 +39,11 @@ namespace UpdateControls.XAML.Wrapper
 
         protected object WrapObject(object value)
         {
-            // Try to reuse the wrapper we've already created.
-            IObjectInstance wrapper;
-            if (ObjectInstance.WrapperByObject.TryGetValue(value, out wrapper))
-                return wrapper;
-            else
-                return ClassProperty.MakeObjectInstance(value, ObjectInstance.WrapperByObject);
-        }
+			return typeof(ObjectInstance<>)
+				.MakeGenericType(value.GetType())
+				.GetConstructors()
+				.Single()
+				.Invoke(new object[] { value });
+		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using UpdateControls.XAML.Wrapper;
 using System;
+using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls.XAML
 {

@@ -1,7 +1,7 @@
 /**********************************************************************
  * 
  * Update Controls .NET
- * Copyright 2009 Mallard Software Designs
+ * Copyright 2010 Michael L Perry
  * MIT License
  * 
  * http://updatecontrols.net
@@ -11,6 +11,7 @@
 
 using System;
 using UpdateControls;
+using System.ComponentModel.DataAnnotations;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -52,6 +53,7 @@ namespace UpdateControls.XAML.Wrapper
             if (NotificationGate.IsInbound)
             {
                 value = TranslateIncommingValue(value);
+				Validator.ValidateProperty(value, new ValidationContext(ObjectInstance.WrappedObject, null, null) { MemberName = ClassProperty.Name });
                 ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
             }
 		}
