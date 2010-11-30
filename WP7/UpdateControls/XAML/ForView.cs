@@ -18,22 +18,24 @@ namespace UpdateControls.XAML
 {
     public static class ForView
     {
-        /// <summary>
-        /// Wrap an object to be used as the DataContext of a view.
-        /// All of the properties of the object are available for
-        /// data binding with automatic updates.
-        /// </summary>
-        /// <param name="wrappedObject">The object to wrap for the view.</param>
-        /// <typeparam name="TWrappedObjectType">!!!DO NOT SPECIFY!!!</typeparam>
-        /// <returns>An object suitable for data binding.</returns>
-        public static object Wrap<TWrappedObjectType>(TWrappedObjectType wrappedObject)
-        {
-            return typeof(ObjectInstance<>)
-                .MakeGenericType(wrappedObject.GetType())
-                .GetConstructors()
-                .Single()
-                .Invoke(new object[] { wrappedObject, new Dictionary<object, IObjectInstance>() });
-        }
+		/// <summary>
+		/// Wrap an object to be used as the DataContext of a view.
+		/// All of the properties of the object are available for
+		/// data binding with automatic updates.
+		/// </summary>
+		/// <param name="wrappedObject">The object to wrap for the view.</param>
+		/// <returns>An object suitable for data binding.</returns>
+		public static IObjectInstance Wrap(object wrappedObject)
+		{
+			return
+				wrappedObject == null
+					? null
+					: (IObjectInstance)typeof(ObjectInstance<>)
+						.MakeGenericType(wrappedObject.GetType())
+						.GetConstructors()
+						.Single()
+						.Invoke(new object[] { wrappedObject });
+		}
 
         /// <summary>
         /// Unwrap a DataContext to get back to the original object.
@@ -47,7 +49,7 @@ namespace UpdateControls.XAML
             IObjectInstance wrapper = dataContext as IObjectInstance;
             return
                 wrapper == null
-                    ? default(TWrappedObjectType)
+                    ? null
                     : wrapper.WrappedObject as TWrappedObjectType;
         }
     }
