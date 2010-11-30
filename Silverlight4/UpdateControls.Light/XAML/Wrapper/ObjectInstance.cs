@@ -49,6 +49,11 @@ namespace UpdateControls.XAML.Wrapper
     			return _properties.Single(p => p.ClassProperty == classProperty);
 		}
 
+		public ObjectProperty GetPropertyByName(string name)
+		{
+			return _properties.FirstOrDefault(property => property.ClassProperty.Name == name);
+		}
+
         public override string ToString()
         {
             return _wrappedObject.ToString();
