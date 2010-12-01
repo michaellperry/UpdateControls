@@ -116,6 +116,7 @@
     <Compile Include="XAML\Wrapper\ObjectProperty.cs" />
     <Compile Include="XAML\Wrapper\ObjectPropertyAtom.cs" />
     <Compile Include="XAML\Wrapper\ObjectPropertyCollection.cs" />
+    <Compile Include="XAML\Wrapper\UnitTestDispatcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

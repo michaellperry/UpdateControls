@@ -47,7 +47,7 @@ namespace UpdateControls.XAML.Wrapper
             IEnumerable source = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
             List<object> sourceCollection = source.OfType<object>().ToList();
 
-			ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+			ObjectInstance.Defer(new Action(delegate
 			{
 				// Create a list of new items.
 				List<CollectionItem> items = new List<CollectionItem>();
@@ -75,7 +75,7 @@ namespace UpdateControls.XAML.Wrapper
 
         private void TriggerUpdate()
         {
-            ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+            ObjectInstance.Defer(new Action(delegate
             {
                 using (NotificationGate.BeginOutbound())
                 {

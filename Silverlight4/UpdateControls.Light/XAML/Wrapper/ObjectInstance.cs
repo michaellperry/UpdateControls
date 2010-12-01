@@ -41,6 +41,14 @@ namespace UpdateControls.XAML.Wrapper
             get { return _wrappedObject; }
         }
 
+        public void Defer(Action action)
+        {
+            if (UnitTestDispatcher.On)
+                UnitTestDispatcher.Defer(action);
+            else
+                Dispatcher.BeginInvoke(action);
+        }
+
         public ObjectProperty LookupProperty(ClassProperty classProperty)
         {
             if (_properties == null)

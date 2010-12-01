@@ -95,7 +95,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Child.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Parent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LeakTest.cs" />
     <Compile Include="Tournament.cs" />

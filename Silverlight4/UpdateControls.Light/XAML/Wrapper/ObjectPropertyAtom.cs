@@ -34,7 +34,7 @@ namespace UpdateControls.XAML.Wrapper
 				// When the property becomes out of date, trigger an update.
 				Action triggerUpdate = new Action(delegate
 				{
-					ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+					ObjectInstance.Defer(new Action(delegate
 					{
                         using (NotificationGate.BeginOutbound())
                         {

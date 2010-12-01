@@ -9,6 +9,7 @@
  * 
  **********************************************************************/
 
+using System;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -17,7 +18,7 @@ namespace UpdateControls.XAML.Wrapper
     public interface IObjectInstance
     {
         object WrappedObject { get; }
-        Dispatcher Dispatcher { get; }
+        void Defer(Action action);
         ObjectProperty LookupProperty(UpdateControls.XAML.Wrapper.ClassProperty classProperty);
         void SetValue(DependencyProperty dependencyProperty, object value);
     }
