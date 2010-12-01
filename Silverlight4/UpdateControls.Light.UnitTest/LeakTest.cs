@@ -57,6 +57,8 @@ namespace UpdateControls.Light.UnitTest
 		[TestMethod]
 		public void WhenPropertyIsChanged_PropertyValueIsADifferentChildWrapper()
 		{
+            UnitTestDispatcher.On = true;
+
 			Tournament tournament = new Tournament();
 			Game firstSelectedGame = new Game();
 			tournament.SelectedGame = firstSelectedGame;
@@ -66,6 +68,7 @@ namespace UpdateControls.Light.UnitTest
 
 			Game secondSelectedGame = new Game();
 			tournament.SelectedGame = secondSelectedGame;
+            UnitTestDispatcher.ExecuteAll();
 			ObjectInstance<Game> secondSelectedGameWrapper = tournamentWrapper.GetValue(selectedGameProperty.ClassProperty.DependencyProperty) as ObjectInstance<Game>;
 
 			Assert.AreNotSame(firstSelectedGameWrapper, secondSelectedGameWrapper);

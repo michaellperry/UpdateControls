@@ -25,16 +25,18 @@ namespace UpdateControls.XAML
         /// </summary>
         /// <param name="wrappedObject">The object to wrap for the view.</param>
         /// <returns>An object suitable for data binding.</returns>
-		public static IObjectInstance Wrap(object wrappedObject)
+        public static IObjectInstance Wrap(object wrappedObject)
         {
-            return
-                wrappedObject == null
-                    ? null
-					: (IObjectInstance)typeof(ObjectInstance<>)
-						.MakeGenericType(wrappedObject.GetType())
-						.GetConstructors()
-						.Single()
-						.Invoke(new object[] { wrappedObject });
+            if (wrappedObject == null)
+                return null;
+            Tree tree = new Tree();
+            IObjectInstance root = (IObjectInstance)typeof(ObjectInstance<>)
+                .MakeGenericType(wrappedObject.GetType())
+                .GetConstructors()
+                .Single()
+                .Invoke(new object[] { wrappedObject, tree });
+            tree.SetRoot(root);
+            return root;
         }
 
         /// <summary>

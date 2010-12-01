@@ -104,7 +104,12 @@ namespace UpdateControls.XAML.Wrapper
             return _makeObjectProperty(objectInstance);
         }
 
-        // Called when the user edits the property. Sets the property in the wrapped object.
+		public DependencyProperty DependencyProperty
+		{
+			get { return _dependencyProperty; }
+		}
+
+		// Called when the user edits the property. Sets the property in the wrapped object.
 		private void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
 		{
 			// Get the wrapped object.

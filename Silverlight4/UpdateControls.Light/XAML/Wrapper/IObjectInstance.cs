@@ -18,8 +18,10 @@ namespace UpdateControls.XAML.Wrapper
     public interface IObjectInstance
     {
         object WrappedObject { get; }
+        Tree Tree { get; }
         void Defer(Action action);
         ObjectProperty LookupProperty(UpdateControls.XAML.Wrapper.ClassProperty classProperty);
         void SetValue(DependencyProperty dependencyProperty, object value);
+        void UpdateNodes();
     }
 }

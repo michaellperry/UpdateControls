@@ -25,20 +25,46 @@ namespace UpdateControls.XAML.Wrapper
         // Wrap the object instance.
         private object _wrappedObject;
 
+        private Tree _tree;
+
 		// Wrap all properties.
 		private List<ObjectProperty> _properties;
 
-        public ObjectInstance(TWrappedObjectType wrappedObject)
+        private Dependent _depNodes;
+
+        public ObjectInstance(TWrappedObjectType wrappedObject, Tree tree)
 		{
 			_wrappedObject = wrappedObject;
+            _tree = tree;
 
             // Create a wrapper around each property.
             _properties = _classInstance.ClassProperties.Select(p => ObjectProperty.From(this, p)).ToList();
+
+            _depNodes = new Dependent(delegate
+            {
+                foreach (ObjectProperty property in _properties)
+                {
+                    property.UpdateNodes();
+                }
+            });
 		}
 
         public object WrappedObject
         {
             get { return _wrappedObject; }
+        }
+
+        public Tree Tree
+        {
+            get { return _tree; }
+        }
+
+        public void Defer(Action action)
+        {
+            if (UnitTestDispatcher.On)
+                UnitTestDispatcher.Defer(action);
+            else
+                Dispatcher.BeginInvoke(action);
         }
 
         public ObjectProperty LookupProperty(ClassProperty classProperty)
@@ -48,6 +74,16 @@ namespace UpdateControls.XAML.Wrapper
             else
     			return _properties.Single(p => p.ClassProperty == classProperty);
 		}
+
+		public ObjectProperty GetPropertyByName(string name)
+		{
+			return _properties.FirstOrDefault(property => property.ClassProperty.Name == name);
+		}
+
+        public void UpdateNodes()
+        {
+            _depNodes.OnGet();
+        }
 
         public override string ToString()
         {

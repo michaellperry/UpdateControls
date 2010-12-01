@@ -21,6 +21,7 @@ namespace UpdateControls.XAML.Wrapper
 	{
 		private ObservableCollection<object> _collection = new ObservableCollection<object>();
         private Dependent _depCollection;
+        private List<IObjectInstance> _children = new List<IObjectInstance>();
 
         public ObjectPropertyCollection(IObjectInstance objectInstance, ClassProperty classProperty)
 			: base(objectInstance, classProperty)
@@ -32,20 +33,15 @@ namespace UpdateControls.XAML.Wrapper
 
                 // When the collection is out of date, update it from the wrapped object.
                 _depCollection = new Dependent(OnUpdateCollection);
-
-                // When the property becomes out of date, trigger an update.
-                _depCollection.Invalidated += TriggerUpdate;
-
-                // The property is out of date right now, so trigger the first update.
-                _depCollection.Touch();
             }
         }
 
         private void OnUpdateCollection()
         {
             // Get the source collection from the wrapped object.
+            _children.Clear();
             IEnumerable source = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
-            List<object> sourceCollection = source.OfType<object>().ToList();
+            List<object> sourceCollection = source.OfType<object>().Select(TranslateOutgoingValue).ToList();
 
 			ObjectInstance.Defer(new Action(delegate
 			{
@@ -60,7 +56,7 @@ namespace UpdateControls.XAML.Wrapper
 					// Add new objects to the list.
 					if (sourceCollection != null)
 						foreach (object obj in sourceCollection)
-							items.Add(bin.Extract(new CollectionItem(_collection, TranslateOutgoingValue(obj), false)));
+							items.Add(bin.Extract(new CollectionItem(_collection, obj, false)));
 					// All deleted items are removed from the collection at this point.
 				}
 				// Ensure that all items are added to the list.
@@ -73,21 +69,22 @@ namespace UpdateControls.XAML.Wrapper
 			}));
         }
 
-        private void TriggerUpdate()
-        {
-            ObjectInstance.Defer(new Action(delegate
-            {
-                using (NotificationGate.BeginOutbound())
-                {
-                    _depCollection.OnGet();
-                }
-            }));
-        }
-
         public override void OnUserInput(object value)
 		{
 			throw new NotSupportedException("Update Controls does not support two-way binding of collection properties.");
 		}
+
+        public override void UpdateNodes()
+        {
+            _depCollection.OnGet();
+            foreach (IObjectInstance child in _children)
+                child.UpdateNodes();
+        }
+
+        protected void AddChild(IObjectInstance child)
+        {
+            _children.Add(child);
+        }
 
         public abstract object TranslateOutgoingValue(object value);
     }

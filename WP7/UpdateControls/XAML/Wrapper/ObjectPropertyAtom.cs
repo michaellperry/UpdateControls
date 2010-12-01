@@ -9,14 +9,12 @@
  * 
  **********************************************************************/
 
-using System;
-using UpdateControls;
-
 namespace UpdateControls.XAML.Wrapper
 {
     internal abstract class ObjectPropertyAtom : ObjectProperty
     {
         private Dependent _depProperty;
+        private IObjectInstance _child;
 
 		public ObjectPropertyAtom(IObjectInstance objectInstance, ClassProperty classProperty)
 			: base(objectInstance, classProperty)
@@ -26,24 +24,11 @@ namespace UpdateControls.XAML.Wrapper
 				// When the property is out of date, update it from the wrapped object.
 				_depProperty = new Dependent(delegate
 				{
+                    _child = null;
 					object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
-					value = TranslateOutgoingValue(value);
-					ClassProperty.SetUserOutput(ObjectInstance, value);
+                    value = TranslateOutgoingValue(value);
+                    ClassProperty.SetUserOutput(ObjectInstance, value);
 				});
-				// When the property becomes out of date, trigger an update.
-				Action triggerUpdate = new Action(delegate
-				{
-					ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
-					{
-                        using (NotificationGate.BeginOutbound())
-                        {
-                            _depProperty.OnGet();
-                        }
-					}));
-				});
-				_depProperty.Invalidated += triggerUpdate;
-                // The property is out of date right now, so trigger the first update.
-                _depProperty.Touch();
             }
 		}
 
@@ -52,9 +37,24 @@ namespace UpdateControls.XAML.Wrapper
             if (NotificationGate.IsInbound)
             {
                 value = TranslateIncommingValue(value);
-				ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+                ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
             }
 		}
+
+        public override void UpdateNodes()
+        {
+            using (NotificationGate.BeginOutbound())
+            {
+                _depProperty.OnGet();
+            }
+            if (_child != null)
+                _child.UpdateNodes();
+        }
+
+        protected void SetChild(IObjectInstance child)
+        {
+            _child = child;
+        }
 
         public abstract object TranslateIncommingValue(object value);
         public abstract object TranslateOutgoingValue(object value);

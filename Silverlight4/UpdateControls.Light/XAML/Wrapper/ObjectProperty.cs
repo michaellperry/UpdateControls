@@ -26,6 +26,7 @@ namespace UpdateControls.XAML.Wrapper
 		}
 
 		public abstract void OnUserInput(object value);
+        public abstract void UpdateNodes();
 
         public static ObjectProperty From(IObjectInstance objectInstance, ClassProperty classProperty)
 		{
@@ -37,13 +38,9 @@ namespace UpdateControls.XAML.Wrapper
             return String.Format("{0}({1})", ClassProperty, ObjectInstance.WrappedObject);
         }
 
-        protected object WrapObject(object value)
+        protected bool WrapObject(object value, out IObjectInstance wrapper)
         {
-			return typeof(ObjectInstance<>)
-				.MakeGenericType(value.GetType())
-				.GetConstructors()
-				.Single()
-				.Invoke(new object[] { value });
-		}
+            return ObjectInstance.Tree.WrapObject(value, out wrapper);
+        }
 	}
 }
