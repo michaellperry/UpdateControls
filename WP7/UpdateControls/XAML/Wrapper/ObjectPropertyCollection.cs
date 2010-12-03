@@ -17,15 +17,18 @@ using System.Collections.ObjectModel;
 
 namespace UpdateControls.XAML.Wrapper
 {
-	internal abstract class ObjectPropertyCollection : ObjectProperty
+	internal class ObjectPropertyCollection : ObjectProperty
 	{
+        private bool _hasChildObjects = false;
 		private ObservableCollection<object> _collection = new ObservableCollection<object>();
         private Dependent _depCollection;
         private List<IObjectInstance> _children = new List<IObjectInstance>();
 
-        public ObjectPropertyCollection(IObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectPropertyCollection(IObjectInstance objectInstance, ClassProperty classProperty, bool hasChildObjects)
 			: base(objectInstance, classProperty)
 		{
+            _hasChildObjects = hasChildObjects;
+
             if (ClassProperty.CanRead)
             {
                 // Bind to the observable collection.
@@ -38,10 +41,42 @@ namespace UpdateControls.XAML.Wrapper
 
         private void OnUpdateCollection()
         {
-            // Get the source collection from the wrapped object.
-            _children.Clear();
-            IEnumerable source = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
-            List<object> sourceCollection = source.OfType<object>().Select(TranslateOutgoingValue).ToList();
+            IEnumerable values = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
+            List<object> newCollection;
+            if (_hasChildObjects)
+            {
+                List<IObjectInstance> oldChildren = new List<IObjectInstance>(_children);
+                Dictionary<object, IObjectInstance> oldValues = oldChildren.ToDictionary(wrapper => wrapper.WrappedObject);
+
+                // Get the source collection from the wrapped object.
+                _children.Clear();
+                newCollection = new List<object>();
+                foreach (object value in values)
+                {
+                    IObjectInstance wrapper;
+                    if (oldValues.TryGetValue(value, out wrapper))
+                    {
+                        _children.Add(wrapper);
+                        newCollection.Add(wrapper);
+                    }
+                    else
+                    {
+                        if (WrapObject(value, out wrapper))
+                            _children.Add(wrapper);
+                        newCollection.Add(wrapper);
+                    }
+                }
+
+                foreach (IObjectInstance child in oldChildren.Except(_children))
+                {
+                    ObjectInstance.Tree.RemoveKey(child.WrappedObject);
+                    child.Dispose();
+                }
+            }
+            else
+            {
+                newCollection = values.OfType<object>().ToList();
+            }
 
 			ObjectInstance.Defer(new Action(delegate
 			{
@@ -54,8 +89,8 @@ namespace UpdateControls.XAML.Wrapper
 					foreach (object oldItem in _collection)
 						bin.AddObject(new CollectionItem(_collection, oldItem, true));
 					// Add new objects to the list.
-					if (sourceCollection != null)
-						foreach (object obj in sourceCollection)
+					if (newCollection != null)
+						foreach (object obj in newCollection)
 							items.Add(bin.Extract(new CollectionItem(_collection, obj, false)));
 					// All deleted items are removed from the collection at this point.
 				}
@@ -81,11 +116,18 @@ namespace UpdateControls.XAML.Wrapper
                 child.UpdateNodes();
         }
 
+        public override void Dispose()
+        {
+            foreach (IObjectInstance child in _children)
+            {
+                child.Dispose();
+            }
+            _depCollection.Dispose();
+        }
+
         protected void AddChild(IObjectInstance child)
         {
             _children.Add(child);
         }
-
-        public abstract object TranslateOutgoingValue(object value);
     }
 }

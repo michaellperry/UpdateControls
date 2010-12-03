@@ -32,6 +32,8 @@ namespace UpdateControls.XAML.Wrapper
 
         private Dependent _depNodes;
 
+        private bool _disposed = false;
+
         public ObjectInstance(TWrappedObjectType wrappedObject, Tree tree)
 		{
 			_wrappedObject = wrappedObject;
@@ -83,6 +85,21 @@ namespace UpdateControls.XAML.Wrapper
         public void UpdateNodes()
         {
             _depNodes.OnGet();
+        }
+
+        public bool IsDisposed
+        {
+            get { return _disposed; }
+        }
+
+        public void Dispose()
+        {
+            foreach (ObjectProperty property in _properties)
+            {
+                property.Dispose();
+            }
+            _depNodes.Dispose();
+            _disposed = true;
         }
 
         public override string ToString()

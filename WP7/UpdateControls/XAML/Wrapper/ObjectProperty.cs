@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public abstract class ObjectProperty
+    public abstract class ObjectProperty : IDisposable
 	{
 		public IObjectInstance ObjectInstance { get; private set; }
 		public ClassProperty ClassProperty { get; private set; }
@@ -27,6 +27,7 @@ namespace UpdateControls.XAML.Wrapper
 
 		public abstract void OnUserInput(object value);
         public abstract void UpdateNodes();
+        public abstract void Dispose();
 
         public static ObjectProperty From(IObjectInstance objectInstance, ClassProperty classProperty)
 		{
