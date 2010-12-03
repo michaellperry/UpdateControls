@@ -55,5 +55,20 @@ namespace UpdateControls.XAML.Wrapper
             else
                 return false;
         }
+
+        public void RemoveWrapper(IObjectInstance wrapper)
+        {
+            object key = _wrapperByObject
+                .Where(e => e.Value == wrapper)
+                .Select(e => e.Key)
+                .FirstOrDefault();
+            if (key != null)
+                RemoveKey(key);
+        }
+
+        public void RemoveKey(object key)
+        {
+            _wrapperByObject.Remove(key);
+        }
     }
 }

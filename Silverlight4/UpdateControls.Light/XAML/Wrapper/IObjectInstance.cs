@@ -15,7 +15,7 @@ using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public interface IObjectInstance
+    public interface IObjectInstance : IDisposable
     {
         object WrappedObject { get; }
         Tree Tree { get; }

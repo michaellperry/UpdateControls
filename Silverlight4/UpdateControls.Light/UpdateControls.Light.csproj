@@ -75,12 +75,6 @@
     <Compile Include="..\..\desktop\updatecontrols.xaml\wrapper\NotificationGate.cs">
       <Link>XAML\Wrapper\NotificationGate.cs</Link>
     </Compile>
-    <Compile Include="..\..\desktop\updatecontrols.xaml\wrapper\ObjectPropertyAtomNative.cs">
-      <Link>XAML\Wrapper\ObjectPropertyAtomNative.cs</Link>
-    </Compile>
-    <Compile Include="..\..\desktop\updatecontrols.xaml\wrapper\ObjectPropertyCollectionNative.cs">
-      <Link>XAML\Wrapper\ObjectPropertyCollectionNative.cs</Link>
-    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Dependent.cs">
       <Link>Dependent.cs</Link>
     </Compile>
@@ -109,9 +103,7 @@
     <Compile Include="XAML\Wrapper\ObjectInstance.cs" />
     <Compile Include="XAML\Wrapper\ObjectProperty.cs" />
     <Compile Include="XAML\Wrapper\ObjectPropertyAtom.cs" />
-    <Compile Include="XAML\Wrapper\ObjectPropertyAtomObject.cs" />
     <Compile Include="XAML\Wrapper\ObjectPropertyCollection.cs" />
-    <Compile Include="XAML\Wrapper\ObjectPropertyCollectionObject.cs" />
     <Compile Include="XAML\Wrapper\Tree.cs" />
     <Compile Include="XAML\Wrapper\UnitTestDispatcher.cs" />
   </ItemGroup>

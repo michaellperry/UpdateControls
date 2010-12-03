@@ -51,7 +51,7 @@ namespace UpdateControls.XAML.Wrapper
             if (IsPrimitive(propertyType))
             {
                 _makeObjectProperty = objectInstance =>
-                    new ObjectPropertyAtomNative(objectInstance, this);
+                    new ObjectPropertyAtom(objectInstance, this, false);
                 valueType = propertyType;
             }
             else if (typeof(IEnumerable).IsAssignableFrom(propertyType))
@@ -64,18 +64,18 @@ namespace UpdateControls.XAML.Wrapper
                     itemType = typeof(object);
                 if (IsPrimitive(itemType))
                     _makeObjectProperty = objectInstance =>
-                        new ObjectPropertyCollectionNative(objectInstance, this);
+                        new ObjectPropertyCollection(objectInstance, this, false);
                 else
                 {
                     _makeObjectProperty = objectInstance =>
-                        new ObjectPropertyCollectionObject(objectInstance, this);
+                        new ObjectPropertyCollection(objectInstance, this, true);
                 }
                 valueType = typeof(IEnumerable);
             }
             else
             {
                 _makeObjectProperty = objectInstance =>
-                    new ObjectPropertyAtomObject(objectInstance, this);
+                    new ObjectPropertyAtom(objectInstance, this, true);
                 valueType = typeof(IObjectInstance);
             }
 
