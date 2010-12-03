@@ -89,6 +89,7 @@ namespace UpdateControls.XAML.Wrapper
         {
             if (_child != null)
                 _child.Dispose();
+            ObjectInstance.ClearValue(ClassProperty.DependencyProperty);
             _depProperty.Dispose();
         }
 	}

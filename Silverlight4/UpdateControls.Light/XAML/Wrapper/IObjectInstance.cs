@@ -22,6 +22,7 @@ namespace UpdateControls.XAML.Wrapper
         void Defer(Action action);
         ObjectProperty LookupProperty(UpdateControls.XAML.Wrapper.ClassProperty classProperty);
         void SetValue(DependencyProperty dependencyProperty, object value);
+        void ClearValue(DependencyProperty dependencyProperty);
         void UpdateNodes();
     }
 }
