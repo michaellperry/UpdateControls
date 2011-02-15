@@ -78,33 +78,35 @@ namespace UpdateControls.XAML.Wrapper
                 newCollection = values.OfType<object>().ToList();
             }
 
-			ObjectInstance.Defer(new Action(delegate
+			AssignToObservableCollection(newCollection);
+		}
+
+		private void AssignToObservableCollection(List<object> newCollection)
+		{
+			// Create a list of new items.
+			List<CollectionItem> items = new List<CollectionItem>();
+
+			// Dump all previous items into a recycle bin.
+			using (RecycleBin<CollectionItem> bin = new RecycleBin<CollectionItem>())
 			{
-				// Create a list of new items.
-				List<CollectionItem> items = new List<CollectionItem>();
+				foreach (object oldItem in _collection)
+					bin.AddObject(new CollectionItem(_collection, oldItem, true));
+				// Add new objects to the list.
+				if (newCollection != null)
+					foreach (object obj in newCollection)
+						items.Add(bin.Extract(new CollectionItem(_collection, obj, false)));
+				// All deleted items are removed from the collection at this point.
+			}
+			// Ensure that all items are added to the list.
+			int index = 0;
+			foreach (CollectionItem item in items)
+			{
+				item.EnsureInCollection(index);
+				++index;
+			}
+		}
 
-				// Dump all previous items into a recycle bin.
-				using (RecycleBin<CollectionItem> bin = new RecycleBin<CollectionItem>())
-				{
-					foreach (object oldItem in _collection)
-						bin.AddObject(new CollectionItem(_collection, oldItem, true));
-					// Add new objects to the list.
-					if (newCollection != null)
-						foreach (object obj in newCollection)
-							items.Add(bin.Extract(new CollectionItem(_collection, obj, false)));
-					// All deleted items are removed from the collection at this point.
-				}
-				// Ensure that all items are added to the list.
-				int index = 0;
-				foreach (CollectionItem item in items)
-				{
-					item.EnsureInCollection(index);
-					++index;
-				}
-			}));
-        }
-
-        public override void OnUserInput(object value)
+		public override void OnUserInput(object value)
 		{
 			throw new NotSupportedException("Update Controls does not support two-way binding of collection properties.");
 		}
