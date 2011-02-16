@@ -53,8 +53,8 @@ namespace UpdateControls.XAML.Wrapper
 
                         if (oldChild != _child && oldChild != null)
                         {
-                            oldChild.Dispose();
-                            ObjectInstance.Tree.RemoveKey(oldValue);
+							ObjectInstance.Tree.RemoveKey(oldValue);
+							oldChild.Dispose();
                         }
                     }
                     else
@@ -91,7 +91,10 @@ namespace UpdateControls.XAML.Wrapper
         public override void Dispose()
         {
             if (_child != null)
-                _child.Dispose();
+			{
+				ObjectInstance.Tree.RemoveKey(_child.WrappedObject);
+				_child.Dispose();
+			}
             ObjectInstance.ClearValue(ClassProperty.DependencyProperty);
             _depProperty.Dispose();
         }

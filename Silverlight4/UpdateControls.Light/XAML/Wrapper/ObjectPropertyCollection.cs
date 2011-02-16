@@ -122,7 +122,8 @@ namespace UpdateControls.XAML.Wrapper
         {
             foreach (IObjectInstance child in _children)
             {
-                child.Dispose();
+				ObjectInstance.Tree.RemoveKey(child.WrappedObject);
+				child.Dispose();
             }
             ObjectInstance.ClearValue(ClassProperty.DependencyProperty);
             _depCollection.Dispose();
