@@ -9,8 +9,6 @@
  * 
  **********************************************************************/
 
-using System.ComponentModel.DataAnnotations;
-
 namespace UpdateControls.XAML.Wrapper
 {
     internal class ObjectPropertyAtom : ObjectProperty
@@ -73,7 +71,6 @@ namespace UpdateControls.XAML.Wrapper
                 {
                     value = value == null ? null : ((IObjectInstance)value).WrappedObject;
                 }
-				Validator.ValidateProperty(value, new ValidationContext(ObjectInstance.WrappedObject, null, null) { MemberName = ClassProperty.Name });
                 ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
             }
 		}
