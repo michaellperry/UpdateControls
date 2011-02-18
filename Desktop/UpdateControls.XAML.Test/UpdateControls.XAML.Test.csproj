@@ -122,7 +122,7 @@
     </ProjectReference>
     <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">
       <Project>{FFA4FF30-E11F-476F-A305-EC9FD624C752}</Project>
-      <Name>UpdateControls</Name>
+      <Name>UpdateControls %28Desktop\UpdateControls%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

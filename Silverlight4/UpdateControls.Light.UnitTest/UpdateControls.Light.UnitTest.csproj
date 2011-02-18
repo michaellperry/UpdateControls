@@ -113,9 +113,9 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UpdateControls.Light\UpdateControls.Light.csproj">
+    <ProjectReference Include="..\UpdateControls.Light\UpdateControls.csproj">
       <Project>{9C929158-63EF-44DE-8EF4-93AF5EABEAAA}</Project>
-      <Name>UpdateControls.Light %28Silverlight4\UpdateControls.Light%29</Name>
+      <Name>UpdateControls %28Silverlight4\UpdateControls%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

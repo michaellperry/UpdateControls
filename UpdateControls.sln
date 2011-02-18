@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Installer", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "UpdateControls.Setup", "Desktop\UpdateControls.Setup\UpdateControls.Setup.vdproj", "{87F14D96-D3CE-4C73-99D5-E89A1341E2C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light", "Silverlight\UpdateControls.Light\UpdateControls.Light.csproj", "{BB6E8A4F-6031-4386-A7E2-45DF90C92556}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "Silverlight\UpdateControls.Light\UpdateControls.csproj", "{BB6E8A4F-6031-4386-A7E2-45DF90C92556}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light.Demo", "Silverlight\UpdateControls.Light.Demo\UpdateControls.Light.Demo.csproj", "{A5424374-189E-4A60-8A91-50AB72E67059}"
 EndProject
@@ -44,7 +44,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.UnitTest", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight4", "Silverlight4", "{8A25F37E-4875-4D86-8611-265359F21509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light", "Silverlight4\UpdateControls.Light\UpdateControls.Light.csproj", "{9C929158-63EF-44DE-8EF4-93AF5EABEAAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "Silverlight4\UpdateControls.Light\UpdateControls.csproj", "{9C929158-63EF-44DE-8EF4-93AF5EABEAAA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WP7", "WP7", "{306549E8-C08A-47F3-BE75-0905C5FCF972}"
 EndProject
@@ -53,6 +53,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.VSAddIn.UnitTest", "Desktop\UpdateControls.VSAddIn.UnitTest\UpdateControls.VSAddIn.UnitTest.csproj", "{55743A4D-DBD8-4B34-B02A-49B8310336A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Light.UnitTest", "Silverlight4\UpdateControls.Light.UnitTest\UpdateControls.Light.UnitTest.csproj", "{C250866B-4D06-4E85-B95C-31467DC3A071}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{B72F82F3-55EA-49AA-951F-B2B7AAE50E7F}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\updatecontrols.nuspec = NuGet\updatecontrols.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -96,34 +101,34 @@ Global
 		SccProjectTopLevelParentUniqueName9 = UpdateControls.sln
 		SccProjectName9 = Desktop/UpdateControls.Setup
 		SccLocalPath9 = Desktop\\UpdateControls.Setup
-		SccProjectUniqueName10 = Silverlight\\UpdateControls.Light\\UpdateControls.Light.csproj
+		SccProjectUniqueName10 = Silverlight\\UpdateControls.Light.Demo\\UpdateControls.Light.Demo.csproj
 		SccProjectTopLevelParentUniqueName10 = UpdateControls.sln
-		SccProjectName10 = Silverlight/UpdateControls.Light
-		SccLocalPath10 = Silverlight\\UpdateControls.Light
-		SccProjectUniqueName11 = Silverlight\\UpdateControls.Light.Demo\\UpdateControls.Light.Demo.csproj
+		SccProjectName10 = Silverlight/UpdateControls.Light.Demo
+		SccLocalPath10 = Silverlight\\UpdateControls.Light.Demo
+		SccProjectUniqueName11 = UpdateControls.UnitTest\\UpdateControls.UnitTest.csproj
 		SccProjectTopLevelParentUniqueName11 = UpdateControls.sln
-		SccProjectName11 = Silverlight/UpdateControls.Light.Demo
-		SccLocalPath11 = Silverlight\\UpdateControls.Light.Demo
-		SccProjectUniqueName12 = UpdateControls.UnitTest\\UpdateControls.UnitTest.csproj
+		SccProjectName11 = UpdateControls.UnitTest
+		SccLocalPath11 = UpdateControls.UnitTest
+		SccProjectUniqueName12 = WP7\\UpdateControls\\UpdateControls.csproj
 		SccProjectTopLevelParentUniqueName12 = UpdateControls.sln
-		SccProjectName12 = UpdateControls.UnitTest
-		SccLocalPath12 = UpdateControls.UnitTest
-		SccProjectUniqueName13 = Silverlight4\\UpdateControls.Light\\UpdateControls.Light.csproj
+		SccProjectName12 = WP7/UpdateControls
+		SccLocalPath12 = WP7\\UpdateControls
+		SccProjectUniqueName13 = Desktop\\UpdateControls.VSAddIn.UnitTest\\UpdateControls.VSAddIn.UnitTest.csproj
 		SccProjectTopLevelParentUniqueName13 = UpdateControls.sln
-		SccProjectName13 = Silverlight4/UpdateControls.Light
-		SccLocalPath13 = Silverlight4\\UpdateControls.Light
-		SccProjectUniqueName14 = WP7\\UpdateControls\\UpdateControls.csproj
+		SccProjectName13 = Desktop/UpdateControls.VSAddIn.UnitTest
+		SccLocalPath13 = Desktop\\UpdateControls.VSAddIn.UnitTest
+		SccProjectUniqueName14 = Silverlight4\\UpdateControls.Light.UnitTest\\UpdateControls.Light.UnitTest.csproj
 		SccProjectTopLevelParentUniqueName14 = UpdateControls.sln
-		SccProjectName14 = WP7/UpdateControls
-		SccLocalPath14 = WP7\\UpdateControls
-		SccProjectUniqueName15 = Desktop\\UpdateControls.VSAddIn.UnitTest\\UpdateControls.VSAddIn.UnitTest.csproj
+		SccProjectName14 = Silverlight4/UpdateControls.Light.UnitTest
+		SccLocalPath14 = Silverlight4\\UpdateControls.Light.UnitTest
+		SccProjectUniqueName15 = Silverlight\\UpdateControls.Light\\UpdateControls.csproj
 		SccProjectTopLevelParentUniqueName15 = UpdateControls.sln
-		SccProjectName15 = Desktop/UpdateControls.VSAddIn.UnitTest
-		SccLocalPath15 = Desktop\\UpdateControls.VSAddIn.UnitTest
-		SccProjectUniqueName16 = Silverlight4\\UpdateControls.Light.UnitTest\\UpdateControls.Light.UnitTest.csproj
+		SccProjectName15 = Silverlight/UpdateControls.Light
+		SccLocalPath15 = Silverlight\\UpdateControls.Light
+		SccProjectUniqueName16 = Silverlight4\\UpdateControls.Light\\UpdateControls.csproj
 		SccProjectTopLevelParentUniqueName16 = UpdateControls.sln
-		SccProjectName16 = Silverlight4/UpdateControls.Light.UnitTest
-		SccLocalPath16 = Silverlight4\\UpdateControls.Light.UnitTest
+		SccProjectName16 = Silverlight4/UpdateControls.Light
+		SccLocalPath16 = Silverlight4\\UpdateControls.Light
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = UpdateControls1.vsmdi
