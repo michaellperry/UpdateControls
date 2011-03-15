@@ -58,6 +58,8 @@
     <Compile Include="Collections\IndependentList.cs" />
     <Compile Include="Dependent.cs" />
     <Compile Include="Dependent.CurrentUpdate.cs" />
+    <Compile Include="Fields\Dependent.cs" />
+    <Compile Include="Fields\Independent.cs" />
     <Compile Include="Independent.cs" />
     <Compile Include="InertialProperty.cs" />
     <Compile Include="Precedent.cs" />

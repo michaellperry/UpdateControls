@@ -1,4 +1,4 @@
-using System;
+using UpdateControls.Fields;
 
 namespace UpdateControls.UnitTest
 {
@@ -6,32 +6,22 @@ namespace UpdateControls.UnitTest
 	{
 		private SourceData _source;
 
-		private int _property;
-		private Dependent _depProperty;
+        private Dependent<int> _property;
 
 		public DirectDependent(SourceData source)
 		{
 			_source = source;
-			_depProperty = new Dependent(UpdateDependent);
+            _property = new Dependent<int>(() => _source.SourceProperty);
 		}
 
 		public int DependentProperty
 		{
-			get
-			{
-				_depProperty.OnGet();
-				return _property;
-			}
-		}
-
-		private void UpdateDependent()
-		{
-			_property = _source.SourceProperty;
+            get { return _property; }
 		}
 
 		public bool IsUpToDate
 		{
-			get { return _depProperty.IsUpToDate; }
+			get { return _property.DependentSentry.IsUpToDate; }
 		}
 	}
 }
