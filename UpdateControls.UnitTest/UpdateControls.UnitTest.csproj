@@ -54,6 +54,7 @@
     <Compile Include="ContactListData\ContactList.cs" />
     <Compile Include="ContactListData\ContactListViewModel.cs" />
     <Compile Include="ContactListData\ContactViewModel.cs" />
+    <Compile Include="DependentListTest.cs" />
     <Compile Include="DirectConcurrencyTest.cs" />
     <Compile Include="DirectDependent.cs" />
     <Compile Include="DynamicSortOrderTest.cs" />

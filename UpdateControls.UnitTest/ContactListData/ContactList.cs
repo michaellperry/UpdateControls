@@ -1,27 +1,25 @@
 using System.Collections.Generic;
+using UpdateControls.Collections;
 
 namespace UpdateControls.UnitTest.ContactListData
 {
     public class ContactList
     {
-        private List<Contact> _contacts = new List<Contact>();
-        private Independent _indContacts = new Independent();
+        private IndependentList<Contact> _contacts = new IndependentList<Contact>();
 
         public void AddContact(Contact contact)
         {
-            _indContacts.OnSet();
             _contacts.Add(contact);
         }
 
         public void DeleteContact(Contact contact)
         {
-            _indContacts.OnSet();
             _contacts.Remove(contact);
         }
 
         public IEnumerable<Contact> Contacts
         {
-            get { _indContacts.OnGet(); return _contacts; }
+            get { return _contacts; }
         }
     }
 }
