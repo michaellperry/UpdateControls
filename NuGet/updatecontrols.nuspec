@@ -1,14 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?> 
-<package> 
-  <metadata> 
-    <id>updatecontrols</id> 
-    <version>2.1.1.6</version> 
-    <authors>Michael L Perry</authors> 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>updatecontrols</id>
+    <version>2.1.2.0</version>
+    <authors>Michael L Perry</authors>
     <owners>Michael L Perry</owners>
-    <description>Automatically discover view model dependencies and databind without INotifyPropertyChanged.</description> 
+    <description>Automatically discover view model dependencies and databind without INotifyPropertyChanged.</description>
     <projectUrl>http://updatecontrols.codeplex.com/</projectUrl>
     <licenseUrl>http://updatecontrols.codeplex.com/license</licenseUrl>
     <tags>mvvm viewmodel databinding inotifypropertychanged inpc wpf silverlight wp7</tags>
-    <language>en-US</language> 
-  </metadata> 
+    <language>en-US</language>
+  </metadata>
 </package>
