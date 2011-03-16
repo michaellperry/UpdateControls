@@ -1,25 +1,23 @@
 ﻿using System;
+using UpdateControls.Fields;
 
 namespace UpdateControls.Light.Demo
 {
     public class PaymentNavigationModel
     {
-        private Invoice _selectedUnpaidInvoice;
-        private Invoice _selectedPaidInvoice;
-
-        private Independent _indSelectedUnpaidInvoice = new Independent();
-        private Independent _indSelectedPaidInvoice = new Independent();
+        private Independent<Invoice> _selectedUnpaidInvoice = new Independent<Invoice>();
+        private Independent<Invoice> _selectedPaidInvoice = new Independent<Invoice>();
 
         public Invoice SelectedUnpaidInvoice
         {
-            get { _indSelectedUnpaidInvoice.OnGet(); return _selectedUnpaidInvoice; }
-            set { _indSelectedUnpaidInvoice.OnSet(); _selectedUnpaidInvoice = value; }
+            get { return _selectedUnpaidInvoice; }
+            set { _selectedUnpaidInvoice.Value = value; }
         }
 
         public Invoice SelectedPaidInvoice
         {
-            get { _indSelectedPaidInvoice.OnGet(); return _selectedPaidInvoice; }
-            set { _indSelectedPaidInvoice.OnSet(); _selectedPaidInvoice = value; }
+            get { return _selectedPaidInvoice; }
+            set { _selectedPaidInvoice.Value = value; }
         }
     }
 }

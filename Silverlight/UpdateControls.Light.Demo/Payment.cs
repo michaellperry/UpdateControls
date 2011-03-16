@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using UpdateControls.Collections;
 
 namespace UpdateControls.Light.Demo
 {
     public class Payment
     {
         private Customer _customer;
-        private List<Invoice> _paidInvoices = new List<Invoice>();
-
-        private Independent _indPaidInvoices = new Independent();
+        private IndependentList<Invoice> _paidInvoices = new IndependentList<Invoice>();
 
         public Payment(Customer customer)
         {
@@ -22,18 +21,16 @@ namespace UpdateControls.Light.Demo
 
         public IEnumerable<Invoice> PaidInvoices
         {
-            get { _indPaidInvoices.OnGet(); return _paidInvoices; }
+            get { return _paidInvoices; }
         }
 
         public void AddPaidInvoice(Invoice invoice)
         {
-            _indPaidInvoices.OnSet();
             _paidInvoices.Add(invoice);
         }
 
         public void RemovePaidInvoice(Invoice invoice)
         {
-            _indPaidInvoices.OnSet();
             _paidInvoices.Remove(invoice);
         }
     }

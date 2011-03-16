@@ -1,30 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using UpdateControls.Collections;
+using UpdateControls.Fields;
 
 namespace UpdateControls.Light.Demo
 {
     public class Customer
     {
-        private string _name;
-        private List<Invoice> _invoices = new List<Invoice>();
-
-        private Independent _indName = new Independent();
-        private Independent _indInvoices = new Independent();
+        private Independent<string> _name = new Independent<string>();
+        private IndependentList<Invoice> _invoices = new IndependentList<Invoice>();
 
         public string Name
         {
-            get { _indName.OnGet(); return _name; }
-            set { _indName.OnSet(); _name = value; }
+            get { return _name; }
+            set { _name.Value = value; }
         }
 
         public IEnumerable<Invoice> Invoices
         {
-            get { _indInvoices.OnGet(); return _invoices; }
+            get { return _invoices; }
         }
 
         public Invoice NewInvoice(string number)
         {
-            _indInvoices.OnSet();
             Invoice invoice = new Invoice(number);
             _invoices.Add(invoice);
             return invoice;
