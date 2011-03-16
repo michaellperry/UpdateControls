@@ -84,6 +84,12 @@
     <Compile Include="..\..\Desktop\UpdateControls\Dependent.cs">
       <Link>Dependent.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\Fields\Dependent.cs">
+      <Link>Fields\Dependent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\Fields\Independent.cs">
+      <Link>Fields\Independent.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Independent.cs">
       <Link>Independent.cs</Link>
     </Compile>
