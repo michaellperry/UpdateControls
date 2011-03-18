@@ -15,7 +15,6 @@ using System.Collections.Generic;
 namespace UpdateControls.Collections
 {
     public class DependentList<T> : IEnumerable<T>
-        where T : IDisposable
     {
         private readonly Func<IEnumerable<T>> _computeCollection;
 

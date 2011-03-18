@@ -26,7 +26,6 @@ namespace UpdateControls
 		/// the bin.
 		/// </remarks>
 		public static RecycleBin<T> Recycle<T>(this ICollection<T> collection)
-			where T : IDisposable
 		{
 			RecycleBin<T> bin = new RecycleBin<T>();
 

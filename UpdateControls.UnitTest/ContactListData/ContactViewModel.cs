@@ -2,7 +2,7 @@ using System;
 
 namespace UpdateControls.UnitTest.ContactListData
 {
-    public class ContactViewModel : IDisposable
+    public class ContactViewModel
     {
         private Contact _contact;
 
@@ -32,10 +32,6 @@ namespace UpdateControls.UnitTest.ContactListData
         public override int GetHashCode()
         {
             return _contact.GetHashCode();
-        }
-
-        public void Dispose()
-        {
         }
     }
 }
