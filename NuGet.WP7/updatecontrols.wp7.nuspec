@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>updatecontrols</id>
+    <id>updatecontrols.wp7</id>
     <version>2.1.2.1</version>
     <authors>Michael L Perry</authors>
     <owners>Michael L Perry</owners>

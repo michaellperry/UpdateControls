@@ -57,6 +57,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{B72F82F3-55EA-49AA-951F-B2B7AAE50E7F}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet\updatecontrols.nuspec = NuGet\updatecontrols.nuspec
+		NuGet.WP7\updatecontrols.wp7.nuspec = NuGet.WP7\updatecontrols.wp7.nuspec
 	EndProjectSection
 EndProject
 Global
