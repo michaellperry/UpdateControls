@@ -13,7 +13,7 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace UpdateControls.Forms
@@ -183,52 +183,39 @@ namespace UpdateControls.Forms
 				base.Enabled = GetEnabled();
 		}
 
-		private void UpdateItems()
-		{
-			++_updating;
-			try
-			{
-				if ( GetItems != null )
-				{
-					// Recycle the collection of items.
-					ArrayList newItems = new ArrayList( base.Items.Count );
-                    using (var recycleBin = new RecycleBin<ListBoxItem>())
-					{
-                        foreach (ListBoxItem item in base.Items)
-                            recycleBin.AddObject(item);
+        private void UpdateItems()
+        {
+            ++_updating;
+            try
+            {
+                if (GetItems != null)
+                {
+                    // Replace the items in the control.
+                    base.BeginUpdate();
+                    try
+                    {
+                        // Make sure the same tag is selected.
+                        ListBoxItem selectedItem = (ListBoxItem)base.SelectedItem;
+                        object selectedTag = selectedItem == null ? null : selectedItem.Tag;
+                        Util.CollectionHelper.RecycleCollection(
+                            base.Items,
+                            GetItems().OfType<object>().Select(item =>
+                                new ListBoxItem(item, GetItemText, GetItemSelected, SetItemSelected)));
+                        base.SelectedIndex = IndexOfTag(selectedTag);
+                    }
+                    finally
+                    {
+                        base.EndUpdate();
+                    }
+                }
+            }
+            finally
+            {
+                --_updating;
+            }
+        }
 
-						// Extract each item from the recycle bin.
-						foreach ( object item in GetItems() )
-						{
-							newItems.Add( recycleBin.Extract(
-								new ListBoxItem( item, GetItemText, GetItemSelected, SetItemSelected ) ) );
-						}
-					}
-
-					// Replace the items in the control.
-					base.BeginUpdate();
-					try
-					{
-						// Make sure the same tag is selected.
-						ListBoxItem selectedItem = (ListBoxItem)base.SelectedItem;
-						object selectedTag = selectedItem == null ? null : selectedItem.Tag;
-						base.Items.Clear();
-						base.Items.AddRange( newItems.ToArray() );
-						base.SelectedIndex = IndexOfTag( selectedTag );
-					}
-					finally
-					{
-						base.EndUpdate();
-					}
-				}
-			}
-			finally
-			{
-				--_updating;
-			}
-		}
-
-		private int IndexOfTag( object tag )
+        private int IndexOfTag(object tag)
 		{
 			if ( tag == null )
 				return -1;
