@@ -43,6 +43,8 @@
             this.personListBox.TabIndex = 0;
             this.personListBox.GetItems += new UpdateControls.Forms.GetCollectionDelegate(this.personListBox_GetItems);
             this.personListBox.GetItemText += new UpdateControls.Forms.GetObjectStringDelegate(this.personListBox_GetItemText);
+            this.personListBox.GetSelectedItem += new UpdateControls.Forms.GetObjectDelegate(this.personListBox_GetSelectedItem);
+            this.personListBox.SetSelectedItem += new UpdateControls.Forms.SetObjectDelegate(this.personListBox_SetSelectedItem);
             // 
             // ListBoxForm
             // 

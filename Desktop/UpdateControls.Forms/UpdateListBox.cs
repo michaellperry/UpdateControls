@@ -163,7 +163,8 @@ namespace UpdateControls.Forms
 
 		private Independent _dynSelectedItem = new Independent();
 
-		private int _updating = 0;
+        private int _updating = 0;
+        private bool _interacting = false;
 
 		/// <summary>
 		/// Creates a new dependent list box.
@@ -317,13 +318,16 @@ namespace UpdateControls.Forms
 			base.OnHandleDestroyed (e);
 		}
 
-		private void Application_Idle(object sender, EventArgs e)
-		{
-			// Update all dependent sentries.
-			_depEnabled.OnGet();
-			_depItems.OnGet();
-			_depSelectedItem.OnGet();
-		}
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            // Update all dependent sentries.
+            if (!_interacting)
+            {
+                _depEnabled.OnGet();
+                _depItems.OnGet();
+                _depSelectedItem.OnGet();
+            }
+        }
 
 		/// <summary>
 		/// Handle changes to the selected items.
@@ -487,6 +491,18 @@ namespace UpdateControls.Forms
 				_depSelectedItem.OnGet();
 				return base.SelectedIndices;
 			}
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            _interacting = true;
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            _interacting = false;
+            base.OnMouseUp(e);
         }
 	}
 }
