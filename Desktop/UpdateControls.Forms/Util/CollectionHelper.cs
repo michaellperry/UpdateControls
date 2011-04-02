@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UpdateControls.Forms.Util
 {
@@ -59,7 +60,7 @@ namespace UpdateControls.Forms.Util
             }
         }
 
-        public static void RecycleCollection<T>(IList collection, IEnumerable<T> source)
+        public static IEnumerable<T> RecycleCollection<T>(IList collection, IEnumerable<T> source)
         {
             // Recycle the collection of items.
             List<Placeholder<T>> newItems = new List<Placeholder<T>>(collection.Count);
@@ -77,6 +78,8 @@ namespace UpdateControls.Forms.Util
 
             for (int index = 0; index < newItems.Count; index++)
                 newItems[index].EnsureInCollectionAt(index);
+
+            return newItems.Select(placeholder => placeholder.Item);
         }
     }
 }

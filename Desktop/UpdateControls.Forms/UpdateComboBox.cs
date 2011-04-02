@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace UpdateControls.Forms
 {
@@ -205,21 +206,6 @@ namespace UpdateControls.Forms
 			{
 				if ( GetItems != null )
 				{
-					// Recycle the collection of items.
-					ArrayList newItems = new ArrayList( base.Items.Count );
-                    using (var recycleBin = new RecycleBin<ComboBoxItem>())
-					{
-                        foreach (ComboBoxItem item in base.Items)
-                            recycleBin.AddObject(item);
-
-						// Extract each item from the recycle bin.
-						foreach ( object item in GetItems() )
-						{
-							newItems.Add( recycleBin.Extract(
-								new ComboBoxItem( item, GetItemText ) ) );
-						}
-					}
-
 					// Replace the items in the control.
 					base.BeginUpdate();
 					try
@@ -229,17 +215,15 @@ namespace UpdateControls.Forms
 							// Make sure the same tag is selected.
 							ComboBoxItem selectedItem = (ComboBoxItem)base.SelectedItem;
 							object selectedTag = selectedItem == null ? null : selectedItem.Tag;
-							base.Items.Clear();
-							base.Items.AddRange( newItems.ToArray() );
-							_selectedIndex = IndexOfTag( selectedTag );
+                            RecycleItems();
+                            _selectedIndex = IndexOfTag(selectedTag);
 							base.SelectedIndex = _selectedIndex;
 						}
 						else
 						{
 							// Make sure the same text is selected.
 							string selectedText = base.Text;
-							base.Items.Clear();
-							base.Items.AddRange( newItems.ToArray() );
+                            RecycleItems();
 							_selectedIndex = IndexOfText( selectedText );
 							base.SelectedIndex = _selectedIndex;
 						}
@@ -258,7 +242,15 @@ namespace UpdateControls.Forms
 			}
 		}
 
-		private int IndexOfTag( object tag )
+        private void RecycleItems()
+        {
+            // Recycle the collection of items.
+            Util.CollectionHelper.RecycleCollection(
+                base.Items,
+                GetItems().OfType<object>().Select(item => new ComboBoxItem(item, GetItemText)));
+        }
+
+        private int IndexOfTag(object tag)
 		{
 			// Scan for the tag.
 			int index = 0;

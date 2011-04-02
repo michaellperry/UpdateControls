@@ -911,36 +911,24 @@ namespace UpdateControls.Forms
 			try
 			{
 				if ( GetItems != null )
-				{
-					// Recycle the collection of items.
-					ArrayList newItems = new ArrayList( base.Items.Count );
-                    using (var recycleBin = new RecycleBin<DependentListViewItem>())
-					{
-                        foreach (DependentListViewItem item in base.Items)
-                            recycleBin.AddObject(item);
+                {
+                    // Replace the items in the control.
+                    base.BeginUpdate();
+                    try
+                    {
+                        var newItems = Util.CollectionHelper.RecycleCollection(
+                            base.Items,
+                            GetItems().OfType<object>().Select(item =>
+                                new DependentListViewItem(item, _groupsByTag, _itemDelegates)));
 
-						// Extract each item from the recycle bin.
-						foreach ( object item in GetItems() )
-						{
-							newItems.Add( recycleBin.Extract(
-								new DependentListViewItem( item, _groupsByTag, _itemDelegates ) ) );
-						}
-					}
-
-					// Replace the items in the control.
-					base.BeginUpdate();
-					try
-					{
-						base.Items.Clear();
-						base.Items.AddRange( (ListViewItem[])newItems.ToArray( typeof(ListViewItem) ) );
                         foreach (DependentListViewItem item in newItems)
                             item.UpdateGroup();
-					}
-					finally
-					{
-						base.EndUpdate();
-					}
-				}
+                    }
+                    finally
+                    {
+                        base.EndUpdate();
+                    }
+                }
 			}
 			finally
 			{
@@ -1098,17 +1086,20 @@ namespace UpdateControls.Forms
 
 		private void Application_Idle(object sender, EventArgs e)
 		{
-			// Update all dependent sentries.
-			_depEnabled.OnGet();
-            _depGroups.OnGet();
-            _depGroupProperties.OnGet();
-			_depItems.OnGet();
-            _depItemGroups.OnGet();
-            _depItemText.OnGet();
-			_depItemSelected.OnGet();
-			_depItemChecked.OnGet();
-			_depItemImageIndex.OnGet();
-			_depSubItems.OnGet();
+            if (!this.Capture)
+            {
+                // Update all dependent sentries.
+                _depEnabled.OnGet();
+                _depGroups.OnGet();
+                _depGroupProperties.OnGet();
+                _depItems.OnGet();
+                _depItemGroups.OnGet();
+                _depItemText.OnGet();
+                _depItemSelected.OnGet();
+                _depItemChecked.OnGet();
+                _depItemImageIndex.OnGet();
+                _depSubItems.OnGet();
+            }
 		}
 
 		/// <summary>True if the control is enabled (read-only).</summary>

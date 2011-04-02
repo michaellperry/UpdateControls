@@ -15,6 +15,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace UpdateControls.Forms
@@ -144,23 +145,10 @@ namespace UpdateControls.Forms
                 if (_itemDelegates.GetSubItems != null)
                 {
                     // Recycle the collection of items.
-                    ArrayList newItems = new ArrayList(base.Nodes.Count);
-                    using (var recycleBin = new RecycleBin<DependentTreeNode>())
-                    {
-                        foreach (DependentTreeNode node in base.Nodes)
-                            recycleBin.AddObject(node);
-
-                        // Extract each item from the recycle bin.
-                        foreach (object item in _itemDelegates.GetSubItems(base.Tag))
-                        {
-                            newItems.Add(recycleBin.Extract(
-                                new DependentTreeNode(item, _itemDelegates)));
-                        }
-                    }
-
-                    // Replace the items in the control.
-                    base.Nodes.Clear();
-                    base.Nodes.AddRange((TreeNode[])newItems.ToArray(typeof(TreeNode)));
+                    Util.CollectionHelper.RecycleCollection(
+                        base.Nodes,
+                        _itemDelegates.GetSubItems(base.Tag).OfType<object>().Select(item =>
+                            new DependentTreeNode(item, _itemDelegates)));
                 }
                 else
                 {
@@ -380,34 +368,22 @@ namespace UpdateControls.Forms
 			try
 			{
 				if ( GetItems != null )
-				{
-					// Recycle the collection of items.
-					ArrayList newItems = new ArrayList( base.Nodes.Count );
-					using ( var recycleBin = new RecycleBin<DependentTreeNode>() )
-					{
-                        foreach (DependentTreeNode node in base.Nodes)
-                            recycleBin.AddObject(node);
-
-						// Extract each item from the recycle bin.
-						foreach ( object item in GetItems() )
-						{
-							newItems.Add( recycleBin.Extract(
-								new DependentTreeNode( item, _itemDelegates ) ) );
-						}
-					}
-
-					// Replace the items in the control.
-					base.BeginUpdate();
-					try
-					{
-						base.Nodes.Clear();
-						base.Nodes.AddRange( (TreeNode[])newItems.ToArray( typeof(TreeNode) ) );
-					}
-					finally
-					{
-						base.EndUpdate();
-					}
-				}
+                {
+                    // Replace the items in the control.
+                    base.BeginUpdate();
+                    try
+                    {
+                        // Make sure the same tag is selected.
+                        Util.CollectionHelper.RecycleCollection(
+                            base.Nodes,
+                            GetItems().OfType<object>().Select(item =>
+                                new DependentTreeNode(item, _itemDelegates)));
+                    }
+                    finally
+                    {
+                        base.EndUpdate();
+                    }
+                }
 			}
 			finally
 			{
@@ -564,10 +540,13 @@ namespace UpdateControls.Forms
 
 		private void Application_Idle(object sender, EventArgs e)
 		{
-            // Update all dependent sentries.
-            _depEnabled.OnGet();
-            _depNodes.OnGet();
-            _depRecursive.OnGet();
+            if (!this.Capture)
+            {
+                // Update all dependent sentries.
+                _depEnabled.OnGet();
+                _depNodes.OnGet();
+                _depRecursive.OnGet();
+            }
 		}
 
         /// <summary>True if the control is enabled (read-only).</summary>
