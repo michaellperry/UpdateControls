@@ -128,7 +128,12 @@ namespace UpdateControls
             DISPOSED
 		};
 		private StatusType _status;
-		private List<Precedent> _precedents;
+        private class PrecedentNode
+        {
+            public Precedent Precedent;
+            public PrecedentNode Next;
+        }
+		private PrecedentNode _firstPrecedent = null;
 
 		/// <summary>
 		/// Creates a new dependent sentry with a given update procedure.
@@ -139,7 +144,6 @@ namespace UpdateControls
 		{
 			_update = update;
 			_status = StatusType.OUT_OF_DATE;
-			_precedents = new List<Precedent>();
         }
 
 		/// <summary>
@@ -194,7 +198,7 @@ namespace UpdateControls
         {
 			get
 			{
-				lock (_precedents)
+				lock (this)
 				{
 					bool isUpToDate = _status == StatusType.UP_TO_DATE;
 					return isUpToDate;
@@ -209,7 +213,7 @@ namespace UpdateControls
         {
             get
             {
-                lock (_precedents)
+                lock (this)
                 {
                     return
                         _status != StatusType.UPDATING &&
@@ -231,19 +235,16 @@ namespace UpdateControls
 
 		internal void MakeOutOfDate()
 		{
-			lock ( _precedents )
+			lock ( this )
 			{
 				if ( _status == StatusType.UP_TO_DATE ||
 					_status == StatusType.UPDATING )
 				{
 					// Tell all precedents to forget about me.
-					foreach ( Precedent precedent in _precedents )
-					{
-						if (precedent != null)
-							precedent.RemoveDependent( this );
-					}
+                    for (PrecedentNode current = _firstPrecedent; current != null; current = current.Next)
+                        current.Precedent.RemoveDependent(this);
 
-					_precedents.Clear();
+                    _firstPrecedent = null;
 
 					// Make all indirect dependents out-of-date, too.
 					MakeDependentsOutOfDate();
@@ -264,7 +265,7 @@ namespace UpdateControls
 			StatusType formerStatus;
 			bool isUpToDate = true;
 
-			lock ( _precedents )
+			lock ( this )
 			{
 				// Get the former status.
 				formerStatus = _status;
@@ -300,7 +301,7 @@ namespace UpdateControls
 					Debug.Assert(that == this);
                     _currentUpdate = stack;
 
-					lock (_precedents)
+					lock (this)
 					{
 						// Look for changes since the update began.
 						if (_status == StatusType.UPDATING)
@@ -323,13 +324,15 @@ namespace UpdateControls
 
 		internal bool AddPrecedent( Precedent precedent )
 		{
-			lock ( _precedents )
+			lock ( this )
 			{
 				if ( _status == StatusType.UPDATING )
 				{
-					if ( _precedents.Contains(precedent) )
-						return false;
-					_precedents.Add( precedent );
+                    for (PrecedentNode current = _firstPrecedent; current != null; current = current.Next)
+                        if (current.Precedent == precedent)
+                            return false;
+
+                    _firstPrecedent = new PrecedentNode { Precedent = precedent, Next = _firstPrecedent };
 					return true;
 				}
 				else if ( _status != StatusType.UPDATING_AND_OUT_OF_DATE )
