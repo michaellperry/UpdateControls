@@ -101,10 +101,8 @@ namespace UpdateControls
     ///	End Class
     /// </code>
 	/// </example>
-	public class Independent
+	public class Independent : Precedent
 	{
-		private Precedent _base = new Precedent();
-
 		/// <summary>
 		/// Call this function just before getting the field that this
 		/// sentry controls.
@@ -118,7 +116,7 @@ namespace UpdateControls
 		{
 			// Establish dependency between the current update
 			// and this field.
-			_base.RecordDependent();
+			RecordDependent();
 		}
 
 		/// <summary>
@@ -138,65 +136,7 @@ namespace UpdateControls
 
 			// When an independent field canges,
 			// its dependents become out-of-date.
-			_base.MakeDependentsOutOfDate();
-		}
-
-		/// <summary>
-		/// True if any other fields depend upon this one.
-		/// </summary>
-		/// <remarks>
-		/// If any dependent field has used this independent field while updating,
-		/// then HasDependents is true. When that dependent becomes out-of-date,
-		/// however, it no longer depends upon this field.
-		/// <para/>
-		/// This property is useful for caching. When all dependents are up-to-date,
-		/// check this property for cached fields. If it is false, then nothing
-		/// depends upon the field, and it can be unloaded. Be careful not to
-		/// unload the cache while dependents are still out-of-date, since
-		/// those dependents may in fact need the field when they update.
-		/// </remarks>
-		public bool HasDependents
-		{
-			get
-			{
-				return _base.HasDependents;
-			}
-		}
-
-		/// <summary>
-        /// Event fired when the first dependent references this field. This event only
-        /// fires when HasDependents goes from false to true. If the field already
-        /// has dependents, then this event does not fire.
-		/// </summary>
-		public event Action GainDependent
-		{
-			add
-			{
-				_base.GainDependent += value;
-			}
-			remove
-			{
-				_base.GainDependent -= value;
-			}
-		}
-
-		/// <summary>
-        /// Event fired when the last dependent goes out-of-date. This event
-        /// only fires when HasDependents goes from true to false. If the field has
-        /// other dependents, then this event does not fire. If the dependent is
-        /// currently updating and it still depends upon this field, then the
-        /// GainDependent event will be fired immediately.
-		/// </summary>
-		public event Action LooseDependent
-		{
-			add
-			{
-				_base.LooseDependent += value;
-			}
-			remove
-			{
-				_base.LooseDependent -= value;
-			}
+			MakeDependentsOutOfDate();
 		}
 	}
 }

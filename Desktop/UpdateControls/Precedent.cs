@@ -22,25 +22,35 @@ namespace UpdateControls
 	/// <remarks>
 	/// This class is for internal use only.
 	/// </remarks>
-	internal class Precedent
+	public abstract class Precedent
 	{
 		private List<Dependent> _dependents = new List<Dependent>();
 
-		public event Action GainDependent;
-		public event Action LooseDependent;
+        /// <summary>
+        /// Method called when the first dependent references this field. This event only
+        /// fires when HasDependents goes from false to true. If the field already
+        /// has dependents, then this event does not fire.
+        /// </summary>
+        protected virtual void GainDependent()
+        {
+        }
 
-		/// <summary>
-		/// Creates a new precedent sentry.
-		/// </summary>
-		public Precedent()
-		{
-		}
+        /// <summary>
+        /// Method called when the last dependent goes out-of-date. This event
+        /// only fires when HasDependents goes from true to false. If the field has
+        /// other dependents, then this event does not fire. If the dependent is
+        /// currently updating and it still depends upon this field, then the
+        /// GainDependent event will be fired immediately.
+        /// </summary>
+        protected virtual void LoseDependent()
+        {
+        }
 
 		/// <summary>
 		/// Establishes a relationship between this precedent and the currently
 		/// updating dependent.
 		/// </summary>
-		public void RecordDependent()
+		internal void RecordDependent()
 		{
 			lock ( _dependents )
 			{
@@ -50,7 +60,7 @@ namespace UpdateControls
 				{
 					// Establish a two-way link.
 					bool gain = false;
-					if ( _dependents.Count == 0 && GainDependent != null )
+					if ( _dependents.Count == 0 )
 						gain = true;
 					_dependents.Add( update );
 					if ( gain )
@@ -60,10 +70,8 @@ namespace UpdateControls
 				{
 					// Though there is no lasting dependency, someone
 					// has shown interest.
-					if ( GainDependent != null )
-						GainDependent();
-					if ( LooseDependent != null )
-						LooseDependent();
+					GainDependent();
+					LoseDependent();
 				}
 			}
 		}
@@ -71,7 +79,7 @@ namespace UpdateControls
 		/// <summary>
 		/// Makes all direct and indirect dependents out of date.
 		/// </summary>
-		public void MakeDependentsOutOfDate()
+		internal void MakeDependentsOutOfDate()
 		{
 			// When I make a dependent out-of-date, it will
 			// call RemoveDependent, thereby removing it from
@@ -89,16 +97,30 @@ namespace UpdateControls
 			}
 		}
 
-		public void RemoveDependent( Dependent dependent )
+		internal void RemoveDependent( Dependent dependent )
 		{
 			int before = _dependents.Count;
 			_dependents.Remove(dependent);
 			Debug.Assert( _dependents.Count < before, "Dependent was not found in the collection." );
-			if ( _dependents.Count == 0 && LooseDependent != null )
-				LooseDependent();
+			if ( _dependents.Count == 0 )
+				LoseDependent();
 		}
 
-		public bool HasDependents
+        /// <summary>
+        /// True if any other fields depend upon this one.
+        /// </summary>
+        /// <remarks>
+        /// If any dependent field has used this independent field while updating,
+        /// then HasDependents is true. When that dependent becomes out-of-date,
+        /// however, it no longer depends upon this field.
+        /// <para/>
+        /// This property is useful for caching. When all dependents are up-to-date,
+        /// check this property for cached fields. If it is false, then nothing
+        /// depends upon the field, and it can be unloaded. Be careful not to
+        /// unload the cache while dependents are still out-of-date, since
+        /// those dependents may in fact need the field when they update.
+        /// </remarks>
+        public bool HasDependents
 		{
 			get
 			{

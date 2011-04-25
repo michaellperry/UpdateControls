@@ -97,7 +97,7 @@ namespace UpdateControls
 	/// End Class
 	/// </code>
 	/// </example>
-	public partial class Dependent
+	public partial class Dependent : Precedent
 	{
         [ThreadStatic]
         private static Dependent _currentUpdate = null;
@@ -118,8 +118,7 @@ namespace UpdateControls
         /// </summary>
         public event Action Invalidated;
 
-		internal Precedent _base = new Precedent();
-		private Precedent _upToDatePrecedent = new Precedent();
+		private Independent _upToDatePrecedent = new Independent();
 		private Action _update;
 		private enum StatusType
 		{
@@ -160,7 +159,7 @@ namespace UpdateControls
 			{
 				// Establish dependency between the current update
 				// and this attribute.
-				_base.RecordDependent();
+				RecordDependent();
 			}
 			else
 			{
@@ -200,9 +199,9 @@ namespace UpdateControls
 				{
 					bool isUpToDate = _status == StatusType.UP_TO_DATE;
 					if (isUpToDate)
-						_base.RecordDependent();
+						RecordDependent();
 					else
-						_upToDatePrecedent.RecordDependent();
+						_upToDatePrecedent.OnGet();
 					return isUpToDate;
 				}
 			}
@@ -252,7 +251,7 @@ namespace UpdateControls
 					_precedents.Clear();
 
 					// Make all indirect dependents out-of-date, too.
-					_base.MakeDependentsOutOfDate();
+					MakeDependentsOutOfDate();
 
 					if ( _status == StatusType.UP_TO_DATE )
 						_status = StatusType.OUT_OF_DATE;
