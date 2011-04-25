@@ -21,7 +21,8 @@ namespace UpdateControls.UnitTest
             // Started at 92.
             // Making Precedent a base class: 80.
             // Removing Gain/LoseDependent events: 72.
-            Assert.AreEqual(72, end - start);
+            // Custom linked list implementation for dependents: 48.
+            Assert.AreEqual(48, end - start);
 
             int value = newIndependent;
             Assert.AreEqual(42, value);
@@ -37,7 +38,9 @@ namespace UpdateControls.UnitTest
             // Started at 260.
             // Making Precedent a base class: 248.
             // Removing Gain/LoseDependent events: 232.
-            Assert.AreEqual(232, end - start);
+            // Making IsUpToDate no longer a precident: 192.
+            // Custom linked list implementation for dependents: 152.
+            Assert.AreEqual(152, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
@@ -55,7 +58,9 @@ namespace UpdateControls.UnitTest
             // Started at 336.
             // Making Precedent a base class: 312.
             // Removing Gain/LoseDependent events: 288.
-            Assert.AreEqual(288, end - start);
+            // Making IsUpToDate no longer a precident: 248.
+            // Custom linked list implementation for dependents: 200.
+            Assert.AreEqual(200, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
@@ -74,7 +79,9 @@ namespace UpdateControls.UnitTest
             // Started at 460.
             // Making Precedent a base class: 436.
             // Removing Gain/LoseDependent events: 412.
-            Assert.AreEqual(412, end - start);
+            // Making IsUpToDate no longer a precident: 372.
+            // Custom linked list implementation for dependents: 308.
+            Assert.AreEqual(308, end - start);
 
             value = newDependent;
             Assert.AreEqual(42, value);

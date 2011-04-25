@@ -118,7 +118,6 @@ namespace UpdateControls
         /// </summary>
         public event Action Invalidated;
 
-		private Independent _upToDatePrecedent = new Independent();
 		private Action _update;
 		private enum StatusType
 		{
@@ -198,10 +197,6 @@ namespace UpdateControls
 				lock (_precedents)
 				{
 					bool isUpToDate = _status == StatusType.UP_TO_DATE;
-					if (isUpToDate)
-						RecordDependent();
-					else
-						_upToDatePrecedent.OnGet();
 					return isUpToDate;
 				}
 			}
@@ -311,7 +306,6 @@ namespace UpdateControls
 						if (_status == StatusType.UPDATING)
 						{
 							_status = StatusType.UP_TO_DATE;
-							_upToDatePrecedent.MakeDependentsOutOfDate();
 						}
 						else if (_status == StatusType.UPDATING_AND_OUT_OF_DATE)
 						{

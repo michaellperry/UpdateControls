@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace UpdateControls
 {
-	/// <summary>
+    /// <summary>
 	/// Base class for <see cref="Dynamic"/> and <see cref="Dependent"/> sentries.
 	/// </summary>
 	/// <threadsafety static="true" instance="true"/>
@@ -24,7 +24,13 @@ namespace UpdateControls
 	/// </remarks>
 	public abstract class Precedent
 	{
-		private List<Dependent> _dependents = new List<Dependent>();
+        private class DependentNode
+        {
+            public Dependent Dependent;
+            public DependentNode Next;
+        }
+
+		private DependentNode _firstDependent = null;
 
         /// <summary>
         /// Method called when the first dependent references this field. This event only
@@ -52,7 +58,7 @@ namespace UpdateControls
 		/// </summary>
 		internal void RecordDependent()
 		{
-			lock ( _dependents )
+			lock ( this )
 			{
 				// Get the current dependent.
 				Dependent update = Dependent.GetCurrentUpdate();
@@ -60,13 +66,13 @@ namespace UpdateControls
 				{
 					// Establish a two-way link.
 					bool gain = false;
-					if ( _dependents.Count == 0 )
+					if ( _firstDependent == null )
 						gain = true;
-					_dependents.Add( update );
+                    _firstDependent = new DependentNode { Dependent = update, Next = _firstDependent };
 					if ( gain )
 						GainDependent();
 				}
-				else if ( _dependents.Count == 0 )
+				else if ( _firstDependent == null )
 				{
 					// Though there is no lasting dependency, someone
 					// has shown interest.
@@ -84,25 +90,37 @@ namespace UpdateControls
 			// When I make a dependent out-of-date, it will
 			// call RemoveDependent, thereby removing it from
 			// the list.
-			lock (_dependents)
+			lock (this)
 			{
-				while (_dependents.Count > 0)
+				while (_firstDependent != null)
 				{
-					Dependent dependent = _dependents[0];
+					Dependent dependent = _firstDependent.Dependent;
 					if (dependent != null)
 						dependent.MakeOutOfDate();
 					else
-						_dependents.RemoveAt(0);
+						_firstDependent = _firstDependent.Next;
 				}
 			}
 		}
 
 		internal void RemoveDependent( Dependent dependent )
 		{
-			int before = _dependents.Count;
-			_dependents.Remove(dependent);
-			Debug.Assert( _dependents.Count < before, "Dependent was not found in the collection." );
-			if ( _dependents.Count == 0 )
+			//int before = _dependents.Count;
+            DependentNode prior = null;
+            DependentNode current = _firstDependent;
+            while (current != null)
+            {
+                if (current.Dependent == dependent)
+                {
+                    if (prior == null)
+                        _firstDependent = current.Next;
+                    else
+                        prior.Next = current.Next;
+                }
+                current = current.Next;
+            }
+			//Debug.Assert( _dependents.Count < before, "Dependent was not found in the collection." );
+			if ( _firstDependent == null )
 				LoseDependent();
 		}
 
@@ -124,9 +142,9 @@ namespace UpdateControls
 		{
 			get
 			{
-				lock ( _dependents )
+				lock ( this )
 				{
-					return _dependents.Count > 0;
+					return _firstDependent != null;
 				}
 			}
 		}
