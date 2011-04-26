@@ -322,22 +322,16 @@ namespace UpdateControls
 			return isUpToDate;
 		}
 
-		internal bool AddPrecedent( Precedent precedent )
+		internal void AddPrecedent( Precedent precedent )
 		{
 			lock ( this )
 			{
 				if ( _status == StatusType.UPDATING )
 				{
-                    for (PrecedentNode current = _firstPrecedent; current != null; current = current.Next)
-                        if (current.Precedent == precedent)
-                            return false;
-
                     _firstPrecedent = new PrecedentNode { Precedent = precedent, Next = _firstPrecedent };
-					return true;
 				}
 				else if ( _status != StatusType.UPDATING_AND_OUT_OF_DATE )
 					Debug.Assert( false, "Unexpected state in AddPrecedent" );
-				return false;
 			}
 		}
 

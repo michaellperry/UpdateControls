@@ -62,9 +62,10 @@ namespace UpdateControls
 			{
 				// Get the current dependent.
 				Dependent update = Dependent.GetCurrentUpdate();
-				if ( update != null && update.AddPrecedent( this ) )
+                if (update != null && !DependencyExists(update))
 				{
-					// Establish a two-way link.
+                    // Establish a two-way link.
+                    update.AddPrecedent(this);
 					bool gain = false;
 					if ( _firstDependent == null )
 						gain = true;
@@ -148,5 +149,13 @@ namespace UpdateControls
 				}
 			}
 		}
-	}
+
+        private bool DependencyExists(Dependent update)
+        {
+            for (DependentNode current = _firstDependent; current != null; current = current.Next)
+                if (current.Dependent == update)
+                    return true;
+            return false;
+        }
+    }
 }
