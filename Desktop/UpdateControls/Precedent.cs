@@ -134,7 +134,7 @@ namespace UpdateControls
                 DependentNode prior = null;
                 for (DependentNode current = _firstDependent; current != null; current = current.Next)
                 {
-                    if (current.Dependent.Target == dependent)
+                    if (!current.Dependent.IsAlive || current.Dependent.Target == dependent)
                     {
                         if (prior == null)
                             _firstDependent = current.Next;

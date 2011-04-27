@@ -110,8 +110,9 @@ namespace UpdateControls.UnitTest
             GC.Collect();
             Assert.IsFalse(weakDependent.IsAlive, "Since we released the strong reference to the dependent, the object should not be alive.");
 
-            // This assertion here to make sure the independent is not optimized away.
-            Assert.AreEqual(42, independent.SourceProperty);
+            // Make sure we can still modify the independent.
+            independent.SourceProperty = 32;
+            Assert.AreEqual(32, independent.SourceProperty);
         }
 
         [TestMethod]
@@ -134,9 +135,10 @@ namespace UpdateControls.UnitTest
             GC.Collect();
             Assert.IsFalse(weakIndirectDependent.IsAlive, "Since we released the strong reference to the dependent, the object should not be alive.");
 
-            // These assertions here to make sure the independent and intermediate are not optimized away.
-            Assert.AreEqual(42, intermediate.DependentProperty);
-            Assert.AreEqual(42, independent.SourceProperty);
+            // Make sure we can still modify the independent, and that the intermediate still depends upon it.
+            independent.SourceProperty = 32;
+            Assert.AreEqual(32, independent.SourceProperty);
+            Assert.AreEqual(32, intermediate.DependentProperty);
         }
     }
 }
