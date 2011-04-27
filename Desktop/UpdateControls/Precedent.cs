@@ -26,7 +26,7 @@ namespace UpdateControls
     {
         private class DependentNode
         {
-            public Dependent Dependent;
+            public WeakReference Dependent;
             public DependentNode Next;
         }
 
@@ -84,7 +84,7 @@ namespace UpdateControls
             // the list.
             while (_firstDependent != null)
             {
-                Dependent dependent = _firstDependent.Dependent;
+                Dependent dependent = (Dependent)_firstDependent.Dependent.Target;
                 if (dependent != null)
                     dependent.MakeOutOfDate();
                 else
@@ -122,7 +122,7 @@ namespace UpdateControls
             lock (this)
             {
                 bool first = _firstDependent == null;
-                _firstDependent = new DependentNode { Dependent = update, Next = _firstDependent };
+                _firstDependent = new DependentNode { Dependent = new WeakReference(update), Next = _firstDependent };
                 return first;
             }
         }
@@ -134,7 +134,7 @@ namespace UpdateControls
                 DependentNode prior = null;
                 for (DependentNode current = _firstDependent; current != null; current = current.Next)
                 {
-                    if (current.Dependent == dependent)
+                    if (current.Dependent.Target == dependent)
                     {
                         if (prior == null)
                             _firstDependent = current.Next;
@@ -153,7 +153,7 @@ namespace UpdateControls
             lock (this)
             {
                 for (DependentNode current = _firstDependent; current != null; current = current.Next)
-                    if (current.Dependent == update)
+                    if (current.Dependent.Target == update)
                         return true;
                 return false;
             }

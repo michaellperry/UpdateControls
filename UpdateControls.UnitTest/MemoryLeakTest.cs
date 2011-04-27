@@ -84,10 +84,59 @@ namespace UpdateControls.UnitTest
             // Making IsUpToDate no longer a precident: 372.
             // Custom linked list implementation for dependents: 308.
             // Custom linked list implementation for precedents: 192.
-            Assert.AreEqual(192, end - start);
+            // Weak reference to dependents: 208.
+            Assert.AreEqual(208, end - start);
 
             value = newDependent;
             Assert.AreEqual(42, value);
+        }
+
+        [TestMethod]
+        public void DirectDependentObjectCanBeGarbageCollected()
+        {
+            GC.Collect();
+            SourceData independent = new SourceData();
+            DirectDependent dependent = new DirectDependent(independent);
+            independent.SourceProperty = 42;
+            Assert.AreEqual(42, dependent.DependentProperty);
+            WeakReference weakDependent = new WeakReference(dependent);
+
+            GC.Collect();
+            Assert.IsTrue(weakDependent.IsAlive, "Since we hold a strong reference to the dependent, the object should still be alive.");
+            // This assertion here to make sure the dependent is not optimized away.
+            Assert.AreEqual(42, dependent.DependentProperty);
+
+            dependent = null;
+            GC.Collect();
+            Assert.IsFalse(weakDependent.IsAlive, "Since we released the strong reference to the dependent, the object should not be alive.");
+
+            // This assertion here to make sure the independent is not optimized away.
+            Assert.AreEqual(42, independent.SourceProperty);
+        }
+
+        [TestMethod]
+        public void IndirectDependentObjectCanBeGarbageCollected()
+        {
+            GC.Collect();
+            SourceData independent = new SourceData();
+            DirectDependent intermediate = new DirectDependent(independent);
+            IndirectDependent indirectDependent = new IndirectDependent(intermediate);
+            independent.SourceProperty = 42;
+            Assert.AreEqual(42, indirectDependent.DependentProperty);
+            WeakReference weakIndirectDependent = new WeakReference(indirectDependent);
+
+            GC.Collect();
+            Assert.IsTrue(weakIndirectDependent.IsAlive, "Since we hold a strong reference to the dependent, the object should still be alive.");
+            // This assertion here to make sure the dependent is not optimized away.
+            Assert.AreEqual(42, indirectDependent.DependentProperty);
+
+            indirectDependent = null;
+            GC.Collect();
+            Assert.IsFalse(weakIndirectDependent.IsAlive, "Since we released the strong reference to the dependent, the object should not be alive.");
+
+            // These assertions here to make sure the independent and intermediate are not optimized away.
+            Assert.AreEqual(42, intermediate.DependentProperty);
+            Assert.AreEqual(42, independent.SourceProperty);
         }
     }
 }
