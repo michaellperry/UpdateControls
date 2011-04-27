@@ -16,21 +16,21 @@ using System.Diagnostics;
 namespace UpdateControls
 {
     /// <summary>
-	/// Base class for <see cref="Dynamic"/> and <see cref="Dependent"/> sentries.
-	/// </summary>
-	/// <threadsafety static="true" instance="true"/>
-	/// <remarks>
-	/// This class is for internal use only.
-	/// </remarks>
-	public abstract class Precedent
-	{
+    /// Base class for <see cref="Dynamic"/> and <see cref="Dependent"/> sentries.
+    /// </summary>
+    /// <threadsafety static="true" instance="true"/>
+    /// <remarks>
+    /// This class is for internal use only.
+    /// </remarks>
+    public abstract class Precedent
+    {
         private class DependentNode
         {
             public Dependent Dependent;
             public DependentNode Next;
         }
 
-		private DependentNode _firstDependent = null;
+        private DependentNode _firstDependent = null;
 
         /// <summary>
         /// Method called when the first dependent references this field. This event only
@@ -52,78 +52,51 @@ namespace UpdateControls
         {
         }
 
-		/// <summary>
-		/// Establishes a relationship between this precedent and the currently
-		/// updating dependent.
-		/// </summary>
-		internal void RecordDependent()
-		{
-			lock ( this )
-			{
-				// Get the current dependent.
-				Dependent update = Dependent.GetCurrentUpdate();
-                if (update != null && !DependencyExists(update))
-				{
-                    // Establish a two-way link.
-                    update.AddPrecedent(this);
-					bool gain = false;
-					if ( _firstDependent == null )
-						gain = true;
-                    _firstDependent = new DependentNode { Dependent = update, Next = _firstDependent };
-					if ( gain )
-						GainDependent();
-				}
-				else if ( _firstDependent == null )
-				{
-					// Though there is no lasting dependency, someone
-					// has shown interest.
-					GainDependent();
-					LoseDependent();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Makes all direct and indirect dependents out of date.
-		/// </summary>
-		internal void MakeDependentsOutOfDate()
-		{
-			// When I make a dependent out-of-date, it will
-			// call RemoveDependent, thereby removing it from
-			// the list.
-			lock (this)
-			{
-				while (_firstDependent != null)
-				{
-					Dependent dependent = _firstDependent.Dependent;
-					if (dependent != null)
-						dependent.MakeOutOfDate();
-					else
-						_firstDependent = _firstDependent.Next;
-				}
-			}
-		}
-
-		internal void RemoveDependent( Dependent dependent )
-		{
-			//int before = _dependents.Count;
-            DependentNode prior = null;
-            DependentNode current = _firstDependent;
-            while (current != null)
+        /// <summary>
+        /// Establishes a relationship between this precedent and the currently
+        /// updating dependent.
+        /// </summary>
+        internal void RecordDependent()
+        {
+            // Get the current dependent.
+            Dependent update = Dependent.GetCurrentUpdate();
+            if (update != null && !Contains(update) && update.AddPrecedent(this))
             {
-                if (current.Dependent == dependent)
-                {
-                    if (prior == null)
-                        _firstDependent = current.Next;
-                    else
-                        prior.Next = current.Next;
-                }
-                current = current.Next;
+                if (Insert(update))
+                    GainDependent();
             }
-			//Debug.Assert( _dependents.Count < before, "Dependent was not found in the collection." );
-			if ( _firstDependent == null )
-				LoseDependent();
-		}
+            else if (!Any())
+            {
+                // Though there is no lasting dependency, someone
+                // has shown interest.
+                GainDependent();
+                LoseDependent();
+            }
+        }
+
+        /// <summary>
+        /// Makes all direct and indirect dependents out of date.
+        /// </summary>
+        internal void MakeDependentsOutOfDate()
+        {
+            // When I make a dependent out-of-date, it will
+            // call RemoveDependent, thereby removing it from
+            // the list.
+            while (_firstDependent != null)
+            {
+                Dependent dependent = _firstDependent.Dependent;
+                if (dependent != null)
+                    dependent.MakeOutOfDate();
+                else
+                    _firstDependent = _firstDependent.Next;
+            }
+        }
+
+        internal void RemoveDependent(Dependent dependent)
+        {
+            if (Delete(dependent))
+                LoseDependent();
+        }
 
         /// <summary>
         /// True if any other fields depend upon this one.
@@ -141,21 +114,57 @@ namespace UpdateControls
         /// </remarks>
         public bool HasDependents
 		{
-			get
-			{
-				lock ( this )
-				{
-					return _firstDependent != null;
-				}
-			}
+            get { return Any(); }
 		}
 
-        private bool DependencyExists(Dependent update)
+        private bool Insert(Dependent update)
         {
-            for (DependentNode current = _firstDependent; current != null; current = current.Next)
-                if (current.Dependent == update)
-                    return true;
-            return false;
+            lock (this)
+            {
+                bool first = _firstDependent == null;
+                _firstDependent = new DependentNode { Dependent = update, Next = _firstDependent };
+                return first;
+            }
+        }
+
+        private bool Delete(Dependent dependent)
+        {
+            lock (this)
+            {
+                DependentNode prior = null;
+                for (DependentNode current = _firstDependent; current != null; current = current.Next)
+                {
+                    if (current.Dependent == dependent)
+                    {
+                        if (prior == null)
+                            _firstDependent = current.Next;
+                        else
+                            prior.Next = current.Next;
+                    }
+                    else
+                        prior = current;
+                }
+                return _firstDependent == null;
+            }
+        }
+
+        private bool Contains(Dependent update)
+        {
+            lock (this)
+            {
+                for (DependentNode current = _firstDependent; current != null; current = current.Next)
+                    if (current.Dependent == update)
+                        return true;
+                return false;
+            }
+        }
+
+        private bool Any()
+        {
+            lock (this)
+            {
+                return _firstDependent != null;
+            }
         }
     }
 }
