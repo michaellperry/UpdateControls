@@ -10,9 +10,17 @@ namespace UpdateControls.UnitTest
     [TestClass]
     public class MemoryLeakTest
     {
+#if SILVERLIGHT
+        // In Silverlight, Independent is 20 bytes smaller. Why?
+        private static long platformOffset = -20;
+#else
+        private static long platformOffset = 0;
+#endif
+
         [TestMethod]
         public void IndependentIsAsSmallAsPossible()
         {
+            GC.Collect();
             long start = GC.GetTotalMemory(true);
             Independent<int> newIndependent = new Independent<int>();
             newIndependent.Value = 42;
@@ -22,7 +30,7 @@ namespace UpdateControls.UnitTest
             // Making Precedent a base class: 80.
             // Removing Gain/LoseDependent events: 72.
             // Custom linked list implementation for dependents: 48.
-            Assert.AreEqual(48, end - start);
+            Assert.AreEqual(48 + platformOffset, end - start);
 
             int value = newIndependent;
             Assert.AreEqual(42, value);
@@ -31,6 +39,7 @@ namespace UpdateControls.UnitTest
         [TestMethod]
         public void DependentIsAsSmallAsPossible()
         {
+            GC.Collect();
             long start = GC.GetTotalMemory(true);
             Dependent<int> newDependent = new Dependent<int>(() => 42);
             long end = GC.GetTotalMemory(true);
@@ -50,6 +59,7 @@ namespace UpdateControls.UnitTest
         [TestMethod]
         public void SingleDependencyBeforeUpdateIsAsSmallAsPossible()
         {
+            GC.Collect();
             long start = GC.GetTotalMemory(true);
             Independent<int> newIndependent = new Independent<int>();
             Dependent<int> newDependent = new Dependent<int>(() => newIndependent);
@@ -62,7 +72,7 @@ namespace UpdateControls.UnitTest
             // Making IsUpToDate no longer a precident: 248.
             // Custom linked list implementation for dependents: 200.
             // Custom linked list implementation for precedents: 160.
-            Assert.AreEqual(160, end - start);
+            Assert.AreEqual(160 + platformOffset, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
@@ -71,6 +81,7 @@ namespace UpdateControls.UnitTest
         [TestMethod]
         public void SingleDependencyAfterUpdateIsAsSmallAsPossible()
         {
+            GC.Collect();
             long start = GC.GetTotalMemory(true);
             Independent<int> newIndependent = new Independent<int>();
             Dependent<int> newDependent = new Dependent<int>(() => newIndependent);
@@ -85,7 +96,7 @@ namespace UpdateControls.UnitTest
             // Custom linked list implementation for dependents: 308.
             // Custom linked list implementation for precedents: 192.
             // Weak reference to dependents: 208.
-            Assert.AreEqual(208, end - start);
+            Assert.AreEqual(208 + platformOffset, end - start);
 
             value = newDependent;
             Assert.AreEqual(42, value);

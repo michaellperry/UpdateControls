@@ -92,6 +92,75 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\UpdateControls.UnitTest\CollectionContentTest.cs">
+      <Link>CollectionContentTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\CollectionData\SourceCollection.cs">
+      <Link>CollectionData\SourceCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\CollectionData\TargetCollection.cs">
+      <Link>CollectionData\TargetCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\CollectionTest.cs">
+      <Link>CollectionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\ContactListData\Contact.cs">
+      <Link>ContactListData\Contact.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\ContactListData\ContactList.cs">
+      <Link>ContactListData\ContactList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\ContactListData\ContactListSortOrder.cs">
+      <Link>ContactListData\ContactListSortOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\ContactListData\ContactListViewModel.cs">
+      <Link>ContactListData\ContactListViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\ContactListData\ContactViewModel.cs">
+      <Link>ContactListData\ContactViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\DependentListTest.cs">
+      <Link>DependentListTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\DirectConcurrencyTest.cs">
+      <Link>DirectConcurrencyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\DirectDependent.cs">
+      <Link>DirectDependent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\DirectDependentTest.cs">
+      <Link>DirectDependentTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\DynamicSortOrderTest.cs">
+      <Link>DynamicSortOrderTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\IndirectConcurrencyTest.cs">
+      <Link>IndirectConcurrencyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\IndirectDependent.cs">
+      <Link>IndirectDependent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\IndirectDependentTest.cs">
+      <Link>IndirectDependentTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\MemoryLeakTest.cs">
+      <Link>MemoryLeakTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\MultithreadedData\SourceThread.cs">
+      <Link>MultithreadedData\SourceThread.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\MultithreadedData\TargetThread.cs">
+      <Link>MultithreadedData\TargetThread.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\MultithreadedTest.cs">
+      <Link>MultithreadedTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\SortedCollectionTest.cs">
+      <Link>SortedCollectionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\UpdateControls.UnitTest\SourceData.cs">
+      <Link>SourceData.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -118,6 +187,7 @@
       <Name>UpdateControls %28Silverlight4\UpdateControls%29</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <Import Condition="$(SilverlightVersion)=='v3.0'" Project="$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SilverlightToolkit\Tools\v3.0)Microsoft.Silverlight.Toolkit.Build.targets" />
   <Import Condition="$(SilverlightVersion)=='v4.0'" Project="$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SilverlightToolkit\Tools\v4.0)Microsoft.Silverlight.Toolkit.Build.targets" />
