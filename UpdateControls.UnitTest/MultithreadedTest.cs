@@ -13,7 +13,7 @@ namespace UpdateControls.UnitTest
         [TestMethod]
         public void IsThreadSafe()
         {
-            const int ThreadCount = 30;
+            const int ThreadCount = 10;
 
             // Start source threads.
             SourceThread[] sources = new SourceThread[ThreadCount];

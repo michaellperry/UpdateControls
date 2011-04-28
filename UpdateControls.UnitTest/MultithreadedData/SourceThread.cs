@@ -5,7 +5,7 @@ namespace UpdateControls.UnitTest.MultithreadedData
 {
     public class SourceThread
     {
-        public const int MaxValue = 1000000;
+        public const int MaxValue = 10000;
 
         private Thread _thread;
         private Independent<int> _value = new Independent<int>();

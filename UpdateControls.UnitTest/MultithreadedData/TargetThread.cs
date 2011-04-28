@@ -30,7 +30,11 @@ namespace UpdateControls.UnitTest.MultithreadedData
 
         public int Total
         {
-            get { return _total; }
+            get
+            {
+                lock (this)
+                    return _total;
+            }
         }
 
         private void ThreadProc()
