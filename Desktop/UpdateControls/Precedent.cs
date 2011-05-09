@@ -82,13 +82,10 @@ namespace UpdateControls
             // When I make a dependent out-of-date, it will
             // call RemoveDependent, thereby removing it from
             // the list.
-            while (_firstDependent != null)
+            Dependent first;
+            while ((first = First()) != null)
             {
-                Dependent dependent = (Dependent)_firstDependent.Dependent.Target;
-                if (dependent != null)
-                    dependent.MakeOutOfDate();
-                else
-                    _firstDependent = _firstDependent.Next;
+                first.MakeOutOfDate();
             }
         }
 
@@ -131,11 +128,14 @@ namespace UpdateControls
         {
             lock (this)
             {
+                int count = 0;
                 DependentNode prior = null;
                 for (DependentNode current = _firstDependent; current != null; current = current.Next)
                 {
                     if (!current.Dependent.IsAlive || current.Dependent.Target == dependent)
                     {
+                        if (current.Dependent.Target == dependent)
+                            ++count;
                         if (prior == null)
                             _firstDependent = current.Next;
                         else
@@ -144,6 +144,7 @@ namespace UpdateControls
                     else
                         prior = current;
                 }
+                Debug.Assert(count == 1, String.Format("Expected 1 dependent, found {0}.", count));
                 return _firstDependent == null;
             }
         }
@@ -164,6 +165,22 @@ namespace UpdateControls
             lock (this)
             {
                 return _firstDependent != null;
+            }
+        }
+
+        private Dependent First()
+        {
+            lock (this)
+            {
+                while (_firstDependent != null)
+                {
+                    Dependent dependent = (Dependent)_firstDependent.Dependent.Target;
+                    if (dependent != null)
+                        return dependent;
+                    else
+                        _firstDependent = _firstDependent.Next;
+                }
+                return null;
             }
         }
     }
