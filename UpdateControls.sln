@@ -65,9 +65,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.UnitTest", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.ManualTest", "Silverlight4\UpdateControls.ManualTest\UpdateControls.ManualTest.csproj", "{97DAD126-CC3E-4BA9-BADF-CC77EE421F6B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.ManualTest", "WP7\UpdateControls.ManualTest\UpdateControls.ManualTest.csproj", "{308C84E5-30C6-451C-995C-4696259BB46C}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 20
+		SccNumberOfProjects = 21
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs07
 		SccLocalPath0 = .
@@ -147,6 +149,10 @@ Global
 		SccProjectTopLevelParentUniqueName19 = UpdateControls.sln
 		SccProjectName19 = Silverlight4/UpdateControls.ManualTest
 		SccLocalPath19 = Silverlight4\\UpdateControls.ManualTest
+		SccProjectUniqueName20 = WP7\\UpdateControls.ManualTest\\UpdateControls.ManualTest.csproj
+		SccProjectTopLevelParentUniqueName20 = UpdateControls.sln
+		SccProjectName20 = WP7/UpdateControls.ManualTest
+		SccLocalPath20 = WP7\\UpdateControls.ManualTest
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = UpdateControls1.vsmdi
@@ -232,6 +238,12 @@ Global
 		{97DAD126-CC3E-4BA9-BADF-CC77EE421F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97DAD126-CC3E-4BA9-BADF-CC77EE421F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97DAD126-CC3E-4BA9-BADF-CC77EE421F6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308C84E5-30C6-451C-995C-4696259BB46C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{308C84E5-30C6-451C-995C-4696259BB46C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{308C84E5-30C6-451C-995C-4696259BB46C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{308C84E5-30C6-451C-995C-4696259BB46C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{308C84E5-30C6-451C-995C-4696259BB46C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308C84E5-30C6-451C-995C-4696259BB46C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -258,5 +270,6 @@ Global
 		{97DAD126-CC3E-4BA9-BADF-CC77EE421F6B} = {8A25F37E-4875-4D86-8611-265359F21509}
 		{151284DC-04CE-4175-A0F4-5FCC761AA2DB} = {306549E8-C08A-47F3-BE75-0905C5FCF972}
 		{9931B0A1-9BC2-4500-A4C5-AD1B3FD35937} = {306549E8-C08A-47F3-BE75-0905C5FCF972}
+		{308C84E5-30C6-451C-995C-4696259BB46C} = {306549E8-C08A-47F3-BE75-0905C5FCF972}
 	EndGlobalSection
 EndGlobal
