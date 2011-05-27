@@ -122,7 +122,10 @@ namespace UpdateControls.XAML.Wrapper
             {
                 child.Dispose();
             }
-            ObjectInstance.ClearValue(ClassProperty.DependencyProperty);
+            using (NotificationGate.BeginOutbound())
+            {
+                ObjectInstance.ClearValue(ClassProperty.DependencyProperty);
+            }
             _depCollection.Dispose();
         }
 
