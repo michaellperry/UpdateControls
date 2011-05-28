@@ -108,7 +108,14 @@ namespace UpdateControls
         public void AddObject(T recyclableObject)
         {
             Recyclable<T> recyclable = _makeRecyclable(recyclableObject);
-            _recyclableObjects.Add(recyclable, recyclable);
+            if (_recyclableObjects.ContainsKey(recyclable))
+            {
+                recyclable.Dispose();
+            }
+            else
+            {
+                _recyclableObjects.Add(recyclable, recyclable);
+            }
         }
 
 		/// <summary>
