@@ -88,6 +88,7 @@ namespace UpdateControls
         }
         private Dictionary<Recyclable<T>, Recyclable<T>> _recyclableObjects = new Dictionary<Recyclable<T>, Recyclable<T>>();
         private static Func<T, Recyclable<T>> _makeRecyclable = GenerateMakeRecyclable();
+        private List<Recyclable<T>> _duplicates = new List<Recyclable<T>>();
 
 		/// <summary>
 		/// Creates an empty recycle bin.
@@ -109,13 +110,9 @@ namespace UpdateControls
         {
             Recyclable<T> recyclable = _makeRecyclable(recyclableObject);
             if (_recyclableObjects.ContainsKey(recyclable))
-            {
-                recyclable.Dispose();
-            }
+                _duplicates.Add(recyclable);
             else
-            {
                 _recyclableObjects.Add(recyclable, recyclable);
-            }
         }
 
 		/// <summary>
@@ -155,11 +152,11 @@ namespace UpdateControls
 		/// </remarks>
 		public void Dispose()
 		{
-			foreach ( Recyclable<T> obj in _recyclableObjects.Values )
-			{
-				obj.Dispose();
-			}
-		}
+            foreach (Recyclable<T> obj in _recyclableObjects.Values)
+                obj.Dispose();
+            foreach (Recyclable<T> obj in _duplicates)
+                obj.Dispose();
+        }
 
         private static Func<T, Recyclable<T>> GenerateMakeRecyclable()
         {
