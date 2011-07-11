@@ -48,7 +48,7 @@ namespace UpdateControls.Forms
 
 		private Dependent _depEnabled;
 		private Dependent _depValue;
-		private Independent _dynValue = new Independent();
+		private Independent _dynValue = Independent.New("UpdateDateTimePicker.Value");
 
 		private int _updating = 0;
 
@@ -58,8 +58,8 @@ namespace UpdateControls.Forms
 		public UpdateDateTimePicker()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( UpdateEnabled );
-			_depValue = new Dependent( UpdateValue );
+			_depEnabled = Dependent.New("UpdateDateTimePicker.Enabled", UpdateEnabled);
+			_depValue = Dependent.New("UpdateDateTimePicker.Value", UpdateValue);
 		}
 
 		private void UpdateEnabled()

@@ -40,7 +40,7 @@ namespace UpdateControls.Forms
 			{
 				_tag = tag;
 				_getItemText = getItemText;
-				_depText = new Dependent( UpdateText );
+				_depText = Dependent.New("ComboBoxItem.Text", UpdateText );
 			}
 
 			public void Dispose()
@@ -147,10 +147,10 @@ namespace UpdateControls.Forms
 		public UpdateComboBox()
 		{
             // Create all dependent sentries.
-			_depText = new Dependent( UpdateText );
-			_depEnabled = new Dependent( UpdateEnabled );
-			_depItems = new Dependent( UpdateItems );
-			_depSelectedItem = new Dependent( UpdateSelectedItem );
+			_depText = Dependent.New("UpdateComboBox.Text", UpdateText );
+			_depEnabled = Dependent.New("UpdateComboBox.Enabled", UpdateEnabled);
+			_depItems = Dependent.New("UpdateComboBox.Items", UpdateItems);
+			_depSelectedItem = Dependent.New("UpdateComboBox.SelectedItem", UpdateSelectedItem);
 		}
 
 		private void UpdateText()

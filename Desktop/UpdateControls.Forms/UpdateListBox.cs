@@ -45,8 +45,8 @@ namespace UpdateControls.Forms
 				_getItemText = getItemText;
 				_getItemSelected = getItemSelected;
 				_setItemSelected = setItemSelected;
-				_depText = new Dependent( UpdateText );
-				_depSelected = new Dependent( UpdateSelected );
+				_depText = Dependent.New("ListBoxItem.Text", UpdateText);
+				_depSelected = Dependent.New("ListBoxItem.Selected", UpdateSelected);
 			}
 
 			public void Dispose()
@@ -161,7 +161,7 @@ namespace UpdateControls.Forms
 		private Dependent _depItems;
 		private Dependent _depSelectedItem;
 
-		private Independent _dynSelectedItem = new Independent();
+		private Independent _dynSelectedItem = Independent.New("UpdateListBox.SelectedItem");
 
         private int _updating = 0;
 
@@ -171,9 +171,9 @@ namespace UpdateControls.Forms
 		public UpdateListBox()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( UpdateEnabled );
-			_depItems = new Dependent( UpdateItems );
-			_depSelectedItem = new Dependent( UpdateSelectedItem );
+			_depEnabled = Dependent.New("UpdateListBox.Enabled", UpdateEnabled );
+			_depItems = Dependent.New("UpdateListBox.Items", UpdateItems );
+			_depSelectedItem = Dependent.New("UpdateListBox.SelectedItem", UpdateSelectedItem );
 		}
 
 		private void UpdateEnabled()

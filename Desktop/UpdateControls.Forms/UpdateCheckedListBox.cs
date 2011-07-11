@@ -44,8 +44,8 @@ namespace UpdateControls.Forms
 				_getItemText = getItemText;
 				_getItemCheckState = getItemCheckState;
 				_setItemCheckState = setItemCheckState;
-				_depText = new Dependent( UpdateText );
-				_depCheckState = new Dependent( UpdateCheckState );
+				_depText = Dependent.New("CheckedListBoxItem.Text", UpdateText );
+				_depCheckState = Dependent.New("CheckedListBoxItem.CheckState", UpdateCheckState);
 			}
 
 			public void Dispose()
@@ -170,9 +170,9 @@ namespace UpdateControls.Forms
 		public UpdateCheckedListBox()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( UpdateEnabled );
-			_depItems = new Dependent( UpdateItems );
-			_depItemCheckState = new Dependent( UpdateItemCheckState );
+			_depEnabled = Dependent.New("UpdateCheckedListBox.Enabled", UpdateEnabled);
+			_depItems = Dependent.New("UpdateCheckedListBox.Items", UpdateItems);
+			_depItemCheckState = Dependent.New("UpdateCheckedListBox.ItemCheckState", UpdateItemCheckState);
 		}
 
 		private void UpdateEnabled()

@@ -103,7 +103,7 @@ namespace UpdateControls
 	/// </example>
 	public class Independent : Precedent
 	{
-		public static Independent New() { return new Independent(); }
+		public static Independent New() { return DebugMode ? new NamedIndependent() : new Independent(); }
 		public static NamedIndependent New(string name) { return new NamedIndependent(name); }
 		public static NamedIndependent New(Type valueType) { return new NamedIndependent(valueType.NameWithGenericParams()); }
 		public static NamedIndependent New(Type containerType, string name) { return new NamedIndependent(containerType, name); }

@@ -87,11 +87,11 @@ namespace UpdateControls.Forms
 		public UpdateMonthCalendar()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( UpdateEnabled );
-			_depSelection = new Dependent( UpdateSelection );
-			_depAnnuallyBoldedDates = new Dependent( UpdateAnnuallyBoldedDates );
-			_depMonthlyBoldedDates = new Dependent( UpdateMonthlyBoldedDates );
-			_depBoldedDates = new Dependent( UpdateBoldedDates );
+			_depEnabled = Dependent.New("UpdateMonthCalendar.Enabled", UpdateEnabled);
+			_depSelection = Dependent.New("UpdateMonthCalendar.Selection", UpdateSelection);
+			_depAnnuallyBoldedDates = Dependent.New("UpdateMonthCalendar.AnuallyBoldedDates", UpdateAnnuallyBoldedDates);
+			_depMonthlyBoldedDates = Dependent.New("UpdateMonthCalendar.MonthlyBoldedDates", UpdateMonthlyBoldedDates);
+			_depBoldedDates = Dependent.New("UpdateMonthCalendar.BoldedDates", UpdateBoldedDates);
 		}
 
 		private void UpdateEnabled()

@@ -57,6 +57,7 @@
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
     <Compile Include="Delegates.cs" />
+    <Compile Include="GuiUpdateHelper.cs" />
     <Compile Include="UpdateButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -70,6 +71,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UpdateComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UpdateNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Util\CollectionHelper.cs" />

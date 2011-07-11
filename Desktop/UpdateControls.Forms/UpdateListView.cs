@@ -210,8 +210,8 @@ namespace UpdateControls.Forms
 			private Dependent _depImageIndex;
 			private Dependent _depSubItems;
 
-			private Independent _dynSelected = new Independent();
-			private Independent _dynChecked = new Independent();
+			private Independent _dynSelected = Independent.New("UpdateListView.Selected");
+			private Independent _dynChecked = Independent.New("UpdateListView.Checked");
 
 			private bool _selected = false;
 			private bool _checked = false;
@@ -223,12 +223,12 @@ namespace UpdateControls.Forms
 				base.Tag = tag;
                 _groupsByTag = groupsByTag;
 				_itemDelegates = itemDelegates;
-                _depGroup = new Dependent(UpdateGroup);
-				_depText = new Dependent(UpdateText);
-				_depSelected = new Dependent(UpdateSelected);
-				_depChecked = new Dependent(UpdateChecked);
-				_depImageIndex = new Dependent(UpdateImageIndex);
-				_depSubItems = new Dependent(UpdateSubItems);
+                _depGroup = Dependent.New("UpdateListViewItem.Group", UpdateGroup);
+				_depText = Dependent.New("UpdateListViewItem.Text", UpdateText);
+				_depSelected = Dependent.New("UpdateListViewItem.Selected", UpdateSelected);
+				_depChecked = Dependent.New("UpdateListViewItem.Checked", UpdateChecked);
+				_depImageIndex = Dependent.New("UpdateListViewItem.ImageIndex", UpdateImageIndex);
+				_depSubItems = Dependent.New("UpdateListViewItem.SubItems", UpdateSubItems);
 			}
 
 			public void Dispose()
@@ -469,9 +469,9 @@ namespace UpdateControls.Forms
                 _groupDelegates = groupDelegates;
                 _listView = listView;
 
-                _depName = new Dependent(UpdateName);
-                _depHeader = new Dependent(UpdateHeader);
-                _depAlignment = new Dependent(UpdateAlignment);
+                _depName = Dependent.New("DependentListViewGroup.Name", UpdateName);
+				_depHeader = Dependent.New("DependentListViewGroup.Header", UpdateHeader);
+				_depAlignment = Dependent.New("DependentListViewGroup.Alignment", UpdateAlignment);
             }
 
             public void Dispose()
@@ -798,16 +798,16 @@ namespace UpdateControls.Forms
 		public UpdateListView()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent(UpdateEnabled);
-            _depGroups = new Dependent(UpdateGroups);
-            _depGroupProperties = new Dependent(UpdateGroupProperties);
-			_depItems = new Dependent(UpdateItems);
-            _depItemGroups = new Dependent(UpdateItemGroups);
-			_depItemText = new Dependent(UpdateItemText);
-			_depItemSelected = new Dependent(UpdateItemSelected);
-			_depItemChecked = new Dependent(UpdateItemChecked);
-			_depItemImageIndex = new Dependent(UpdateItemImageIndex);
-			_depSubItems = new Dependent(UpdateSubItems);
+			_depEnabled = Dependent.New("UpdateListView.Enabled", UpdateEnabled);
+			_depGroups = Dependent.New("UpdateListView.Groups", UpdateGroups);
+			_depGroupProperties = Dependent.New("UpdateListView.GroupProperties", UpdateGroupProperties);
+			_depItems = Dependent.New("UpdateListView.Items", UpdateItems);
+			_depItemGroups = Dependent.New("UpdateListView.ItemGroups", UpdateItemGroups);
+			_depItemText = Dependent.New("UpdateListView.ItemText", UpdateItemText);
+			_depItemSelected = Dependent.New("UpdateListView.ItemSelected", UpdateItemSelected);
+			_depItemChecked = Dependent.New("UpdateListView.ItemChecked", UpdateItemChecked);
+			_depItemImageIndex = Dependent.New("UpdateListView.ItemImageIndex", UpdateItemImageIndex);
+			_depSubItems = Dependent.New("UpdateListView.SubItems", UpdateSubItems);
 		}
 
 		/// <summary>Select an item in the list view.</summary>

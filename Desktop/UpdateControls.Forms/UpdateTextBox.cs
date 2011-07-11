@@ -46,8 +46,8 @@ namespace UpdateControls.Forms
 
 		private Dependent _depText;
 		private Dependent _depEnabled;
-		private Independent _dynModified = new Independent();
-        private Independent _dynError = new Independent();
+		private Independent _dynModified = Independent.New("UpdateTextBox.Modified");
+		private Independent _dynError = Independent.New("UpdateTextBox.Error");
 
 		private bool _realTime = false;
         private string _errorText = string.Empty;
@@ -60,8 +60,8 @@ namespace UpdateControls.Forms
 		public UpdateTextBox()
 		{
             // Create all dependent sentries.
-			_depText = new Dependent( UpdateText );
-			_depEnabled = new Dependent( UpdateEnabled );
+			_depText = Dependent.New("UpdateTextBox.Text", UpdateText);
+			_depEnabled = Dependent.New("UpdateTextBox.Enabled", UpdateEnabled);
 		}
 
 		private void UpdateText()

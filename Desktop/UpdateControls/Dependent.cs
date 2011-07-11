@@ -100,6 +100,9 @@ namespace UpdateControls
 	/// </example>
 	public partial class Dependent : Precedent
 	{
+		public static Dependent New(Action update) { return DebugMode ? new NamedDependent(update) : new Dependent(update); }
+		public static NamedDependent New(string name, Action update) { return new NamedDependent(name, update); }
+
         [ThreadStatic]
         private static Dependent _currentUpdate = null;
 

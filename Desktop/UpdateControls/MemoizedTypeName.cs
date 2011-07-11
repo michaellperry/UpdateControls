@@ -5,6 +5,10 @@ using System.Text;
 
 namespace UpdateControls
 {
+	/// <summary>.NET Framework reflection doesn't offer complete type names for 
+	/// generic types such as "List&lt;int>" (the Type.Name value of that class is 
+	/// "List`1"). <see cref="GenericName"/> fills in the gap, and also saves the 
+	/// computed name for fast repeated lookups.</summary>
 	public static class MemoizedTypeName
 	{
 		static Dictionary<Type, string> _shortNames = new Dictionary<Type, string>();

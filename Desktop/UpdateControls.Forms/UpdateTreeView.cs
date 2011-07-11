@@ -49,7 +49,7 @@ namespace UpdateControls.Forms
 			private Dependent _depNodes;
 			private Dependent _depRecursive;
 
-			private Independent _dynWasExpanded = new Independent();
+			private Independent _dynWasExpanded = Independent.New("UpdateTreeView.WasExpanded");
             private bool _wasExpanded = false;
 
 			private int _updating = 0;
@@ -58,10 +58,10 @@ namespace UpdateControls.Forms
 			{
 				base.Tag = tag;
 				_itemDelegates = itemDelegates;
-				_depText = new Dependent( UpdateText );
-				_depImageIndex = new Dependent( UpdateImageIndex );
-				_depNodes = new Dependent( UpdateNodes );
-				_depRecursive = new Dependent( UpdateRecursive );
+				_depText = Dependent.New("UpdateTreeView.Text", UpdateText);
+				_depImageIndex = Dependent.New("UpdateTreeView.ImageIndex", UpdateImageIndex);
+				_depNodes = Dependent.New("UpdateTreeView.Nodes", UpdateNodes);
+				_depRecursive = Dependent.New("UpdateTreeView.Recursive", UpdateRecursive);
 			}
 
 			public void Dispose()

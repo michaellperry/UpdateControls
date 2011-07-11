@@ -165,7 +165,7 @@ namespace UpdateControls.Forms
                 _table = table;
                 _tag = tag;
                 _updateController = updateController;
-                _depValue = new Dependent(UpdateValue);
+                _depValue = Dependent.New("UpdateDataRow.Value", UpdateValue);
             }
 
 			public void Dispose()
@@ -453,10 +453,10 @@ namespace UpdateControls.Forms
             _table.RowDeleting += new DataRowChangeEventHandler(OnRowDeleting);
 
 			// Create all dependent sentries.
-			_depEnabled = new Dependent( UpdateEnabled );
-			_depColumns = new Dependent( UpdateColumns );
-			_depItems = new Dependent( UpdateItems );
-			_depItemValue = new Dependent( UpdateItemValue );
+			_depEnabled = Dependent.New("UpdateGrid.Enabled", UpdateEnabled );
+			_depColumns = Dependent.New("UpdateGrid.Columns", UpdateColumns);
+			_depItems = Dependent.New("UpdateGrid.Items", UpdateItems);
+			_depItemValue = Dependent.New("UpdateGrid.ItemValue", UpdateItemValue);
 		}
 
         private void OnColumnChanged(object sender, DataColumnChangeEventArgs e)

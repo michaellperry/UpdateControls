@@ -42,7 +42,7 @@ namespace UpdateControls.Forms
 		public UpdateButton()
 		{
             // Create all dependent sentries.
-			_depEnabled = new Dependent( UpdateEnabled );
+			_depEnabled = Dependent.New("UpdateButton.Enabled", UpdateEnabled);
 		}
 
 		/// <summary>
