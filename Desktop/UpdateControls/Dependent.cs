@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace UpdateControls
 {
@@ -118,7 +119,16 @@ namespace UpdateControls
         /// </summary>
         public event Action Invalidated;
 
-		private Action _update;
+		protected internal Action _update;
+
+		/// <summary>Gets the update method.</summary>
+		/// <remarks>This property is used by GuiUpdateHelper.</remarks>
+		[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+		public Action UpdateMethod
+		{
+			get { return _update; }
+		}
+
 		private enum StatusType
 		{
 			OUT_OF_DATE,
@@ -140,6 +150,13 @@ namespace UpdateControls
 		/// <seealso cref="UpdateProcedure"/>
 		/// </summary>
 		/// <param name="update">The procedure that updates the value of the controled field.</param>
+		/// <remarks>
+		/// The update parameter is allowed to be null, so that derived classes
+		/// can initialize properly. Due to a limitation of C#, an Update method 
+		/// defined in a derived class can't be passed to the constructor of the 
+		/// base class. Instead, update must be null and the _update member must 
+		/// be set afterward.
+		/// </remarks>
 		public Dependent( Action update )
 		{
 			_update = update;
@@ -338,5 +355,143 @@ namespace UpdateControls
 		}
 
         static partial void ReportCycles();
-    }
+
+		#region Debugger Visualization
+
+		/// <summary>Intended for the debugger. Returns a tree of Dependents that 
+		/// use this Dependent.</summary>
+		/// <remarks>UsedBy is defined separately in Independent and Dependent so 
+		/// that the user doesn't have to drill down to the final base class, 
+		/// Precedent, in order to view this property.</remarks>
+		protected DependentVisualizer UsedBy
+		{
+			get { return new DependentVisualizer(this); }
+		}
+
+		/// <summary>Intended for the debugger. Returns a tree of Precedents that 
+		/// were accessed when this Dependent was last updated.</summary>
+		protected PrecedentVisualizer Uses
+		{
+			get { return new PrecedentVisualizer(this); }
+		}
+
+		/// <summary>Intended for the debugger. Returns a tree of Precedents that 
+		/// were accessed when this Dependent was last updated, collapsed so that
+		/// all precedents that have the same name are shown as a single item.</summary>
+		protected PrecedentSummarizer UsesSummary
+		{
+			get { return new PrecedentSummarizer(this); }
+		}
+
+		/// <summary>Helper class, intended to be viewed in the debugger, that 
+		/// shows a list of Dependents and Independents that are used by this 
+		/// Dependent.</summary>
+		protected class PrecedentVisualizer
+		{
+			Dependent _self;
+			public PrecedentVisualizer(Dependent self) { _self = self; }
+			public override string ToString() { return _self.VisualizerName(true); }
+
+			[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+			public object[] Items
+			{
+				get {
+					var list = new List<object>();
+					lock (_self)
+					{
+						for (PrecedentNode current = _self._firstPrecedent; current != null; current = current.Next)
+						{
+							var dep = current.Precedent as Dependent;
+							var ind = current.Precedent as Independent;
+							if (dep != null)
+								list.Add(new PrecedentVisualizer(dep));
+							else
+								list.Add(new LeafVisualizer(ind));
+						}
+						
+						list.Sort((a, b) => a.ToString().CompareTo(b.ToString()));
+
+						// Return as array so that the debugger doesn't offer a useless "Raw View"
+						return list.ToArray();
+					}
+				}
+			}
+		}
+		/// <summary>Helper class, used by <see cref="PrecedentVisualizer"/>, whose 
+		/// ToString() method shows [I] plus the "extended name" of an Independent.</summary>
+		private class LeafVisualizer
+		{
+			Independent _self;
+			public LeafVisualizer(Independent self) { _self = self; }
+			public override string ToString() { return _self.VisualizerName(true); }
+		}
+
+		/// <summary>Helper class, intended to be viewed in the debugger, that is 
+		/// similar to PrecedentVisualizer except that it collapses all precedents 
+		/// with the same name into a single entry.</summary>
+		protected class PrecedentSummarizer
+		{
+			List<Precedent> _precedentsAtThisLevel;
+			public PrecedentSummarizer(Precedent self)
+			{
+				_precedentsAtThisLevel = new List<Precedent>();
+				_precedentsAtThisLevel.Add(self);
+			}
+
+			public override string ToString()
+			{
+				var list = _precedentsAtThisLevel;
+				if (list.Count > 1)
+					return string.Format("x{0} {1}", list.Count, list[0].VisualizerName(false));
+				else if (list.Count == 1)
+					return list[0].VisualizerName(true);
+				else
+					return "x0"; // should never happen
+			}
+
+			[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+			public PrecedentSummarizer[] Items
+			{
+				get
+				{
+					var dict = new Dictionary<string, PrecedentSummarizer>();
+					foreach (var item in _precedentsAtThisLevel)
+					{
+						if (item is Dependent) lock (item)
+						{
+							//if (_isDependentTree)
+							//{
+							//    for (DependentNode current = item._firstDependent; current != null; current = current.Next)
+							//    {
+							//        var dep = current.Dependent.Target as Dependent;
+							//        if (dep != null)
+							//        {
+							//            PrecedentSummarizer child;
+							//            if (dict.TryGetValue(dep.ToString(), out child))
+							//                child._list.Add(dep);
+							//            else
+							//                dict[dep.ToString()] = new PrecedentSummarizer(dep, _isDependentTree);
+							//        }
+							//    }
+							//}
+							for (PrecedentNode current = (item as Dependent)._firstPrecedent; current != null; current = current.Next)
+							{
+								Precedent p = current.Precedent;
+								string name = p.VisualizerName(false);
+								PrecedentSummarizer child;
+								if (dict.TryGetValue(name, out child))
+									child._precedentsAtThisLevel.Add(current.Precedent);
+								else
+									dict[name] = new PrecedentSummarizer(p);
+							}
+						}
+					}
+
+					return dict.Values.ToArray();
+				}
+			}
+		}
+
+		#endregion
+	}
 }

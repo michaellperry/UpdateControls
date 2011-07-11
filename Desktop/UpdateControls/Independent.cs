@@ -103,6 +103,11 @@ namespace UpdateControls
 	/// </example>
 	public class Independent : Precedent
 	{
+		public static Independent New() { return new Independent(); }
+		public static NamedIndependent New(string name) { return new NamedIndependent(name); }
+		public static NamedIndependent New(Type valueType) { return new NamedIndependent(valueType.NameWithGenericParams()); }
+		public static NamedIndependent New(Type containerType, string name) { return new NamedIndependent(containerType, name); }
+
 		/// <summary>
 		/// Call this function just before getting the field that this
 		/// sentry controls.
@@ -112,7 +117,7 @@ namespace UpdateControls
 		/// this field; when the field changes, the dependent becomes
 		/// out-of-date.
 		/// </remarks>
-		public void OnGet()
+		public virtual void OnGet()
 		{
 			// Establish dependency between the current update
 			// and this field.
@@ -137,6 +142,13 @@ namespace UpdateControls
 			// When an independent field canges,
 			// its dependents become out-of-date.
 			MakeDependentsOutOfDate();
+		}
+
+		/// <summary>Intended for the debugger. Returns a tree of Dependents that 
+		/// use this Dependent.</summary>
+		protected DependentVisualizer UsedBy
+		{
+			get { return new DependentVisualizer(this); }
 		}
 	}
 }

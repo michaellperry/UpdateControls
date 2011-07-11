@@ -16,7 +16,7 @@ namespace UpdateControls.Collections
 	public class IndependentList<T> : IList<T>
 	{
 		private IList<T> _list = new List<T>();
-		private Independent _indList = new Independent();
+		private Independent _indList = new NamedIndependent(MemoizedTypeName<IndependentList<T>>.GenericName());
 
 		public int IndexOf(T item)
 		{

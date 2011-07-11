@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace UpdateControls
 {
@@ -24,13 +25,13 @@ namespace UpdateControls
     /// </remarks>
     public abstract class Precedent
     {
-        private class DependentNode
+		internal class DependentNode
         {
             public WeakReference Dependent;
             public DependentNode Next;
         }
 
-        private DependentNode _firstDependent = null;
+        internal DependentNode _firstDependent = null;
 
         /// <summary>
         /// Method called when the first dependent references this field. This event only
@@ -183,5 +184,69 @@ namespace UpdateControls
                 return null;
             }
         }
-    }
+
+		public override string ToString()
+		{
+			return VisualizerName(true);
+		}
+
+		#region Debugger Visualization
+
+		/// <summary>Gets or sets a flag that allows extra debug features.</summary>
+		/// <remarks>
+		/// This flag currently controls a single feature: automatic name detection 
+		/// for <see cref="NamedIndependent"/>s. When this feature is enabled, and
+		/// you define a NamedIndependent or <see cref="Independent{T}"/> object 
+		/// without giving it a name, the OnGet() method
+		/// </remarks>
+		public static bool DebugMode { get; set; }
+
+		public virtual string VisualizerName(bool withValue)
+		{
+			return VisNameWithOptionalHash(GetType().Name, withValue);
+		}
+		protected string VisNameWithOptionalHash(string name, bool withHash)
+		{
+			if (withHash) {
+				// Unless VisualizerName has been overridden, we have no idea what 
+				// value is associated with the Precedent. Include an ID code so 
+				// that the user has a chance to detect duplicates (that is, when
+				// he sees two Independents with the same code, they are probably 
+				// the same Independent.)
+				return string.Format("{0} #{1:X5}", name, GetHashCode() & 0xFFFFF);
+			} else
+				return name;
+		}
+
+		protected class DependentVisualizer
+		{
+			Precedent _self;
+			public DependentVisualizer(Precedent self) { _self = self; }
+			public override string ToString() { return _self.VisualizerName(true); }
+
+			[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+			public DependentVisualizer[] Items
+			{
+				get {
+					var list = new List<DependentVisualizer>();
+					lock (_self)
+					{
+						for (DependentNode current = _self._firstDependent; current != null; current = current.Next)
+						{
+							var dep = current.Dependent.Target as Dependent;
+							if (dep != null)
+								list.Add(new DependentVisualizer(dep));
+						}
+
+						list.Sort((a, b) => a.ToString().CompareTo(b.ToString()));
+
+						// Return as array so that the debugger doesn't offer a useless "Raw View"
+						return list.ToArray();
+					}
+				}
+			}
+		}
+
+		#endregion
+	}
 }

@@ -25,8 +25,8 @@ namespace UpdateControls.Collections
         {
             _computeCollection = computeCollection;
 
-            _dependentSentry = new Dependent(delegate
-            {
+            _dependentSentry = new NamedDependent(MemoizedTypeName<DependentList<T>>.GenericName(),
+			delegate {
                 using (var bin = new RecycleBin<T>())
                 {
                     foreach (T item in _list)

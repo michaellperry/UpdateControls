@@ -16,7 +16,7 @@ namespace UpdateControls.Collections
 	public class IndependentDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
 		private IDictionary<TKey, TValue> _dictionary = new Dictionary<TKey, TValue>();
-		private Independent _indDictionary = new Independent();
+		private Independent _indDictionary = new NamedIndependent(MemoizedTypeName<IndependentDictionary<TKey, TValue>>.GenericName());
 
 		public void Add(TKey key, TValue value)
 		{
