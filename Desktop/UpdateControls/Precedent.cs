@@ -194,13 +194,23 @@ namespace UpdateControls
 
 		/// <summary>Gets or sets a flag that allows extra debug features.</summary>
 		/// <remarks>
-		/// This flag currently controls a single feature: automatic name detection 
-		/// for <see cref="NamedIndependent"/>s. When this feature is enabled, and
-		/// you define a NamedIndependent or <see cref="Independent{T}"/> object 
-		/// without giving it a name, the OnGet() method
+		/// This flag currently just controls automatic name detection for untitled
+		/// NamedIndependents, and other precedents that were created without a name 
+		/// by calling <see cref="Independent.New"/>() or <see cref="Dependent.New"/>(),
+		/// including dependents created implicitly by <see cref="GuiUpdateHelper"/>.
+		/// <para/>
+		/// DebugMode should be enabled before creating any UpdateControls sentries,
+		/// otherwise some of them may never get a name. For example, if 
+		/// Indepedent.New() is called (without arguments) when DebugMode is false, 
+		/// a "regular" <see cref="Independent"/> is created that is incapable of 
+		/// having a name.
+		/// <para/>
+		/// DebugMode may slow down your program. In particular, independents will
+		/// compute their names based on a stack trace the first time OnGet() is 
+		/// called, which is expensive.
 		/// </remarks>
 		public static bool DebugMode { get; set; }
-
+		
 		public virtual string VisualizerName(bool withValue)
 		{
 			return VisNameWithOptionalHash(GetType().Name, withValue);
