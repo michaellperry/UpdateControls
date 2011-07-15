@@ -25,7 +25,12 @@ namespace UpdateControls.Fields
         public Dependent(Func<T> computeValue)
         {
             _computeValue = computeValue;
-            _dependentSentry = new Dependent(() => _value = _computeValue());
+			Action update = () => _value = _computeValue();
+			if (Precedent.DebugMode)
+				_dependentSentry = new NamedDependent(string.Intern(
+					NamedDependent.GetClassAndMethodName(_computeValue) + "()"), update);
+			else
+				_dependentSentry = new Dependent(update);
         }
 
         public T Value
