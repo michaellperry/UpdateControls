@@ -76,7 +76,7 @@ namespace UpdateControls.Collections
 		public bool TryGetValue(TKey key, out TValue value)
 		{
 			_dependentSentry.OnGet();
-			_dictionary.TryGetValue(key, out value);
+			return _dictionary.TryGetValue(key, out value);
 		}
 
 		public ICollection<TValue> Values
