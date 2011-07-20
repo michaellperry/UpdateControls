@@ -5,15 +5,36 @@ using System.Text;
 
 namespace UpdateControls.Collections
 {
+	/// <summary>A dictionary tied to a dependent sentry.</summary>
+	/// <remarks>
+	/// To use DependentDictionary, you must pass a method to the constructor whose 
+	/// job is to choose the contents of the dictionary (either as a list of key-
+	/// value pairs, or as an object that implements <see cref="IDictionary{TKey,TValue}"/>).
+	/// </remarks>
 	class DependentDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
 		private readonly Func<IEnumerable<KeyValuePair<TKey, TValue>>> _computeCollection;
 		private IDictionary<TKey, TValue> _dictionary;
 		private Dependent _dependentSentry;
 
-		public DependentDictionary(Func<IEnumerable<KeyValuePair<TKey, TValue>>> computeCollection)
+		/// <summary>Initializes DependentDictionary.</summary>
+		/// <param name="updateCollection">A method that is called to choose the 
+		/// contents of the dictionary.</param>
+		/// <remarks>
+		/// The update method will be called automatically when someone accesses the 
+		/// dictionary, and either (1) it is being accessed for the first time, or
+		/// (2) one of the precedents (Dependent and Independent sentries) that were 
+		/// accessed by updateCollection() has changed since the last time it was
+		/// called.
+		/// <para/>
+		/// TODO: DependentList uses a RecycleBin but DependentDictionary does not.
+		///       Either introduce a RecycleBin (or two, one for values and one for
+		///       keys?), or write a rationale why there is a discrepency between 
+		///       the two collection types.
+		/// </remarks>
+		public DependentDictionary(Func<IEnumerable<KeyValuePair<TKey, TValue>>> updateCollection)
 		{
-			_computeCollection = computeCollection;
+			_computeCollection = updateCollection;
 
 			_dependentSentry = new NamedDependent(MemoizedTypeName<DependentDictionary<TKey, TValue>>.GenericName(), Update);
 		}
