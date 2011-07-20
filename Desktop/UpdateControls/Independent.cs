@@ -11,6 +11,7 @@
 
 using System;
 using System.Diagnostics;
+using UpdateControls.Fields;
 
 namespace UpdateControls
 {
@@ -105,8 +106,9 @@ namespace UpdateControls
 	{
 		public static Independent New() { return DebugMode ? new NamedIndependent() : new Independent(); }
 		public static NamedIndependent New(string name) { return new NamedIndependent(name); }
-		public static NamedIndependent New(Type valueType) { return new NamedIndependent(valueType.NameWithGenericParams()); }
+		public static Independent<T> New<T>(string name) { return new Independent<T>(name, default(T)); }
 		public static NamedIndependent New(Type containerType, string name) { return new NamedIndependent(containerType, name); }
+		public static Independent<T> New<T>(Type containerType, string name) { return new Independent<T>(containerType, name); }
 
 		/// <summary>
 		/// Call this function just before getting the field that this

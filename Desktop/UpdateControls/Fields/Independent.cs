@@ -19,9 +19,14 @@ namespace UpdateControls.Fields
     {
 		protected internal T _value;
 
-		public Independent() : this((string)null) { }
+		public Independent() { }
 		public Independent(T value) : this((string)null, value) { }
-		public Independent(string name) : base(name) { }
+		
+		// Oops, this constructor causes ambiguity in case of Independent<string>. 
+		// In that case, C# compilers will reinterpret existing code that previously 
+		// used the Independent(value) constructor to call Independent(name) instead.
+		//public Independent(string name) : base(name) { }
+		
 		public Independent(string name, T value) : base(name) { _value = value; }
 		public Independent(Type containerType, string name) : base(containerType, name) { }
 		public Independent(Type containerType, string name, T value) : base(containerType, name) { _value = value; }

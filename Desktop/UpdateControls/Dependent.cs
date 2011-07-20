@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using UpdateControls.Fields;
 
 namespace UpdateControls
 {
@@ -101,7 +102,9 @@ namespace UpdateControls
 	public partial class Dependent : Precedent
 	{
 		public static Dependent New(Action update) { return DebugMode ? new NamedDependent(update) : new Dependent(update); }
+		public static Dependent<T> New<T>(Func<T> update) { return new Dependent<T>(update); }
 		public static NamedDependent New(string name, Action update) { return new NamedDependent(name, update); }
+		public static Dependent<T> New<T>(string name, Func<T> update) { return new Dependent<T>(name, update); }
 
         [ThreadStatic]
         private static Dependent _currentUpdate = null;

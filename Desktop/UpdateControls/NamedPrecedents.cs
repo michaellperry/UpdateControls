@@ -104,7 +104,6 @@ namespace UpdateControls
 	{
 		public NamedIndependent() : base() { }
 		public NamedIndependent(T value) : base(value) { }
-		public NamedIndependent(string name) : base(name) { }
 		public NamedIndependent(string name, T value) : base(name, value) { }
 		public NamedIndependent(Type containerType, string name) : base(containerType, name) { }
 		public NamedIndependent(Type containerType, string name, T value) : base(containerType, name, value) { }
