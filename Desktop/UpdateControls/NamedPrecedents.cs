@@ -99,88 +99,21 @@ namespace UpdateControls
 		}
 	}
 
-	public class NamedIndependent<T> : NamedIndependent
+	[Obsolete]
+	public class NamedIndependent<T> : UpdateControls.Fields.Independent<T>
 	{
-		protected internal T _value;
-
-		public NamedIndependent() : this((string)null) { }
-		public NamedIndependent(T value) : this((string)null, value) { }
+		public NamedIndependent() : base() { }
+		public NamedIndependent(T value) : base(value) { }
 		public NamedIndependent(string name) : base(name) { }
-		public NamedIndependent(string name, T value) : base(name) { _value = value; }
+		public NamedIndependent(string name, T value) : base(name, value) { }
 		public NamedIndependent(Type containerType, string name) : base(containerType, name) { }
-		public NamedIndependent(Type containerType, string name, T value) : base(containerType, name) { _value = value; }
-
-		public T Value
-		{
-			get { base.OnGet(); return _value; }
-			set {
-				if (_value == null ? value != null : !_value.Equals(value))
-				{
-					base.OnSet();
-					_value = value;
-				}
-			}
-		}
-		public static implicit operator T(NamedIndependent<T> independent)
-		{
-			return independent.Value;
-		}
-
-		public override string VisualizerName(bool withValue)
-		{
-			string s = "[I] " + NamedDependent<T>.VisualizerName(Name);
-			if (withValue)
-				s += " = " + (_value == null ? "null" : _value.ToString());
-			return s;
-		}
+		public NamedIndependent(Type containerType, string name, T value) : base(containerType, name, value) { }
 	}
 
-	public class NamedDependent<T> : NamedDependent
+	[Obsolete]
+	public class NamedDependent<T> : UpdateControls.Fields.Dependent<T>
 	{
-		protected internal T _value;
-		protected Func<T> _computeValue;
-
-		public NamedDependent(Func<T> compute) : base((string)null, null)
-		{
-			base._update = Update; _computeValue = compute;
-		}
-		public NamedDependent(string name, Func<T> compute) : base(name, null)
-		{
-			base._update = Update; _computeValue = compute;
-		}
-
-		protected void Update()
-		{
-			_value = _computeValue();
-			// TODO: don't propagate updates when _value did not change.
-			//    T oldValue = _value;
-			//    _value = _computeValue();
-			//    return _value == null ? oldValue != null : !_value.Equals(oldValue);
-		}
-
-		public T Value
-		{
-			get { base.OnGet(); return _value; }
-		}
-		public static implicit operator T(NamedDependent<T> dependent)
-		{
-			return dependent.Value;
-		}
-
-		public override string VisualizerName(bool withValue)
-		{
-			string s = VisualizerName(_name ?? "NamedDependent");
-			if (withValue)
-				s += " = " + (_value == null ? "null" : _value.ToString());
-			return s;
-		}
-		internal static string VisualizerName(string name)
-		{
-			string typeName = MemoizedTypeName<T>.GenericName();
-			if (!string.IsNullOrEmpty(name))
-				return string.Format("{0}: {1}", name, typeName);
-			else
-				return typeName;
-		}
+		public NamedDependent(Func<T> compute) : base(compute) { }
+		public NamedDependent(string name, Func<T> compute) : base(name, compute) { }
 	}
 }

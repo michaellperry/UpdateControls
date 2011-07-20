@@ -10,44 +10,50 @@
  * http://www.codeplex.com/updatecontrols/
  * 
  **********************************************************************/
+using System;
+using System.ComponentModel;
 
 namespace UpdateControls.Fields
 {
-    public class Independent<T>
+    public class Independent<T> : NamedIndependent
     {
-        private T _value;
-        private readonly Independent _independentSentry = new Independent();
+		protected internal T _value;
 
-        public Independent()
-        {
-        }
+		public Independent() : this((string)null) { }
+		public Independent(T value) : this((string)null, value) { }
+		public Independent(string name) : base(name) { }
+		public Independent(string name, T value) : base(name) { _value = value; }
+		public Independent(Type containerType, string name) : base(containerType, name) { }
+		public Independent(Type containerType, string name, T value) : base(containerType, name) { _value = value; }
 
-        public Independent(T initialValue)
-        {
-            _value = initialValue;
-        }
+		public T Value
+		{
+			get { base.OnGet(); return _value; }
+			set {
+				if (_value == null ? value != null : !_value.Equals(value))
+				{
+					base.OnSet();
+					_value = value;
+				}
+			}
+		}
+		public static implicit operator T(Independent<T> independent)
+		{
+			return independent.Value;
+		}
 
-        public T Value
-        {
-            get { _independentSentry.OnGet(); return _value; }
-            set
-            {
-                if (!object.Equals(value, _value))
-                {
-                    _independentSentry.OnSet();
-                    _value = value;
-                }
-            }
-        }
+		public override string VisualizerName(bool withValue)
+		{
+			string s = "[I] " + Dependent<T>.VisualizerName(Name);
+			if (withValue)
+				s += " = " + (_value == null ? "null" : _value.ToString());
+			return s;
+		}
 
-        public Independent IndependentSentry
-        {
-            get { return _independentSentry; }
-        }
-
-        public static implicit operator T(Independent<T> independent)
-        {
-            return independent.Value;
-        }
+		[Obsolete, EditorBrowsable(EditorBrowsableState.Never)]
+		public Independent IndependentSentry
+		{
+			get { return this; }
+		}
     }
 }
