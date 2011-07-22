@@ -27,17 +27,10 @@ namespace UpdateControls
 		/// </remarks>
 		public static RecycleBin<T> Recycle<T>(this ICollection<T> collection)
 		{
-			RecycleBin<T> bin = new RecycleBin<T>();
+			RecycleBin<T> bin = new RecycleBin<T>(collection);
 
-			// Take all objects into the recycle bin.
 			if (collection != null)
-			{
-				foreach (T recyclableObject in collection)
-					bin.AddObject(recyclableObject);
-
-				// Empty the collection.
 				collection.Clear();
-			}
 
 			return bin;
 		}

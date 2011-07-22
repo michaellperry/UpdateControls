@@ -11,19 +11,50 @@
 
 using System;
 using System.Collections.Generic;
+using UpdateControls.Collections;
 
 namespace UpdateControls
 {
 	/// <summary>
-	/// A collection that recycles objects during a dependent update.
+	/// A collection that maps new objects to old, equivalent versions of the
+	/// same objects. It is typically used with LINQ during a Dependent update.
 	/// </summary>
+	/// <typeparam name="T">Type of object to recycle. When using the MVVM design
+	/// pattern, T is typically a type of view-model that wraps around a model
+	/// type.</typeparam>
 	/// <remarks>
-	/// Construct a recycle bin within a <see cref="Dependent"/>'s update
-	/// function when that Dependent controls a collection. Fill the
-	/// recycle bin with the contents of the dependent collection,
-	/// then reconstruct the collection by extracting objects from the
-	/// recycle bin. This prevents the unnecessary destruction and
-	/// recreation of objects in the dependent collection.
+	/// This class helps implement the MVVM pattern with UpdateControls. In this
+	/// pattern, you typically write a "Model" class which contains all the state
+	/// information for your models, and a "ViewModel" class which is a thin 
+	/// wrapper around the Model. The ViewModel should be stateless, except for
+	/// temporary information that is only meaningful in the GUI, such as an 
+	/// "IsSelected" flag that represents whether the ViewModel is selected in
+	/// a ListBox.
+	/// <para/>
+	/// In the UpdateControls paradigm, you will typically create (at most) one
+	/// ViewModel object for each Model, and some kind of dependent collection is 
+	/// used to keep the set of ViewModels synchronized with the set of Models. 
+	/// RecycleBin plays an important role in this paradigm. If you use a class 
+	/// such as <see cref="DependentList{T}"/>, it will use a RecycleBin for you,
+	/// but if you use <see cref="Dependent"/> directly then you may need to 
+	/// create a RecycleBin yourself.
+	/// <para/>
+	/// RecycleBin has two purposes: (1) it disposes old objects that are no 
+	/// longer in use, if T implements IDisposable; and (2) it preserves any state 
+	/// information in the ViewModel wrappers.
+	/// <para/>
+	/// Typical usage is as follows: you first construct a RecycleBin within a 
+	/// <see cref="Dependent"/>'s update function (assuming that the Dependent 
+	/// controls a collection.) You fill the recycle bin with the old contents 
+	/// of your collection of ViewModels, then construct a new collection of 
+	/// ViewModels (from scratch, e.g. using a LINQ query over your models), and 
+	/// pass each new ViewModel through the <see cref="Extract(T)"/> method. If 
+	/// the new ViewModel represents a Model that was in the old collection, 
+	/// Extract returns the old ViewModel; otherwise it returns the new ViewModel.
+	/// This ensures that the ViewModel state is preserved. For example, if your 
+	/// ViewModel has an IsSelected flag, then failing to use a RecycleBin would 
+	/// cause any selected objects to become deselected whenever the Dependent 
+	/// is updated (assuming IsSelected is false by default).
 	/// <para/>
 	/// The recycle bin extracts objects based on a prototype. If
 	/// the recycle bin contains an object matching the prototype
@@ -33,8 +64,12 @@ namespace UpdateControls
 	/// imperitive that you properly implement GetHashCode and
 	/// Equals in your recycled classes.
 	/// <para/>
-	/// Your implementation of GetHashCode and Equals must only consider
-	/// fields that do not change. If a field can be changed, or is
+	/// If T is a ViewModel class, then it generally suffices for T.GetHashCode 
+	/// to call GetHashCode on the wrapped Model, and for T.Equals to compare
+	/// the two wrapped objects for equality.
+	/// <para/>
+	/// In general, your implementation of GetHashCode and Equals must only 
+	/// consider fields that do not change. If a field can be changed, or is
 	/// itself dependent, then it must not be used either as part of the
 	/// hash code, or to determine equality. The best practice is to
 	/// implement GetHashCode and Equals in terms of fields that are
@@ -49,46 +84,14 @@ namespace UpdateControls
 	/// </remarks>
 	public class RecycleBin<T> : IDisposable
 	{
-        private class Recyclable<T> : IDisposable
-        {
-            private T _object;
-            private IDisposable _disposable;
+		private Dictionary<T, T> _objects = new Dictionary<T, T>();
 
-            public Recyclable(T o, IDisposable disposable)
-            {
-                _object = o;
-                _disposable = disposable;
-            }
+		// This list is created only if there are duplicates AND T is IDisposable.
+		// Its sole purpose is to allow us to dispose duplicates, since _objects
+		// cannot hold duplicates.
+		private List<T> _duplicates;
 
-            public T Object
-            {
-                get { return _object; }
-            }
-
-            public void Dispose()
-            {
-                if (_disposable != null)
-                    _disposable.Dispose();
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (this == obj)
-                    return true;
-                Recyclable<T> that = obj as Recyclable<T>;
-                if (that == null)
-                    return false;
-                return System.Object.Equals(this._object, that._object);
-            }
-
-            public override int GetHashCode()
-            {
-                return _object == null ? 0 : _object.GetHashCode();
-            }
-        }
-        private Dictionary<Recyclable<T>, Recyclable<T>> _recyclableObjects = new Dictionary<Recyclable<T>, Recyclable<T>>();
-        private static Func<T, Recyclable<T>> _makeRecyclable = GenerateMakeRecyclable();
-        private List<Recyclable<T>> _duplicates = new List<Recyclable<T>>();
+		static readonly bool _isTDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T));
 
 		/// <summary>
 		/// Creates an empty recycle bin.
@@ -96,24 +99,42 @@ namespace UpdateControls
 		/// <remarks>
 		/// The recycle bin should be filled with objects from a dependent
 		/// collection, and the collection should be emptied. Then it can be
-		/// repopulaed by extraction from the bin.
+		/// repopulated by extraction from the bin.
 		/// </remarks>
 		public RecycleBin()
 		{
+		}
+		/// <summary>
+		/// Creates an recycle bin containing the specified objects.
+		/// </summary>
+		public RecycleBin(IEnumerable<T> objects)
+		{
+			AddRange(objects);
 		}
 
 		/// <summary>
 		/// Add an object to the recycle bin.
 		/// </summary>
 		/// <param name="recyclableObject">The object to put in the recycle bin.</param>
-        public void AddObject(T recyclableObject)
-        {
-            Recyclable<T> recyclable = _makeRecyclable(recyclableObject);
-            if (_recyclableObjects.ContainsKey(recyclable))
-                _duplicates.Add(recyclable);
-            else
-                _recyclableObjects.Add(recyclable, recyclable);
-        }
+		public void AddObject(T recyclableObject)
+		{
+			if (recyclableObject != null)
+			{
+				if (_isTDisposable && _objects.ContainsKey(recyclableObject)) {
+					if (_duplicates == null)
+						_duplicates = new List<T>();
+					_duplicates.Add(recyclableObject);
+				} else
+					_objects[recyclableObject] = recyclableObject;
+			}
+		}
+
+		public void AddRange(IEnumerable<T> objects)
+		{
+			if (objects != null)
+				foreach (var obj in objects)
+					AddObject(obj);
+		}
 
 		/// <summary>
 		/// If a matching object is in the recycle bin, remove and return it.
@@ -122,23 +143,19 @@ namespace UpdateControls
 		/// <param name="prototype">An object equal to the one to be extracted.</param>
 		/// <returns>The matching object that was added to the recycle bin, or
 		/// the prototype if no such object is found.</returns>
-		public T Extract( T prototype )
+		public T Extract(T prototype)
 		{
-            // See if a matching object is already in the recycle bin.
-            Recyclable<T> match;
-            Recyclable<T> recyclable = _makeRecyclable(prototype);
-            if (_recyclableObjects.TryGetValue(recyclable, out match))
-            {
-                // Yes, so extract it.
-                recyclable.Dispose();
-                _recyclableObjects.Remove(recyclable);
-                return match.Object;
-            }
-            else
-            {
-                // No, so use the prototype.
-                return prototype;
-            }
+			// See if a matching object is already in the recycle bin.
+			T match;
+			if (_objects.TryGetValue(prototype, out match))
+			{
+				if (_isTDisposable)
+					((IDisposable)prototype).Dispose();
+				_objects.Remove(prototype);
+				return match;
+			}
+			// No, so use the prototype.
+			return prototype;
 		}
 
 		/// <summary>
@@ -152,20 +169,14 @@ namespace UpdateControls
 		/// </remarks>
 		public void Dispose()
 		{
-            foreach (Recyclable<T> obj in _recyclableObjects.Values)
-                obj.Dispose();
-            foreach (Recyclable<T> obj in _duplicates)
-                obj.Dispose();
-        }
-
-        private static Func<T, Recyclable<T>> GenerateMakeRecyclable()
-        {
-            if (typeof(IDisposable).IsAssignableFrom(typeof(T)))
-            {
-                return recyclableObject => new Recyclable<T>(recyclableObject, (IDisposable)recyclableObject);
-            }
-            else
-                return recyclableObject => new Recyclable<T>(recyclableObject, null);
+			if (_isTDisposable)
+			{
+				foreach (T obj in _objects.Values)
+					((IDisposable)obj).Dispose();
+				if (_duplicates != null)
+					foreach (T obj in _duplicates)
+						((IDisposable)obj).Dispose();
+			}
         }
     }
 }
