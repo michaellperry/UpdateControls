@@ -53,11 +53,7 @@ namespace UpdateControls.Collections
 			RecycleBin<TValue> vBin = null;
 			try {
 				if (_recycleValues && _dictionary != null)
-				{
-					vBin = new RecycleBin<TValue>();
-					foreach (TValue item in _dictionary.Values)
-						vBin.AddObject(item);
-				}
+					vBin = new RecycleBin<TValue>(_dictionary.Values);
 
 				var result = _computeCollection();
 				if (vBin != null || (_dictionary = (result as IDictionary<TKey, TValue>)) == null)
@@ -94,10 +90,10 @@ namespace UpdateControls.Collections
 			return _dictionary.ContainsKey(key);
 		}
 
-		public DependentCollectionHelper<TKey> Keys
+		public UpdateCollectionHelper<TKey> Keys
 		{
 			get { 
-				return new DependentCollectionHelper<TKey>(() => {
+				return new UpdateCollectionHelper<TKey>(() => {
 					_dependentSentry.OnGet();
 					return _dictionary.Keys;
 				});
@@ -116,10 +112,10 @@ namespace UpdateControls.Collections
 			return _dictionary.TryGetValue(key, out value);
 		}
 
-		public DependentCollectionHelper<TValue> Values
+		public UpdateCollectionHelper<TValue> Values
 		{
 			get { 
-				return new DependentCollectionHelper<TValue>(() => {
+				return new UpdateCollectionHelper<TValue>(() => {
 					_dependentSentry.OnGet();
 					return _dictionary.Values;
 				});
@@ -198,68 +194,6 @@ namespace UpdateControls.Collections
 		public Dependent DependentSentry
 		{
 			get { return _dependentSentry; }
-		}
-	}
-
-}
-
-namespace UpdateControls.Collections.Impl
-{
-	/// <summary>Helper structure used by DependentDictionary to represent the 
-	/// "Keys" and "Values" members.</summary>
-	/// <remarks>
-	/// Every time DependentDictionary is updated, a new dictionary is created to
-	/// hold the updated content, so the Keys and Values collections change 
-	/// frequently. This wrapper hides the changes to ensure that you do not 
-	/// accidentally hold a reference to an out-of-date version of the Keys or
-	/// Values collection. It also ensures that the dictionary is updated if 
-	/// necessary when it is accessed through the Keys or Values collection.
-	/// </remarks>
-	public struct DependentCollectionHelper<T> : ICollection<T>
-	{
-		readonly Func<ICollection<T>> _get;
-
-		public DependentCollectionHelper(Func<ICollection<T>> getCollection)
-		{
-			_get = getCollection;
-		}
-
-		public void Add(T item)
-		{
-			throw new NotSupportedException();
-		}
-		public void Clear()
-		{
-			throw new NotSupportedException();
-		}
-		public bool Contains(T item)
-		{
-			return _get().Contains(item);
-		}
-		public void CopyTo(T[] array, int arrayIndex)
-		{
-			_get().CopyTo(array, arrayIndex);
-		}
-		public int Count
-		{
-			get { return _get().Count; }
-		}
-		public bool IsReadOnly
-		{
-			get { return true; }
-		}
-		public bool Remove(T item)
-		{
-			throw new NotSupportedException();
-		}
-
-		public IEnumerator<T> GetEnumerator()
-		{
-			return _get().GetEnumerator();
-		}
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
 		}
 	}
 }

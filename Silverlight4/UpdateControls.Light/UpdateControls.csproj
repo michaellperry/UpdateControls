@@ -75,6 +75,9 @@
     <Compile Include="..\..\desktop\updatecontrols.xaml\wrapper\NotificationGate.cs">
       <Link>XAML\Wrapper\NotificationGate.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\Collections\DependentDictionary.cs">
+      <Link>Collections\DependentDictionary.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Collections\DependentList.cs">
       <Link>Collections\DependentList.cs</Link>
     </Compile>
@@ -83,6 +86,9 @@
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Collections\IndependentList.cs">
       <Link>Collections\IndependentList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\Collections\UpdateCollectionHelper.cs">
+      <Link>Collections\UpdateCollectionHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Dependent.cs">
       <Link>Dependent.cs</Link>

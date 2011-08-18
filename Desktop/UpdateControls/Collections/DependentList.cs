@@ -27,10 +27,8 @@ namespace UpdateControls.Collections
 
             _dependentSentry = new NamedDependent(MemoizedTypeName<DependentList<T>>.GenericName(),
 			delegate {
-                using (var bin = new RecycleBin<T>())
+                using (var bin = new RecycleBin<T>(_list))
                 {
-                    foreach (T item in _list)
-                        bin.AddObject(item);
                     _list.Clear();
 
                     foreach (T item in computeCollection())

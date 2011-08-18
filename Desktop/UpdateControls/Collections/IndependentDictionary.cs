@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System.Collections.Generic;
+using UpdateControls.Collections.Impl;
 
 namespace UpdateControls.Collections
 {
@@ -17,6 +18,23 @@ namespace UpdateControls.Collections
 	{
 		private IDictionary<TKey, TValue> _dictionary = new Dictionary<TKey, TValue>();
 		private Independent _indDictionary = new NamedIndependent(MemoizedTypeName<IndependentDictionary<TKey, TValue>>.GenericName());
+
+		public IndependentDictionary()
+		{
+			_dictionary = new Dictionary<TKey, TValue>();
+		}
+		public IndependentDictionary(IEqualityComparer<TKey> comp)
+		{
+			_dictionary = new Dictionary<TKey, TValue>(comp);
+		}
+		public IndependentDictionary(IDictionary<TKey,TValue> copy)
+		{
+			_dictionary = new Dictionary<TKey, TValue>(copy);
+		}
+		public IndependentDictionary(IDictionary<TKey, TValue> copy, IEqualityComparer<TKey> comp)
+		{
+			_dictionary = new Dictionary<TKey, TValue>(copy, comp);
+		}
 
 		public void Add(TKey key, TValue value)
 		{
@@ -32,7 +50,13 @@ namespace UpdateControls.Collections
 
 		public ICollection<TKey> Keys
 		{
-			get { _indDictionary.OnGet(); return _dictionary.Keys; }
+			get {
+				return new UpdateCollectionHelper<TKey>(() =>
+				{
+					_indDictionary.OnGet();
+					return _dictionary.Keys;
+				});
+			}
 		}
 
 		public bool Remove(TKey key)
@@ -49,7 +73,13 @@ namespace UpdateControls.Collections
 
 		public ICollection<TValue> Values
 		{
-			get { _indDictionary.OnGet(); return _dictionary.Values; }
+			get {
+				return new UpdateCollectionHelper<TValue>(() =>
+				{
+					_indDictionary.OnGet();
+					return _dictionary.Values;
+				});
+			}
 		}
 
 		public TValue this[TKey key]

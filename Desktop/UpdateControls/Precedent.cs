@@ -205,9 +205,11 @@ namespace UpdateControls
 		/// a "regular" <see cref="Independent"/> is created that is incapable of 
 		/// having a name.
 		/// <para/>
-		/// DebugMode may slow down your program. In particular, independents will
-		/// compute their names based on a stack trace the first time OnGet() is 
-		/// called, which is expensive.
+		/// DebugMode may slow down your program. In particular, if you use named 
+		/// independents (or <see cref="Independent{T}"/>) but do not explicitly 
+		/// specify a name, DebugMode will cause them to compute their names based 
+		/// on a stack trace the first time OnGet() is called; this process is
+		/// expensive if it is repeated for a large number of Independents.
 		/// </remarks>
 		public static bool DebugMode { get; set; }
 		
