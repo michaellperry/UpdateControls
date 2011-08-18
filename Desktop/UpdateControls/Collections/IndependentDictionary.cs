@@ -48,7 +48,7 @@ namespace UpdateControls.Collections
 			return _dictionary.ContainsKey(key);
 		}
 
-		public ICollection<TKey> Keys
+		public UpdateCollectionHelper<TKey> Keys
 		{
 			get {
 				return new UpdateCollectionHelper<TKey>(() =>
@@ -58,6 +58,8 @@ namespace UpdateControls.Collections
 				});
 			}
 		}
+
+		ICollection<TKey> IDictionary<TKey, TValue>.Keys { get { return Keys; } }
 
 		public bool Remove(TKey key)
 		{
@@ -71,7 +73,7 @@ namespace UpdateControls.Collections
 			return _dictionary.TryGetValue(key, out value);
 		}
 
-		public ICollection<TValue> Values
+		public UpdateCollectionHelper<TValue> Values
 		{
 			get {
 				return new UpdateCollectionHelper<TValue>(() =>
@@ -81,6 +83,8 @@ namespace UpdateControls.Collections
 				});
 			}
 		}
+
+		ICollection<TValue> IDictionary<TKey, TValue>.Values { get { return Values; } }
 
 		public TValue this[TKey key]
 		{
