@@ -97,14 +97,14 @@
     <Compile Include="..\..\Desktop\UpdateControls\Collections\DependentList.cs">
       <Link>Collections\DependentList.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\Collections\Impl\UpdateCollectionHelper.cs">
+      <Link>Collections\Impl\UpdateCollectionHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Collections\IndependentDictionary.cs">
       <Link>Collections\IndependentDictionary.cs</Link>
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Collections\IndependentList.cs">
       <Link>Collections\IndependentList.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Desktop\UpdateControls\Collections\UpdateCollectionHelper.cs">
-      <Link>Collections\UpdateCollectionHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Dependent.cs">
       <Link>Dependent.cs</Link>

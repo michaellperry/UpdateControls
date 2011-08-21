@@ -58,7 +58,7 @@
     <Compile Include="Collections\DependentList.cs" />
     <Compile Include="Collections\IndependentDictionary.cs" />
     <Compile Include="Collections\IndependentList.cs" />
-    <Compile Include="Collections\UpdateCollectionHelper.cs" />
+    <Compile Include="Collections\Impl\UpdateCollectionHelper.cs" />
     <Compile Include="Dependent.cs" />
     <Compile Include="Dependent.CurrentUpdate.cs" />
     <Compile Include="Fields\Dependent.cs" />

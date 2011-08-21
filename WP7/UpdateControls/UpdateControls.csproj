@@ -71,6 +71,9 @@
     <Compile Include="..\..\Desktop\UpdateControls\Collections\DependentList.cs">
       <Link>Collections\DependentList.cs</Link>
     </Compile>
+    <Compile Include="..\..\desktop\updatecontrols\collections\impl\UpdateCollectionHelper.cs">
+      <Link>Collections\Impl\UpdateCollectionHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Collections\IndependentDictionary.cs">
       <Link>Collections\IndependentDictionary.cs</Link>
     </Compile>
@@ -91,6 +94,12 @@
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\InertialProperty.cs">
       <Link>InertialProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\MemoizedTypeName.cs">
+      <Link>MemoizedTypeName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\NamedPrecedents.cs">
+      <Link>NamedPrecedents.cs</Link>
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\Precedent.cs">
       <Link>Precedent.cs</Link>
