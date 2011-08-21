@@ -11,10 +11,16 @@ namespace UpdateControls.UnitTest
     public class MemoryLeakTest
     {
 #if SILVERLIGHT
-        // In Silverlight, Independent is 20 bytes smaller. Why?
-        private static long platformOffset = -20;
+        // In Silverlight, Dependent is 12 bytes bigger. Why?
+        private const int DependentPlatformOffset = 12;
 #else
-        private static long platformOffset = 0;
+        private const int DependentPlatformOffset = 0;
+#endif
+#if SILVERLIGHT
+        // In Silverlight, Independent is 8 bytes smaller. Why?
+        private static long IndependentPlatformOffset = -8;
+#else
+        private static long IndependentPlatformOffset = 0;
 #endif
 
         [TestMethod]
@@ -30,7 +36,8 @@ namespace UpdateControls.UnitTest
             // Making Precedent a base class: 80.
             // Removing Gain/LoseDependent events: 72.
             // Custom linked list implementation for dependents: 48.
-            Assert.AreEqual(48 + platformOffset, end - start);
+            // Other optimizations: 40.
+            Assert.AreEqual(40 + IndependentPlatformOffset, end - start);
 
             int value = newIndependent;
             Assert.AreEqual(42, value);
@@ -50,7 +57,8 @@ namespace UpdateControls.UnitTest
             // Making IsUpToDate no longer a precident: 192.
             // Custom linked list implementation for dependents: 152.
             // Custom linked list implementation for precedents: 112.
-            Assert.AreEqual(112, end - start);
+            // Other optimizations: 104.
+            Assert.AreEqual(104 + DependentPlatformOffset, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
@@ -72,7 +80,8 @@ namespace UpdateControls.UnitTest
             // Making IsUpToDate no longer a precident: 248.
             // Custom linked list implementation for dependents: 200.
             // Custom linked list implementation for precedents: 160.
-            Assert.AreEqual(160 + platformOffset, end - start);
+            // Other optimizations: 144.
+            Assert.AreEqual(144 + IndependentPlatformOffset, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
@@ -96,7 +105,8 @@ namespace UpdateControls.UnitTest
             // Custom linked list implementation for dependents: 308.
             // Custom linked list implementation for precedents: 192.
             // Weak reference to dependents: 208.
-            Assert.AreEqual(208 + platformOffset, end - start);
+            // Other optimizations: 192.
+            Assert.AreEqual(192 + IndependentPlatformOffset, end - start);
 
             value = newDependent;
             Assert.AreEqual(42, value);
