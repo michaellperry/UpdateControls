@@ -16,9 +16,19 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.ColumnSpan="2" Margin="8" Text="{Binding Title}" />
         <TextBlock Grid.Row="1" Margin="8" Text="Last Name:" />
         <TextBox Grid.Column="1" Grid.Row="1" Margin="8" Text="{Binding LastName, Mode=TwoWay}" />
+        <TextBlock Grid.Row="2" Margin="8" Text="Members:"/>
+        <ListBox Grid.Row="2" Grid.Column="1" Margin="8" ItemsSource="{Binding Members}" SelectedItem="{Binding SelectedMember, Mode=TwoWay}" DisplayMemberPath="FullName"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <Button Margin="8" Content="New" Command="{Binding NewMember}"/>
+            <Button Margin="8" Content="Delete" Command="{Binding DeleteMember}"/>
+        </StackPanel>
+        <TextBlock Grid.Row="4" Margin="8" Text="First Name:"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Margin="8" Text="{Binding SelectedMemberDetails.FirstName, Mode=TwoWay}" IsEnabled="{Binding MemberIsSelected}"/>
     </Grid>
 </UserControl>

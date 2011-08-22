@@ -17,7 +17,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -39,23 +38,20 @@ namespace UpdateControls.XAML.Wrapper
 
         private PropertyInfo _propertyInfo;
         private Type _objectInstanceType;
-		private Type _valueType;
         private Func<IObjectInstance, ObjectProperty> _makeObjectProperty;
 
         public ClassProperty(PropertyInfo property, Type objectInstanceType)
-            : base(property)
+            : base(property, GetValueType(property.PropertyType))
         {
             _propertyInfo = property;
             _objectInstanceType = objectInstanceType;
 
             // Determine which type of object property to create.
             Type propertyType = property.PropertyType;
-            Type valueType;
 			if (IsPrimitive(propertyType))
             {
                 _makeObjectProperty = objectInstance =>
                     new ObjectPropertyAtomNative(objectInstance, this);
-                valueType = propertyType;
             }
             else if (typeof(IEnumerable).IsAssignableFrom(propertyType))
             {
@@ -73,16 +69,22 @@ namespace UpdateControls.XAML.Wrapper
                     _makeObjectProperty = objectInstance =>
                         new ObjectPropertyCollectionObject(objectInstance, this);
                 }
-                valueType = typeof(IEnumerable);
             }
             else
             {
                 _makeObjectProperty = objectInstance =>
                     new ObjectPropertyAtomObject(objectInstance, this);
-                valueType = typeof(IObjectInstance);
             }
+        }
 
-			_valueType = valueType;
+        private static Type GetValueType(Type propertyType)
+        {
+            if (IsPrimitive(propertyType))
+                return propertyType;
+            else if (typeof(IEnumerable).IsAssignableFrom(propertyType))
+                return typeof(IEnumerable);
+            else
+                return typeof(IObjectInstance);
         }
 
         public ObjectProperty MakeObjectProperty(IObjectInstance objectInstance)
@@ -118,14 +120,6 @@ namespace UpdateControls.XAML.Wrapper
         public override string ToString()
         {
             return String.Format("{0}.{1}", _propertyInfo.DeclaringType.Name, _propertyInfo.Name);
-        }
-
-        private ObjectProperty GetObjectProperty(object component)
-        {
-            // Find the object property.
-            IObjectInstance objectInstance = ((IObjectInstance)component);
-            ObjectProperty objectProperty = objectInstance.LookupProperty(this);
-            return objectProperty;
         }
 
 		private static bool IsPrimitive(Type type)

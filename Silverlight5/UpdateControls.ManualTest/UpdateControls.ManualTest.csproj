@@ -77,6 +77,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Family.cs" />
+    <Compile Include="FamilyMember.cs" />
+    <Compile Include="FamilyMemberDetailsViewModel.cs" />
+    <Compile Include="FamilyMemberSummaryViewModel.cs" />
+    <Compile Include="FamilyNavigationModel.cs" />
     <Compile Include="FamilyViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

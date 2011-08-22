@@ -7,10 +7,12 @@ namespace UpdateControls.XAML.Wrapper
     public abstract class DelegatedPropertyInfo : PropertyInfo
     {
         private readonly PropertyInfo _rawPropertyInfo;
+        private readonly Type _propertyType;
 
-        public DelegatedPropertyInfo(PropertyInfo rawPropertyInfo)
+        public DelegatedPropertyInfo(PropertyInfo rawPropertyInfo, Type propertyType)
         {
             _rawPropertyInfo = rawPropertyInfo;
+            _propertyType = propertyType;
         }
 
         protected abstract object GetValue(object obj);
@@ -58,7 +60,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override Type PropertyType
         {
-            get { return _rawPropertyInfo.PropertyType; }
+            get { return _propertyType; }
         }
 
         public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
