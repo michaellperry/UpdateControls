@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A16D5461-4B69-4835-A223-3E7284982C7D}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UpdateControls</RootNamespace>
+    <AssemblyName>UpdateControls</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Desktop\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols.xaml\MakeCommand.cs">
+      <Link>XAML\MakeCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols.xaml\ViewModelBase.cs">
+      <Link>XAML\ViewModelBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols\collections\DependentDictionary.cs">
+      <Link>Collections\DependentDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols\collections\DependentList.cs">
+      <Link>Collections\DependentList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols\collections\impl\UpdateCollectionHelper.cs">
+      <Link>Collections\Impl\UpdateCollectionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols\collections\IndependentDictionary.cs">
+      <Link>Collections\IndependentDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols\collections\IndependentList.cs">
+      <Link>Collections\IndependentList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\Dependent.cs">
+      <Link>Dependent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols\fields\Dependent.cs">
+      <Link>Fields\Dependent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\desktop\updatecontrols\fields\Independent.cs">
+      <Link>Fields\Independent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\Independent.cs">
+      <Link>Independent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\InertialProperty.cs">
+      <Link>InertialProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\MemoizedTypeName.cs">
+      <Link>MemoizedTypeName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\NamedPrecedents.cs">
+      <Link>NamedPrecedents.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\Precedent.cs">
+      <Link>Precedent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\RecycleBin.cs">
+      <Link>RecycleBin.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\UpdateControlsExtensions.cs">
+      <Link>UpdateControlsExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XAML\ForView.cs" />
+    <Compile Include="XAML\MakeCommand.GetDispatcher.cs" />
+    <Compile Include="XAML\ViewModelBase.FirePropertyChanged.cs" />
+    <Compile Include="XAML\Wrapper\DelegatedPropertyInfo.cs" />
+    <Compile Include="XAML\Wrapper\DelegatedType.cs" />
+    <Compile Include="XAML\Wrapper\ClassInstance.cs" />
+    <Compile Include="XAML\Wrapper\ClassProperty.cs" />
+    <Compile Include="XAML\Wrapper\CollectionItem.cs" />
+    <Compile Include="XAML\Wrapper\IObjectInstance.cs" />
+    <Compile Include="XAML\Wrapper\NotificationGate.cs" />
+    <Compile Include="XAML\Wrapper\ObjectInstance.cs" />
+    <Compile Include="XAML\Wrapper\ObjectProperty.cs" />
+    <Compile Include="XAML\Wrapper\ObjectPropertyAtom.cs" />
+    <Compile Include="XAML\Wrapper\ObjectPropertyAtomNative.cs" />
+    <Compile Include="XAML\Wrapper\ObjectPropertyAtomObject.cs" />
+    <Compile Include="XAML\Wrapper\ObjectPropertyCollection.cs" />
+    <Compile Include="XAML\Wrapper\ObjectPropertyCollectionNative.cs" />
+    <Compile Include="XAML\Wrapper\ObjectPropertyCollectionObject.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
