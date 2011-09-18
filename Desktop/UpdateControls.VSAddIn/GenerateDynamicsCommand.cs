@@ -68,7 +68,7 @@ namespace UpdateControls.VSAddIn
 
             if (matchedLines)
             {
-                int start = selection.BottomLine;
+                int start = selection.BottomLine + 1;
 
                 // Search for the beginning of the region.
                 selection.MoveToLineAndOffset(1, 1, false);
