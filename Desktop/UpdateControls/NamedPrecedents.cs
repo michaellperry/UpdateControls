@@ -46,11 +46,14 @@ namespace UpdateControls
 
 		public override void OnGet()
 		{
+#if !SILVERLIGHT
 			if (DebugMode && _name == null)
 				_name = ComputeNameFromStackTrace();
+#endif
 			base.OnGet();
 		}
 
+#if !SILVERLIGHT
 		private string ComputeNameFromStackTrace()
 		{
 			StackTrace stackTrace = new StackTrace(false);
@@ -85,8 +88,9 @@ namespace UpdateControls
 
 			return string.Intern(MemoizedTypeName.GenericName(method.DeclaringType) + "." + methodName);
 		}
+#endif
 
-		protected string _name;
+        protected string _name;
 		public string Name
 		{
 			get { return _name ?? "NamedIndependent"; }

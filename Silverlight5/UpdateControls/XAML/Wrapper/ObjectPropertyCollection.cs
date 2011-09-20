@@ -21,6 +21,7 @@ namespace UpdateControls.XAML.Wrapper
 	{
 		private ObservableCollection<object> _collection = new ObservableCollection<object>();
         private Dependent _depCollection;
+        private Action _delay;
 
         public ObjectPropertyCollection(IObjectInstance objectInstance, ClassProperty classProperty)
 			: base(objectInstance, classProperty)
@@ -41,7 +42,11 @@ namespace UpdateControls.XAML.Wrapper
             IEnumerable source = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
             List<object> sourceCollection = source.OfType<object>().ToList();
 
-            ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+            // Delay the update to the observable collection so that we don't record dependencies on
+            // properties used in the items template. XAML will invoke the item template synchronously
+            // as we add items to the observable collection, thus causing other view model property
+            // getters to fire.
+            _delay = delegate
             {
                 // Create a list of new items.
                 List<CollectionItem> items = new List<CollectionItem>();
@@ -64,17 +69,14 @@ namespace UpdateControls.XAML.Wrapper
                     item.EnsureInCollection(index);
                     ++index;
                 }
-            }));
+            };
         }
 
         private void TriggerUpdate()
         {
             ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
             {
-                using (NotificationGate.BeginOutbound())
-                {
-                    _depCollection.OnGet();
-                }
+                UpdateNow();
             }));
         }
 
@@ -87,14 +89,26 @@ namespace UpdateControls.XAML.Wrapper
         {
             get
             {
-                using (NotificationGate.BeginOutbound())
-                {
-                    _depCollection.OnGet();
-                }
+                UpdateNow();
                 return _collection;
             }
         }
 
         public abstract object TranslateOutgoingValue(object value);
+
+        private void UpdateNow()
+        {
+            using (NotificationGate.BeginOutbound())
+            {
+                _depCollection.OnGet();
+                if (_delay != null)
+                {
+                    // Update the observable collection outside of the update method
+                    // so we don't take a dependency on item template properties.
+                    _delay();
+                    _delay = null;
+                }
+            }
+        }
     }
 }

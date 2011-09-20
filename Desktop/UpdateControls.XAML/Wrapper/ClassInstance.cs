@@ -26,7 +26,6 @@ namespace UpdateControls.XAML.Wrapper
 
         public ClassInstance(Type wrappedType, Type objectInstanceType)
         {
-            System.Diagnostics.Debug.WriteLine(string.Format("new ClassInstance({0}, {1})", wrappedType, objectInstanceType));
             _wrappedType = wrappedType;
 
             // Create a wrapper for each non-collection property.

@@ -25,7 +25,6 @@ namespace UpdateControls.XAML.Wrapper
         public ClassInstance(Type wrappedType, Type objectInstanceType)
             : base(wrappedType)
         {
-            System.Diagnostics.Debug.WriteLine(string.Format("new ClassInstance({0}, {1})", wrappedType, objectInstanceType));
             _wrappedType = wrappedType;
             _objectInstanceType = objectInstanceType;
 
