@@ -141,7 +141,7 @@ namespace UpdateControls
 			if (Dependent.GetCurrentUpdate() != null)
 				Debug.Assert(false, "An independent was changed while updating a dependent.");
 
-			// When an independent field canges,
+			// When an independent field changes,
 			// its dependents become out-of-date.
 			MakeDependentsOutOfDate();
 		}
