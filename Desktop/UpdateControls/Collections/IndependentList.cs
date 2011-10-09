@@ -15,10 +15,20 @@ namespace UpdateControls.Collections
 {
 	public class IndependentList<T> : IList<T>
 	{
-		private IList<T> _list = new List<T>();
+        private IList<T> _list;
 		private Independent _indList = new NamedIndependent(MemoizedTypeName<IndependentList<T>>.GenericName());
 
-		public int IndexOf(T item)
+        public IndependentList()
+        {
+            _list = new List<T>();
+        }
+
+        public IndependentList(IEnumerable<T> collection)
+        {
+            _list = new List<T>(collection);
+        }
+
+        public int IndexOf(T item)
 		{
 			_indList.OnGet();
 			return _list.IndexOf(item);
