@@ -1,0 +1,26 @@
+﻿<navigation:Page 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           xmlns:local="clr-namespace:UpdateControls.ManualTest" x:Class="UpdateControls.ManualTest.OptionPage"
+           mc:Ignorable="d"
+           d:DesignWidth="640" d:DesignHeight="480"
+           Title="OptionPagte Page">
+	<navigation:Page.Resources>
+		<DataTemplate x:Key="OptionDataTemplate">
+			<Grid>
+				<CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"/>
+			</Grid>
+		</DataTemplate>
+	</navigation:Page.Resources>
+    <Grid x:Name="LayoutRoot">
+    	<Grid.RowDefinitions>
+    		<RowDefinition Height="Auto"/>
+    		<RowDefinition Height="0.892*"/>
+    	</Grid.RowDefinitions>
+    	<ComboBox HorizontalAlignment="Left" Margin="8,8,0,8" Width="262" ItemsSource="{Binding Groups, Mode=OneWay}" SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"/>
+    	<ItemsControl Margin="8" Grid.Row="1" ItemsSource="{Binding Options, Mode=OneWay}" ItemTemplate="{StaticResource OptionDataTemplate}"/>
+    </Grid>
+</navigation:Page>
