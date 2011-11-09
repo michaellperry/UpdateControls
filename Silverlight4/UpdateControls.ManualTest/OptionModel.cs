@@ -6,14 +6,32 @@ namespace UpdateControls.ManualTest
 {
     public class OptionModel
     {
-        private List<Option> _options = new List<Option>
+        private List<OptionHeading> _headings = new List<OptionHeading>
         {
-            new Option("Group 1", "Option A"),
-            new Option("Group 1", "Option B"),
-            new Option("Group 1", "Option C"),
-            new Option("Group 2", "Option A"),
-            new Option("Group 2", "Option B"),
-            new Option("Group 2", "Option C"),
+            new OptionHeading("Group 1", "Heading I", new List<Option>
+            {
+                new Option("Option A"),
+                new Option("Option B"),
+                new Option("Option C")
+            }),
+            new OptionHeading("Group 1", "Heading II", new List<Option>
+            {
+                new Option("Option D"),
+                new Option("Option E"),
+                new Option("Option F")
+            }),
+            new OptionHeading("Group 2", "Heading I", new List<Option>
+            {
+                new Option("Option G"),
+                new Option("Option H"),
+                new Option("Option I")
+            }),
+            new OptionHeading("Group 2", "Heading II", new List<Option>
+            {
+                new Option("Option J"),
+                new Option("Option K"),
+                new Option("Option L")
+            }),
         };
         private Independent<string> _selectedGroup = new Independent<string>();
 
@@ -32,14 +50,14 @@ namespace UpdateControls.ManualTest
             set { _selectedGroup.Value = value; }
         }
 
-        public IEnumerable<Option> Options
+        public IEnumerable<OptionHeading> Headings
         {
             get
             {
                 return
-                    from o in _options
-                    where o.Group == SelectedGroup
-                    select o;
+                    from h in _headings
+                    where h.Group == SelectedGroup
+                    select h;
             }
         }
     }

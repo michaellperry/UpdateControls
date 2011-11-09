@@ -11,16 +11,22 @@
 	<navigation:Page.Resources>
 		<DataTemplate x:Key="OptionDataTemplate">
 			<Grid>
-				<CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"/>
+				<CheckBox Content="{Binding Name}" IsChecked="{Binding Selected, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"/>
 			</Grid>
 		</DataTemplate>
-	</navigation:Page.Resources>
+        <DataTemplate x:Key="HeadingDataTemplate">
+            <StackPanel>
+                <TextBlock Text="{Binding Heading, Mode=OneWay}"/>
+                <ItemsControl Margin="8,0,0,0" ItemsSource="{Binding Options, Mode=OneWay}" ItemTemplate="{StaticResource OptionDataTemplate}"/>
+            </StackPanel>
+        </DataTemplate>
+    </navigation:Page.Resources>
     <Grid x:Name="LayoutRoot">
     	<Grid.RowDefinitions>
     		<RowDefinition Height="Auto"/>
-    		<RowDefinition Height="0.892*"/>
+    		<RowDefinition Height="*"/>
     	</Grid.RowDefinitions>
     	<ComboBox HorizontalAlignment="Left" Margin="8,8,0,8" Width="262" ItemsSource="{Binding Groups, Mode=OneWay}" SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"/>
-    	<ItemsControl Margin="8" Grid.Row="1" ItemsSource="{Binding Options, Mode=OneWay}" ItemTemplate="{StaticResource OptionDataTemplate}"/>
+        <ItemsControl Margin="8" Grid.Row="1" ItemsSource="{Binding Headings, Mode=OneWay}" ItemTemplate="{StaticResource HeadingDataTemplate}"/>
     </Grid>
 </navigation:Page>

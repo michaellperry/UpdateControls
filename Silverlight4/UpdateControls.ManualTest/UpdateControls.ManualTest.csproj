@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="Model.cs" />
     <Compile Include="Option.cs" />
+    <Compile Include="OptionHeading.cs" />
     <Compile Include="OptionModel.cs" />
     <Compile Include="OptionPage.xaml.cs">
       <DependentUpon>OptionPage.xaml</DependentUpon>
