@@ -151,6 +151,23 @@ namespace UpdateControls
         }
 		private PrecedentNode _firstPrecedent = null;
 
+		private WeakReference _weakReferenceToSelf = null;
+
+		/// <summary>Returns a weak reference to this Dependent itself.</summary>
+		/// <remarks>Often, a Dependent depends on several precedents that each 
+		/// need a WeakReference in order to record the dependency. Time and memory
+		/// is needed to create each WeakReference, so this property exists to save 
+		/// time and memory by ensuring that only one WeakReference is created per 
+		/// Dependent.</remarks>
+		protected internal WeakReference WeakReferenceToSelf
+		{
+			get { 
+				if (_weakReferenceToSelf == null)
+					_weakReferenceToSelf = new WeakReference(this);
+				return _weakReferenceToSelf;
+			}
+		}
+
 		/// <summary>
 		/// Creates a new dependent sentry with a given update procedure.
 		/// <seealso cref="UpdateProcedure"/>
@@ -167,7 +184,7 @@ namespace UpdateControls
 		{
 			_update = update;
 			_status = StatusType.OUT_OF_DATE;
-        }
+		}
 
 		/// <summary>
 		/// Call this method before reading the value of a controlled field.

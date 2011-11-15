@@ -58,7 +58,8 @@ namespace UpdateControls.UnitTest
             // Custom linked list implementation for dependents: 152.
             // Custom linked list implementation for precedents: 112.
             // Other optimizations: 104.
-            Assert.AreEqual(104 + DependentPlatformOffset, end - start);
+			// Added WeakReferenceToSelf: 108.
+            Assert.AreEqual(108 + DependentPlatformOffset, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
@@ -81,7 +82,8 @@ namespace UpdateControls.UnitTest
             // Custom linked list implementation for dependents: 200.
             // Custom linked list implementation for precedents: 160.
             // Other optimizations: 144.
-            Assert.AreEqual(144 + IndependentPlatformOffset, end - start);
+			// Added WeakReferenceToSelf: 148.
+			Assert.AreEqual(148 + IndependentPlatformOffset, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
@@ -106,7 +108,8 @@ namespace UpdateControls.UnitTest
             // Custom linked list implementation for precedents: 192.
             // Weak reference to dependents: 208.
             // Other optimizations: 192.
-            Assert.AreEqual(192 + IndependentPlatformOffset, end - start);
+			// Added WeakReferenceToSelf: 196.
+			Assert.AreEqual(196 + IndependentPlatformOffset, end - start);
 
             value = newDependent;
             Assert.AreEqual(42, value);

@@ -120,7 +120,7 @@ namespace UpdateControls
             lock (this)
             {
                 bool first = _firstDependent == null;
-                _firstDependent = new DependentNode { Dependent = new WeakReference(update), Next = _firstDependent };
+                _firstDependent = new DependentNode { Dependent = update.WeakReferenceToSelf, Next = _firstDependent };
                 return first;
             }
         }
@@ -145,7 +145,7 @@ namespace UpdateControls
                     else
                         prior = current;
                 }
-                Debug.Assert(count == 1, String.Format("Expected 1 dependent, found {0}.", count));
+				if (count != 1) Debug.Assert(false, String.Format("Expected 1 dependent, found {0}.", count));
                 return _firstDependent == null;
             }
         }
