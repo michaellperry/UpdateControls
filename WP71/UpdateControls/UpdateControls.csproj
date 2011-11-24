@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{151284DC-04CE-4175-A0F4-5FCC761AA2DB}</ProjectGuid>
+    <ProjectGuid>{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -13,7 +13,7 @@
     <AssemblyName>UpdateControls</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
-    <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
@@ -45,12 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
+    <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Desktop\Solution Files\CommonProperties.cs">
@@ -110,25 +110,49 @@
     <Compile Include="..\..\Desktop\UpdateControls\UpdateControlsExtensions.cs">
       <Link>UpdateControlsExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\ForView.cs">
+      <Link>XAML\ForView.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\MakeCommand.GetDispatcher.cs">
+      <Link>XAML\MakeCommand.GetDispatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\ViewModelBase.FirePropertyChanged.cs">
+      <Link>XAML\ViewModelBase.FirePropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\ClassInstance.cs">
+      <Link>XAML\Wrapper\ClassInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\ClassProperty.cs">
+      <Link>XAML\Wrapper\ClassProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\IObjectInstance.cs">
+      <Link>XAML\Wrapper\IObjectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\ObjectInstance.cs">
+      <Link>XAML\Wrapper\ObjectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\ObjectProperty.cs">
+      <Link>XAML\Wrapper\ObjectProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\ObjectPropertyAtom.cs">
+      <Link>XAML\Wrapper\ObjectPropertyAtom.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\ObjectPropertyCollection.cs">
+      <Link>XAML\Wrapper\ObjectPropertyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\Tree.cs">
+      <Link>XAML\Wrapper\Tree.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\UnitTestDispatcher.cs">
+      <Link>XAML\Wrapper\UnitTestDispatcher.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XAML\ForView.cs" />
-    <Compile Include="XAML\MakeCommand.GetDispatcher.cs" />
-    <Compile Include="XAML\ViewModelBase.FirePropertyChanged.cs" />
-    <Compile Include="XAML\Wrapper\ClassInstance.cs" />
-    <Compile Include="XAML\Wrapper\ClassProperty.cs" />
-    <Compile Include="XAML\Wrapper\IObjectInstance.cs" />
-    <Compile Include="XAML\Wrapper\ObjectInstance.cs" />
-    <Compile Include="XAML\Wrapper\ObjectProperty.cs" />
-    <Compile Include="XAML\Wrapper\ObjectPropertyAtom.cs" />
-    <Compile Include="XAML\Wrapper\ObjectPropertyCollection.cs" />
-    <Compile Include="XAML\Wrapper\Tree.cs" />
-    <Compile Include="XAML\Wrapper\UnitTestDispatcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(SolutionDir)NuGet\lib\sl3-wp\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(SolutionDir)NuGet\lib\sl4-windowsphone71\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

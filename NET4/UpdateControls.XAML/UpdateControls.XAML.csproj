@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{06390EE3-0C46-4DBF-B439-BF06F8FE3326}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UpdateControls.XAML</RootNamespace>
+    <AssemblyName>UpdateControls.XAML</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Desktop\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ForView.cs">
+      <Link>ForView.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\MakeCommand.cs">
+      <Link>MakeCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\MakeCommand.GetDispatcher.cs">
+      <Link>MakeCommand.GetDispatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ObservableCollectionItem.cs">
+      <Link>ObservableCollectionItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\PathSegment.cs">
+      <Link>PathSegment.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\UpdateExtension.cs">
+      <Link>UpdateExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ValueDependencyObject.cs">
+      <Link>ValueDependencyObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ValueObservableCollection.cs">
+      <Link>ValueObservableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ValueSource.cs">
+      <Link>ValueSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelBase.cs">
+      <Link>ViewModelBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelBase.FirePropertyChanged.cs">
+      <Link>ViewModelBase.FirePropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\WrappedType.cs">
+      <Link>WrappedType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ClassEvent.cs">
+      <Link>Wrapper\ClassEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ClassInstance.cs">
+      <Link>Wrapper\ClassInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ClassInstanceProvider.cs">
+      <Link>Wrapper\ClassInstanceProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ClassProperty.cs">
+      <Link>Wrapper\ClassProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\CollectionItem.cs">
+      <Link>Wrapper\CollectionItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\IObjectInstance.cs">
+      <Link>Wrapper\IObjectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\NotificationGate.cs">
+      <Link>Wrapper\NotificationGate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectInstance.cs">
+      <Link>Wrapper\ObjectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectProperty.cs">
+      <Link>Wrapper\ObjectProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectPropertyAtom.cs">
+      <Link>Wrapper\ObjectPropertyAtom.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectPropertyAtomNative.cs">
+      <Link>Wrapper\ObjectPropertyAtomNative.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectPropertyAtomObject.cs">
+      <Link>Wrapper\ObjectPropertyAtomObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectPropertyCollection.cs">
+      <Link>Wrapper\ObjectPropertyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectPropertyCollectionNative.cs">
+      <Link>Wrapper\ObjectPropertyCollectionNative.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ObjectPropertyCollectionObject.cs">
+      <Link>Wrapper\ObjectPropertyCollectionObject.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">
+      <Project>{31F2EF96-7815-4D7F-A339-05362C67D757}</Project>
+      <Name>UpdateControls %28NET4\UpdateControls%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(SolutionDir)NuGet\lib\Net40\"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

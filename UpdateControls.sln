@@ -73,9 +73,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "Silverlig
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.ManualTest", "Silverlight5\UpdateControls.ManualTest\UpdateControls.ManualTest.csproj", "{820C411D-6CDA-4576-9394-5FBEB9625434}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WP71", "WP71", "{6B7586BF-B91D-4C9C-B4C9-4631E53CAB94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "WP71\UpdateControls\UpdateControls.csproj", "{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NET4", "NET4", "{71A0855D-38BB-4198-8CEC-399698F54D05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "NET4\UpdateControls\UpdateControls.csproj", "{31F2EF96-7815-4D7F-A339-05362C67D757}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "NET4\UpdateControls.XAML\UpdateControls.XAML.csproj", "{06390EE3-0C46-4DBF-B439-BF06F8FE3326}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 23
+		SccNumberOfProjects = 26
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs07
 		SccLocalPath0 = .
@@ -167,6 +177,18 @@ Global
 		SccProjectTopLevelParentUniqueName22 = UpdateControls.sln
 		SccProjectName22 = Silverlight5/UpdateControls.ManualTest
 		SccLocalPath22 = Silverlight5\\UpdateControls.ManualTest
+		SccProjectUniqueName23 = WP71\\UpdateControls\\UpdateControls.csproj
+		SccProjectTopLevelParentUniqueName23 = UpdateControls.sln
+		SccProjectName23 = WP71/UpdateControls
+		SccLocalPath23 = WP71\\UpdateControls
+		SccProjectUniqueName24 = NET4\\UpdateControls\\UpdateControls.csproj
+		SccProjectTopLevelParentUniqueName24 = UpdateControls.sln
+		SccProjectName24 = NET4/UpdateControls
+		SccLocalPath24 = NET4\\UpdateControls
+		SccProjectUniqueName25 = NET4\\UpdateControls.XAML\\UpdateControls.XAML.csproj
+		SccProjectTopLevelParentUniqueName25 = UpdateControls.sln
+		SccProjectName25 = NET4/UpdateControls.XAML
+		SccLocalPath25 = NET4\\UpdateControls.XAML
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = UpdateControls1.vsmdi
@@ -266,6 +288,18 @@ Global
 		{820C411D-6CDA-4576-9394-5FBEB9625434}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{820C411D-6CDA-4576-9394-5FBEB9625434}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{820C411D-6CDA-4576-9394-5FBEB9625434}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31F2EF96-7815-4D7F-A339-05362C67D757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31F2EF96-7815-4D7F-A339-05362C67D757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31F2EF96-7815-4D7F-A339-05362C67D757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31F2EF96-7815-4D7F-A339-05362C67D757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06390EE3-0C46-4DBF-B439-BF06F8FE3326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06390EE3-0C46-4DBF-B439-BF06F8FE3326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06390EE3-0C46-4DBF-B439-BF06F8FE3326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06390EE3-0C46-4DBF-B439-BF06F8FE3326}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -295,5 +329,8 @@ Global
 		{308C84E5-30C6-451C-995C-4696259BB46C} = {306549E8-C08A-47F3-BE75-0905C5FCF972}
 		{A16D5461-4B69-4835-A223-3E7284982C7D} = {5E64EDE1-1CFA-4793-8A4C-0CF81E2807CB}
 		{820C411D-6CDA-4576-9394-5FBEB9625434} = {5E64EDE1-1CFA-4793-8A4C-0CF81E2807CB}
+		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D} = {6B7586BF-B91D-4C9C-B4C9-4631E53CAB94}
+		{31F2EF96-7815-4D7F-A339-05362C67D757} = {71A0855D-38BB-4198-8CEC-399698F54D05}
+		{06390EE3-0C46-4DBF-B439-BF06F8FE3326} = {71A0855D-38BB-4198-8CEC-399698F54D05}
 	EndGlobalSection
 EndGlobal
