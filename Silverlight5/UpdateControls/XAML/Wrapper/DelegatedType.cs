@@ -127,7 +127,10 @@ namespace UpdateControls.XAML.Wrapper
             PropertyInfo result;
             if (!_propertyByName.TryGetValue(name, out result))
             {
-                result = DelegatePropertyInfo(_rawType.GetProperty(name, bindingAttr));
+                PropertyInfo propertyInfo = _rawType.GetProperty(name, bindingAttr);
+                if (propertyInfo == null)
+                    return null;
+                result = DelegatePropertyInfo(propertyInfo);
                 _propertyByName.Add(name, result);
             }
             return result;
