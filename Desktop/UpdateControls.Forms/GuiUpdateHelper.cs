@@ -15,7 +15,9 @@ namespace UpdateControls.Forms
 	/// See the documentation of each constructor for more information.
 	/// <para/>
 	/// Remember to dispose this object when the control (or other object) that 
-	/// uses it is disposed.
+	/// uses it is disposed. Otherwise, if this object is still subscribed to 
+	/// Application.Idle, it will continue calling the update methods and there 
+	/// will be a memory leak involving anything reachable from those methods.
 	/// </remarks>
 	public class GuiUpdateHelper : IDisposable
 	{

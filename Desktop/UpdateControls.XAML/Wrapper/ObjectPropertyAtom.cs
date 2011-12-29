@@ -37,6 +37,9 @@ namespace UpdateControls.XAML.Wrapper
 					_firePropertyChanged = true;
 				});
 				// When the property becomes out of date, trigger an update.
+				// The update should have lower priority than user input & drawing,
+				// to ensure that the app doesn't lock up in case a large model is 
+				// being updated outside the UI (e.g. via timers or the network).
 				Action triggerUpdate = new Action(delegate
 				{
 					ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
@@ -45,7 +48,7 @@ namespace UpdateControls.XAML.Wrapper
 						{
 							_depProperty.OnGet();
 						}
-					}));
+					}), System.Windows.Threading.DispatcherPriority.Background);
 				});
 				_depProperty.Invalidated += triggerUpdate;
 			}
