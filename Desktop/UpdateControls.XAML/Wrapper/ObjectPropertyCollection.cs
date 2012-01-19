@@ -49,6 +49,12 @@ namespace UpdateControls.XAML.Wrapper
             // getters to fire.
             _delay = delegate
             {
+				if (_collection == null)
+				{
+					_collection = new ObservableCollection<object>();
+					ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+				}
+
                 // Create a list of new items.
                 List<CollectionItem> items = new List<CollectionItem>();
 
@@ -103,10 +109,7 @@ namespace UpdateControls.XAML.Wrapper
 				// cancel its subscription to _collection.CollectionChanged and subscribe
 				// to the new collection instead. So let's adopt the collection as our
 				// own, if it happens to be ObservableCollection<object>.
-				if (value is ObservableCollection<object>)
-					_collection = (ObservableCollection<object>)value;
-				else
-					System.Diagnostics.Debug.WriteLine("UpdateControls warning: Two-way collection binding is not ObservableCollection<object>; updates may stop");
+				_collection = value as ObservableCollection<object>;
 			}
 		}
 
