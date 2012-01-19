@@ -17,7 +17,7 @@ namespace UpdateControls.XAML
                 {
                     depCollection.OnGet();
                 }
-            }));
+			}), System.Windows.Threading.DispatcherPriority.Background);
         }
     }
 
@@ -31,7 +31,7 @@ namespace UpdateControls.XAML
             {
                 if (PropertyChanged != null)
                     PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }));
+			}), System.Windows.Threading.DispatcherPriority.Background);
         }
     }
 }

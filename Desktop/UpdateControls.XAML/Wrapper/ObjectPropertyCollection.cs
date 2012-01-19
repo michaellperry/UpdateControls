@@ -14,6 +14,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -77,12 +78,36 @@ namespace UpdateControls.XAML.Wrapper
             ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
             {
                 UpdateNow();
-            }));
+            }), System.Windows.Threading.DispatcherPriority.Background);
         }
 
         public override void OnUserInput(object value)
 		{
-			throw new NotSupportedException("Update Controls does not support two-way binding of collection properties.");
+			if (NotificationGate.IsInbound)
+			{
+				// Use reflection to convert the collection to the ViewModel type
+				// (which must be compatible with List<T>, e.g. IEnumerable<T> or IList)
+				if (_translateIncomingList == null)
+				{
+					Type propType = ClassProperty.PropertyInfo.PropertyType;
+					Type elemType = (propType.GetInterfaces().Concat(new Type[] { propType })
+						.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>)) ?? typeof(IEnumerable<object>))
+						.GetGenericArguments()[0];
+					MethodInfo mi = GetType().GetMethod("TranslateIncomingList").MakeGenericMethod(new Type[] { elemType });
+					_translateIncomingList = (Func<IEnumerable, IEnumerable>)Delegate.CreateDelegate(typeof(Func<IEnumerable, IEnumerable>), this, mi);
+				}
+				value = _translateIncomingList((IEnumerable)value);
+				ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+
+				// If the UI object switches to a new collection, we can expect it to
+				// cancel its subscription to _collection.CollectionChanged and subscribe
+				// to the new collection instead. So let's adopt the collection as our
+				// own, if it happens to be ObservableCollection<object>.
+				if (value is ObservableCollection<object>)
+					_collection = (ObservableCollection<object>)value;
+				else
+					System.Diagnostics.Debug.WriteLine("UpdateControls warning: Two-way collection binding is not ObservableCollection<object>; updates may stop");
+			}
 		}
 
         public override object Value
@@ -95,6 +120,16 @@ namespace UpdateControls.XAML.Wrapper
         }
 
         public abstract object TranslateOutgoingValue(object value);
+		public abstract object TranslateIncomingValue(object value);
+
+		Func<IEnumerable, IEnumerable> _translateIncomingList;
+		public IEnumerable TranslateIncomingList<T>(IEnumerable list)
+		{
+			var translated = new List<T>();
+			foreach (object elem in list)
+				translated.Add((T)TranslateIncomingValue(elem));
+			return translated;
+		}
 
         private void UpdateNow()
         {

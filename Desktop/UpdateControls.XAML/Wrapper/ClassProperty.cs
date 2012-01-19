@@ -111,6 +111,11 @@ namespace UpdateControls.XAML.Wrapper
             get { return _valueType; }
         }
 
+		public PropertyInfo PropertyInfo
+		{
+			get { return _propertyInfo; }
+		}
+
         public override string ToString()
         {
             return String.Format("{0}.{1}", _propertyInfo.DeclaringType.Name, _propertyInfo.Name);

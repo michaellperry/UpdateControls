@@ -10,6 +10,9 @@
  **********************************************************************/
 
 using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -24,5 +27,9 @@ namespace UpdateControls.XAML.Wrapper
         {
             return value == null ? null : WrapObject(value);
         }
+		public override object TranslateIncomingValue(object value)
+		{
+			return ((IObjectInstance)value).WrappedObject;
+		}
     }
 }

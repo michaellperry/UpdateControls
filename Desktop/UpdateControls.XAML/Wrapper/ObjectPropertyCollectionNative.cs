@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System;
+using System.Collections;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -24,5 +25,9 @@ namespace UpdateControls.XAML.Wrapper
         {
             return value;
         }
+		public override object TranslateIncomingValue(object value)
+		{
+			return value;
+		}
     }
 }
