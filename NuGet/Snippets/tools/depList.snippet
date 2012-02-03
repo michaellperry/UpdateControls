@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>depList</Title>
+			<Shortcut>depList</Shortcut>
+			<Description>Code snippet for 'DependentList&lt;T&gt;', which is used to compute a list of values based on a set of other values that utilize Independent, Dependent or other classes in Update Controls.</Description>
+			<Author>David Piepgrass</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>type</ID>
+					<Default>string</Default>
+					<ToolTip>Data type of each element</ToolTip>
+				</Literal>
+				<Literal>
+					<ID>name</ID>
+					<Default>List</Default>
+					<ToolTip>Property Name</ToolTip>
+				</Literal>
+				<Literal>
+					<ID>expr</ID>
+					<Default>return TODO;</Default>
+					<ToolTip>Write a LINQ query or other code to compute the list of items as IEnumerable&lt;T%gt;.</ToolTip>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp"><![CDATA[DependentList<$type$> _$name$;
+		public DependentList<$type$> $name$
+		{
+			get { 
+				if (_$name$ == null)
+					_$name$ = new DependentList<$type$>("$name$", () => {
+						$expr$
+					});
+				return _$name$;
+			}
+		}]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>ind</Title>
+			<Shortcut>ind</Shortcut>
+			<Description>Code snippet for 'Independent&lt;T&gt;'</Description>
+			<Author>David Piepgrass</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>type</ID>
+					<Default>string</Default>
+					<ToolTip>Data type</ToolTip>
+				</Literal>
+				<Literal>
+					<ID>name</ID>
+					<Default>Name</Default>
+					<ToolTip>Property Name</ToolTip>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp"><![CDATA[Independent<$type$> _$name$ = new Independent<$type$>("$name$", default($type$));
+		public $type$ $name$
+		{
+			get { return _$name$.Value; }
+			set { _$name$.Value = value; }
+		}]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

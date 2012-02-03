@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>UpdateControls.Snippets</id>
+    <version>2.2.0.0</version>
+    <authors>Qwertie</authors>
+    <owners>Michael L Perry</owners>
+    <description>Code snippets for Update Controls.</description>
+    <licenseUrl>http://updatecontrols.codeplex.com/license</licenseUrl>
+    <projectUrl>http://updatecontrols.codeplex.com/</projectUrl>
+    <iconUrl>http://updatecontrols.net/images/logosmall.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <language>en-US</language>
+    <tags>mvvm viewmodel databinding inotifypropertychanged inpc wpf silverlight wp7</tags>
+  </metadata>
+</package>

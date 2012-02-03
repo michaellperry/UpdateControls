@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>dep</Title>
+			<Shortcut>dep</Shortcut>
+			<Description>Code snippet to help you make properties based on 'Dependent&lt;T&gt;', an Update Controls class that represents a value computed based on one or more Independents. Note: in most cases you should just write a normal property instead of using Dependent&lt;T&gt;. Dependent&lt;T&gt; is useful to cache the result of a computation when the value of the property is expensive to compute.</Description>
+			<Author>David Piepgrass</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>type</ID>
+					<Default>string</Default>
+					<ToolTip>Data type</ToolTip>
+				</Literal>
+				<Literal>
+					<ID>name</ID>
+					<Default>CalculatedProperty</Default>
+					<ToolTip>A name for this computed property</ToolTip>
+				</Literal>
+				<Literal>
+					<ID>expr</ID>
+					<Default>TODO</Default>
+					<ToolTip>Write an expression here to compute the value of the Dependent</ToolTip>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp"><![CDATA[Dependent<$type$> _$name$;
+		public $type$ $name$
+		{
+			get { 
+				if (_$name$ == null)
+					_$name$ = new Dependent<$type$>("$name$",
+						() => $expr$);
+				return _$name$.Value;
+			}
+		}]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
