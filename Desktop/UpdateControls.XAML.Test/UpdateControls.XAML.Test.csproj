@@ -118,7 +118,7 @@
   <ItemGroup>
     <ProjectReference Include="..\UpdateControls.XAML\UpdateControls.XAML.csproj">
       <Project>{E4496FFF-165F-4008-8766-4DD086F5D3EC}</Project>
-      <Name>UpdateControls.XAML</Name>
+      <Name>UpdateControls.XAML %28Desktop\UpdateControls.XAML%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">
       <Project>{FFA4FF30-E11F-476F-A305-EC9FD624C752}</Project>
