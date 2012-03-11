@@ -37,17 +37,19 @@ namespace UpdateControls.XAML.Wrapper
 					_firePropertyChanged = true;
 				});
 				// When the property becomes out of date, trigger an update.
-				Action triggerUpdate = new Action(delegate
-				{
-					ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
-					{
-						using (NotificationGate.BeginOutbound())
-						{
-							_depProperty.OnGet();
-						}
-					}));
-				});
-				_depProperty.Invalidated += triggerUpdate;
+                _depProperty.Invalidated += delegate
+                {
+                    if (!AffectedSet.CaptureDependent(_depProperty))
+                    {
+                        ObjectInstance.Dispatcher.BeginInvoke(delegate
+                        {
+                            using (NotificationGate.BeginOutbound())
+                            {
+                                _depProperty.OnGet();
+                            }
+                        });
+                    }
+                };
 			}
 		}
 
@@ -55,8 +57,19 @@ namespace UpdateControls.XAML.Wrapper
 		{
             if (NotificationGate.IsInbound)
             {
+                var affectedSet = AffectedSet.Begin();
+
                 value = TranslateIncommingValue(value);
                 ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+
+                if (affectedSet != null)
+                {
+                    using (NotificationGate.BeginOutbound())
+                    {
+                        foreach (Dependent dependent in affectedSet.End())
+                            dependent.OnGet();
+                    }
+                }
             }
 		}
 

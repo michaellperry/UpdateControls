@@ -70,7 +70,7 @@ namespace UpdateControls.ManualTest
             {
                 return _navigation.SelectedMember == null
                     ? null
-                    : new FamilyMemberDetailsViewModel(_navigation.SelectedMember);
+                    : new FamilyMemberDetailsViewModel(_navigation.SelectedMember, _family);
             }
         }
 

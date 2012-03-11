@@ -123,6 +123,7 @@
     <Compile Include="XAML\ForView.cs" />
     <Compile Include="XAML\MakeCommand.GetDispatcher.cs" />
     <Compile Include="XAML\ViewModelBase.FirePropertyChanged.cs" />
+    <Compile Include="XAML\Wrapper\AffectedSet.cs" />
     <Compile Include="XAML\Wrapper\DelegatedPropertyInfo.cs" />
     <Compile Include="XAML\Wrapper\DelegatedType.cs" />
     <Compile Include="XAML\Wrapper\ClassInstance.cs" />
