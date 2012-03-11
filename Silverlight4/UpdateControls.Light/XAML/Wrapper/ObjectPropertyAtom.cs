@@ -82,7 +82,8 @@ namespace UpdateControls.XAML.Wrapper
         {
             using (NotificationGate.BeginOutbound())
             {
-                _depProperty.OnGet();
+                if (_depProperty != null && _depProperty.IsNotUpdating)
+                    _depProperty.OnGet();
             }
             if (_child != null)
                 _child.UpdateNodes();
