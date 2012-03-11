@@ -98,6 +98,9 @@
     <Compile Include="..\..\Desktop\UpdateControls\RecycleBin.cs">
       <Link>RecycleBin.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\ThreadLocal.cs">
+      <Link>ThreadLocal.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\UpdateControlsExtensions.cs">
       <Link>UpdateControlsExtensions.cs</Link>
     </Compile>

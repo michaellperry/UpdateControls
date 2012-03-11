@@ -93,6 +93,9 @@
     <Compile Include="..\..\Desktop\UpdateControls.XAML\WrappedType.cs">
       <Link>WrappedType.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\AffectedSet.cs">
+      <Link>Wrapper\AffectedSet.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ClassEvent.cs">
       <Link>Wrapper\ClassEvent.cs</Link>
     </Compile>

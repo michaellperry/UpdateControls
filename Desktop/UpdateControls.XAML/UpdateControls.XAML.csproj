@@ -72,6 +72,7 @@
     <Compile Include="ValueSource.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModelBase.FirePropertyChanged.cs" />
+    <Compile Include="Wrapper\AffectedSet.cs" />
     <Compile Include="Wrapper\ClassEvent.cs" />
     <Compile Include="Wrapper\ClassInstance.cs" />
     <Compile Include="Wrapper\ClassInstanceProvider.cs" />

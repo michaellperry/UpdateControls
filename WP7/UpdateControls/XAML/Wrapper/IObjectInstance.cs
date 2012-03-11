@@ -19,7 +19,7 @@ namespace UpdateControls.XAML.Wrapper
     {
         object WrappedObject { get; }
         Tree Tree { get; }
-        void Defer(Action action);
+        void Defer(Dependent dependent);
         ObjectProperty LookupProperty(UpdateControls.XAML.Wrapper.ClassProperty classProperty);
         void SetValue(DependencyProperty dependencyProperty, object value);
         void ClearValue(DependencyProperty dependencyProperty);

@@ -61,12 +61,12 @@ namespace UpdateControls.XAML.Wrapper
             get { return _tree; }
         }
 
-        public void Defer(Action action)
+        public void Defer(Dependent dependent)
         {
             if (UnitTestDispatcher.On)
-                UnitTestDispatcher.Defer(action);
+                UnitTestDispatcher.Defer(delegate { dependent.OnGet(); });
             else
-                Dispatcher.BeginInvoke(action);
+                Dispatcher.BeginInvoke(delegate { dependent.OnGet(); });
         }
 
         public ObjectProperty LookupProperty(ClassProperty classProperty)

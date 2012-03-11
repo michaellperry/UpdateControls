@@ -106,12 +106,11 @@ namespace UpdateControls
 		public static NamedDependent New(string name, Action update) { return new NamedDependent(name, update); }
 		public static Dependent<T> New<T>(string name, Func<T> update) { return new Dependent<T>(name, update); }
 
-        [ThreadStatic]
-        private static Dependent _currentUpdate = null;
+        private static ThreadLocal<Dependent> _currentUpdate = new ThreadLocal<Dependent>();
 
         internal static Dependent GetCurrentUpdate()
         {
-            return _currentUpdate;
+            return _currentUpdate.Get();
         }
 
         /// <summary>
@@ -208,7 +207,7 @@ namespace UpdateControls
 			{
 				// We're still not up-to-date (because of a concurrent change).
 				// The current update should similarly not be up-to-date.
-                Dependent currentUpdate = _currentUpdate;
+                Dependent currentUpdate = _currentUpdate.Get();
 				if (currentUpdate != null)
 					currentUpdate.MakeOutOfDate();
 			}
@@ -326,8 +325,8 @@ namespace UpdateControls
 			else if (formerStatus == StatusType.OUT_OF_DATE)
 			{
 				// Push myself to the update stack.
-				Dependent stack = _currentUpdate;
-                _currentUpdate = this;
+				Dependent stack = _currentUpdate.Get();
+                _currentUpdate.Set(this);
 
 				// Update the attribute.
 				try
@@ -337,9 +336,9 @@ namespace UpdateControls
 				finally
 				{
 					// Pop myself off the update stack.
-					Dependent that = _currentUpdate;
+					Dependent that = _currentUpdate.Get();
 					Debug.Assert(that == this);
-                    _currentUpdate = stack;
+                    _currentUpdate.Set(stack);
 
 					lock (this)
 					{

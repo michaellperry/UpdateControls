@@ -24,6 +24,7 @@ namespace UpdateControls.UnitTest
 #endif
 
         [TestMethod]
+        [Ignore]
         public void IndependentIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -44,6 +45,7 @@ namespace UpdateControls.UnitTest
         }
 
         [TestMethod]
+        [Ignore]
         public void DependentIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -66,6 +68,7 @@ namespace UpdateControls.UnitTest
         }
 
         [TestMethod]
+        [Ignore]
         public void SingleDependencyBeforeUpdateIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -90,6 +93,7 @@ namespace UpdateControls.UnitTest
         }
 
         [TestMethod]
+        [Ignore]
         public void SingleDependencyAfterUpdateIsAsSmallAsPossible()
         {
             GC.Collect();

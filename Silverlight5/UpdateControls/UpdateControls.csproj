@@ -74,6 +74,9 @@
     <Compile Include="..\..\desktop\updatecontrols.xaml\ViewModelBase.cs">
       <Link>XAML\ViewModelBase.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\AffectedSet.cs">
+      <Link>XAML\Wrapper\AffectedSet.cs</Link>
+    </Compile>
     <Compile Include="..\..\desktop\updatecontrols\collections\DependentDictionary.cs">
       <Link>Collections\DependentDictionary.cs</Link>
     </Compile>
@@ -116,6 +119,9 @@
     <Compile Include="..\..\Desktop\UpdateControls\RecycleBin.cs">
       <Link>RecycleBin.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\ThreadLocal.cs">
+      <Link>ThreadLocal.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\UpdateControlsExtensions.cs">
       <Link>UpdateControlsExtensions.cs</Link>
     </Compile>
@@ -123,7 +129,6 @@
     <Compile Include="XAML\ForView.cs" />
     <Compile Include="XAML\MakeCommand.GetDispatcher.cs" />
     <Compile Include="XAML\ViewModelBase.FirePropertyChanged.cs" />
-    <Compile Include="XAML\Wrapper\AffectedSet.cs" />
     <Compile Include="XAML\Wrapper\DelegatedPropertyInfo.cs" />
     <Compile Include="XAML\Wrapper\DelegatedType.cs" />
     <Compile Include="XAML\Wrapper\ClassInstance.cs" />

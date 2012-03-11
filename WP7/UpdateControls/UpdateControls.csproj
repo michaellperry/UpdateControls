@@ -62,6 +62,9 @@
     <Compile Include="..\..\desktop\updatecontrols.xaml\ViewModelBase.cs">
       <Link>XAML\ViewModelBase.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\AffectedSet.cs">
+      <Link>XAML\Wrapper\AffectedSet.cs</Link>
+    </Compile>
     <Compile Include="..\..\desktop\updatecontrols.xaml\wrapper\CollectionItem.cs">
       <Link>XAML\Wrapper\CollectionItem.cs</Link>
     </Compile>
@@ -106,6 +109,9 @@
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\RecycleBin.cs">
       <Link>RecycleBin.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\ThreadLocal.cs">
+      <Link>ThreadLocal.cs</Link>
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\UpdateControlsExtensions.cs">
       <Link>UpdateControlsExtensions.cs</Link>

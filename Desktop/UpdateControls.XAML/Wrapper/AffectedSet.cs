@@ -5,25 +5,26 @@ namespace UpdateControls.XAML.Wrapper
 {
     public class AffectedSet
     {
-        [ThreadStatic]
-        private static AffectedSet _currentSet = null;
+        private static ThreadLocal<AffectedSet> _currentSet = new ThreadLocal<AffectedSet>();
 
         public static AffectedSet Begin()
         {
             // If someone is already capturing the affected set,
             // let them keep that responsibility.
-            if (_currentSet != null)
+            if (_currentSet.Get() != null)
                 return null;
 
-            _currentSet = new AffectedSet();
-            return _currentSet;
+            AffectedSet currentSet = new AffectedSet();
+            _currentSet.Set(currentSet);
+            return currentSet;
         }
 
         public static bool CaptureDependent(Dependent dependent)
         {
-            if (_currentSet != null)
+            AffectedSet currentSet = _currentSet.Get();
+            if (currentSet != null)
             {
-                _currentSet._dependents.Add(dependent);
+                currentSet._dependents.Add(dependent);
                 return true;
             }
             else
@@ -36,8 +37,8 @@ namespace UpdateControls.XAML.Wrapper
 
         public IEnumerable<Dependent> End()
         {
-            System.Diagnostics.Debug.Assert(_currentSet == this);
-            _currentSet = null;
+            System.Diagnostics.Debug.Assert(_currentSet.Get() == this);
+            _currentSet.Set(null);
             return _dependents;
         }
     }

@@ -15,8 +15,7 @@ namespace UpdateControls.XAML.Wrapper
 {
     class NotificationGate : IDisposable
     {
-        [ThreadStatic]
-        private static int _outboundCount;
+        private static ThreadLocal<int> _outboundCount = new ThreadLocal<int>();
 
         private NotificationGate()
         {
@@ -24,18 +23,20 @@ namespace UpdateControls.XAML.Wrapper
 
         public static bool IsInbound
         {
-            get { return _outboundCount == 0; }
+            get { return _outboundCount.Get() == 0; }
         }
 
         public static IDisposable BeginOutbound()
         {
-            ++_outboundCount;
+            int outboundCount = _outboundCount.Get();
+            _outboundCount.Set(outboundCount + 1);
             return new NotificationGate();
         }
 
         public void Dispose()
         {
-            --_outboundCount;
+            int outboundCount = _outboundCount.Get();
+            _outboundCount.Set(outboundCount - 1);
         }
     }
 }
