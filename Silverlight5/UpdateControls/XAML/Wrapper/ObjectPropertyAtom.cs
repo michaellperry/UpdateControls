@@ -59,15 +59,20 @@ namespace UpdateControls.XAML.Wrapper
             {
                 var affectedSet = AffectedSet.Begin();
 
-                value = TranslateIncommingValue(value);
-                ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
-
-                if (affectedSet != null)
+                try
                 {
-                    using (NotificationGate.BeginOutbound())
+                    value = TranslateIncommingValue(value);
+                    ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+                }
+                finally
+                {
+                    if (affectedSet != null)
                     {
-                        foreach (Dependent dependent in affectedSet.End())
-                            dependent.OnGet();
+                        using (NotificationGate.BeginOutbound())
+                        {
+                            foreach (Dependent dependent in affectedSet.End())
+                                dependent.OnGet();
+                        }
                     }
                 }
             }
