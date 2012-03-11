@@ -40,17 +40,19 @@ namespace UpdateControls.XAML.Wrapper
 				// The update should have lower priority than user input & drawing,
 				// to ensure that the app doesn't lock up in case a large model is 
 				// being updated outside the UI (e.g. via timers or the network).
-				Action triggerUpdate = new Action(delegate
-				{
-					ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
-					{
-						using (NotificationGate.BeginOutbound())
-						{
-							_depProperty.OnGet();
-						}
-					}), System.Windows.Threading.DispatcherPriority.Background);
-				});
-				_depProperty.Invalidated += triggerUpdate;
+                _depProperty.Invalidated += delegate
+                {
+                    if (!AffectedSet.CaptureDependent(_depProperty))
+                    {
+                        ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
+                        {
+                            using (NotificationGate.BeginOutbound())
+                            {
+                                _depProperty.OnGet();
+                            }
+                        }), System.Windows.Threading.DispatcherPriority.Background);
+                    }
+                };
 			}
 		}
 
@@ -58,8 +60,24 @@ namespace UpdateControls.XAML.Wrapper
 		{
             if (NotificationGate.IsInbound)
             {
-                value = TranslateIncommingValue(value);
-                ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+                var affectedSet = AffectedSet.Begin();
+
+                try
+                {
+                    value = TranslateIncommingValue(value);
+                    ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+                }
+                finally
+                {
+                    if (affectedSet != null)
+                    {
+                        using (NotificationGate.BeginOutbound())
+                        {
+                            foreach (Dependent dependent in affectedSet.End())
+                                dependent.OnGet();
+                        }
+                    }
+                }
             }
 		}
 
