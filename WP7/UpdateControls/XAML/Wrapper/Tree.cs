@@ -27,7 +27,10 @@ namespace UpdateControls.XAML.Wrapper
             });
             _depNodes.Invalidated += delegate
             {
-                _root.Defer(_depNodes);
+                if (!AffectedSet.CaptureDependent(_depNodes))
+                {
+                    _root.Defer(_depNodes);
+                }
             };
         }
 

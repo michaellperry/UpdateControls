@@ -67,11 +67,27 @@ namespace UpdateControls.XAML.Wrapper
 		{
             if (NotificationGate.IsInbound)
             {
-                if (_hasChildObject)
+                var affectedSet = AffectedSet.Begin();
+
+                try
                 {
-                    value = value == null ? null : ((IObjectInstance)value).WrappedObject;
+                    if (_hasChildObject && value != null)
+                    {
+                        value = ((IObjectInstance)value).WrappedObject;
+                    }
+                    ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
                 }
-                ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+                finally
+                {
+                    if (affectedSet != null)
+                    {
+                        using (NotificationGate.BeginOutbound())
+                        {
+                            foreach (Dependent dependent in affectedSet.End())
+                                dependent.OnGet();
+                        }
+                    }
+                }
             }
 		}
 
