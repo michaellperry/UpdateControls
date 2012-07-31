@@ -1,19 +1,47 @@
 using System.Reflection;
 using UpdateControls.Fields;
+using System.Linq;
 using System;
 using System.Windows.Threading;
+using System.Windows.Input;
+using System.Windows;
+using System.ComponentModel;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Reflection;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace UpdateControls.XAML.Wrapper
 {
     class DependentProperty
     {
+        private static readonly Type[] Primitives = new Type[]
+        {
+			typeof(object),
+            typeof(string),
+            typeof(ICommand)
+        };
+
+        private static readonly Type[] Bindables = new Type[]
+        {
+            typeof(DependencyObject),
+            typeof(INotifyPropertyChanged),
+            typeof(INotifyCollectionChanged)
+        };
+
         private static readonly object[] EmptyIndexer = new object[0];
 
         private readonly DynamicDependentWrapper _wrapper;
         private readonly object _wrappedObject;
         private readonly PropertyInfo _propertyInfo;
+        private readonly bool _isPrimitive;
+        private readonly bool _isCollection;
 
         private object _value;
+        private List<object> _sourceCollection;
+        private ObservableCollection<object> _collection;
         private Dependent _depValue;
         private bool _initialized = false;
         
@@ -23,9 +51,27 @@ namespace UpdateControls.XAML.Wrapper
             _wrappedObject = wrappedObject;
             _propertyInfo = propertyInfo;
 
+            if (IsPrimitive(_propertyInfo.PropertyType))
+            {
+                _isCollection = false;
+                _isPrimitive = true;
+            }
+            else if (IsCollectionType(_propertyInfo.PropertyType))
+            {
+                _isCollection = true;
+                _isPrimitive = IsPrimitive(GetItemType(_propertyInfo.PropertyType));
+                _collection = new ObservableCollection<object>();
+                _value = _collection;
+            }
+            else
+            {
+                _isCollection = false;
+                _isPrimitive = false;
+            }
+
             _depValue = new Dependent(UpdateValue);
             _depValue.Invalidated += ValueInvalidated;
-            _depValue.OnGet();
+            UpdateNow();
         }
 
         public object GetValue()
@@ -39,45 +85,134 @@ namespace UpdateControls.XAML.Wrapper
 
             try
             {
-                _propertyInfo.SetValue(_wrappedObject, value, EmptyIndexer);
+                if (!_isCollection)
+                    _propertyInfo.SetValue(_wrappedObject, UnwrapValue(value), EmptyIndexer);
             }
             finally
             {
                 if (affectedSet != null)
                 {
-                    foreach (var dependent in affectedSet.End())
-                        dependent.OnGet();
+                    foreach (var dependentProperty in affectedSet.End())
+                        dependentProperty.UpdateNow();
                 }
             }
         }
 
         private void UpdateValue()
         {
-            object newValue = _propertyInfo.GetValue(_wrappedObject, EmptyIndexer);
-            if (_initialized)
+            if (_isCollection)
             {
-                if ((!Object.Equals(newValue, _value)))
-                {
-                    _value = newValue;
-                    _wrapper.FirePropertyChanged(_propertyInfo.Name);
-                }
+                _sourceCollection = ((IEnumerable)_propertyInfo.GetValue(_wrappedObject, EmptyIndexer)).OfType<object>().ToList();
             }
             else
             {
-                _value = newValue;
-                _initialized = true;
+                _value = WrapValue(_propertyInfo.GetValue(_wrappedObject, EmptyIndexer));
             }
         }
 
         private void ValueInvalidated()
         {
-            if (!AffectedSet.CaptureDependent(_depValue))
+            if (!AffectedSet.CaptureDependent(this))
             {
                 Dispatcher.CurrentDispatcher.BeginInvoke(new Action(delegate
                 {
-                    _depValue.OnGet();
+                    UpdateNow();
                 }), System.Windows.Threading.DispatcherPriority.Background);
             }
+        }
+
+        private void UpdateNow()
+        {
+            if (_isCollection)
+            {
+                _depValue.OnGet();
+
+                // Create a list of new items.
+                List<CollectionItem> items = new List<CollectionItem>();
+
+                // Dump all previous items into a recycle bin.
+                using (RecycleBin<CollectionItem> bin = new RecycleBin<CollectionItem>())
+                {
+                    foreach (object oldItem in _collection)
+                        bin.AddObject(new CollectionItem(_collection, oldItem, true));
+                    // Add new objects to the list.
+                    if (_sourceCollection != null)
+                        foreach (object obj in _sourceCollection)
+                            items.Add(bin.Extract(new CollectionItem(_collection, WrapValue(obj), false)));
+                    _sourceCollection = null;
+                    // All deleted items are removed from the collection at this point.
+                }
+                // Ensure that all items are added to the list.
+                int index = 0;
+                foreach (CollectionItem item in items)
+                {
+                    item.EnsureInCollection(index);
+                    ++index;
+                }
+            }
+            else
+            {
+                object oldValue = _value;
+                _depValue.OnGet();
+                object newValue = _value;
+
+                if (_initialized)
+                {
+                    if ((!Object.Equals(newValue, oldValue)))
+                    {
+                        _wrapper.FirePropertyChanged(_propertyInfo.Name);
+                    }
+                }
+                else
+                {
+                    _initialized = true;
+                }
+            }
+        }
+
+        private object WrapValue(object value)
+        {
+            if (value == null)
+                return null;
+            else if (_isPrimitive)
+                return value;
+            else
+                return new DynamicDependentWrapper(value);
+        }
+
+        private object UnwrapValue(object value)
+        {
+            if (value == null)
+                return null;
+            else if (_isPrimitive)
+                return value;
+            else
+                return ((DynamicDependentWrapper)value).GetWrappedObject();
+        }
+
+        private static bool IsCollectionType(Type propertyType)
+        {
+            return typeof(IEnumerable).IsAssignableFrom(propertyType);
+        }
+
+        private static Type GetItemType(Type collectionType)
+        {
+            if (collectionType.GetGenericArguments().Length == 1)
+                return collectionType.GetGenericArguments()[0];
+            else
+                return typeof(object);
+        }
+
+        private static bool IsPrimitive(Type type)
+        {
+            return
+                type.IsValueType ||
+                type.IsPrimitive ||
+                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ||
+                Primitives.Contains(type) ||
+                // Don't wrap objects that are already bindable
+                Bindables.Any(b => b.IsAssignableFrom(type));
+            ;
         }
     }
 }

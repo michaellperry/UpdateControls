@@ -9,7 +9,9 @@ namespace UpdateControls.XAML
     {
         public static object Wrap(object viewModel)
         {
-            return new Wrapper.DynamicDependentWrapper(viewModel);
+            return viewModel == null
+                ? null
+                : new Wrapper.DynamicDependentWrapper(viewModel);
         }
     }
 }

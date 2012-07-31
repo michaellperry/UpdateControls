@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Dynamic;
 using System.Reflection;
-using System.ComponentModel;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class DynamicDependentWrapper : DynamicObject, INotifyPropertyChanged
+    class DynamicDependentWrapper : DynamicObject, INotifyPropertyChanged, IDataErrorInfo, IEditableObject
     {
         private readonly object _wrappedObject;
 
@@ -42,12 +40,37 @@ namespace UpdateControls.XAML.Wrapper
             return true;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (Object.ReferenceEquals(this, obj))
+                return true;
+            DynamicDependentWrapper that = obj as DynamicDependentWrapper;
+            if (that == null)
+                return false;
+            return Object.Equals(this._wrappedObject, that._wrappedObject);
+        }
+
+        public override int GetHashCode()
+        {
+            return _wrappedObject.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return _wrappedObject.ToString();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void FirePropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        internal object GetWrappedObject()
+        {
+            return _wrappedObject;
         }
 
         private DependentProperty GetDependentProperty(string propertyName)
@@ -63,6 +86,45 @@ namespace UpdateControls.XAML.Wrapper
                 _propertyByName.Add(propertyName, dependentProperty);
             }
             return dependentProperty;
+        }
+
+        public string Error
+        {
+            get
+            {
+                IDataErrorInfo wrappedObject = _wrappedObject as IDataErrorInfo;
+                return wrappedObject != null ? wrappedObject.Error : null;
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                IDataErrorInfo wrappedObject = _wrappedObject as IDataErrorInfo;
+                return wrappedObject != null ? wrappedObject[columnName] : null;
+            }
+        }
+
+        public void BeginEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.BeginEdit();
+        }
+
+        public void CancelEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.CancelEdit();
+        }
+
+        public void EndEdit()
+        {
+            IEditableObject wrappedObject = _wrappedObject as IEditableObject;
+            if (wrappedObject != null)
+                wrappedObject.EndEdit();
         }
     }
 }

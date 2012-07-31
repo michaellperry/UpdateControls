@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public class AffectedSet
+    class AffectedSet
     {
         private static ThreadLocal<AffectedSet> _currentSet = new ThreadLocal<AffectedSet>();
 
@@ -19,12 +19,12 @@ namespace UpdateControls.XAML.Wrapper
             return currentSet;
         }
 
-        public static bool CaptureDependent(Dependent dependent)
+        public static bool CaptureDependent(DependentProperty dependentProperty)
         {
             AffectedSet currentSet = _currentSet.Get();
             if (currentSet != null)
             {
-                currentSet._dependents.Add(dependent);
+                currentSet._dependentProperties.Add(dependentProperty);
                 return true;
             }
             else
@@ -33,13 +33,13 @@ namespace UpdateControls.XAML.Wrapper
             }
         }
 
-        private List<Dependent> _dependents = new List<Dependent>();
+        private List<DependentProperty> _dependentProperties = new List<DependentProperty>();
 
-        public IEnumerable<Dependent> End()
+        public IEnumerable<DependentProperty> End()
         {
             System.Diagnostics.Debug.Assert(_currentSet.Get() == this);
             _currentSet.Set(null);
-            return _dependents;
+            return _dependentProperties;
         }
     }
 }
