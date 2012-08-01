@@ -1,15 +1,14 @@
-﻿<Window x:Class="UpdateControls.XAML.Test.Window1"
+﻿<Page
+    x:Class="UpdateControls.XAML.Test.MainPage"
+    IsTabStop="false"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Window1" Height="316" Width="559">
+    xmlns:local="using:UpdateControls.XAML.Test"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
 
-    <Window.Resources>
-        <Style TargetType="Border">
-            <Setter Property="Margin" Value="3"/>
-        </Style>
-    </Window.Resources>
-
-    <Grid>
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition
                 Width="250" />
@@ -33,7 +32,7 @@
             </ListBox>
         </Border>
 
-        <StackPanel Grid.Row="1" IsEnabled="{Binding IsPersonSelected}">
+        <StackPanel Grid.Row="1">
             <Grid DataContext="{Binding SelectedPerson}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -49,34 +48,34 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Grid.Row="0" Grid.Column="0">
-                    <Label Content="Prefix:"/>
+                    <TextBlock Text="Prefix:"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="1">
                     <ComboBox ItemsSource="{Binding Prefixes}" SelectedItem="{Binding Prefix}"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="0">
-                    <Label Content="First Name:"/>
+                    <TextBlock Text="First Name:"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="1">
-                    <TextBox Text="{Binding First, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding First}"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="0">
-                    <Label Content="Last Name:"/>
+                    <TextBlock Text="Last Name:"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1">
-                    <TextBox Text="{Binding Last, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding Last}"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="0">
-                    <Label Content="Gender:"/>
+                    <TextBlock Text="Gender:"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="1">
-                    <ComboBox Text="{Binding Gender}">
+                    <ComboBox SelectedValue="{Binding Gender}">
                         <ComboBoxItem>Male</ComboBoxItem>
                         <ComboBoxItem>Female</ComboBoxItem>
                     </ComboBox>
                 </Border>
                 <Border Grid.Row="4" Grid.Column="0">
-                    <Label Content="Spouse:"/>
+                    <TextBlock Text="Spouse:"/>
                 </Border>
                 <Border Grid.Row="4" Grid.Column="1">
                     <ComboBox ItemsSource="{Binding PotentialSpouses}" SelectedItem="{Binding Spouse}">
@@ -97,9 +96,6 @@
             <Border>
                 <Button Command="{Binding DeletePerson}">Delete Person</Button>
             </Border>
-            <Border>
-                <Button Name="NewWindow" Click="NewWindow_Click">New Window</Button>
-            </Border>
         </StackPanel>
     </Grid>
-</Window>
+</Page>
