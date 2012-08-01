@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
+using System.Linq;
 using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class DynamicDependentWrapper : DynamicObject, INotifyPropertyChanged, IDataErrorInfo, IEditableObject
+    class DynamicDependentWrapper : DynamicObject, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
     {
         private readonly object _wrappedObject;
 
@@ -78,7 +79,7 @@ namespace UpdateControls.XAML.Wrapper
             DependentProperty dependentProperty;
             if (!_propertyByName.TryGetValue(propertyName, out dependentProperty))
             {
-                PropertyInfo propertyInfo = _wrappedObject.GetType().GetProperty(propertyName);
+                PropertyInfo propertyInfo = _wrappedObject.GetType().GetTypeInfo().GetDeclaredProperty(propertyName);
                 if (propertyInfo == null)
                     return null;
 
@@ -88,21 +89,26 @@ namespace UpdateControls.XAML.Wrapper
             return dependentProperty;
         }
 
-        public string Error
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public System.Collections.IEnumerable GetErrors(string propertyName)
         {
-            get
-            {
-                IDataErrorInfo wrappedObject = _wrappedObject as IDataErrorInfo;
-                return wrappedObject != null ? wrappedObject.Error : null;
-            }
+            var errors = _wrappedObject as INotifyDataErrorInfo;
+            if (errors != null)
+                return errors.GetErrors(propertyName);
+            else
+                return Enumerable.Empty<object>();
         }
 
-        public string this[string columnName]
+        public bool HasErrors
         {
             get
             {
-                IDataErrorInfo wrappedObject = _wrappedObject as IDataErrorInfo;
-                return wrappedObject != null ? wrappedObject[columnName] : null;
+                var errors = _wrappedObject as INotifyDataErrorInfo;
+                if (errors != null)
+                    return errors.HasErrors;
+                else
+                    return false;
             }
         }
 

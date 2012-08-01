@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using UpdateControls.Collections;
+using System.Reflection;
 
 namespace UpdateControls
 {
@@ -91,7 +92,7 @@ namespace UpdateControls
 		// cannot hold duplicates.
 		private List<T> _duplicates;
 
-		static readonly bool _isTDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T));
+		static readonly bool _isTDisposable = typeof(IDisposable).GetTypeInfo().IsAssignableFrom(typeof(T).GetTypeInfo());
 
 		/// <summary>
 		/// Creates an empty recycle bin.

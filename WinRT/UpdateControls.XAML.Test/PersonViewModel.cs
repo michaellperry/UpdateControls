@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace UpdateControls.XAML.Test
 {
-    public class PersonViewModel : PersonViewModelBase, IDataErrorInfo
+    public class PersonViewModel : PersonViewModelBase, INotifyDataErrorInfo
 	{
 		private ContactList _contactList;
 
@@ -63,5 +63,20 @@ namespace UpdateControls.XAML.Test
 					return null;
 			}
 		}
-	}
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public System.Collections.IEnumerable GetErrors(string propertyName)
+        {
+            if (propertyName == "Last" && string.IsNullOrEmpty(this.Last))
+                yield return "Last name is required.";
+            else if (propertyName == "First" && string.IsNullOrEmpty(this.First))
+                yield return "First name is required.";
+        }
+
+        public bool HasErrors
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
 }

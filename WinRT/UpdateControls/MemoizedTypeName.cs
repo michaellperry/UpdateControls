@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace UpdateControls
 {
@@ -30,7 +31,7 @@ namespace UpdateControls
 			{
 				if (!_shortNames.TryGetValue(type, out name))
 				{
-					if (type.IsGenericType)
+					if (type.GetTypeInfo().IsGenericType)
 						_shortNames[type] = name = ComputeGenericName(type);
 					else
 						name = type.Name;
@@ -43,7 +44,7 @@ namespace UpdateControls
 		internal static string ComputeGenericName(Type type)
 		{
 			string result = type.Name;
-			if (type.IsGenericType)
+            if (type.GetTypeInfo().IsGenericType)
 			{
 				// remove genric indication (e.g. `1)
 				result = result.Substring(0, result.LastIndexOf('`'));
@@ -51,7 +52,7 @@ namespace UpdateControls
 				result = string.Format(
 					"{0}<{1}>",
 					result,
-					string.Join(", ", type.GetGenericArguments()
+                    string.Join(", ", type.GetTypeInfo().GenericTypeArguments
 									  .Select(t => GenericName(t)).ToArray()));
 			}
 			return result;

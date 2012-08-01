@@ -11,7 +11,8 @@
 
 using System;
 using System.Windows.Input;
-using System.Windows.Threading;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace UpdateControls.XAML
 {
@@ -33,15 +34,10 @@ namespace UpdateControls.XAML
             private bool _canExecute = false;
             private Dependent _depCanExecute;
 
-            // The dispatcher of the UI thread.
-            private Dispatcher _dispatcher;
-
             public Command(Func<bool> canExecute, Action execute)
             {
                 _canExecuteFunction = canExecute;
                 _execute = execute;
-
-                _dispatcher = MakeCommand.GetDispatcher();
 
                 // Create a dependent sentry to control the "can execute" flag.
                 _depCanExecute = new Dependent(UpdateCanExecute);
@@ -80,7 +76,9 @@ namespace UpdateControls.XAML
                 // When the "can execute" flag is invalidated, we need to queue
                 // up a call to update it. This will cause the UI thread to
                 // call TriggerUpdate (below) when everything settles down.
-                _dispatcher.BeginInvoke(new Action(TriggerUpdate));
+                Window.Current.Dispatcher.RunAsync(
+                    CoreDispatcherPriority.Low,
+                    new DispatchedHandler(TriggerUpdate));
             }
 
             private void TriggerUpdate()

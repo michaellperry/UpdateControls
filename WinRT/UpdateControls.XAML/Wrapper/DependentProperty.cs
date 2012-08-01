@@ -2,16 +2,15 @@ using System.Reflection;
 using UpdateControls.Fields;
 using System.Linq;
 using System;
-using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows;
 using System.ComponentModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Reflection;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
+using Windows.UI.Core;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -114,10 +113,12 @@ namespace UpdateControls.XAML.Wrapper
         {
             if (!AffectedSet.CaptureDependent(this))
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(new Action(delegate
-                {
-                    UpdateNow();
-                }), System.Windows.Threading.DispatcherPriority.Background);
+                Window.Current.Dispatcher.RunAsync(
+                    CoreDispatcherPriority.Low,
+                    new DispatchedHandler(delegate
+                    {
+                        UpdateNow();
+                    }));
             }
         }
 
@@ -192,13 +193,13 @@ namespace UpdateControls.XAML.Wrapper
 
         private static bool IsCollectionType(Type propertyType)
         {
-            return typeof(IEnumerable).IsAssignableFrom(propertyType);
+            return typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(propertyType.GetTypeInfo());
         }
 
         private static Type GetItemType(Type collectionType)
         {
-            if (collectionType.GetGenericArguments().Length == 1)
-                return collectionType.GetGenericArguments()[0];
+            if (collectionType.GetTypeInfo().GenericTypeArguments.Length == 1)
+                return collectionType.GetTypeInfo().GenericTypeArguments[0];
             else
                 return typeof(object);
         }
@@ -206,12 +207,12 @@ namespace UpdateControls.XAML.Wrapper
         private static bool IsPrimitive(Type type)
         {
             return
-                type.IsValueType ||
-                type.IsPrimitive ||
-                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ||
+                type.GetTypeInfo().IsValueType ||
+                type.GetTypeInfo().IsPrimitive ||
+                (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ||
                 Primitives.Contains(type) ||
                 // Don't wrap objects that are already bindable
-                Bindables.Any(b => b.IsAssignableFrom(type));
+                Bindables.Any(b => b.GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()));
             ;
         }
     }

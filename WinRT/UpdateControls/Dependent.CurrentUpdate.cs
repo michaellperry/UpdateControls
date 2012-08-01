@@ -7,7 +7,14 @@ namespace UpdateControls
     {
         static partial void ReportCycles()
         {
-            Trace.WriteLine(string.Format("Cycle discovered during update: {0}", Environment.StackTrace));
+            try
+            {
+                throw new InvalidOperationException("Cycle discovered during update.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
     }
 }

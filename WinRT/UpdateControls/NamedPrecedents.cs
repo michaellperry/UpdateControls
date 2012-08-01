@@ -28,11 +28,11 @@ namespace UpdateControls
 		}
 		public static string GetClassAndMethodName(Delegate d)
 		{
-			return MemoizedTypeName.GenericName(d.Method.DeclaringType) + "." + d.Method.Name;
+			return MemoizedTypeName.GenericName(d.GetMethodInfo().DeclaringType) + "." + d.GetMethodInfo().Name;
 		}
 		protected virtual string ComputeName()
 		{
-			return string.Intern(GetClassAndMethodName(_update) + "()");
+			return GetClassAndMethodName(_update) + "()";
 		}
 	}
 
@@ -42,18 +42,18 @@ namespace UpdateControls
 		public NamedIndependent(string name) : base() { _name = name; }
 		public NamedIndependent(Type valueType) : this(valueType.NameWithGenericParams()) { }
 		public NamedIndependent(Type containerType, string name) :
-			this(string.Intern(string.Format("{0}.{1}", containerType.NameWithGenericParams(), name))) { }
+			this(string.Format("{0}.{1}", containerType.NameWithGenericParams(), name)) { }
 
 		public override void OnGet()
 		{
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETFX_CORE
 			if (DebugMode && _name == null)
 				_name = ComputeNameFromStackTrace();
 #endif
 			base.OnGet();
 		}
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETFX_CORE
 		private string ComputeNameFromStackTrace()
 		{
 			StackTrace stackTrace = new StackTrace(false);
