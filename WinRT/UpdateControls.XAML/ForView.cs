@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls.XAML
 {
@@ -9,9 +7,11 @@ namespace UpdateControls.XAML
     {
         public static object Wrap(object viewModel)
         {
-            return viewModel == null
-                ? null
-                : new Wrapper.DynamicDependentWrapper(viewModel);
+            if (viewModel == null)
+                return null;
+            return (IDependentObject)Activator.CreateInstance(
+                typeof(DependentObject<>).MakeGenericType(viewModel.GetType()),
+                viewModel);
         }
     }
 }

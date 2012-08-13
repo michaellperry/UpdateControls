@@ -32,7 +32,7 @@ namespace UpdateControls.XAML.Wrapper
 
         private static readonly object[] EmptyIndexer = new object[0];
 
-        private readonly DynamicDependentWrapper _wrapper;
+        private readonly IDependentObject _wrapper;
         private readonly object _wrappedObject;
         private readonly PropertyInfo _propertyInfo;
         private readonly bool _isPrimitive;
@@ -44,7 +44,7 @@ namespace UpdateControls.XAML.Wrapper
         private Dependent _depValue;
         private bool _initialized = false;
         
-        public DependentProperty(DynamicDependentWrapper wrapper, object wrappedObject, PropertyInfo propertyInfo)
+        public DependentProperty(IDependentObject wrapper, object wrappedObject, PropertyInfo propertyInfo)
         {
             _wrapper = wrapper;
             _wrappedObject = wrappedObject;
@@ -178,7 +178,7 @@ namespace UpdateControls.XAML.Wrapper
             else if (_isPrimitive)
                 return value;
             else
-                return new DynamicDependentWrapper(value);
+                return ForView.Wrap(value);
         }
 
         private object UnwrapValue(object value)
@@ -188,7 +188,7 @@ namespace UpdateControls.XAML.Wrapper
             else if (_isPrimitive)
                 return value;
             else
-                return ((DynamicDependentWrapper)value).GetWrappedObject();
+                return ((IDependentObject)value).GetWrappedObject();
         }
 
         private static bool IsCollectionType(Type propertyType)

@@ -7,20 +7,30 @@ using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class DynamicDependentWrapper : DynamicObject, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
+    internal interface IDependentObject
     {
-        private readonly object _wrappedObject;
+        object GetWrappedObject();
+        bool TryGetMember(string name, out object result);
+        bool TrySetMember(string name, object value);
+        bool Equals(object obj);
+        int GetHashCode();
+        string ToString();
+        void FirePropertyChanged(string propertyName);
+    }
+    class DependentObject<T> : IDependentObject, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
+    {
+        private readonly T _wrappedObject;
 
         private Dictionary<string, DependentProperty> _propertyByName = new Dictionary<string, DependentProperty>();
 
-        public DynamicDependentWrapper(object wrappedObject)
+        public DependentObject(T wrappedObject)
         {
             _wrappedObject = wrappedObject;
         }
 
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        public bool TryGetMember(string name, out object result)
         {
-            DependentProperty dependentProperty = GetDependentProperty(binder.Name);
+            DependentProperty dependentProperty = GetDependentProperty(name);
             if (dependentProperty == null)
             {
                 result = null;
@@ -31,9 +41,9 @@ namespace UpdateControls.XAML.Wrapper
             return true;
         }
 
-        public override bool TrySetMember(SetMemberBinder binder, object value)
+        public bool TrySetMember(string name, object value)
         {
-            DependentProperty dependentProperty = GetDependentProperty(binder.Name);
+            DependentProperty dependentProperty = GetDependentProperty(name);
             if (dependentProperty == null)
                 return false;
 
@@ -45,7 +55,7 @@ namespace UpdateControls.XAML.Wrapper
         {
             if (Object.ReferenceEquals(this, obj))
                 return true;
-            DynamicDependentWrapper that = obj as DynamicDependentWrapper;
+            DependentObject<T> that = obj as DependentObject<T>;
             if (that == null)
                 return false;
             return Object.Equals(this._wrappedObject, that._wrappedObject);
@@ -69,7 +79,7 @@ namespace UpdateControls.XAML.Wrapper
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        internal object GetWrappedObject()
+        public object GetWrappedObject()
         {
             return _wrappedObject;
         }
