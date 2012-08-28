@@ -25,7 +25,7 @@ namespace UpdateControls.XAML.Test
 		public PrefixViewModel Prefix
 		{
 			get { return _prefixes.First(p => p.Prefix == _person.Prefix); }
-			set { _person.Prefix = value.Prefix; }
+			set { if (value != null) _person.Prefix = value.Prefix; }
 		}
 
 		public IEnumerable<PrefixViewModel> Prefixes

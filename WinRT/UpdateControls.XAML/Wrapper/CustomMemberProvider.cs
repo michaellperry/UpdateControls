@@ -108,7 +108,15 @@ namespace UpdateControls.XAML.Wrapper
 
         public void SetValue(object instance, object value)
         {
-            throw new NotImplementedException();
+            IDependentObject obj = instance as IDependentObject;
+            if (obj == null)
+                return;
+
+            DependentProperty property = obj.GetDependentProperty(this);
+            if (property == null)
+                return;
+
+            property.SetValue(value);
         }
 
         public IXamlType TargetType

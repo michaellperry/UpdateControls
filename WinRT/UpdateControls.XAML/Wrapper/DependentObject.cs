@@ -65,7 +65,7 @@ namespace UpdateControls.XAML.Wrapper
             DependentProperty dependentProperty;
             if (!_propertyByName.TryGetValue(provider, out dependentProperty))
             {
-                PropertyInfo propertyInfo = _wrappedObject.GetType().GetTypeInfo().GetDeclaredProperty(provider.Name);
+                PropertyInfo propertyInfo = _wrappedObject.GetType().GetRuntimeProperty(provider.Name);
                 if (propertyInfo == null)
                     return null;
 

@@ -23,7 +23,7 @@
 
         <Border
             Margin="3">
-            <ListBox ItemsSource="{Binding People}" SelectedItem="{Binding SelectedPerson}">
+            <ListBox ItemsSource="{Binding People}" SelectedItem="{Binding SelectedPerson, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FullName}"/>
@@ -51,25 +51,25 @@
                     <TextBlock Text="Prefix:"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="1">
-                    <ComboBox ItemsSource="{Binding Prefixes}" SelectedItem="{Binding Prefix}"/>
+                    <ComboBox ItemsSource="{Binding Prefixes}" SelectedItem="{Binding Prefix, Mode=TwoWay}"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="0">
                     <TextBlock Text="First Name:"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="1">
-                    <TextBox Text="{Binding First}"/>
+                    <TextBox Text="{Binding First, Mode=TwoWay}"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="0">
                     <TextBlock Text="Last Name:"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1">
-                    <TextBox Text="{Binding Last}"/>
+                    <TextBox Text="{Binding Last, Mode=TwoWay}"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="0">
                     <TextBlock Text="Gender:"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="1">
-                    <ComboBox SelectedValue="{Binding Gender}">
+                    <ComboBox SelectedValue="{Binding Gender, Mode=TwoWay}">
                         <ComboBoxItem>Male</ComboBoxItem>
                         <ComboBoxItem>Female</ComboBoxItem>
                     </ComboBox>
@@ -78,7 +78,7 @@
                     <TextBlock Text="Spouse:"/>
                 </Border>
                 <Border Grid.Row="4" Grid.Column="1">
-                    <ComboBox ItemsSource="{Binding PotentialSpouses}" SelectedItem="{Binding Spouse}">
+                    <ComboBox ItemsSource="{Binding PotentialSpouses}" SelectedItem="{Binding Spouse, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding FullName}"/>
