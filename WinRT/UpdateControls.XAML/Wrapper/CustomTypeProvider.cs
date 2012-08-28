@@ -10,6 +10,7 @@ namespace UpdateControls.XAML.Wrapper
     class CustomTypeProvider : IXamlType
     {
         private Type _type;
+        private Dictionary<string, CustomMemberProvider> _members = new Dictionary<string, CustomMemberProvider>();
 
         public CustomTypeProvider(Type type)
         {
@@ -53,7 +54,13 @@ namespace UpdateControls.XAML.Wrapper
 
         public IXamlMember GetMember(string name)
         {
-            return new CustomMemberProvider(_type, name);
+            CustomMemberProvider member;
+            if (!_members.TryGetValue(name, out member))
+            {
+                member = new CustomMemberProvider(this, _type, name);
+                _members.Add(name, member);
+            }
+            return member;
         }
 
         public bool IsArray

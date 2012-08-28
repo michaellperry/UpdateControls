@@ -10,10 +10,9 @@ namespace UpdateControls.XAML.Wrapper
     internal interface IDependentObject
     {
         object GetWrappedObject();
-        bool TryGetMember(string name, out object result);
-        bool TrySetMember(string name, object value);
         bool Equals(object obj);
         int GetHashCode();
+        DependentProperty GetDependentProperty(CustomMemberProvider member);
         string ToString();
         void FirePropertyChanged(string propertyName);
     }
@@ -21,34 +20,11 @@ namespace UpdateControls.XAML.Wrapper
     {
         private readonly T _wrappedObject;
 
-        private Dictionary<string, DependentProperty> _propertyByName = new Dictionary<string, DependentProperty>();
+        private Dictionary<CustomMemberProvider, DependentProperty> _propertyByName = new Dictionary<CustomMemberProvider, DependentProperty>();
 
         public DependentObject(T wrappedObject)
         {
             _wrappedObject = wrappedObject;
-        }
-
-        public bool TryGetMember(string name, out object result)
-        {
-            DependentProperty dependentProperty = GetDependentProperty(name);
-            if (dependentProperty == null)
-            {
-                result = null;
-                return false;
-            }
-
-            result = dependentProperty.GetValue();
-            return true;
-        }
-
-        public bool TrySetMember(string name, object value)
-        {
-            DependentProperty dependentProperty = GetDependentProperty(name);
-            if (dependentProperty == null)
-                return false;
-
-            dependentProperty.SetValue(value);
-            return true;
         }
 
         public override bool Equals(object obj)
@@ -84,17 +60,17 @@ namespace UpdateControls.XAML.Wrapper
             return _wrappedObject;
         }
 
-        private DependentProperty GetDependentProperty(string propertyName)
+        public DependentProperty GetDependentProperty(CustomMemberProvider provider)
         {
             DependentProperty dependentProperty;
-            if (!_propertyByName.TryGetValue(propertyName, out dependentProperty))
+            if (!_propertyByName.TryGetValue(provider, out dependentProperty))
             {
-                PropertyInfo propertyInfo = _wrappedObject.GetType().GetTypeInfo().GetDeclaredProperty(propertyName);
+                PropertyInfo propertyInfo = _wrappedObject.GetType().GetTypeInfo().GetDeclaredProperty(provider.Name);
                 if (propertyInfo == null)
                     return null;
 
-                dependentProperty = new DependentProperty(this, _wrappedObject, propertyInfo);
-                _propertyByName.Add(propertyName, dependentProperty);
+                dependentProperty = new DependentProperty(this, _wrappedObject, propertyInfo, provider);
+                _propertyByName.Add(provider, dependentProperty);
             }
             return dependentProperty;
         }

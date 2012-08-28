@@ -16,27 +16,12 @@ namespace UpdateControls.XAML.Wrapper
 {
     class DependentProperty
     {
-        private static readonly Type[] Primitives = new Type[]
-        {
-			typeof(object),
-            typeof(string),
-            typeof(ICommand)
-        };
-
-        private static readonly Type[] Bindables = new Type[]
-        {
-            typeof(DependencyObject),
-            typeof(INotifyPropertyChanged),
-            typeof(INotifyCollectionChanged)
-        };
-
         private static readonly object[] EmptyIndexer = new object[0];
 
         private readonly IDependentObject _wrapper;
         private readonly object _wrappedObject;
         private readonly PropertyInfo _propertyInfo;
-        private readonly bool _isPrimitive;
-        private readonly bool _isCollection;
+        private readonly CustomMemberProvider _provider;
 
         private object _value;
         private List<object> _sourceCollection;
@@ -44,28 +29,17 @@ namespace UpdateControls.XAML.Wrapper
         private Dependent _depValue;
         private bool _initialized = false;
         
-        public DependentProperty(IDependentObject wrapper, object wrappedObject, PropertyInfo propertyInfo)
+        public DependentProperty(IDependentObject wrapper, object wrappedObject, PropertyInfo propertyInfo, CustomMemberProvider provider)
         {
             _wrapper = wrapper;
             _wrappedObject = wrappedObject;
             _propertyInfo = propertyInfo;
+            _provider = provider;
 
-            if (IsPrimitive(_propertyInfo.PropertyType))
+            if (_provider.IsCollection)
             {
-                _isCollection = false;
-                _isPrimitive = true;
-            }
-            else if (IsCollectionType(_propertyInfo.PropertyType))
-            {
-                _isCollection = true;
-                _isPrimitive = IsPrimitive(GetItemType(_propertyInfo.PropertyType));
                 _collection = new ObservableCollection<object>();
                 _value = _collection;
-            }
-            else
-            {
-                _isCollection = false;
-                _isPrimitive = false;
             }
 
             _depValue = new Dependent(UpdateValue);
@@ -84,7 +58,7 @@ namespace UpdateControls.XAML.Wrapper
 
             try
             {
-                if (!_isCollection)
+                if (!_provider.IsCollection)
                     _propertyInfo.SetValue(_wrappedObject, UnwrapValue(value), EmptyIndexer);
             }
             finally
@@ -99,7 +73,7 @@ namespace UpdateControls.XAML.Wrapper
 
         private void UpdateValue()
         {
-            if (_isCollection)
+            if (_provider.IsCollection)
             {
                 _sourceCollection = ((IEnumerable)_propertyInfo.GetValue(_wrappedObject, EmptyIndexer)).OfType<object>().ToList();
             }
@@ -124,7 +98,7 @@ namespace UpdateControls.XAML.Wrapper
 
         private void UpdateNow()
         {
-            if (_isCollection)
+            if (_provider.IsCollection)
             {
                 _depValue.OnGet();
 
@@ -175,7 +149,7 @@ namespace UpdateControls.XAML.Wrapper
         {
             if (value == null)
                 return null;
-            else if (_isPrimitive)
+            else if (_provider.IsPrimitive)
                 return value;
             else
                 return ForView.Wrap(value);
@@ -185,35 +159,10 @@ namespace UpdateControls.XAML.Wrapper
         {
             if (value == null)
                 return null;
-            else if (_isPrimitive)
+            else if (_provider.IsPrimitive)
                 return value;
             else
                 return ((IDependentObject)value).GetWrappedObject();
-        }
-
-        private static bool IsCollectionType(Type propertyType)
-        {
-            return typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(propertyType.GetTypeInfo());
-        }
-
-        private static Type GetItemType(Type collectionType)
-        {
-            if (collectionType.GetTypeInfo().GenericTypeArguments.Length == 1)
-                return collectionType.GetTypeInfo().GenericTypeArguments[0];
-            else
-                return typeof(object);
-        }
-
-        private static bool IsPrimitive(Type type)
-        {
-            return
-                type.GetTypeInfo().IsValueType ||
-                type.GetTypeInfo().IsPrimitive ||
-                (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ||
-                Primitives.Contains(type) ||
-                // Don't wrap objects that are already bindable
-                Bindables.Any(b => b.GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()));
-            ;
         }
     }
 }

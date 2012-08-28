@@ -9,6 +9,8 @@ namespace UpdateControls.XAML.Wrapper
 {
     public class CustomMetadataProvider : IXamlMetadataProvider
     {
+        private static Dictionary<Type, IXamlType> _xamlTypeFromCLR = new Dictionary<Type, IXamlType>();
+
         public IXamlType GetXamlType(string fullName)
         {
             return null;
@@ -20,10 +22,25 @@ namespace UpdateControls.XAML.Wrapper
             {
                 if (type.GetGenericTypeDefinition() == typeof(DependentObject<>))
                 {
-                    return new CustomTypeProvider(type.GenericTypeArguments[0]);
+                    Type wrappedType = type.GenericTypeArguments[0];
+                    return GetDependentType(wrappedType);
                 }
             }
             return null;
+        }
+
+        public static IXamlType GetDependentType(Type wrappedType)
+        {
+            lock (_xamlTypeFromCLR)
+            {
+                IXamlType xamlType;
+                if (!_xamlTypeFromCLR.TryGetValue(wrappedType, out xamlType))
+                {
+                    xamlType = new CustomTypeProvider(wrappedType);
+                    _xamlTypeFromCLR.Add(wrappedType, xamlType);
+                }
+                return xamlType;
+            }
         }
 
         public XmlnsDefinition[] GetXmlnsDefinitions()
