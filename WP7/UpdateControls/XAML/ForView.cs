@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using UpdateControls.XAML.Wrapper;
 using System;
 using System.Linq;
+using System.Windows.Input;
+using Microsoft.Phone.Shell;
 
 namespace UpdateControls.XAML
 {
@@ -53,6 +55,24 @@ namespace UpdateControls.XAML
                 wrapper == null
                     ? null
                     : wrapper.WrappedObject as TWrappedObjectType;
+        }
+
+        public static void BindAppBarItem(object item, ICommand command)
+        {
+            var button = item as IApplicationBarMenuItem;
+            if (button == null || command == null)
+                return;
+
+            button.Click += delegate
+            {
+                command.Execute(null);
+            };
+
+            command.CanExecuteChanged += delegate
+            {
+                button.IsEnabled = command.CanExecute(null);
+            };
+            button.IsEnabled = command.CanExecute(null);
         }
     }
 }
