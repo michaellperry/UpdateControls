@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using UpdateControls.Fields;
 using UpdateControls.XAML;
 
 namespace UpdateControls.XAML.Test
@@ -16,11 +17,6 @@ namespace UpdateControls.XAML.Test
 			_contactList = contactList;
 			_navigation = navigation;
 		}
-
-        public DataGridContactListViewModel DataGridVM
-        {
-            get { return new DataGridContactListViewModel(_contactList); }
-        }
 
 		public IEnumerable<PersonViewModel> People
 		{

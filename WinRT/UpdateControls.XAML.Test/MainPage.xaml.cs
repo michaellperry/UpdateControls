@@ -36,10 +36,12 @@ namespace UpdateControls.XAML.Test
             var contactList = new ContactList();
 
             Person mike = contactList.NewPerson();
+            mike.Prefix = PrefixID.Mr;
             mike.First = "Michael";
             mike.Last = "Perry";
             mike.Gender = GenderEnum.Male;
             Person jenny = contactList.NewPerson();
+            jenny.Prefix = PrefixID.Mrs;
             jenny.First = "Jennifer";
             jenny.Last = "Perry";
             jenny.Gender = GenderEnum.Female;

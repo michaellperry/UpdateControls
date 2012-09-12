@@ -121,7 +121,6 @@
     <Compile Include="ContactList.cs" />
     <Compile Include="ContactListNavigationModel.cs" />
     <Compile Include="ContactListViewModel.cs" />
-    <Compile Include="ContactListViewModelSansWrapper.cs" />
     <Compile Include="DataGridPersonViewModel.cs" />
     <Compile Include="GenderEnum.cs" />
     <Compile Include="ISpouseViewModel.cs" />

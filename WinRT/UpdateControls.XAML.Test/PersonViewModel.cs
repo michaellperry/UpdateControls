@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ComponentModel;
 
 namespace UpdateControls.XAML.Test
 {
-    public class PersonViewModel : PersonViewModelBase, INotifyDataErrorInfo
+    public class PersonViewModel : PersonViewModelBase
 	{
 		private ContactList _contactList;
 
@@ -45,38 +44,5 @@ namespace UpdateControls.XAML.Test
 			else
 				return viewModel.Person;
 		}
-
-		public string Error
-		{
-			get { return null; }
-		}
-
-		public string this[string columnName]
-		{
-			get
-			{
-				if (columnName == "Last")
-					return string.IsNullOrEmpty(this.Last) ? "Last name is required." : null;
-				else if (columnName == "First")
-					return string.IsNullOrEmpty(this.First) ? "First name is required." : null;
-				else
-					return null;
-			}
-		}
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-        public System.Collections.IEnumerable GetErrors(string propertyName)
-        {
-            if (propertyName == "Last" && string.IsNullOrEmpty(this.Last))
-                yield return "Last name is required.";
-            else if (propertyName == "First" && string.IsNullOrEmpty(this.First))
-                yield return "First name is required.";
-        }
-
-        public bool HasErrors
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }

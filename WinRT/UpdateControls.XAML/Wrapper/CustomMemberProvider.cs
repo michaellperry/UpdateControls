@@ -121,12 +121,18 @@ namespace UpdateControls.XAML.Wrapper
 
         public IXamlType TargetType
         {
-            get { throw new NotImplementedException(); }
+            get { return _owner; }
         }
 
         public IXamlType Type
         {
-            get { return _owner; }
+            get
+            {
+                return
+                    _isPrimitive
+                        ? (IXamlType)new PrimitiveTypeProvider(_propertyInfo.PropertyType)
+                        : _owner;
+            }
         }
 
         private static bool IsCollectionType(TypeInfo propertyType)

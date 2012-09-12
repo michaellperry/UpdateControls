@@ -40,13 +40,5 @@ namespace UpdateControls.XAML.Test
         {
             return new SpouseViewModel(spouse);
         }
-
-        public static Person Unwrap(ISpouseViewModel viewModel)
-        {
-            if (viewModel == null)
-                return null;
-            else
-                return viewModel.Spouse;
-        }
     }
 }

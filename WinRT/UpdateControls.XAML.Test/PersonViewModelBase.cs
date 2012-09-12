@@ -59,7 +59,7 @@ namespace UpdateControls.XAML.Test
 		public ISpouseViewModel Spouse
 		{
 			get { return SpouseViewModel.Wrap(_person.Spouse); }
-			set { Person.Marry(_person, SpouseViewModel.Unwrap(value)); }
+			set { if (value != null) Person.Marry(_person, value.Spouse); }
 		}
 
 		public override bool Equals(object obj)
