@@ -38,29 +38,45 @@ namespace UpdateControls.XAML.Wrapper
         private readonly bool _isPrimitive;
         private readonly bool _isCollection;
 
-        public CustomMemberProvider(CustomTypeProvider owner, Type type, string name)
+        private CustomMemberProvider(CustomTypeProvider owner, Type type, string name, PropertyInfo propertyInfo, bool isPrimitive, bool isCollection)
         {
             _owner = owner;
-            _name = name;
             _type = type;
+            _name = name;
+            _propertyInfo = propertyInfo;
+            _isPrimitive = isPrimitive;
+            _isCollection = isCollection;
+        }
 
-            _propertyInfo = _type.GetRuntimeProperty(_name);
-            var propertyTypeInfo = _propertyInfo.PropertyType.GetTypeInfo();
+        public static CustomMemberProvider For(CustomTypeProvider owner, Type type, string name)
+        {
+            var propertyInfo = type.GetRuntimeProperty(name);
+            if (propertyInfo == null)
+            {
+                System.Diagnostics.Debug.WriteLine(String.Format("The property {0} is not found in class {1}.", name, type));
+                return null;
+            }
+            var propertyTypeInfo = propertyInfo.PropertyType.GetTypeInfo();
+
+            bool isCollection;
+            bool isPrimitive;
             if (TypeIsPrimitive(propertyTypeInfo))
             {
-                _isCollection = false;
-                _isPrimitive = true;
+                isCollection = false;
+                isPrimitive = true;
             }
             else if (IsCollectionType(propertyTypeInfo))
             {
-                _isCollection = true;
-                _isPrimitive = TypeIsPrimitive(GetItemType(propertyTypeInfo));
+                isCollection = true;
+                isPrimitive = TypeIsPrimitive(GetItemType(propertyTypeInfo));
             }
             else
             {
-                _isCollection = false;
-                _isPrimitive = false;
+                isCollection = false;
+                isPrimitive = false;
             }
+
+            return new CustomMemberProvider(owner, type, name, propertyInfo, isPrimitive, isCollection);
         }
 
         public bool IsCollection

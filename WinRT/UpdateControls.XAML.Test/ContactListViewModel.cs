@@ -7,10 +7,17 @@ using UpdateControls.XAML;
 
 namespace UpdateControls.XAML.Test
 {
-    public class ContactListViewModel
+    public class ContactListViewModel : ViewModelBase
 	{
 		private ContactList _contactList;
 		private ContactListNavigationModel _navigation;
+
+        private static List<PrefixViewModel> _prefixes = Enum.GetValues(typeof(PrefixID))
+            .OfType<PrefixID>()
+            .Select(p => new PrefixViewModel(p))
+            .ToList();
+
+        public static IEnumerable<PrefixViewModel> AllPrefixes { get { return _prefixes; } }
 
 		public ContactListViewModel(ContactList contactList, ContactListNavigationModel navigation)
 		{
@@ -20,19 +27,33 @@ namespace UpdateControls.XAML.Test
 
 		public IEnumerable<PersonViewModel> People
 		{
-			get { return _contactList.People.Select(p => PersonViewModel.Wrap(p, _contactList)); }
+			get { return GetCollection(() => _contactList.People.Select(p => PersonViewModel.Wrap(p, _contactList))); }
 		}
 
 		public PersonViewModel SelectedPerson
 		{
-			get { return PersonViewModel.Wrap(_navigation.SelectedPerson, _contactList); }
+			get { return Get(() => PersonViewModel.Wrap(_navigation.SelectedPerson, _contactList)); }
 			set { _navigation.SelectedPerson = PersonViewModel.Unwrap(value); }
 		}
 
 		public bool IsPersonSelected
 		{
-			get { return _navigation.SelectedPerson != null; }
+			get { return Get(() => _navigation.SelectedPerson != null); }
 		}
+
+        public IEnumerable<PrefixViewModel> Prefixes
+        {
+            get { return GetCollection(() => _prefixes); }
+        }
+
+        public IEnumerable<GenderEnum> GenderOptions
+        {
+            get
+            {
+                yield return GenderEnum.Male;
+                yield return GenderEnum.Female;
+            }
+        }
 
 		public ICommand NewPerson
 		{

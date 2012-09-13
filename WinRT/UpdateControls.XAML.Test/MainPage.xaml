@@ -12,7 +12,7 @@
         <local:DebugConverter x:Key="DebugConverter"/>
     </Page.Resources>
 
-    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition
                 Width="250" />
@@ -55,7 +55,7 @@
                     <TextBlock Text="Prefix:"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="1">
-                    <ComboBox ItemsSource="{Binding Prefixes}" SelectedItem="{Binding Prefix, Mode=TwoWay}"/>
+                    <ComboBox ItemsSource="{Binding DataContext.Prefixes, ElementName=LayoutRoot}" SelectedItem="{Binding Prefix, Mode=TwoWay}"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="0">
                     <TextBlock Text="First Name:"/>
@@ -73,7 +73,7 @@
                     <TextBlock Text="Gender:"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="1">
-                    <ComboBox ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding Gender, Mode=TwoWay, Converter={StaticResource DebugConverter}}"/>
+                    <ComboBox ItemsSource="{Binding DataContext.GenderOptions, ElementName=LayoutRoot}" SelectedItem="{Binding Gender, Mode=TwoWay, Converter={StaticResource DebugConverter}}"/>
                 </Border>
                 <Border Grid.Row="4" Grid.Column="0">
                     <TextBlock Text="Spouse:"/>

@@ -47,7 +47,7 @@ namespace UpdateControls.XAML.Test
             jenny.Gender = GenderEnum.Female;
             Person.Marry(mike, jenny);
 
-            DataContext = ForView.Wrap(new ContactListViewModel(contactList, new ContactListNavigationModel()));
+            DataContext = new ContactListViewModel(contactList, new ContactListNavigationModel());
         }
     }
 }

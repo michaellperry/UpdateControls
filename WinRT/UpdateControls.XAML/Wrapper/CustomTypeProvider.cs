@@ -59,8 +59,9 @@ namespace UpdateControls.XAML.Wrapper
             CustomMemberProvider member;
             if (!_members.TryGetValue(name, out member))
             {
-                member = new CustomMemberProvider(this, _type, name);
-                _members.Add(name, member);
+                member = CustomMemberProvider.For(this, _type, name);
+                if (member != null)
+                    _members.Add(name, member);
             }
             return member;
         }

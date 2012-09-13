@@ -4,13 +4,9 @@ using System.Collections.Generic;
 
 namespace UpdateControls.XAML.Test
 {
-    public class PersonViewModelBase
+    public class PersonViewModelBase : ViewModelBase
 	{
 		private Person _person;
-		private static List<PrefixViewModel> _prefixes = Enum.GetValues(typeof(PrefixID))
-			.OfType<PrefixID>()
-			.Select(p => new PrefixViewModel(p))
-			.ToList();
 
 		public PersonViewModelBase(Person person)
 		{
@@ -24,50 +20,36 @@ namespace UpdateControls.XAML.Test
 
 		public PrefixViewModel Prefix
 		{
-			get { return _prefixes.First(p => p.Prefix == _person.Prefix); }
-			set { if (value != null) _person.Prefix = value.Prefix; }
-		}
-
-		public IEnumerable<PrefixViewModel> Prefixes
-		{
-			get { return _prefixes; }
+			get { return Get(() => ContactListViewModel.AllPrefixes.First(p => p.Prefix == _person.Prefix)); }
+			set { _person.Prefix = value.Prefix; }
 		}
 
 		public string First
 		{
-			get { return _person.First; }
+			get { return Get(() => _person.First); }
 			set { _person.First = value.Trim(); }
 		}
 
 		public string Last
 		{
-			get { return _person.Last; }
+			get { return Get(() => _person.Last); }
 			set { _person.Last = value.Trim(); }
 		}
 
 		public string FullName
 		{
-			get { return _person.FullName; }
+			get { return Get(() => _person.FullName); }
 		}
 
-        public IEnumerable<GenderOption> GenderOptions
-        {
-            get
-            {
-                yield return new GenderOption(GenderEnum.Male);
-                yield return new GenderOption(GenderEnum.Female);
-            }
-        }
-
-        public GenderOption Gender
+        public GenderEnum Gender
 		{
-            get { return new GenderOption(_person.Gender); }
-			set { if (value != null) _person.Gender = value.Gender; }
+            get { return Get(() => _person.Gender); }
+			set { _person.Gender = value; }
 		}
 
 		public ISpouseViewModel Spouse
 		{
-			get { return SpouseViewModel.Wrap(_person.Spouse); }
+			get { return Get(() => SpouseViewModel.Wrap(_person.Spouse)); }
 			set { if (value != null) Person.Marry(_person, value.Spouse); }
 		}
 

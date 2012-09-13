@@ -18,14 +18,14 @@ namespace UpdateControls.XAML.Test
 		{
 			get
 			{
-                return
+                return GetCollection(() =>
                     // Return all people of the opposite gender.
                     // Include an option to be unmarried.
                     new List<Person>() { null }
                     .Union(_contactList.People
                         .Where(p => p.Gender != Person.Gender)
                     )
-                    .Select(p => (ISpouseViewModel)SpouseViewModel.Wrap(p));
+                    .Select(p => (ISpouseViewModel)SpouseViewModel.Wrap(p)));
 			}
 		}
 
