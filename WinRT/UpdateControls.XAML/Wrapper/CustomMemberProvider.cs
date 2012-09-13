@@ -129,9 +129,9 @@ namespace UpdateControls.XAML.Wrapper
             get
             {
                 return
-                    _isPrimitive
+                    _isPrimitive || _isCollection
                         ? (IXamlType)new PrimitiveTypeProvider(_propertyInfo.PropertyType)
-                        : _owner;
+                        : CustomMetadataProvider.GetDependentType(_propertyInfo.PropertyType);
             }
         }
 

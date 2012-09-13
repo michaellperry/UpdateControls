@@ -7,6 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    
+    <Page.Resources>
+        <local:DebugConverter x:Key="DebugConverter"/>
+    </Page.Resources>
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
@@ -69,10 +73,7 @@
                     <TextBlock Text="Gender:"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="1">
-                    <ComboBox SelectedValue="{Binding Gender, Mode=TwoWay}">
-                        <ComboBoxItem>Male</ComboBoxItem>
-                        <ComboBoxItem>Female</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding Gender, Mode=TwoWay, Converter={StaticResource DebugConverter}}"/>
                 </Border>
                 <Border Grid.Row="4" Grid.Column="0">
                     <TextBlock Text="Spouse:"/>

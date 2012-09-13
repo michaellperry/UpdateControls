@@ -10,11 +10,13 @@ namespace UpdateControls.XAML.Wrapper
     class CustomTypeProvider : IXamlType
     {
         private Type _type;
+        private Type _underlyingType;
         private Dictionary<string, CustomMemberProvider> _members = new Dictionary<string, CustomMemberProvider>();
 
         public CustomTypeProvider(Type type)
         {
             _type = type;
+            _underlyingType = typeof(DependentObject<>).MakeGenericType(type);
         }
 
         public object ActivateInstance()
@@ -109,7 +111,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public Type UnderlyingType
         {
-            get { return _type; }
+            get { return _underlyingType; }
         }
     }
 }

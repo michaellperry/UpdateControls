@@ -122,7 +122,9 @@
     <Compile Include="ContactListNavigationModel.cs" />
     <Compile Include="ContactListViewModel.cs" />
     <Compile Include="DataGridPersonViewModel.cs" />
+    <Compile Include="DebugConverter.cs" />
     <Compile Include="GenderEnum.cs" />
+    <Compile Include="GenderOption.cs" />
     <Compile Include="ISpouseViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

@@ -13,5 +13,15 @@ namespace UpdateControls.XAML
                 typeof(DependentObject<>).MakeGenericType(viewModel.GetType()),
                 viewModel);
         }
+
+        public static TWrappedObjectType Unwrap<TWrappedObjectType>(object dataContext)
+            where TWrappedObjectType : class
+        {
+            IDependentObject wrapper = dataContext as IDependentObject;
+            return
+                wrapper == null
+                    ? default(TWrappedObjectType)
+                    : wrapper.GetWrappedObject() as TWrappedObjectType;
+        }
     }
 }

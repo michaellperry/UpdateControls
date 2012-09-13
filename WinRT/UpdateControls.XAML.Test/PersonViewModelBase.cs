@@ -50,10 +50,19 @@ namespace UpdateControls.XAML.Test
 			get { return _person.FullName; }
 		}
 
-		public string Gender
+        public IEnumerable<GenderOption> GenderOptions
+        {
+            get
+            {
+                yield return new GenderOption(GenderEnum.Male);
+                yield return new GenderOption(GenderEnum.Female);
+            }
+        }
+
+        public GenderOption Gender
 		{
-			get { return _person.Gender == GenderEnum.Male ? "Male" : "Female"; }
-			set { _person.Gender = value == "Male" ? GenderEnum.Male : GenderEnum.Female; }
+            get { return new GenderOption(_person.Gender); }
+			set { if (value != null) _person.Gender = value.Gender; }
 		}
 
 		public ISpouseViewModel Spouse
