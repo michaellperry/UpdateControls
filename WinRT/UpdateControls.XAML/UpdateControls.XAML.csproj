@@ -110,6 +110,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Desktop\Solution Files\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="ForView.cs" />
     <Compile Include="MakeCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +130,9 @@
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)..\NuGet\Core\lib\NetCore45\</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

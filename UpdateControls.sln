@@ -105,6 +105,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "WinR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML.Test", "WinRT\UpdateControls.XAML.Test\UpdateControls.XAML.Test.csproj", "{B32DE130-1DC6-4D41-8575-B0CE1A388CFA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{4296EB65-DEA6-471D-810E-63E97B6E7F3F}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\App\content\Models\Document.cs.pp = NuGet\App\content\Models\Document.cs.pp
+		NuGet\App\content\Models\Item.cs.pp = NuGet\App\content\Models\Item.cs.pp
+		NuGet\App\content\ViewModels\ItemHeader.cs.pp = NuGet\App\content\ViewModels\ItemHeader.cs.pp
+		NuGet\App\content\ViewModels\ItemViewModel.cs.pp = NuGet\App\content\ViewModels\ItemViewModel.cs.pp
+		NuGet\App\content\ViewModels\MainViewModel.cs.pp = NuGet\App\content\ViewModels\MainViewModel.cs.pp
+		NuGet\App\content\Readme_UpdateControls.txt.pp = NuGet\App\content\Readme_UpdateControls.txt.pp
+		NuGet\App\content\Models\Selection.cs.pp = NuGet\App\content\Models\Selection.cs.pp
+		NuGet\App\UpdateControls.App.nuspec = NuGet\App\UpdateControls.App.nuspec
+		NuGet\App\content\ViewModels\ViewModelLocator.cs.pp = NuGet\App\content\ViewModels\ViewModelLocator.cs.pp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 29
@@ -372,6 +385,7 @@ Global
 		{151284DC-04CE-4175-A0F4-5FCC761AA2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{151284DC-04CE-4175-A0F4-5FCC761AA2DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{151284DC-04CE-4175-A0F4-5FCC761AA2DB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{151284DC-04CE-4175-A0F4-5FCC761AA2DB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{151284DC-04CE-4175-A0F4-5FCC761AA2DB}.Release|x86.ActiveCfg = Release|Any CPU
 		{55743A4D-DBD8-4B34-B02A-49B8310336A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{55743A4D-DBD8-4B34-B02A-49B8310336A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -412,6 +426,7 @@ Global
 		{9931B0A1-9BC2-4500-A4C5-AD1B3FD35937}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9931B0A1-9BC2-4500-A4C5-AD1B3FD35937}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{9931B0A1-9BC2-4500-A4C5-AD1B3FD35937}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9931B0A1-9BC2-4500-A4C5-AD1B3FD35937}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9931B0A1-9BC2-4500-A4C5-AD1B3FD35937}.Release|x86.ActiveCfg = Release|Any CPU
 		{97DAD126-CC3E-4BA9-BADF-CC77EE421F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97DAD126-CC3E-4BA9-BADF-CC77EE421F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -432,6 +447,7 @@ Global
 		{308C84E5-30C6-451C-995C-4696259BB46C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{308C84E5-30C6-451C-995C-4696259BB46C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{308C84E5-30C6-451C-995C-4696259BB46C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{308C84E5-30C6-451C-995C-4696259BB46C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{308C84E5-30C6-451C-995C-4696259BB46C}.Release|x86.ActiveCfg = Release|Any CPU
 		{A16D5461-4B69-4835-A223-3E7284982C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A16D5461-4B69-4835-A223-3E7284982C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -460,6 +476,7 @@ Global
 		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D}.Release|x86.ActiveCfg = Release|Any CPU
 		{31F2EF96-7815-4D7F-A339-05362C67D757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31F2EF96-7815-4D7F-A339-05362C67D757}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -540,6 +557,7 @@ Global
 		{308C84E5-30C6-451C-995C-4696259BB46C} = {306549E8-C08A-47F3-BE75-0905C5FCF972}
 		{59A53238-C0F6-4BFB-B243-EF62521F04FE} = {B72F82F3-55EA-49AA-951F-B2B7AAE50E7F}
 		{FFB3EF15-CD29-4801-A1CC-533223F382CD} = {B72F82F3-55EA-49AA-951F-B2B7AAE50E7F}
+		{4296EB65-DEA6-471D-810E-63E97B6E7F3F} = {B72F82F3-55EA-49AA-951F-B2B7AAE50E7F}
 		{A16D5461-4B69-4835-A223-3E7284982C7D} = {5E64EDE1-1CFA-4793-8A4C-0CF81E2807CB}
 		{820C411D-6CDA-4576-9394-5FBEB9625434} = {5E64EDE1-1CFA-4793-8A4C-0CF81E2807CB}
 		{B1ABA784-1DFD-48BB-9215-C0E0E2D13F6D} = {6B7586BF-B91D-4C9C-B4C9-4631E53CAB94}
