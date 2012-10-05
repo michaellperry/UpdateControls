@@ -274,19 +274,19 @@ namespace UpdateControls
 
 		internal void MakeOutOfDate()
 		{
+            bool wasUpToDate = false;
 			lock ( this )
 			{
 				if ( _status == StatusType.UP_TO_DATE ||
 					_status == StatusType.UPDATING )
 				{
-					// Tell all precedents to forget about me.
+                    wasUpToDate = true;
+
+                    // Tell all precedents to forget about me.
                     for (PrecedentNode current = _firstPrecedent; current != null; current = current.Next)
                         current.Precedent.RemoveDependent(this);
 
                     _firstPrecedent = null;
-
-					// Make all indirect dependents out-of-date, too.
-					MakeDependentsOutOfDate();
 
 					if ( _status == StatusType.UP_TO_DATE )
 						_status = StatusType.OUT_OF_DATE;
@@ -297,7 +297,11 @@ namespace UpdateControls
                         Invalidated();
 				}
 			}
-		}
+
+            if (wasUpToDate)
+                // Make all indirect dependents out-of-date, too.
+                MakeDependentsOutOfDate();
+        }
 
 		internal bool MakeUpToDate()
 		{
