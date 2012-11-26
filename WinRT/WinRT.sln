@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "..\P
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs07
 		SccLocalPath0 = .
@@ -40,6 +40,10 @@ Global
 		SccProjectTopLevelParentUniqueName5 = WinRT.sln
 		SccProjectName5 = ../Portable/WinRT/UpdateControls.XAML
 		SccLocalPath5 = ..\\Portable\\WinRT\\UpdateControls.XAML
+		SccProjectUniqueName6 = ..\\Portable\\UpdateControls\\UpdateControls.csproj
+		SccProjectTopLevelParentUniqueName6 = WinRT.sln
+		SccProjectName6 = ../Portable/UpdateControls
+		SccLocalPath6 = ..\\Portable\\UpdateControls
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
