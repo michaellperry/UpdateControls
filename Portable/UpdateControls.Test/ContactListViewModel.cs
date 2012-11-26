@@ -5,17 +5,22 @@ using System.Windows.Input;
 using UpdateControls.Fields;
 using UpdateControls.XAML;
 
-namespace UpdateControls.XAML.Test
+namespace UpdateControls.Test
 {
-    public class ContactListViewModel : ViewModelBase
+    public class ContactListViewModel
 	{
 		private ContactList _contactList;
 		private ContactListNavigationModel _navigation;
 
-        private static List<PrefixViewModel> _prefixes = Enum.GetValues(typeof(PrefixID))
-            .OfType<PrefixID>()
-            .Select(p => new PrefixViewModel(p))
-            .ToList();
+        private static List<PrefixViewModel> _prefixes =
+            new List<PrefixViewModel>
+            {
+                new PrefixViewModel(PrefixID.None),
+                new PrefixViewModel(PrefixID.Mr),
+                new PrefixViewModel(PrefixID.Mrs),
+                new PrefixViewModel(PrefixID.Miss),
+                new PrefixViewModel(PrefixID.Dr)
+            };
 
         public static IEnumerable<PrefixViewModel> AllPrefixes { get { return _prefixes; } }
 
@@ -27,23 +32,23 @@ namespace UpdateControls.XAML.Test
 
 		public IEnumerable<PersonViewModel> People
 		{
-			get { return GetCollection(() => _contactList.People.Select(p => PersonViewModel.Wrap(p, _contactList))); }
+			get { return _contactList.People.Select(p => PersonViewModel.Wrap(p, _contactList)); }
 		}
 
 		public PersonViewModel SelectedPerson
 		{
-			get { return Get(() => PersonViewModel.Wrap(_navigation.SelectedPerson, _contactList)); }
+			get { return PersonViewModel.Wrap(_navigation.SelectedPerson, _contactList); }
 			set { _navigation.SelectedPerson = PersonViewModel.Unwrap(value); }
 		}
 
 		public bool IsPersonSelected
 		{
-			get { return Get(() => _navigation.SelectedPerson != null); }
+			get { return _navigation.SelectedPerson != null; }
 		}
 
         public IEnumerable<PrefixViewModel> Prefixes
         {
-            get { return GetCollection(() => _prefixes); }
+            get { return _prefixes; }
         }
 
         public IEnumerable<GenderEnum> GenderOptions
@@ -55,7 +60,7 @@ namespace UpdateControls.XAML.Test
             }
         }
 
-		public ICommand NewPerson
+		public System.Windows.Input.ICommand NewPerson
 		{
 			get
 			{

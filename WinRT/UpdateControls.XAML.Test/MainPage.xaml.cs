@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UpdateControls.Test;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -47,7 +48,8 @@ namespace UpdateControls.XAML.Test
             jenny.Gender = GenderEnum.Female;
             Person.Marry(mike, jenny);
 
-            DataContext = new ContactListViewModel(contactList, new ContactListNavigationModel());
+            ContactListViewModel viewModel = new ContactListViewModel(contactList, new ContactListNavigationModel());
+            DataContext = ForView.Wrap(viewModel);
         }
     }
 }

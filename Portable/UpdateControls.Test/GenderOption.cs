@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace UpdateControls.XAML.Test
+namespace UpdateControls.Test
 {
     public class GenderOption
     {

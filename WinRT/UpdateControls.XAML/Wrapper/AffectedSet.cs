@@ -3,9 +3,18 @@ using System.Collections.Generic;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class AffectedSet
+    public class AffectedSet
     {
+        private static Action<Action> _runOnUIThread;
         private static ThreadLocal<AffectedSet> _currentSet = new ThreadLocal<AffectedSet>();
+
+        public static void Initialize(Action<Action> runOnUIThread)
+        {
+            if (_runOnUIThread == null)
+            {
+                _runOnUIThread = runOnUIThread;
+            }
+        }
 
         public static AffectedSet Begin()
         {
@@ -19,27 +28,28 @@ namespace UpdateControls.XAML.Wrapper
             return currentSet;
         }
 
-        public static bool CaptureDependent(DependentProperty dependentProperty)
+        public static bool CaptureDependent(IUpdatable updatable)
         {
             AffectedSet currentSet = _currentSet.Get();
             if (currentSet != null)
             {
-                currentSet._dependentProperties.Add(dependentProperty);
+                currentSet._updatables.Add(updatable);
                 return true;
             }
             else
             {
+                _runOnUIThread(updatable.UpdateNow);
                 return false;
             }
         }
 
-        private List<DependentProperty> _dependentProperties = new List<DependentProperty>();
+        private List<IUpdatable> _updatables = new List<IUpdatable>();
 
-        public IEnumerable<DependentProperty> End()
+        public IEnumerable<IUpdatable> End()
         {
             System.Diagnostics.Debug.Assert(_currentSet.Get() == this);
             _currentSet.Set(null);
-            return _dependentProperties;
+            return _updatables;
         }
     }
 }

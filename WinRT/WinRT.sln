@@ -7,9 +7,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "Upda
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML.Test", "UpdateControls.XAML.Test\UpdateControls.XAML.Test.csproj", "{A1077BA7-8697-4816-8BE9-F26DF8E4198E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable", "Portable", "{3BD8EDF6-6E6E-4769-A277-A2A024B55E58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "..\Portable\UpdateControls\UpdateControls.csproj", "{0F197CDB-CF38-438B-90AD-1B4F0976061E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Test", "..\Portable\UpdateControls.Test\UpdateControls.Test.csproj", "{B107C9D8-0F56-4923-BDDD-92653EC82E5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WinRT", "WinRT", "{F39BBAC7-2753-48CF-AA85-3D52628F337E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "..\Portable\WinRT\UpdateControls.XAML\UpdateControls.XAML.csproj", "{6D17230D-75E8-41D5-B26C-6AD517E769FB}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs07
 		SccLocalPath0 = .
@@ -22,6 +32,14 @@ Global
 		SccProjectUniqueName3 = UpdateControls.XAML.Test\\UpdateControls.XAML.Test.csproj
 		SccProjectName3 = UpdateControls.XAML.Test
 		SccLocalPath3 = UpdateControls.XAML.Test
+		SccProjectUniqueName4 = ..\\Portable\\UpdateControls.Test\\UpdateControls.Test.csproj
+		SccProjectTopLevelParentUniqueName4 = WinRT.sln
+		SccProjectName4 = ../Portable/UpdateControls.Test
+		SccLocalPath4 = ..\\Portable\\UpdateControls.Test
+		SccProjectUniqueName5 = ..\\Portable\\WinRT\\UpdateControls.XAML\\UpdateControls.XAML.csproj
+		SccProjectTopLevelParentUniqueName5 = WinRT.sln
+		SccProjectName5 = ../Portable/WinRT/UpdateControls.XAML
+		SccLocalPath5 = ..\\Portable\\WinRT\\UpdateControls.XAML
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,8 +108,50 @@ Global
 		{A1077BA7-8697-4816-8BE9-F26DF8E4198E}.Release|x86.ActiveCfg = Release|x86
 		{A1077BA7-8697-4816-8BE9-F26DF8E4198E}.Release|x86.Build.0 = Release|x86
 		{A1077BA7-8697-4816-8BE9-F26DF8E4198E}.Release|x86.Deploy.0 = Release|x86
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Release|x64.ActiveCfg = Release|Any CPU
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E}.Release|x86.ActiveCfg = Release|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Release|x64.ActiveCfg = Release|Any CPU
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Debug|ARM.ActiveCfg = Debug|ARM
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Debug|ARM.Build.0 = Debug|ARM
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Debug|x64.ActiveCfg = Debug|x64
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Debug|x64.Build.0 = Debug|x64
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Debug|x86.ActiveCfg = Debug|x86
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Debug|x86.Build.0 = Debug|x86
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Release|ARM.ActiveCfg = Release|ARM
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Release|ARM.Build.0 = Release|ARM
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Release|x64.ActiveCfg = Release|x64
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Release|x64.Build.0 = Release|x64
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Release|x86.ActiveCfg = Release|x86
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F197CDB-CF38-438B-90AD-1B4F0976061E} = {3BD8EDF6-6E6E-4769-A277-A2A024B55E58}
+		{B107C9D8-0F56-4923-BDDD-92653EC82E5A} = {3BD8EDF6-6E6E-4769-A277-A2A024B55E58}
+		{F39BBAC7-2753-48CF-AA85-3D52628F337E} = {3BD8EDF6-6E6E-4769-A277-A2A024B55E58}
+		{6D17230D-75E8-41D5-B26C-6AD517E769FB} = {F39BBAC7-2753-48CF-AA85-3D52628F337E}
 	EndGlobalSection
 EndGlobal

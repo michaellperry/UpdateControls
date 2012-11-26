@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UpdateControls;
 
-namespace UpdateControls.XAML.Test
+namespace UpdateControls.Test
 {
 	public class ContactList
 	{

@@ -5,17 +5,22 @@ using System.Windows.Input;
 using UpdateControls.XAML;
 using System.ComponentModel;
 
-namespace UpdateControls.XAML.Test
+namespace UpdateControls.Test
 {
     public class DataGridPersonViewModel : IEditableObject
     {
         private Person _person;
         private Person _copy;
         private ContactList _contactList;
-        private static List<PrefixViewModel> _prefixes = Enum.GetValues(typeof(PrefixID))
-            .OfType<PrefixID>()
-            .Select(p => new PrefixViewModel(p))
-            .ToList();
+        private static List<PrefixViewModel> _prefixes =
+            new List<PrefixViewModel>
+            {
+		        new PrefixViewModel(PrefixID.None),
+		        new PrefixViewModel(PrefixID.Mr),
+		        new PrefixViewModel(PrefixID.Mrs),
+		        new PrefixViewModel(PrefixID.Miss),
+		        new PrefixViewModel(PrefixID.Dr)
+            };
 
         public DataGridPersonViewModel(Person person, ContactList contactList)
         {

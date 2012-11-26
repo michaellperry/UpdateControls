@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UpdateControls.XAML.Test
+namespace UpdateControls.Test
 {
 	public enum GenderEnum
 	{

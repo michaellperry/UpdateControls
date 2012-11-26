@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UpdateControls.XAML.Test
+namespace UpdateControls.Test
 {
     public class PersonViewModel : PersonViewModelBase
 	{
@@ -18,14 +18,14 @@ namespace UpdateControls.XAML.Test
 		{
 			get
 			{
-                return GetCollection(() =>
+                return
                     // Return all people of the opposite gender.
                     // Include an option to be unmarried.
                     new List<Person>() { null }
                     .Union(_contactList.People
                         .Where(p => p.Gender != Person.Gender)
                     )
-                    .Select(p => (ISpouseViewModel)SpouseViewModel.Wrap(p)));
+                    .Select(p => (ISpouseViewModel)SpouseViewModel.Wrap(p));
 			}
 		}
 

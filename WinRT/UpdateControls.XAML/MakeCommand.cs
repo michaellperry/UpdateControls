@@ -11,8 +11,7 @@
 
 using System;
 using System.Windows.Input;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
+using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls.XAML
 {
@@ -24,7 +23,7 @@ namespace UpdateControls.XAML
     /// </summary>
     public static partial class MakeCommand
     {
-        private class Command : ICommand
+        private class Command : ICommand, IUpdatable
         {
             // The condition under which it can execute, and the action to execute.
             private Func<bool> _canExecuteFunction;
@@ -76,12 +75,10 @@ namespace UpdateControls.XAML
                 // When the "can execute" flag is invalidated, we need to queue
                 // up a call to update it. This will cause the UI thread to
                 // call TriggerUpdate (below) when everything settles down.
-                Window.Current.Dispatcher.RunAsync(
-                    CoreDispatcherPriority.Low,
-                    new DispatchedHandler(TriggerUpdate));
+                AffectedSet.CaptureDependent(this);
             }
 
-            private void TriggerUpdate()
+            public void UpdateNow()
             {
                 // The "can execute" flag is now out-of-date. We need to update it.
                 _depCanExecute.OnGet();

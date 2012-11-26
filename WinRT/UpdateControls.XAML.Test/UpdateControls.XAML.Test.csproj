@@ -105,6 +105,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\..\Portable\UpdateControls.Test\UpdateControls.Test.csproj">
+      <Project>{b107c9d8-0f56-4923-bddd-92653ec82e5a}</Project>
+      <Name>UpdateControls.Test</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UpdateControls.XAML\UpdateControls.XAML.csproj">
       <Project>{d9d1ddc8-4680-4918-94e1-d540d8a2bd04}</Project>
       <Name>UpdateControls.XAML</Name>
@@ -118,24 +122,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ContactList.cs" />
-    <Compile Include="ContactListNavigationModel.cs" />
-    <Compile Include="ContactListViewModel.cs" />
-    <Compile Include="DataGridPersonViewModel.cs" />
     <Compile Include="DebugConverter.cs" />
-    <Compile Include="GenderEnum.cs" />
-    <Compile Include="GenderOption.cs" />
-    <Compile Include="ISpouseViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Person.cs" />
-    <Compile Include="PersonViewModel.cs" />
-    <Compile Include="PersonViewModelBase.cs" />
-    <Compile Include="PrefixID.cs" />
-    <Compile Include="PrefixViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpouseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

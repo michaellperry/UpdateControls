@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace UpdateControls.XAML.Test
+namespace UpdateControls.Test
 {
-    public class SpouseViewModel : ViewModelBase, ISpouseViewModel
+    public class SpouseViewModel : ISpouseViewModel
     {
         private Person _spouse;
 
@@ -18,7 +18,7 @@ namespace UpdateControls.XAML.Test
 
 		public string FullName
         {
-            get { return Get(() => _spouse == null ? "unmarried" : _spouse.FullName); }
+            get { return _spouse == null ? "unmarried" : _spouse.FullName; }
         }
 
         public override bool Equals(object obj)
