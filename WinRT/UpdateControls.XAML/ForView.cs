@@ -9,7 +9,7 @@ namespace UpdateControls.XAML
     {
         private static CoreDispatcher _mainDispatcher;
 
-        public static object Wrap(object viewModel)
+        public static void Initialize()
         {
             // Ensure that AffectedSet has the ability to run delegates
             // on the UI thread.
@@ -18,7 +18,11 @@ namespace UpdateControls.XAML
                 _mainDispatcher = Window.Current.Dispatcher;
             }
             AffectedSet.Initialize(RunOnUIThread);
+        }
 
+        public static object Wrap(object viewModel)
+        {
+            Initialize();
             if (viewModel == null)
                 return null;
             return (IDependentObject)Activator.CreateInstance(

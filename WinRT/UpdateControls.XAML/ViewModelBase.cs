@@ -151,6 +151,11 @@ namespace UpdateControls.XAML
 
         private IDictionary<string, DependentPropertyBase> _dependentPropertyByName = new Dictionary<string, DependentPropertyBase>();
 
+        public ViewModelBase()
+        {
+            ForView.Initialize();
+        }
+
         protected T Get<T>(Func<T> getMethod, [CallerMemberName] string propertyName = "")
         {
             DependentPropertyBase property;
