@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
+using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls.XAML
 {
@@ -70,24 +68,31 @@ namespace UpdateControls.XAML
         public abstract object Value { get; }
     }
 
-    internal class DependentAtom<T> : DependentPropertyBase
+    internal class DependentAtom<T> : DependentPropertyBase, IUpdatable
     {
         private Dependent _depValue;
         private T _value;
+        private Action _firePropertyChanged;
 
         public DependentAtom(Action firePropertyChanged, Func<T> getMethod)
         {
+            _firePropertyChanged = firePropertyChanged;
             _depValue = new Dependent(() => _value = getMethod());
-            _depValue.Invalidated += firePropertyChanged;
+            _depValue.Invalidated += () => AffectedSet.CaptureDependent(this);
         }
 
         public override object Value
         {
             get { _depValue.OnGet(); return _value; }
         }
+
+        public void UpdateNow()
+        {
+            _firePropertyChanged();
+        }
     }
 
-    internal class DependentCollection<T> : DependentPropertyBase
+    internal class DependentCollection<T> : DependentPropertyBase, IUpdatable
     {
         private Func<IEnumerable<T>> _getMethod;
         private Dependent _depCollection;
@@ -97,7 +102,7 @@ namespace UpdateControls.XAML
         {
             _getMethod = getMethod;
             _depCollection = new Dependent(OnUpdateCollection);
-            _depCollection.Invalidated += () => TriggerUpdate(_depCollection);
+            _depCollection.Invalidated += () => AffectedSet.CaptureDependent(this);
             _depCollection.Touch();
         }
 
@@ -134,14 +139,9 @@ namespace UpdateControls.XAML
             get { return _collection; }
         }
 
-        private void TriggerUpdate(Dependent depCollection)
+        public void UpdateNow()
         {
-            Window.Current.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Low,
-                new DispatchedHandler(delegate
-                {
-                    depCollection.OnGet();
-                }));
+            _depCollection.OnGet();
         }
     }
 
@@ -180,13 +180,8 @@ namespace UpdateControls.XAML
 
         private void FirePropertyChanged(string propertyName)
         {
-            Window.Current.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Low,
-                new DispatchedHandler(delegate
-                {
-                    if (PropertyChanged != null)
-                        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }));
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

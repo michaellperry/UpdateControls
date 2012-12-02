@@ -57,8 +57,21 @@ namespace UpdateControls.XAML
 
             public void Execute(object parameter)
             {
-                // Executing the command.
-                _execute();
+                var affectedSet = AffectedSet.Begin();
+
+                try
+                {
+                    // Execute the command.
+                    _execute();
+                }
+                finally
+                {
+                    if (affectedSet != null)
+                    {
+                        foreach (var updatable in affectedSet.End())
+                            updatable.UpdateNow();
+                    }
+                }
             }
 
             private void UpdateCanExecute()
