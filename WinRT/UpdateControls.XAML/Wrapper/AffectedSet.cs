@@ -28,19 +28,16 @@ namespace UpdateControls.XAML.Wrapper
             return currentSet;
         }
 
-        public static bool CaptureDependent(IUpdatable updatable)
+        public static void CaptureDependent(IUpdatable updatable)
         {
             AffectedSet currentSet = _currentSet.Get();
             if (currentSet != null)
-            {
                 currentSet._updatables.Add(updatable);
-                return true;
-            }
-            else
-            {
+            else if (_runOnUIThread != null)
                 _runOnUIThread(updatable.UpdateNow);
-                return false;
-            }
+            else
+                throw new InvalidOperationException(
+                    "Please call ForView.Initialize() on the UI thread.");
         }
 
         private List<IUpdatable> _updatables = new List<IUpdatable>();
