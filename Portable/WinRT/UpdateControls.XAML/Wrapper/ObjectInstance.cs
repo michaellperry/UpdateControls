@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    internal interface IDependentObject
+    internal interface IObjectInstance
     {
-        object GetWrappedObject();
+        object WrappedObject { get; }
         bool Equals(object obj);
         int GetHashCode();
-        DependentProperty GetDependentProperty(CustomMemberProvider member);
+        ObjectProperty LookupProperty(CustomMemberProvider member);
         string ToString();
         void FirePropertyChanged(string propertyName);
     }
-    class DependentObject<T> : IDependentObject, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
+    class ObjectInstance<T> : IObjectInstance, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
     {
         private readonly T _wrappedObject;
 
-        private Dictionary<CustomMemberProvider, DependentProperty> _propertyByName = new Dictionary<CustomMemberProvider, DependentProperty>();
+        private Dictionary<CustomMemberProvider, ObjectProperty> _propertyByName = new Dictionary<CustomMemberProvider, ObjectProperty>();
 
-        public DependentObject(T wrappedObject)
+        public ObjectInstance(T wrappedObject)
         {
             _wrappedObject = wrappedObject;
         }
@@ -31,7 +30,7 @@ namespace UpdateControls.XAML.Wrapper
         {
             if (Object.ReferenceEquals(this, obj))
                 return true;
-            DependentObject<T> that = obj as DependentObject<T>;
+            ObjectInstance<T> that = obj as ObjectInstance<T>;
             if (that == null)
                 return false;
             return Object.Equals(this._wrappedObject, that._wrappedObject);
@@ -44,7 +43,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override string ToString()
         {
-            return _wrappedObject.ToString();
+            return String.Format("ForView.Wrap({0})", _wrappedObject);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -55,21 +54,21 @@ namespace UpdateControls.XAML.Wrapper
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public object GetWrappedObject()
+        public object WrappedObject
         {
-            return _wrappedObject;
+            get { return _wrappedObject; }
         }
 
-        public DependentProperty GetDependentProperty(CustomMemberProvider provider)
+        public ObjectProperty LookupProperty(CustomMemberProvider provider)
         {
-            DependentProperty dependentProperty;
+            ObjectProperty dependentProperty;
             if (!_propertyByName.TryGetValue(provider, out dependentProperty))
             {
                 PropertyInfo propertyInfo = _wrappedObject.GetType().GetRuntimeProperty(provider.Name);
                 if (propertyInfo == null)
                     return null;
 
-                dependentProperty = new DependentProperty(this, _wrappedObject, propertyInfo, provider);
+                dependentProperty = new ObjectProperty(this, _wrappedObject, propertyInfo, provider);
                 _propertyByName.Add(provider, dependentProperty);
             }
             return dependentProperty;

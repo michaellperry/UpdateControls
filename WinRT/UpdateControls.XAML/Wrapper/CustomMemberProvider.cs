@@ -10,6 +10,7 @@ using Windows.UI.Xaml;
 using System.ComponentModel;
 using System.Collections.Specialized;
 using System.Collections;
+using Windows.UI.Xaml.Input;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -19,14 +20,16 @@ namespace UpdateControls.XAML.Wrapper
         {
 			typeof(object).GetTypeInfo(),
             typeof(string).GetTypeInfo(),
-            typeof(ICommand).GetTypeInfo()
+            typeof(Uri).GetTypeInfo()
         };
 
         private static readonly TypeInfo[] Bindables = new TypeInfo[]
         {
             typeof(DependencyObject).GetTypeInfo(),
             typeof(INotifyPropertyChanged).GetTypeInfo(),
-            typeof(INotifyCollectionChanged).GetTypeInfo()
+            typeof(INotifyCollectionChanged).GetTypeInfo(),
+            typeof(ICommand).GetTypeInfo(),
+            typeof(InputScope).GetTypeInfo()
         };
 
         private static TypeInfo EnumerableTypeInfo = typeof(IEnumerable).GetTypeInfo();
@@ -91,11 +94,11 @@ namespace UpdateControls.XAML.Wrapper
 
         public object GetValue(object instance)
         {
-            IDependentObject obj = instance as IDependentObject;
+            IObjectInstance obj = instance as IObjectInstance;
             if (obj == null)
                 return null;
 
-            DependentProperty property = obj.GetDependentProperty(this);
+            ObjectProperty property = obj.LookupProperty(this);
             if (property == null)
                 return null;
 
@@ -124,11 +127,11 @@ namespace UpdateControls.XAML.Wrapper
 
         public void SetValue(object instance, object value)
         {
-            IDependentObject obj = instance as IDependentObject;
+            IObjectInstance obj = instance as IObjectInstance;
             if (obj == null)
                 return;
 
-            DependentProperty property = obj.GetDependentProperty(this);
+            ObjectProperty property = obj.LookupProperty(this);
             if (property == null)
                 return;
 

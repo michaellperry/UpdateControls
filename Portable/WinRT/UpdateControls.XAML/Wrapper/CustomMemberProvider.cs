@@ -18,15 +18,15 @@ namespace UpdateControls.XAML.Wrapper
         private static readonly TypeInfo[] Primitives = new TypeInfo[]
         {
 			typeof(object).GetTypeInfo(),
-            typeof(string).GetTypeInfo(),
-            typeof(ICommand).GetTypeInfo()
+            typeof(string).GetTypeInfo()
         };
 
         private static readonly TypeInfo[] Bindables = new TypeInfo[]
         {
             typeof(DependencyObject).GetTypeInfo(),
             typeof(INotifyPropertyChanged).GetTypeInfo(),
-            typeof(INotifyCollectionChanged).GetTypeInfo()
+            typeof(INotifyCollectionChanged).GetTypeInfo(),
+            typeof(ICommand).GetTypeInfo()
         };
 
         private static TypeInfo EnumerableTypeInfo = typeof(IEnumerable).GetTypeInfo();
@@ -91,11 +91,11 @@ namespace UpdateControls.XAML.Wrapper
 
         public object GetValue(object instance)
         {
-            IDependentObject obj = instance as IDependentObject;
+            IObjectInstance obj = instance as IObjectInstance;
             if (obj == null)
                 return null;
 
-            DependentProperty property = obj.GetDependentProperty(this);
+            ObjectProperty property = obj.LookupProperty(this);
             if (property == null)
                 return null;
 
@@ -124,11 +124,11 @@ namespace UpdateControls.XAML.Wrapper
 
         public void SetValue(object instance, object value)
         {
-            IDependentObject obj = instance as IDependentObject;
+            IObjectInstance obj = instance as IObjectInstance;
             if (obj == null)
                 return;
 
-            DependentProperty property = obj.GetDependentProperty(this);
+            ObjectProperty property = obj.LookupProperty(this);
             if (property == null)
                 return;
 

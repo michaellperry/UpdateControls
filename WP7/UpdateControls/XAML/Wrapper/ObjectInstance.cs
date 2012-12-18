@@ -104,7 +104,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override string ToString()
         {
-            return _wrappedObject.ToString();
+            return String.Format("ForView.Wrap({0})", _wrappedObject);
         }
 
         public override bool Equals(object obj)

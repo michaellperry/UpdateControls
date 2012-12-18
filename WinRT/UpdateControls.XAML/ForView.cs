@@ -25,19 +25,19 @@ namespace UpdateControls.XAML
             Initialize();
             if (viewModel == null)
                 return null;
-            return (IDependentObject)Activator.CreateInstance(
-                typeof(DependentObject<>).MakeGenericType(viewModel.GetType()),
+            return (IObjectInstance)Activator.CreateInstance(
+                typeof(ObjectInstance<>).MakeGenericType(viewModel.GetType()),
                 viewModel);
         }
 
         public static TWrappedObjectType Unwrap<TWrappedObjectType>(object dataContext)
             where TWrappedObjectType : class
         {
-            IDependentObject wrapper = dataContext as IDependentObject;
+            IObjectInstance wrapper = dataContext as IObjectInstance;
             return
                 wrapper == null
                     ? default(TWrappedObjectType)
-                    : wrapper.GetWrappedObject() as TWrappedObjectType;
+                    : wrapper.WrappedObject as TWrappedObjectType;
         }
 
         private static async void RunOnUIThread(Action action)

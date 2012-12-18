@@ -17,6 +17,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -26,14 +27,18 @@ namespace UpdateControls.XAML.Wrapper
         {
 			typeof(object),
             typeof(string),
-            typeof(ICommand)
+            typeof(Uri),
+            typeof(Cursor)
         };
 
         private static readonly Type[] Bindables = new Type[]
         {
             typeof(DependencyObject),
             typeof(INotifyPropertyChanged),
-            typeof(INotifyCollectionChanged)
+            typeof(INotifyCollectionChanged),
+            typeof(ICommand),
+            typeof(InputScope),
+            typeof(XmlLanguage)
         };
 
         private PropertyInfo _propertyInfo;

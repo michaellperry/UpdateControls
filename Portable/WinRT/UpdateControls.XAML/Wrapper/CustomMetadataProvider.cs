@@ -20,7 +20,7 @@ namespace UpdateControls.XAML.Wrapper
         {
             if (type.IsConstructedGenericType)
             {
-                if (type.GetGenericTypeDefinition() == typeof(DependentObject<>))
+                if (type.GetGenericTypeDefinition() == typeof(ObjectInstance<>))
                 {
                     Type wrappedType = type.GenericTypeArguments[0];
                     return GetDependentType(wrappedType);

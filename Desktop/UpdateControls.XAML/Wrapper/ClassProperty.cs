@@ -18,6 +18,9 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
+using System.Windows.Markup;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -27,14 +30,20 @@ namespace UpdateControls.XAML.Wrapper
         {
 			typeof(object),
             typeof(string),
-            typeof(ICommand)
+            typeof(Uri),
+            typeof(Cursor)
         };
 
         private static readonly Type[] Bindables = new Type[]
         {
-            typeof(DependencyObject),
+            typeof(DispatcherObject),
             typeof(INotifyPropertyChanged),
-            typeof(INotifyCollectionChanged)
+            typeof(INotifyCollectionChanged),
+            typeof(ICommand),
+            typeof(CommandBindingCollection),
+            typeof(InputBindingCollection),
+            typeof(InputScope),
+            typeof(XmlLanguage)
         };
 
         private PropertyInfo _propertyInfo;

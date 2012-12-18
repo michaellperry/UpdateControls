@@ -1,24 +1,17 @@
-using System.Reflection;
-using UpdateControls.Fields;
-using System.Linq;
 using System;
-using System.Windows.Input;
-using System.Windows;
-using System.ComponentModel;
-using System.Collections.Specialized;
 using System.Collections;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using Windows.UI.Xaml;
-using Windows.UI.Core;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class DependentProperty : IUpdatable
+    class ObjectProperty : IUpdatable
     {
         private static readonly object[] EmptyIndexer = new object[0];
 
-        private readonly IDependentObject _wrapper;
+        private readonly IObjectInstance _wrapper;
         private readonly object _wrappedObject;
         private readonly PropertyInfo _propertyInfo;
         private readonly CustomMemberProvider _provider;
@@ -29,7 +22,7 @@ namespace UpdateControls.XAML.Wrapper
         private Dependent _depValue;
         private bool _initialized = false;
         
-        public DependentProperty(IDependentObject wrapper, object wrappedObject, PropertyInfo propertyInfo, CustomMemberProvider provider)
+        public ObjectProperty(IObjectInstance wrapper, object wrappedObject, PropertyInfo propertyInfo, CustomMemberProvider provider)
         {
             _wrapper = wrapper;
             _wrappedObject = wrappedObject;
@@ -154,7 +147,7 @@ namespace UpdateControls.XAML.Wrapper
             else if (_provider.IsPrimitive)
                 return value;
             else
-                return ((IDependentObject)value).GetWrappedObject();
+                return ((IObjectInstance)value).WrappedObject;
         }
     }
 }

@@ -120,8 +120,8 @@
     <Compile Include="Wrapper\CustomMemberProvider.cs" />
     <Compile Include="Wrapper\CustomMetadataProvider.cs" />
     <Compile Include="Wrapper\CustomTypeProvider.cs" />
-    <Compile Include="Wrapper\DependentObject.cs" />
-    <Compile Include="Wrapper\DependentProperty.cs" />
+    <Compile Include="Wrapper\ObjectInstance.cs" />
+    <Compile Include="Wrapper\ObjectProperty.cs" />
     <Compile Include="Wrapper\PrimitiveTypeProvider.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">

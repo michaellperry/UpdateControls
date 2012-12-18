@@ -16,7 +16,7 @@ namespace UpdateControls.XAML.Wrapper
         public CustomTypeProvider(Type type)
         {
             _type = type;
-            _underlyingType = typeof(DependentObject<>).MakeGenericType(type);
+            _underlyingType = typeof(ObjectInstance<>).MakeGenericType(type);
         }
 
         public object ActivateInstance()
