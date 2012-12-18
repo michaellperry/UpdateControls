@@ -6,6 +6,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            <local:ViewModelLocator x:Key="Locator"/>
             <ResourceDictionary.MergedDictionaries>
 
                 <!-- 

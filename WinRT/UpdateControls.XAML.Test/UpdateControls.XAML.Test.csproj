@@ -109,13 +109,13 @@
       <Project>{b107c9d8-0f56-4923-bddd-92653ec82e5a}</Project>
       <Name>UpdateControls.Test</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UpdateControls.XAML\UpdateControls.XAML.csproj">
-      <Project>{d9d1ddc8-4680-4918-94e1-d540d8a2bd04}</Project>
-      <Name>UpdateControls.XAML</Name>
+    <ProjectReference Include="..\..\Portable\UpdateControls\UpdateControls.csproj">
+      <Project>{0f197cdb-cf38-438b-90ad-1b4f0976061e}</Project>
+      <Name>UpdateControls %28Portable\UpdateControls%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">
-      <Project>{40b02fbd-3666-4057-af60-00f0807fd12c}</Project>
-      <Name>UpdateControls</Name>
+    <ProjectReference Include="..\..\Portable\WinRT\UpdateControls.XAML\UpdateControls.XAML.csproj">
+      <Project>{6d17230d-75e8-41d5-b26c-6ad517e769fb}</Project>
+      <Name>UpdateControls.XAML %28Portable\WinRT\UpdateControls.XAML%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +127,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

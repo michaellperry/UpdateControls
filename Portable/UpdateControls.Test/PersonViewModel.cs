@@ -8,7 +8,7 @@ namespace UpdateControls.Test
 	{
 		private ContactList _contactList;
 
-		private PersonViewModel(Person person, ContactList contactList)
+		public PersonViewModel(Person person, ContactList contactList)
 			: base(person)
 		{
 			_contactList = contactList;
