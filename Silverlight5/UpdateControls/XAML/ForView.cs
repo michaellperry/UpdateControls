@@ -41,6 +41,7 @@ namespace UpdateControls.XAML
         /// <returns>An object suitable for data binding.</returns>
         public static IObjectInstance Wrap(object wrappedObject)
         {
+            Initialize();
             if (wrappedObject == null)
                 return null;
             IObjectInstance root = (IObjectInstance)typeof(ObjectInstance<>)
