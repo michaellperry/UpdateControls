@@ -83,8 +83,8 @@ namespace UpdateControls.XAML.Wrapper
                     {
                         using (NotificationGate.BeginOutbound())
                         {
-                            foreach (Dependent dependent in scheduler.End())
-                                dependent.OnGet();
+                            foreach (IUpdatable updatable in scheduler.End())
+                                updatable.UpdateNow();
                         }
                     }
                 }
