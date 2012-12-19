@@ -8,26 +8,43 @@ using $rootnamespace$.Models;
 
 namespace $rootnamespace$.ViewModels
 {
-    public class ViewModelLocator
+    public class ViewModelLocator : ViewModelLocatorBase
     {
-        private MainViewModel _main;
+        private Document _document;
+		private Selection _selection;
 
         public ViewModelLocator()
         {
-            Document document = LoadDocument();
-			Selection selection = new Selection();
-            _main = new MainViewModel(document, selection);
+            _document = LoadDocument();
+			_selection = new Selection();
         }
 
         public object Main
         {
-            get { return ForView.Wrap(_main); }
+            get { return ViewModel(() => new MainViewModel(_document, _selection)); }
         }
+
+		public object Item
+		{
+			get
+			{
+				return ViewModel(() => _selection.SelectedItem == null
+					? null
+					: new ItemViewModel(_selection.SelectedItem));
+			}
+		}
 
 		private Document LoadDocument()
 		{
 			// TODO: Load your document here.
-			return new Document();
+            Document document = new Document();
+            var one = document.NewItem();
+            one.Name = "One";
+            var two = document.NewItem();
+            two.Name = "Two";
+            var three = document.NewItem();
+            three.Name = "Three";
+            return document;
 		}
     }
 }

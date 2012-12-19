@@ -1,19 +1,18 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>UpdateControls.App</id>
-    <version>1.1.0</version>
+    <id>UpdateControls.Portable</id>
+    <version>2.2.1.9</version>
     <authors>Michael L Perry</authors>
     <owners>Michael L Perry</owners>
+    <description>Automatically discover view model dependencies and databind without INotifyPropertyChanged.</description>
     <licenseUrl>http://updatecontrols.codeplex.com/license</licenseUrl>
     <projectUrl>http://updatecontrols.codeplex.com/</projectUrl>
     <iconUrl>http://updatecontrols.net/images/logosmall.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Add a view model locator for use in an Update Controls application.</description>
-    <copyright>Copyright 2012, Michael L Perry</copyright>
+    <copyright>Copyright 2012</copyright>
     <tags>mvvm viewmodel databinding inotifypropertychanged inpc</tags>
     <dependencies>
-      <dependency id="UpdateControls" />
     </dependencies>
   </metadata>
 </package>
