@@ -85,6 +85,9 @@
     <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelBase.cs">
       <Link>XAML\ViewModelBase.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelLocatorBase.cs">
+      <Link>XAML\ViewModelLocatorBase.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\CollectionItem.cs">
       <Link>XAML\Wrapper\CollectionItem.cs</Link>
     </Compile>

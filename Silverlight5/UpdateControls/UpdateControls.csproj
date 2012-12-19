@@ -74,6 +74,9 @@
     <Compile Include="..\..\desktop\updatecontrols.xaml\ViewModelBase.cs">
       <Link>XAML\ViewModelBase.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelLocatorBase.cs">
+      <Link>XAML\ViewModelLocatorBase.cs</Link>
+    </Compile>
     <Compile Include="..\..\desktop\updatecontrols\collections\DependentDictionary.cs">
       <Link>Collections\DependentDictionary.cs</Link>
     </Compile>

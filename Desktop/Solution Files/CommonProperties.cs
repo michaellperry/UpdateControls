@@ -18,5 +18,5 @@ using System;
 [assembly: AssemblyCopyright("Copyright 2012 Michael L Perry, MIT License")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2.2.1.9")]
-[assembly: AssemblyFileVersion("2.2.1.9")]
+[assembly: AssemblyVersion("2.2.1.10")]
+[assembly: AssemblyFileVersion("2.2.1.10")]
