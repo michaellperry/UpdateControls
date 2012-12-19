@@ -11,7 +11,6 @@
 
 using System;
 using System.Windows.Input;
-using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls.XAML
 {

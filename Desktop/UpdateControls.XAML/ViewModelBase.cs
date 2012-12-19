@@ -152,6 +152,7 @@ namespace UpdateControls.XAML
 
         protected T Get<T>(Func<T> getMethod)
         {
+            ForView.Initialize();
             string caller = new StackFrame(1).GetMethod().Name;
             if (!caller.StartsWith("get_"))
                 throw new ArgumentException("Only call Get from a property getter.");
@@ -160,6 +161,7 @@ namespace UpdateControls.XAML
 
         protected T Get<T>(string propertyName, Func<T> getMethod)
         {
+            ForView.Initialize();
             DependentPropertyBase property;
             if (!_dependentPropertyByName.TryGetValue(propertyName, out property))
             {
@@ -171,6 +173,7 @@ namespace UpdateControls.XAML
 
         protected IEnumerable<T> GetCollection<T>(Func<IEnumerable<T>> getMethod)
         {
+            ForView.Initialize();
             string caller = new StackFrame(1).GetMethod().Name;
             if (!caller.StartsWith("get_"))
                 throw new ArgumentException("Only call Get from a property getter.");
@@ -179,6 +182,7 @@ namespace UpdateControls.XAML
 
         protected IEnumerable<T> GetCollection<T>(string propertyName, Func<IEnumerable<T>> getMethod)
         {
+            ForView.Initialize();
             DependentPropertyBase property;
             if (!_dependentPropertyByName.TryGetValue(propertyName, out property))
             {

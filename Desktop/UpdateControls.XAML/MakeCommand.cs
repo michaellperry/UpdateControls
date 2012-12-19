@@ -11,7 +11,6 @@
 
 using System;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace UpdateControls.XAML
 {
@@ -35,6 +34,7 @@ namespace UpdateControls.XAML
 
             public Command(Func<bool> canExecute, Action execute)
             {
+                ForView.Initialize();
                 _canExecuteFunction = canExecute;
                 _execute = execute;
 

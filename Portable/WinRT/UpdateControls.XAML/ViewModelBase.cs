@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using UpdateControls.XAML.Wrapper;
 
 namespace UpdateControls.XAML
 {
@@ -151,13 +150,9 @@ namespace UpdateControls.XAML
 
         private IDictionary<string, DependentPropertyBase> _dependentPropertyByName = new Dictionary<string, DependentPropertyBase>();
 
-        public ViewModelBase()
-        {
-            ForView.Initialize();
-        }
-
         protected T Get<T>(Func<T> getMethod, [CallerMemberName] string propertyName = "")
         {
+            ForView.Initialize();
             DependentPropertyBase property;
             if (!_dependentPropertyByName.TryGetValue(propertyName, out property))
             {
@@ -169,6 +164,7 @@ namespace UpdateControls.XAML
 
         protected IEnumerable<T> GetCollection<T>(Func<IEnumerable<T>> getMethod, [CallerMemberName] string propertyName = "")
         {
+            ForView.Initialize();
             DependentPropertyBase property;
             if (!_dependentPropertyByName.TryGetValue(propertyName, out property))
             {
