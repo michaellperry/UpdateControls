@@ -12,11 +12,26 @@
 using System.Linq;
 using System.Windows;
 using UpdateControls.XAML.Wrapper;
+using System.Windows.Threading;
+using System;
 
 namespace UpdateControls.XAML
 {
     public static class ForView
     {
+        private static Dispatcher _mainDispatcher;
+
+        public static void Initialize()
+        {
+            // Ensure that the UpdateScheduler has the ability to run delegates
+            // on the UI thread.
+            if (_mainDispatcher == null)
+            {
+                _mainDispatcher = Deployment.Current.Dispatcher;
+            }
+            UpdateScheduler.Initialize(RunOnUIThread);
+        }
+
         /// <summary>
         /// Wrap an object to be used as the DataContext of a view.
         /// All of the properties of the object are available for
@@ -50,6 +65,19 @@ namespace UpdateControls.XAML
                 wrapper == null
                     ? null
                     : wrapper.WrappedObject as TWrappedObjectType;
+        }
+
+        private static void RunOnUIThread(Action action)
+        {
+            if (_mainDispatcher != null)
+            {
+                _mainDispatcher.BeginInvoke(action);
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "Please call ForView.Initialize() on the UI thread.");
+            }
         }
     }
 }

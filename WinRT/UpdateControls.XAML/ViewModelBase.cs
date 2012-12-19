@@ -78,7 +78,7 @@ namespace UpdateControls.XAML
         {
             _firePropertyChanged = firePropertyChanged;
             _depValue = new Dependent(() => _value = getMethod());
-            _depValue.Invalidated += () => AffectedSet.CaptureDependent(this);
+            _depValue.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
         }
 
         public override object Value
@@ -102,7 +102,7 @@ namespace UpdateControls.XAML
         {
             _getMethod = getMethod;
             _depCollection = new Dependent(OnUpdateCollection);
-            _depCollection.Invalidated += () => AffectedSet.CaptureDependent(this);
+            _depCollection.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
             _depCollection.Touch();
         }
 

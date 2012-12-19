@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public class Tree
+    public class Tree : IUpdatable
     {
         private Dictionary<object, IObjectInstance> _wrapperByObject = new Dictionary<object, IObjectInstance>();
         private IObjectInstance _root;
@@ -15,16 +15,7 @@ namespace UpdateControls.XAML.Wrapper
             {
                 _root.UpdateNodes();
             });
-            _depNodes.Invalidated += delegate
-            {
-                if (!AffectedSet.CaptureDependent(_depNodes))
-                {
-                    _root.Defer(delegate
-                    {
-                        _depNodes.OnGet();
-                    });
-                }
-            };
+            _depNodes.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
         }
 
         public void SetRoot(IObjectInstance root)
@@ -52,6 +43,11 @@ namespace UpdateControls.XAML.Wrapper
         public void RemoveKey(object key)
         {
             _wrapperByObject.Remove(key);
+        }
+
+        public void UpdateNow()
+        {
+            _depNodes.OnGet();
         }
     }
 }

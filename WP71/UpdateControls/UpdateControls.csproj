@@ -63,9 +63,6 @@
     <Compile Include="..\..\desktop\updatecontrols.xaml\ViewModelBase.cs">
       <Link>XAML\ViewModelBase.cs</Link>
     </Compile>
-    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\AffectedSet.cs">
-      <Link>XAML\Wrapper\AffectedSet.cs</Link>
-    </Compile>
     <Compile Include="..\..\desktop\updatecontrols.xaml\wrapper\CollectionItem.cs">
       <Link>XAML\Wrapper\CollectionItem.cs</Link>
     </Compile>
@@ -99,6 +96,9 @@
     <Compile Include="..\..\Desktop\UpdateControls\InertialProperty.cs">
       <Link>InertialProperty.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\IUpdatable.cs">
+      <Link>IUpdatable.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\MemoizedTypeName.cs">
       <Link>MemoizedTypeName.cs</Link>
     </Compile>
@@ -117,14 +117,11 @@
     <Compile Include="..\..\Desktop\UpdateControls\UpdateControlsExtensions.cs">
       <Link>UpdateControlsExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\UpdateScheduler.cs">
+      <Link>UpdateScheduler.cs</Link>
+    </Compile>
     <Compile Include="..\..\WP7\UpdateControls\XAML\ForView.cs">
       <Link>XAML\ForView.cs</Link>
-    </Compile>
-    <Compile Include="..\..\WP7\UpdateControls\XAML\MakeCommand.GetDispatcher.cs">
-      <Link>XAML\MakeCommand.GetDispatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\..\WP7\UpdateControls\XAML\ViewModelBase.FirePropertyChanged.cs">
-      <Link>XAML\ViewModelBase.FirePropertyChanged.cs</Link>
     </Compile>
     <Compile Include="..\..\WP7\UpdateControls\XAML\Wrapper\ClassInstance.cs">
       <Link>XAML\Wrapper\ClassInstance.cs</Link>

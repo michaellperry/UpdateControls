@@ -14,7 +14,7 @@ using UpdateControls;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    internal abstract class ObjectPropertyAtom : ObjectProperty
+    internal abstract class ObjectPropertyAtom : ObjectProperty, IUpdatable
     {
         private Dependent _depProperty;
         private object _value;
@@ -40,19 +40,7 @@ namespace UpdateControls.XAML.Wrapper
 				// The update should have lower priority than user input & drawing,
 				// to ensure that the app doesn't lock up in case a large model is 
 				// being updated outside the UI (e.g. via timers or the network).
-                _depProperty.Invalidated += delegate
-                {
-                    if (!AffectedSet.CaptureDependent(_depProperty))
-                    {
-                        ObjectInstance.Dispatcher.BeginInvoke(new Action(delegate
-                        {
-                            using (NotificationGate.BeginOutbound())
-                            {
-                                _depProperty.OnGet();
-                            }
-                        }), System.Windows.Threading.DispatcherPriority.Background);
-                    }
-                };
+                _depProperty.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
 			}
 		}
 
@@ -60,7 +48,7 @@ namespace UpdateControls.XAML.Wrapper
 		{
             if (NotificationGate.IsInbound)
             {
-                var affectedSet = AffectedSet.Begin();
+                var scheduler = UpdateScheduler.Begin();
 
                 try
                 {
@@ -69,11 +57,11 @@ namespace UpdateControls.XAML.Wrapper
                 }
                 finally
                 {
-                    if (affectedSet != null)
+                    if (scheduler != null)
                     {
                         using (NotificationGate.BeginOutbound())
                         {
-                            foreach (Dependent dependent in affectedSet.End())
+                            foreach (Dependent dependent in scheduler.End())
                                 dependent.OnGet();
                         }
                     }
@@ -96,5 +84,13 @@ namespace UpdateControls.XAML.Wrapper
 
         public abstract object TranslateIncommingValue(object value);
         public abstract object TranslateOutgoingValue(object value);
-	}
+
+        public void UpdateNow()
+        {
+            using (NotificationGate.BeginOutbound())
+            {
+                _depProperty.OnGet();
+            }
+        }
+    }
 }

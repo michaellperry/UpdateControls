@@ -121,6 +121,7 @@
     <Compile Include="Fields\Independent.cs" />
     <Compile Include="Independent.cs" />
     <Compile Include="InertialProperty.cs" />
+    <Compile Include="IUpdatable.cs" />
     <Compile Include="MemoizedTypeName.cs" />
     <Compile Include="NamedPrecedents.cs" />
     <Compile Include="Precedent.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="RecycleBin.cs" />
     <Compile Include="ThreadLocal.cs" />
     <Compile Include="UpdateControlsExtensions.cs" />
+    <Compile Include="UpdateScheduler.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UpdateControls.XAML.Wrapper;
+using System.Diagnostics;
 
 namespace UpdateControls.XAML
 {
@@ -36,8 +37,13 @@ namespace UpdateControls.XAML
 
         private IDictionary<string, ViewModelContainer> _containerByName = new Dictionary<string, ViewModelContainer>();
 
-        public object ViewModel(Func<object> constructor, [CallerMemberName] string propertyName = "")
+        public object ViewModel(Func<object> constructor)
         {
+            string caller = new StackFrame(1).GetMethod().Name;
+            if (!caller.StartsWith("get_"))
+                throw new ArgumentException("Only call ViewModel from a property getter.");
+            string propertyName = caller.Substring(4);
+
             ForView.Initialize();
             ViewModelContainer container;
             if (!_containerByName.TryGetValue(propertyName, out container))

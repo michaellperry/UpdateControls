@@ -14,7 +14,7 @@ using UpdateControls;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    internal abstract class ObjectPropertyAtom : ObjectProperty
+    internal abstract class ObjectPropertyAtom : ObjectProperty, IUpdatable
     {
         private Dependent _depProperty;
         private object _value;
@@ -37,19 +37,7 @@ namespace UpdateControls.XAML.Wrapper
 					_firePropertyChanged = true;
 				});
 				// When the property becomes out of date, trigger an update.
-                _depProperty.Invalidated += delegate
-                {
-                    if (!AffectedSet.CaptureDependent(_depProperty))
-                    {
-                        ObjectInstance.Dispatcher.BeginInvoke(delegate
-                        {
-                            using (NotificationGate.BeginOutbound())
-                            {
-                                _depProperty.OnGet();
-                            }
-                        });
-                    }
-                };
+                _depProperty.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
 			}
 		}
 
@@ -57,7 +45,7 @@ namespace UpdateControls.XAML.Wrapper
 		{
             if (NotificationGate.IsInbound)
             {
-                var affectedSet = AffectedSet.Begin();
+                var scheduler = UpdateScheduler.Begin();
 
                 try
                 {
@@ -66,11 +54,11 @@ namespace UpdateControls.XAML.Wrapper
                 }
                 finally
                 {
-                    if (affectedSet != null)
+                    if (scheduler != null)
                     {
                         using (NotificationGate.BeginOutbound())
                         {
-                            foreach (Dependent dependent in affectedSet.End())
+                            foreach (Dependent dependent in scheduler.End())
                                 dependent.OnGet();
                         }
                     }
@@ -93,5 +81,13 @@ namespace UpdateControls.XAML.Wrapper
 
         public abstract object TranslateIncommingValue(object value);
         public abstract object TranslateOutgoingValue(object value);
-	}
+
+        public void UpdateNow()
+        {
+            using (NotificationGate.BeginOutbound())
+            {
+                _depProperty.OnGet();
+            }
+        }
+    }
 }

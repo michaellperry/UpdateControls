@@ -21,9 +21,9 @@ namespace UpdateControls.XAML
     /// taking no parameters into both methods. A lambda expression taking no parameters
     /// looks like this: () => &lt;condition or {statement}&gt;
     /// </summary>
-    public static partial class MakeCommand
+    public static class MakeCommand
     {
-        private class Command : ICommand
+        private class Command : ICommand, IUpdatable
         {
             // The condition under which it can execute, and the action to execute.
             private Func<bool> _canExecuteFunction;
@@ -33,22 +33,17 @@ namespace UpdateControls.XAML
             private bool _canExecute = false;
             private Dependent _depCanExecute;
 
-            // The dispatcher of the UI thread.
-            private Dispatcher _dispatcher;
-
             public Command(Func<bool> canExecute, Action execute)
             {
                 _canExecuteFunction = canExecute;
                 _execute = execute;
 
-                _dispatcher = MakeCommand.GetDispatcher();
-
                 // Create a dependent sentry to control the "can execute" flag.
                 _depCanExecute = new Dependent(UpdateCanExecute);
-                _depCanExecute.Invalidated += new Action(Invalidated);
+                _depCanExecute.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
 
                 // It begins its life out-of-date, so prepare to update it.
-                Invalidated();
+                UpdateScheduler.ScheduleUpdate(this);
             }
 
             public event EventHandler CanExecuteChanged;
@@ -75,15 +70,7 @@ namespace UpdateControls.XAML
                 _canExecute = _canExecuteFunction();
             }
 
-            private void Invalidated()
-            {
-                // When the "can execute" flag is invalidated, we need to queue
-                // up a call to update it. This will cause the UI thread to
-                // call TriggerUpdate (below) when everything settles down.
-                _dispatcher.BeginInvoke(new Action(TriggerUpdate));
-            }
-
-            private void TriggerUpdate()
+            public void UpdateNow()
             {
                 // The "can execute" flag is now out-of-date. We need to update it.
                 _depCanExecute.OnGet();

@@ -71,8 +71,7 @@
     <Compile Include="ValueObservableCollection.cs" />
     <Compile Include="ValueSource.cs" />
     <Compile Include="ViewModelBase.cs" />
-    <Compile Include="ViewModelBase.FirePropertyChanged.cs" />
-    <Compile Include="Wrapper\AffectedSet.cs" />
+    <Compile Include="ViewModelLocatorBase.cs" />
     <Compile Include="Wrapper\ClassEvent.cs" />
     <Compile Include="Wrapper\ClassInstance.cs" />
     <Compile Include="Wrapper\ClassInstanceProvider.cs" />
@@ -96,7 +95,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MakeCommand.GetDispatcher.cs" />
     <Compile Include="WrappedType.cs" />
     <None Include="Mallardsoft.snk" />
   </ItemGroup>

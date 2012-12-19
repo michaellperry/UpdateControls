@@ -67,24 +67,31 @@ namespace UpdateControls.XAML
         public abstract object Value { get; }
     }
 
-    internal class DependentAtom<T> : DependentPropertyBase
+    internal class DependentAtom<T> : DependentPropertyBase, IUpdatable
     {
         private Dependent _depValue;
         private T _value;
-
+        private Action _firePropertyChanged;
+        
         public DependentAtom(Action firePropertyChanged, Func<T> getMethod)
         {
+            _firePropertyChanged = firePropertyChanged;
             _depValue = new Dependent(() => _value = getMethod());
-            _depValue.Invalidated += firePropertyChanged;
+            _depValue.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
         }
 
         public override object Value
         {
             get { _depValue.OnGet(); return _value; }
         }
+
+        public void UpdateNow()
+        {
+            _firePropertyChanged();
+        }
     }
 
-    internal partial class DependentCollection<T> : DependentPropertyBase
+    internal class DependentCollection<T> : DependentPropertyBase, IUpdatable
     {
         private Func<IEnumerable<T>> _getMethod;
         private Dependent _depCollection;
@@ -94,7 +101,7 @@ namespace UpdateControls.XAML
         {
             _getMethod = getMethod;
             _depCollection = new Dependent(OnUpdateCollection);
-            _depCollection.Invalidated += () => TriggerUpdate(_depCollection);
+            _depCollection.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
             _depCollection.Touch();
         }
 
@@ -131,10 +138,13 @@ namespace UpdateControls.XAML
             get { return _collection; }
         }
 
-        partial void TriggerUpdate(Dependent depCollection);
+        public void UpdateNow()
+        {
+            _depCollection.OnGet();
+        }
     }
 
-    public partial class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -178,6 +188,10 @@ namespace UpdateControls.XAML
             return (IEnumerable<T>)property.Value;
         }
 
-        partial void FirePropertyChanged(string propertyName);
+        private void FirePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace UpdateControls.XAML.Wrapper
 		{
             if (NotificationGate.IsInbound)
             {
-                var affectedSet = AffectedSet.Begin();
+                var scheduler = UpdateScheduler.Begin();
 
                 try
                 {
@@ -82,11 +82,11 @@ namespace UpdateControls.XAML.Wrapper
                 }
                 finally
                 {
-                    if (affectedSet != null)
+                    if (scheduler != null)
                     {
                         using (NotificationGate.BeginOutbound())
                         {
-                            foreach (Dependent dependent in affectedSet.End())
+                            foreach (Dependent dependent in scheduler.End())
                                 dependent.OnGet();
                         }
                     }

@@ -40,10 +40,10 @@ namespace UpdateControls.XAML
 
                 // Create a dependent sentry to control the "can execute" flag.
                 _depCanExecute = new Dependent(UpdateCanExecute);
-                _depCanExecute.Invalidated += new Action(Invalidated);
+                _depCanExecute.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
 
                 // It begins its life out-of-date, so prepare to update it.
-                Invalidated();
+                UpdateScheduler.ScheduleUpdate(this);
             }
 
             public event EventHandler CanExecuteChanged;
@@ -57,7 +57,7 @@ namespace UpdateControls.XAML
 
             public void Execute(object parameter)
             {
-                var affectedSet = AffectedSet.Begin();
+                var scheduler = UpdateScheduler.Begin();
 
                 try
                 {
@@ -66,9 +66,9 @@ namespace UpdateControls.XAML
                 }
                 finally
                 {
-                    if (affectedSet != null)
+                    if (scheduler != null)
                     {
-                        foreach (var updatable in affectedSet.End())
+                        foreach (var updatable in scheduler.End())
                             updatable.UpdateNow();
                     }
                 }
@@ -81,14 +81,6 @@ namespace UpdateControls.XAML
                 // flag. I become dependent upon anything that the update
                 // function touches.
                 _canExecute = _canExecuteFunction();
-            }
-
-            private void Invalidated()
-            {
-                // When the "can execute" flag is invalidated, we need to queue
-                // up a call to update it. This will cause the UI thread to
-                // call TriggerUpdate (below) when everything settles down.
-                AffectedSet.CaptureDependent(this);
             }
 
             public void UpdateNow()

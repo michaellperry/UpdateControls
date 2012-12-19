@@ -63,9 +63,6 @@
     <Compile Include="..\..\Desktop\UpdateControls.XAML\MakeCommand.cs">
       <Link>MakeCommand.cs</Link>
     </Compile>
-    <Compile Include="..\..\Desktop\UpdateControls.XAML\MakeCommand.GetDispatcher.cs">
-      <Link>MakeCommand.GetDispatcher.cs</Link>
-    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls.XAML\ObservableCollectionItem.cs">
       <Link>ObservableCollectionItem.cs</Link>
     </Compile>
@@ -87,14 +84,8 @@
     <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelBase.cs">
       <Link>ViewModelBase.cs</Link>
     </Compile>
-    <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelBase.FirePropertyChanged.cs">
-      <Link>ViewModelBase.FirePropertyChanged.cs</Link>
-    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls.XAML\WrappedType.cs">
       <Link>WrappedType.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\AffectedSet.cs">
-      <Link>Wrapper\AffectedSet.cs</Link>
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\ClassEvent.cs">
       <Link>Wrapper\ClassEvent.cs</Link>

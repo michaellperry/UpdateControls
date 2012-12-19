@@ -111,14 +111,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModelLocatorBase.cs" />
-    <Compile Include="Wrapper\AffectedSet.cs" />
     <Compile Include="Wrapper\CollectionItem.cs" />
     <Compile Include="Wrapper\CustomMemberProvider.cs" />
     <Compile Include="Wrapper\CustomMetadataProvider.cs" />
     <Compile Include="Wrapper\CustomTypeProvider.cs" />
     <Compile Include="Wrapper\ObjectProperty.cs" />
     <Compile Include="Wrapper\ObjectInstance.cs" />
-    <Compile Include="Wrapper\IUpdatable.cs" />
     <Compile Include="Wrapper\PrimitiveTypeProvider.cs" />
   </ItemGroup>
   <ItemGroup>

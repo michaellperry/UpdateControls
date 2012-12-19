@@ -11,13 +11,13 @@ namespace UpdateControls.XAML
 
         public static void Initialize()
         {
-            // Ensure that AffectedSet has the ability to run delegates
+            // Ensure that the UpdateScheduler has the ability to run delegates
             // on the UI thread.
             if (_mainDispatcher == null)
             {
                 _mainDispatcher = Window.Current.Dispatcher;
             }
-            AffectedSet.Initialize(RunOnUIThread);
+            UpdateScheduler.Initialize(RunOnUIThread);
         }
 
         public static object Wrap(object viewModel)

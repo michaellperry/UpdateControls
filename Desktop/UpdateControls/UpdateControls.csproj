@@ -54,6 +54,8 @@
     <Compile Include="..\Solution Files\CommonProperties.cs">
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
+    <Compile Include="IUpdatable.cs" />
+    <Compile Include="UpdateScheduler.cs" />
     <Compile Include="Collections\DependentDictionary.cs" />
     <Compile Include="Collections\DependentList.cs" />
     <Compile Include="Collections\IndependentDictionary.cs" />

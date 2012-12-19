@@ -18,7 +18,7 @@ namespace UpdateControls.XAML
             {
                 _firePropertyChanged = firePropertyChanged;
                 _dependent = new Dependent(() => _viewModel = ForView.Wrap(constructor()));
-                _dependent.Invalidated += () => AffectedSet.CaptureDependent(this);
+                _dependent.Invalidated += () => UpdateScheduler.ScheduleUpdate(this);
             }
 
             public object ViewModel

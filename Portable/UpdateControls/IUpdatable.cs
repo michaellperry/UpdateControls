@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace UpdateControls.XAML.Wrapper
+namespace UpdateControls
 {
     public interface IUpdatable
     {

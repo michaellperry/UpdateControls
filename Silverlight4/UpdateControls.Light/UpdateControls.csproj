@@ -75,9 +75,6 @@
     <Compile Include="..\..\Desktop\UpdateControls.XAML\ViewModelBase.cs">
       <Link>XAML\ViewModelBase.cs</Link>
     </Compile>
-    <Compile Include="..\..\Desktop\UpdateControls.XAML\Wrapper\AffectedSet.cs">
-      <Link>XAML\Wrapper\AffectedSet.cs</Link>
-    </Compile>
     <Compile Include="..\..\desktop\updatecontrols.xaml\wrapper\CollectionItem.cs">
       <Link>XAML\Wrapper\CollectionItem.cs</Link>
     </Compile>
@@ -114,6 +111,9 @@
     <Compile Include="..\..\Desktop\UpdateControls\InertialProperty.cs">
       <Link>InertialProperty.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\IUpdatable.cs">
+      <Link>IUpdatable.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\MemoizedTypeName.cs">
       <Link>MemoizedTypeName.cs</Link>
     </Compile>
@@ -132,10 +132,11 @@
     <Compile Include="..\..\Desktop\UpdateControls\UpdateControlsExtensions.cs">
       <Link>UpdateControlsExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\UpdateScheduler.cs">
+      <Link>UpdateScheduler.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XAML\ForView.cs" />
-    <Compile Include="XAML\MakeCommand.GetDispatcher.cs" />
-    <Compile Include="XAML\ViewModelBase.FirePropertyChanged.cs" />
     <Compile Include="XAML\Wrapper\ClassInstance.cs" />
     <Compile Include="XAML\Wrapper\ClassProperty.cs" />
     <Compile Include="XAML\Wrapper\IObjectInstance.cs" />

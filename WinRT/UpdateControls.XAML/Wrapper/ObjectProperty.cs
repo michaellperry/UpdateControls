@@ -54,7 +54,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public void SetValue(object value)
         {
-            var affectedSet = AffectedSet.Begin();
+            var scheduler = UpdateScheduler.Begin();
 
             try
             {
@@ -63,9 +63,9 @@ namespace UpdateControls.XAML.Wrapper
             }
             finally
             {
-                if (affectedSet != null)
+                if (scheduler != null)
                 {
-                    foreach (var updatable in affectedSet.End())
+                    foreach (var updatable in scheduler.End())
                         updatable.UpdateNow();
                 }
             }
@@ -85,7 +85,7 @@ namespace UpdateControls.XAML.Wrapper
 
         private void ValueInvalidated()
         {
-            AffectedSet.CaptureDependent(this);
+            UpdateScheduler.ScheduleUpdate(this);
         }
 
         public void UpdateNow()

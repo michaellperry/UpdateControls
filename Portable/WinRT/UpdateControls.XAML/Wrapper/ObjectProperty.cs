@@ -47,7 +47,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public void SetValue(object value)
         {
-            var affectedSet = AffectedSet.Begin();
+            var affectedSet = UpdateScheduler.Begin();
 
             try
             {
@@ -78,7 +78,7 @@ namespace UpdateControls.XAML.Wrapper
 
         private void ValueInvalidated()
         {
-            AffectedSet.CaptureDependent(this);
+            UpdateScheduler.ScheduleUpdate(this);
         }
 
         public void UpdateNow()

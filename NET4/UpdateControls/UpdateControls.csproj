@@ -86,6 +86,9 @@
     <Compile Include="..\..\Desktop\UpdateControls\InertialProperty.cs">
       <Link>InertialProperty.cs</Link>
     </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\IUpdatable.cs">
+      <Link>IUpdatable.cs</Link>
+    </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\MemoizedTypeName.cs">
       <Link>MemoizedTypeName.cs</Link>
     </Compile>
@@ -103,6 +106,9 @@
     </Compile>
     <Compile Include="..\..\Desktop\UpdateControls\UpdateControlsExtensions.cs">
       <Link>UpdateControlsExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Desktop\UpdateControls\UpdateScheduler.cs">
+      <Link>UpdateScheduler.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

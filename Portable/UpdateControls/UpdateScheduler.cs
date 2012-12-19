@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UpdateControls.XAML.Wrapper
+namespace UpdateControls
 {
-    public class AffectedSet
+    public class UpdateScheduler
     {
         private static Action<Action> _runOnUIThread;
-        private static ThreadLocal<AffectedSet> _currentSet = new ThreadLocal<AffectedSet>();
+        private static ThreadLocal<UpdateScheduler> _currentSet = new ThreadLocal<UpdateScheduler>();
 
         public static void Initialize(Action<Action> runOnUIThread)
         {
@@ -16,21 +16,21 @@ namespace UpdateControls.XAML.Wrapper
             }
         }
 
-        public static AffectedSet Begin()
+        public static UpdateScheduler Begin()
         {
             // If someone is already capturing the affected set,
             // let them keep that responsibility.
             if (_currentSet.Get() != null)
                 return null;
 
-            AffectedSet currentSet = new AffectedSet();
+            UpdateScheduler currentSet = new UpdateScheduler();
             _currentSet.Set(currentSet);
             return currentSet;
         }
 
-        public static void CaptureDependent(IUpdatable updatable)
+        public static void ScheduleUpdate(IUpdatable updatable)
         {
-            AffectedSet currentSet = _currentSet.Get();
+            UpdateScheduler currentSet = _currentSet.Get();
             if (currentSet != null)
                 currentSet._updatables.Add(updatable);
             else if (_runOnUIThread != null)
