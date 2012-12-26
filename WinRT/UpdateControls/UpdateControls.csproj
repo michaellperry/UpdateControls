@@ -127,7 +127,6 @@
     <Compile Include="Precedent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecycleBin.cs" />
-    <Compile Include="ThreadLocal.cs" />
     <Compile Include="UpdateControlsExtensions.cs" />
     <Compile Include="UpdateScheduler.cs" />
   </ItemGroup>

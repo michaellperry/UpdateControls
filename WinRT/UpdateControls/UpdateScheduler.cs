@@ -6,7 +6,8 @@ namespace UpdateControls
     public class UpdateScheduler
     {
         private static Action<Action> _runOnUIThread;
-        private static ThreadLocal<UpdateScheduler> _currentSet = new ThreadLocal<UpdateScheduler>();
+        [ThreadStatic]
+        private static UpdateScheduler _currentScheduler;
 
         public static void Initialize(Action<Action> runOnUIThread)
         {
@@ -20,17 +21,17 @@ namespace UpdateControls
         {
             // If someone is already capturing the affected set,
             // let them keep that responsibility.
-            if (_currentSet.Get() != null)
+            if (_currentScheduler != null)
                 return null;
 
             UpdateScheduler currentSet = new UpdateScheduler();
-            _currentSet.Set(currentSet);
+            _currentScheduler = currentSet;
             return currentSet;
         }
 
         public static void ScheduleUpdate(IUpdatable updatable)
         {
-            UpdateScheduler currentSet = _currentSet.Get();
+            UpdateScheduler currentSet = _currentScheduler;
             if (currentSet != null)
                 currentSet._updatables.Add(updatable);
             else if (_runOnUIThread != null)
@@ -44,8 +45,8 @@ namespace UpdateControls
 
         public IEnumerable<IUpdatable> End()
         {
-            System.Diagnostics.Debug.Assert(_currentSet.Get() == this);
-            _currentSet.Set(null);
+            System.Diagnostics.Debug.Assert(_currentScheduler == this);
+            _currentScheduler = null;
             return _updatables;
         }
     }
