@@ -68,7 +68,9 @@ namespace UpdateControls.XAML.Wrapper
         {
             if (_provider.IsCollection)
             {
-                _sourceCollection = ((IEnumerable)_propertyInfo.GetValue(_wrappedObject, EmptyIndexer)).OfType<object>().ToList();
+                IEnumerable propertyValue = _propertyInfo.GetValue(_wrappedObject, EmptyIndexer) as IEnumerable;
+                _sourceCollection = propertyValue == null ? null :
+                    propertyValue.OfType<object>().ToList();
             }
             else
             {
