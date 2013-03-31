@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Input;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class CustomMemberProvider : IXamlMember
+    public class CustomMemberProvider : IXamlMember
     {
         private static readonly TypeInfo[] Primitives = new TypeInfo[]
         {

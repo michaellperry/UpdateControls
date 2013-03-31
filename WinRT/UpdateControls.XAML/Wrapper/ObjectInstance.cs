@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    internal interface IObjectInstance
+    public interface IObjectInstance
     {
         object WrappedObject { get; }
         bool Equals(object obj);
@@ -16,7 +16,7 @@ namespace UpdateControls.XAML.Wrapper
         string ToString();
         void FirePropertyChanged(string propertyName);
     }
-    class ObjectInstance<T> : IObjectInstance, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
+    public class ObjectInstance<T> : IObjectInstance, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
     {
         private readonly T _wrappedObject;
 

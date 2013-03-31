@@ -14,7 +14,7 @@ using Windows.UI.Core;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class ObjectProperty : IUpdatable
+    public class ObjectProperty : IUpdatable
     {
         private static readonly object[] EmptyIndexer = new object[0];
 

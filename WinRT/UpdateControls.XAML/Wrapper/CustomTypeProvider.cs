@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Markup;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    class CustomTypeProvider : IXamlType
+    public class CustomTypeProvider : IXamlType
     {
         private Type _type;
         private Type _underlyingType;
