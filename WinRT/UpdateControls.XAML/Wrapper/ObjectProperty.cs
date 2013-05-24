@@ -58,7 +58,7 @@ namespace UpdateControls.XAML.Wrapper
 
             try
             {
-                if (!_provider.IsCollection)
+                if (!_provider.IsCollection && _propertyInfo.CanWrite)
                     _propertyInfo.SetValue(_wrappedObject, UnwrapValue(value), EmptyIndexer);
             }
             finally

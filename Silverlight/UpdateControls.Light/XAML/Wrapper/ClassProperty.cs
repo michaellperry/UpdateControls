@@ -143,7 +143,8 @@ namespace UpdateControls.XAML.Wrapper
 
 		public void SetObjectValue(object wrappedObject, object value)
 		{
-			_propertyInfo.SetValue(wrappedObject, value, null);
+            if (_propertyInfo.CanWrite)
+    			_propertyInfo.SetValue(wrappedObject, value, null);
 		}
 
 		public string Name
