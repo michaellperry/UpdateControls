@@ -120,7 +120,7 @@ namespace UpdateControls
             lock (this)
             {
                 bool first = _firstDependent == null;
-                _firstDependent = new DependentNode { Dependent = update.WeakReferenceToSelf, Next = _firstDependent };
+                _firstDependent = new DependentNode { Dependent = new WeakReference(update), Next = _firstDependent };
                 return first;
             }
         }

@@ -24,7 +24,7 @@ namespace UpdateControls.UnitTest
 #endif
 
         [TestMethod]
-        [Ignore]
+        //[Ignore]
         public void IndependentIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -38,14 +38,15 @@ namespace UpdateControls.UnitTest
             // Removing Gain/LoseDependent events: 72.
             // Custom linked list implementation for dependents: 48.
             // Other optimizations: 40.
-            Assert.AreEqual(40 + IndependentPlatformOffset, end - start);
+            // Removed WeakReferenceToSelf: 20.
+            Assert.AreEqual(20 + IndependentPlatformOffset, end - start);
 
             int value = newIndependent;
             Assert.AreEqual(42, value);
         }
 
         [TestMethod]
-        [Ignore]
+        //[Ignore]
         public void DependentIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -61,14 +62,15 @@ namespace UpdateControls.UnitTest
             // Custom linked list implementation for precedents: 112.
             // Other optimizations: 104.
 			// Added WeakReferenceToSelf: 108.
-            Assert.AreEqual(108 + DependentPlatformOffset, end - start);
+            // Removed WeakReferenceToSelf: 104.
+            Assert.AreEqual(104 + DependentPlatformOffset, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
         }
 
         [TestMethod]
-        [Ignore]
+        //[Ignore]
         public void SingleDependencyBeforeUpdateIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -86,7 +88,8 @@ namespace UpdateControls.UnitTest
             // Custom linked list implementation for precedents: 160.
             // Other optimizations: 144.
 			// Added WeakReferenceToSelf: 148.
-			Assert.AreEqual(148 + IndependentPlatformOffset, end - start);
+            // Removed WeakReferenceToSelf: 124.
+			Assert.AreEqual(124 + IndependentPlatformOffset, end - start);
 
             int value = newDependent;
             Assert.AreEqual(42, value);
@@ -113,7 +116,8 @@ namespace UpdateControls.UnitTest
             // Weak reference to dependents: 208.
             // Other optimizations: 192.
 			// Added WeakReferenceToSelf: 196.
-			Assert.AreEqual(196 + IndependentPlatformOffset, end - start);
+            // Removed WeakReferenceToSelf: 168 - 324.
+			Assert.AreEqual(324 + IndependentPlatformOffset, end - start);
 
             value = newDependent;
             Assert.AreEqual(42, value);
