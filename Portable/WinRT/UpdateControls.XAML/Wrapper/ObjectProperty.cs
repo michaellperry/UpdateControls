@@ -74,7 +74,9 @@ namespace UpdateControls.XAML.Wrapper
             }
             else
             {
-                _value = WrapValue(_propertyInfo.GetValue(_wrappedObject, EmptyIndexer));
+                object value = WrapValue(_propertyInfo.GetValue(_wrappedObject, EmptyIndexer));
+                if (!Object.Equals(value, _value))
+                    _value = value;
             }
         }
 

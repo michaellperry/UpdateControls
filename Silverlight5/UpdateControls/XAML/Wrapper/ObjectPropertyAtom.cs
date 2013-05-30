@@ -29,8 +29,10 @@ namespace UpdateControls.XAML.Wrapper
 				_depProperty = new Dependent(delegate
 				{
 					object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
-					_value = TranslateOutgoingValue(value);
-					if (_firePropertyChanged)
+                    value = TranslateOutgoingValue(value);
+                    if (!Object.Equals(_value, value))
+                        _value = value;
+                    if (_firePropertyChanged)
 						ObjectInstance.FirePropertyChanged(ClassProperty.Name);
 					_firePropertyChanged = true;
 				});

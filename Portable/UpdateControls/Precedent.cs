@@ -125,8 +125,6 @@ namespace UpdateControls
             }
         }
 
-        private static int _referenceCount = 0;
-
         private bool Delete(Dependent dependent)
         {
             lock (this)
@@ -138,8 +136,6 @@ namespace UpdateControls
                     object target = current.Dependent.Target;
                     if (target == null || target == dependent)
                     {
-                        if (target == null)
-                            System.Diagnostics.Debug.WriteLine(String.Format("Dead reference {0}", _referenceCount++));
                         if (target == dependent)
                             ++count;
                         if (prior == null)

@@ -26,14 +26,16 @@ namespace UpdateControls.XAML.Wrapper
 			if (ClassProperty.CanRead)
 			{
 				// When the property is out of date, update it from the wrapped object.
-				_depProperty = new Dependent(delegate
-				{
-					object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
-					_value = TranslateOutgoingValue(value);
-					if (_firePropertyChanged)
-						ObjectInstance.FirePropertyChanged(ClassProperty.Name);
-					_firePropertyChanged = true;
-				});
+                _depProperty = new Dependent(delegate
+                {
+                    object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
+                    value = TranslateOutgoingValue(value);
+                    if (!Object.Equals(_value, value))
+                        _value = value;
+                    if (_firePropertyChanged)
+                        ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+                    _firePropertyChanged = true;
+                });
 				// When the property becomes out of date, trigger an update.
 				// The update should have lower priority than user input & drawing,
 				// to ensure that the app doesn't lock up in case a large model is 
