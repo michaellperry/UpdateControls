@@ -1,7 +1,8 @@
 ﻿<Window x:Class="UpdateControls.XAML.Test.Window1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Window1" Height="316" Width="559">
+    Title="Window1" Height="316" Width="559"
+    DataContext="{Binding ContactList, Source={StaticResource Locator}}">
 
     <Window.Resources>
         <Style TargetType="Border">

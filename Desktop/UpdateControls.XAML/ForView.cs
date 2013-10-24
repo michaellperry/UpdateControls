@@ -41,6 +41,8 @@ namespace UpdateControls.XAML
         public static object Wrap<TWrappedObjectType>(TWrappedObjectType wrappedObject)
         {
             Initialize();
+            if (wrappedObject == null)
+                return null;
             return typeof(ObjectInstance<>)
 				.MakeGenericType(wrappedObject.GetType())
 				.GetConstructor(new Type[] { typeof(object), typeof(Dispatcher) })
