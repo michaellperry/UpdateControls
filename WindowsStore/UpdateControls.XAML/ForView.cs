@@ -51,11 +51,6 @@ namespace UpdateControls.XAML
                         action();
                     }));
             }
-            else
-            {
-                throw new InvalidOperationException(
-                    "Please call ForView.Initialize() on the UI thread.");
-            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace UpdateControls.XAML
     /// taking no parameters into both methods. A lambda expression taking no parameters
     /// looks like this: () => &lt;condition or {statement}&gt;
     /// </summary>
-    public static partial class MakeCommand
+    public static class MakeCommand
     {
         private class Command : ICommand, IUpdatable
         {

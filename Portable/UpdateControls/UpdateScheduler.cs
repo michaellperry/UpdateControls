@@ -35,9 +35,6 @@ namespace UpdateControls
                 currentSet._updatables.Add(updatable);
             else if (_runOnUIThread != null)
                 _runOnUIThread(updatable.UpdateNow);
-            else
-                throw new InvalidOperationException(
-                    "Please call ForView.Initialize() on the UI thread.");
         }
 
         private List<IUpdatable> _updatables = new List<IUpdatable>();

@@ -10,17 +10,15 @@ using Windows.UI.Xaml;
 using System.ComponentModel;
 using System.Collections.Specialized;
 using System.Collections;
-using Windows.UI.Xaml.Input;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public class CustomMemberProvider : IXamlMember
+    class CustomMemberProvider : IXamlMember
     {
         private static readonly TypeInfo[] Primitives = new TypeInfo[]
         {
 			typeof(object).GetTypeInfo(),
-            typeof(string).GetTypeInfo(),
-            typeof(Uri).GetTypeInfo()
+            typeof(string).GetTypeInfo()
         };
 
         private static readonly TypeInfo[] Bindables = new TypeInfo[]
@@ -28,8 +26,7 @@ namespace UpdateControls.XAML.Wrapper
             typeof(DependencyObject).GetTypeInfo(),
             typeof(INotifyPropertyChanged).GetTypeInfo(),
             typeof(INotifyCollectionChanged).GetTypeInfo(),
-            typeof(ICommand).GetTypeInfo(),
-            typeof(InputScope).GetTypeInfo()
+            typeof(ICommand).GetTypeInfo()
         };
 
         private static TypeInfo EnumerableTypeInfo = typeof(IEnumerable).GetTypeInfo();
@@ -39,17 +36,15 @@ namespace UpdateControls.XAML.Wrapper
         private readonly string _name;
         private readonly PropertyInfo _propertyInfo;
         private readonly bool _isPrimitive;
-        private readonly bool _isBindable;
         private readonly bool _isCollection;
 
-        private CustomMemberProvider(CustomTypeProvider owner, Type type, string name, PropertyInfo propertyInfo, bool isPrimitive, bool isBindable, bool isCollection)
+        private CustomMemberProvider(CustomTypeProvider owner, Type type, string name, PropertyInfo propertyInfo, bool isPrimitive, bool isCollection)
         {
             _owner = owner;
             _type = type;
             _name = name;
             _propertyInfo = propertyInfo;
             _isPrimitive = isPrimitive;
-            _isBindable = isBindable;
             _isCollection = isCollection;
         }
 
@@ -65,34 +60,23 @@ namespace UpdateControls.XAML.Wrapper
 
             bool isCollection;
             bool isPrimitive;
-            bool isBindable;
             if (TypeIsPrimitive(propertyTypeInfo))
             {
                 isCollection = false;
                 isPrimitive = true;
-                isBindable = false;
-            }
-            else if (TypeIsBindable(propertyTypeInfo))
-            {
-                isCollection = false;
-                isPrimitive = false;
-                isBindable = true;
             }
             else if (IsCollectionType(propertyTypeInfo))
             {
                 isCollection = true;
-                var itemType = GetItemType(propertyTypeInfo);
-                isPrimitive = TypeIsPrimitive(itemType);
-                isBindable = TypeIsBindable(itemType);
+                isPrimitive = TypeIsPrimitive(GetItemType(propertyTypeInfo));
             }
             else
             {
                 isCollection = false;
                 isPrimitive = false;
-                isBindable = false;
             }
 
-            return new CustomMemberProvider(owner, type, name, propertyInfo, isPrimitive, isBindable, isCollection);
+            return new CustomMemberProvider(owner, type, name, propertyInfo, isPrimitive, isCollection);
         }
 
         public bool IsCollection
@@ -102,7 +86,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public bool IsPrimitive
         {
-            get { return _isPrimitive || _isBindable; }
+            get { return _isPrimitive; }
         }
 
         public object GetValue(object instance)
@@ -160,12 +144,10 @@ namespace UpdateControls.XAML.Wrapper
         {
             get
             {
-                if (_isPrimitive || _isCollection)
-                    return new PrimitiveTypeProvider(_propertyInfo.PropertyType);
-                else if (_isBindable)
-                    return new PrimitiveTypeProvider(typeof(object));
-                else
-                    return CustomMetadataProvider.GetDependentType(_propertyInfo.PropertyType);
+                return
+                    _isPrimitive || _isCollection
+                        ? (IXamlType)new PrimitiveTypeProvider(_propertyInfo.PropertyType)
+                        : CustomMetadataProvider.GetDependentType(_propertyInfo.PropertyType);
             }
         }
 
@@ -188,12 +170,8 @@ namespace UpdateControls.XAML.Wrapper
                 typeInfo.IsValueType ||
                 typeInfo.IsPrimitive ||
                 (typeInfo.IsGenericType && typeInfo.GetGenericTypeDefinition() == typeof(Nullable<>)) ||
-                Primitives.Contains(typeInfo);
-        }
-
-        private static bool TypeIsBindable(TypeInfo typeInfo)
-        {
-            return
+                Primitives.Contains(typeInfo) ||
+                // Don't wrap objects that are already bindable
                 Bindables.Any(b => b.IsAssignableFrom(typeInfo));
         }
     }

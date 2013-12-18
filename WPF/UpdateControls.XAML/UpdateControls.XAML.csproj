@@ -1,27 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E4496FFF-165F-4008-8766-4DD086F5D3EC}</ProjectGuid>
+    <ProjectGuid>{FEFABF21-E62D-4E4A-A51A-30803EDFA37F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UpdateControls.XAML</RootNamespace>
     <AssemblyName>UpdateControls.XAML</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Mallardsoft.snk</AssemblyOriginatorKeyFile>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,42 +29,36 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\Common\Mallardsoft.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="PresentationFramework">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Solution Files\CommonProperties.cs">
+    <Compile Include="..\..\Common\CommonProperties.cs">
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
     <Compile Include="ForView.cs" />
-    <Compile Include="MakeCommand.cs" />
-    <Compile Include="ObservableCollectionItem.cs" />
-    <Compile Include="PathSegment.cs" />
-    <Compile Include="UpdateExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValueDependencyObject.cs" />
-    <Compile Include="ValueObservableCollection.cs" />
-    <Compile Include="ValueSource.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModelLocatorBase.cs" />
     <Compile Include="Wrapper\ClassEvent.cs" />
     <Compile Include="Wrapper\ClassInstance.cs" />
     <Compile Include="Wrapper\ClassInstanceProvider.cs" />
     <Compile Include="Wrapper\ClassProperty.cs" />
+    <Compile Include="Wrapper\CollectionItem.cs" />
     <Compile Include="Wrapper\IObjectInstance.cs" />
     <Compile Include="Wrapper\NotificationGate.cs" />
     <Compile Include="Wrapper\ObjectInstance.cs" />
@@ -86,22 +69,19 @@
     <Compile Include="Wrapper\ObjectPropertyCollection.cs" />
     <Compile Include="Wrapper\ObjectPropertyCollectionNative.cs" />
     <Compile Include="Wrapper\ObjectPropertyCollectionObject.cs" />
-    <Compile Include="Wrapper\CollectionItem.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">
-      <Project>{FFA4FF30-E11F-476F-A305-EC9FD624C752}</Project>
-      <Name>UpdateControls %28Desktop\UpdateControls%29</Name>
+    <ProjectReference Include="..\..\Portable\UpdateControls\UpdateControls.csproj">
+      <Project>{0f197cdb-cf38-438b-90ad-1b4f0976061e}</Project>
+      <Name>UpdateControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WrappedType.cs" />
-    <None Include="Mallardsoft.snk" />
+    <None Include="..\..\Common\Mallardsoft.snk">
+      <Link>Mallardsoft.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(SolutionDir)NuGet\Core\lib\Net35\"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

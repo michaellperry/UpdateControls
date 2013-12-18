@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public interface IObjectInstance
+    internal interface IObjectInstance
     {
         object WrappedObject { get; }
         bool Equals(object obj);
@@ -16,7 +15,7 @@ namespace UpdateControls.XAML.Wrapper
         string ToString();
         void FirePropertyChanged(string propertyName);
     }
-    public class ObjectInstance<T> : IObjectInstance, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
+    class ObjectInstance<T> : IObjectInstance, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
     {
         private readonly T _wrappedObject;
 

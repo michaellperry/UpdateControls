@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Reflection;
 
 namespace UpdateControls
 {
@@ -43,7 +42,19 @@ namespace UpdateControls
 		/// <summary>Computes a type's name without memoization.</summary>
 		internal static string ComputeGenericName(Type type)
 		{
-            return type.NameWithGenericParams();
+			string result = type.Name;
+			if (type.IsGenericType)
+			{
+				// remove genric indication (e.g. `1)
+				result = result.Substring(0, result.LastIndexOf('`'));
+
+				result = string.Format(
+					"{0}<{1}>",
+					result,
+					string.Join(", ", type.GetGenericArguments()
+									  .Select(t => GenericName(t)).ToArray()));
+			}
+			return result;
 		}
 
 		/// <summary>Extension method on Type that is an alias for the <see cref="ShortName"/> method.</summary>

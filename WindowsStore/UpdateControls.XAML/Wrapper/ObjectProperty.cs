@@ -1,20 +1,13 @@
-using System.Reflection;
-using UpdateControls.Fields;
-using System.Linq;
 using System;
-using System.Windows.Input;
-using System.Windows;
-using System.ComponentModel;
-using System.Collections.Specialized;
 using System.Collections;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using Windows.UI.Xaml;
-using Windows.UI.Core;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public class ObjectProperty : IUpdatable
+    class ObjectProperty : IUpdatable
     {
         private static readonly object[] EmptyIndexer = new object[0];
 
@@ -54,7 +47,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public void SetValue(object value)
         {
-            var scheduler = UpdateScheduler.Begin();
+            var affectedSet = UpdateScheduler.Begin();
 
             try
             {
@@ -63,9 +56,9 @@ namespace UpdateControls.XAML.Wrapper
             }
             finally
             {
-                if (scheduler != null)
+                if (affectedSet != null)
                 {
-                    foreach (var updatable in scheduler.End())
+                    foreach (var updatable in affectedSet.End())
                         updatable.UpdateNow();
                 }
             }

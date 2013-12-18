@@ -74,11 +74,6 @@ namespace UpdateControls.XAML
             {
                 _mainDispatcher.BeginInvoke(action);
             }
-            else
-            {
-                throw new InvalidOperationException(
-                    "Please call ForView.Initialize() on the UI thread.");
-            }
         }
     }
 }

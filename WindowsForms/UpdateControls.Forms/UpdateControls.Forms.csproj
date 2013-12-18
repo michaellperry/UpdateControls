@@ -1,27 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{82338022-D5A1-40B5-8953-E578FF607FCE}</ProjectGuid>
+    <ProjectGuid>{A559D316-B196-4469-9B83-83682CB5F55D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UpdateControls.Forms</RootNamespace>
     <AssemblyName>UpdateControls.Forms</AssemblyName>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Mallardsoft.snk</AssemblyOriginatorKeyFile>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\UpdateControls.Forms.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,24 +28,27 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\UpdateControls.Forms.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Solution Files\CommonProperties.cs">
+    <Compile Include="..\..\Common\CommonProperties.cs">
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
     <Compile Include="Delegates.cs" />
     <Compile Include="GuiUpdateHelper.cs" />
+    <Compile Include="IEnabledControl.cs" />
+    <Compile Include="IErrorControl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -73,11 +64,6 @@
     <Compile Include="UpdateComponent.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UpdateNumericUpDown.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Util\CollectionHelper.cs" />
-    <Compile Include="Util\UpdateController.cs" />
     <Compile Include="UpdateDateTimePicker.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -105,6 +91,9 @@
     <Compile Include="UpdateMonthCalendar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UpdateNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UpdateRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -114,91 +103,9 @@
     <Compile Include="UpdateTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IEnabledControl.cs" />
-    <Compile Include="IErrorControl.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Util\CollectionHelper.cs" />
     <Compile Include="Util\ReadOnlyListDecorator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Mallardsoft.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UpdateButton.resx">
-      <DependentUpon>UpdateButton.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateCheckBox.resx">
-      <DependentUpon>UpdateCheckBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateCheckedListBox.resx">
-      <DependentUpon>UpdateCheckedListBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateComboBox.resx">
-      <DependentUpon>UpdateComboBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateComponent.resx">
-      <DependentUpon>UpdateComponent.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateDateTimePicker.resx">
-      <DependentUpon>UpdateDateTimePicker.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateErrorProvider.resx">
-      <DependentUpon>UpdateErrorProvider.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateFormMap.resx">
-      <DependentUpon>UpdateFormMap.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateGrid.resx">
-      <DependentUpon>UpdateGrid.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateLabel.resx">
-      <DependentUpon>UpdateLabel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateListBox.resx">
-      <DependentUpon>UpdateListBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateListView.resx">
-      <DependentUpon>UpdateListView.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateMonthCalendar.resx">
-      <DependentUpon>UpdateMonthCalendar.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateRadioButton.resx">
-      <DependentUpon>UpdateRadioButton.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateTextBox.resx">
-      <DependentUpon>UpdateTextBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateTreeView.resx">
-      <DependentUpon>UpdateTreeView.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Compile Include="Util\UpdateController.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ToolboxImages\UpdateButton.png" />
@@ -219,12 +126,62 @@
     <EmbeddedResource Include="ToolboxImages\UpdateTreeView.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UpdateControls\UpdateControls.csproj">
-      <Project>{FFA4FF30-E11F-476F-A305-EC9FD624C752}</Project>
-      <Name>UpdateControls %28Desktop\UpdateControls%29</Name>
+    <EmbeddedResource Include="UpdateButton.resx">
+      <DependentUpon>UpdateButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateCheckBox.resx">
+      <DependentUpon>UpdateCheckBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateCheckedListBox.resx">
+      <DependentUpon>UpdateCheckedListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateComboBox.resx">
+      <DependentUpon>UpdateComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateComponent.resx">
+      <DependentUpon>UpdateComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateDateTimePicker.resx">
+      <DependentUpon>UpdateDateTimePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateErrorProvider.resx">
+      <DependentUpon>UpdateErrorProvider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateFormMap.resx">
+      <DependentUpon>UpdateFormMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateGrid.resx">
+      <DependentUpon>UpdateGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateLabel.resx">
+      <DependentUpon>UpdateLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateListBox.resx">
+      <DependentUpon>UpdateListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateListView.resx">
+      <DependentUpon>UpdateListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateMonthCalendar.resx">
+      <DependentUpon>UpdateMonthCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateRadioButton.resx">
+      <DependentUpon>UpdateRadioButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateTextBox.resx">
+      <DependentUpon>UpdateTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateTreeView.resx">
+      <DependentUpon>UpdateTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Portable\UpdateControls\UpdateControls.csproj">
+      <Project>{0f197cdb-cf38-438b-90ad-1b4f0976061e}</Project>
+      <Name>UpdateControls</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -232,8 +189,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>

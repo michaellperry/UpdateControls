@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using UpdateControls.Collections;
-using System.Reflection;
 
 namespace UpdateControls
 {
