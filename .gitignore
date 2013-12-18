@@ -1,4 +1,5 @@
 packages/
+NuGet/Core/lib/
 
 #ignore thumbnails created by windows
 Thumbs.db
