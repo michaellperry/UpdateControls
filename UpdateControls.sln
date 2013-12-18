@@ -31,6 +31,58 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "Silv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.XAML", "WindowsPhone\UpdateControls.XAML\UpdateControls.XAML.csproj", "{97025838-8BB3-46DF-8058-4E890CAFFB63}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{7426ECC1-F6B4-4C5C-82BB-60C93EEFE722}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{52C0E9FE-0633-4836-BEA5-E5C1211E41FF}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\App\UpdateControls.App.nuspec = NuGet\App\UpdateControls.App.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C914E5EC-FD1A-4E30-8CF9-EF4950F9D597}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\Core\updatecontrols.nuspec = NuGet\Core\updatecontrols.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{CB7CADA3-8466-4CED-A7BB-0A0A51D5280E}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\Snippets\updatecontrols.snippets.nuspec = NuGet\Snippets\updatecontrols.snippets.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{79A90AAC-3AE6-4B40-8495-D422426D03EC}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\App\content\Readme_UpdateControls.txt.pp = NuGet\App\content\Readme_UpdateControls.txt.pp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{FCA02035-9681-4BAA-AF4F-0AD27CA5AD5B}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\App\content\Models\Document.cs.pp = NuGet\App\content\Models\Document.cs.pp
+		NuGet\App\content\Models\Item.cs.pp = NuGet\App\content\Models\Item.cs.pp
+		NuGet\App\content\Models\Selection.cs.pp = NuGet\App\content\Models\Selection.cs.pp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModels", "ViewModels", "{A21433EC-B2F2-42CB-AE89-72417F2980BC}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\App\content\ViewModels\ItemHeader.cs.pp = NuGet\App\content\ViewModels\ItemHeader.cs.pp
+		NuGet\App\content\ViewModels\ItemViewModel.cs.pp = NuGet\App\content\ViewModels\ItemViewModel.cs.pp
+		NuGet\App\content\ViewModels\MainViewModel.cs.pp = NuGet\App\content\ViewModels\MainViewModel.cs.pp
+		NuGet\App\content\ViewModels\ViewModelLocator.cs.pp = NuGet\App\content\ViewModels\ViewModelLocator.cs.pp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{A2802567-5D9B-4237-9BCE-DEF3066F2526}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\Snippets\content\Readme_UpdateControls_Snippets.txt = NuGet\Snippets\content\Readme_UpdateControls_Snippets.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B8210BF2-0F3D-4204-9512-DA83421236A8}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\Snippets\tools\dep.snippet = NuGet\Snippets\tools\dep.snippet
+		NuGet\Snippets\tools\depList.snippet = NuGet\Snippets\tools\depList.snippet
+		NuGet\Snippets\tools\ind.snippet = NuGet\Snippets\tools\ind.snippet
+		NuGet\Snippets\tools\indList.snippet = NuGet\Snippets\tools\indList.snippet
+		NuGet\Snippets\tools\install.ps1 = NuGet\Snippets\tools\install.ps1
+		NuGet\Snippets\tools\uninstall.ps1 = NuGet\Snippets\tools\uninstall.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,5 +212,13 @@ Global
 		{A618A92D-ADE7-4E18-9AA7-CEA45B5C322E} = {B7FE118C-C0B1-4735-B4BE-C12C28AB4DE7}
 		{97025838-8BB3-46DF-8058-4E890CAFFB63} = {FF3369E1-6410-41DC-8E7B-F1598293EC20}
 		{A559D316-B196-4469-9B83-83682CB5F55D} = {9642FAB5-5A0E-43D1-B212-D3EBA2940FB2}
+		{52C0E9FE-0633-4836-BEA5-E5C1211E41FF} = {7426ECC1-F6B4-4C5C-82BB-60C93EEFE722}
+		{C914E5EC-FD1A-4E30-8CF9-EF4950F9D597} = {7426ECC1-F6B4-4C5C-82BB-60C93EEFE722}
+		{CB7CADA3-8466-4CED-A7BB-0A0A51D5280E} = {7426ECC1-F6B4-4C5C-82BB-60C93EEFE722}
+		{79A90AAC-3AE6-4B40-8495-D422426D03EC} = {52C0E9FE-0633-4836-BEA5-E5C1211E41FF}
+		{FCA02035-9681-4BAA-AF4F-0AD27CA5AD5B} = {52C0E9FE-0633-4836-BEA5-E5C1211E41FF}
+		{A21433EC-B2F2-42CB-AE89-72417F2980BC} = {52C0E9FE-0633-4836-BEA5-E5C1211E41FF}
+		{A2802567-5D9B-4237-9BCE-DEF3066F2526} = {CB7CADA3-8466-4CED-A7BB-0A0A51D5280E}
+		{B8210BF2-0F3D-4204-9512-DA83421236A8} = {CB7CADA3-8466-4CED-A7BB-0A0A51D5280E}
 	EndGlobalSection
 EndGlobal
