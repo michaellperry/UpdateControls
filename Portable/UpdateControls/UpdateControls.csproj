@@ -106,7 +106,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\portable-net45+sl5+wp8+win81\
+    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\portable-net45+sl50+wp80+win\
 xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\net45\
 xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\sl5\
 xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\wp8\
