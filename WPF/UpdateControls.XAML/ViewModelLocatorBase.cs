@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UpdateControls.XAML.Wrapper;
 using System.Diagnostics;
+using System.Windows;
 
 namespace UpdateControls.XAML
 {
@@ -37,8 +38,23 @@ namespace UpdateControls.XAML
 
         private IDictionary<string, ViewModelContainer> _containerByName = new Dictionary<string, ViewModelContainer>();
 
+        private readonly bool _designMode;
+
+        public ViewModelLocatorBase()
+        {
+            _designMode = DesignerProperties.GetIsInDesignMode(new DependencyObject());
+        }
+
+        public bool DesignMode
+        {
+            get { return _designMode; }
+        }
+
         public object ViewModel(Func<object> constructor)
         {
+            if (DesignMode)
+                return constructor();
+
             string caller = new StackFrame(1).GetMethod().Name;
             if (!caller.StartsWith("get_"))
                 throw new ArgumentException("Only call ViewModel from a property getter.");

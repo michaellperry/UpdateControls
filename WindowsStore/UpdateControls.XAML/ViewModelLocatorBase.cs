@@ -35,8 +35,23 @@ namespace UpdateControls.XAML
 
         private IDictionary<string, ViewModelContainer> _containerByName = new Dictionary<string, ViewModelContainer>();
 
+        private readonly bool _designMode;
+
+        public ViewModelLocatorBase()
+        {
+            _designMode = Windows.ApplicationModel.DesignMode.DesignModeEnabled;
+        }
+
+        public bool DesignMode
+        {
+            get { return _designMode; }
+        }
+
         public object ViewModel(Func<object> constructor, [CallerMemberName] string propertyName = "")
         {
+            if (DesignMode)
+                return constructor();
+
             ForView.Initialize();
             ViewModelContainer container;
             if (!_containerByName.TryGetValue(propertyName, out container))
