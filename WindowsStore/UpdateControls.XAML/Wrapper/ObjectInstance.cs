@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -15,6 +16,7 @@ namespace UpdateControls.XAML.Wrapper
         string ToString();
         void FirePropertyChanged(string propertyName);
     }
+    [DebuggerDisplay("ForView.Wrap({_wrappedObject})")]
     class ObjectInstance<T> : IObjectInstance, INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
     {
         private readonly T _wrappedObject;
@@ -43,7 +45,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override string ToString()
         {
-            return String.Format("ForView.Wrap({0})", _wrappedObject);
+            return String.Format("{0}", _wrappedObject);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

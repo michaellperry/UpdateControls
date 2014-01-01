@@ -14,9 +14,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace UpdateControls.XAML.Wrapper
 {
+    [DebuggerDisplay("ForView.Wrap({_wrappedObject})")]
     [TypeDescriptionProvider(typeof(ClassInstanceProvider))]
     public class ObjectInstance<TWrappedObjectType> : IObjectInstance, INotifyPropertyChanged, IDataErrorInfo, IEditableObject
     {
@@ -63,7 +65,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override string ToString()
         {
-            return String.Format("ForView.Wrap({0})", _wrappedObject);
+            return String.Format("{0}", _wrappedObject);
         }
 
         public override bool Equals(object obj)
