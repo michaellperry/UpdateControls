@@ -106,10 +106,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\portable-net45+sl50+wp80+win\
+    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\portable-net45+sl50+wp80+win+wpa81\
 xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\net45\
 xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\sl5\
 xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\wp8\
+xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\wpa81\
 xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\win81\</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
