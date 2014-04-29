@@ -1,43 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0F197CDB-CF38-438B-90AD-1B4F0976061E}</ProjectGuid>
+    <ProjectGuid>{C5174D32-D236-45E6-B44F-BE6A5F1639DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UpdateControls</RootNamespace>
     <AssemblyName>UpdateControls</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>4.0</OldToolsVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,9 +40,16 @@
     <AssemblyOriginatorKeyFile>..\..\Common\Mallardsoft.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\Common\CommonProperties.cs">
-      <Link>Properties\CommonProperties.cs</Link>
-    </Compile>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="..\..\Common\Mallardsoft.snk">
+      <Link>Mallardsoft.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
+    <TargetPlatform Include="Windows, Version=8.1" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Collections\DependentDictionary.cs" />
     <Compile Include="Collections\DependentList.cs" />
     <Compile Include="Collections\Impl\UpdateCollectionHelper.cs" />
@@ -76,42 +60,15 @@
     <Compile Include="Fields\Independent.cs" />
     <Compile Include="Independent.cs" />
     <Compile Include="InertialProperty.cs" />
-    <Compile Include="MemoizedTypeName.cs" />
-    <Compile Include="NamedPrecedents.cs" />
+    <Compile Include="IUpdatable.cs" />
     <Compile Include="Precedent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecycleBin.cs" />
-    <Compile Include="ThreadLocal.cs" />
     <Compile Include="UpdateControlsExtensions.cs" />
-    <Compile Include="XAML\MakeCommand.cs" />
     <Compile Include="UpdateScheduler.cs" />
-    <Compile Include="IUpdatable.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Common\Mallardsoft.snk">
-      <Link>Mallardsoft.snk</Link>
-    </None>
+    <Compile Include="XAML\MakeCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\portable-net45+sl50+wp80+win\
-xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\net45\
-xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\sl5\
-xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\wp8\
-xcopy /y $(TargetPath) $(SolutionDir)NuGet\Core\lib\win81\</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
