@@ -50,6 +50,9 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\CommonProperties.cs">
+      <Link>Properties\CommonProperties.cs</Link>
+    </Compile>
     <Compile Include="Collections\DependentDictionary.cs" />
     <Compile Include="Collections\DependentList.cs" />
     <Compile Include="Collections\Impl\UpdateCollectionHelper.cs" />
