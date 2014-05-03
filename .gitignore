@@ -1,5 +1,6 @@
 packages/
 NuGet/Core/lib/
+NuGet/Forms/lib/
 
 #ignore thumbnails created by windows
 Thumbs.db

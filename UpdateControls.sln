@@ -98,6 +98,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls.Test", "Univ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateControls", "WindowsForms\UpdateControls\UpdateControls.csproj", "{D87B59EB-39D2-4620-9940-26EE4EC907A4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Forms", "Forms", "{29D0DFD2-D0D5-42B5-B55C-D483803A51F2}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\Forms\UpdateControls.Forms.nuspec = NuGet\Forms\UpdateControls.Forms.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -268,5 +273,6 @@ Global
 		{6D17230D-75E8-41D5-B26C-6AD517E769FB} = {703939C8-C325-4EF6-88F9-85F4E463D963}
 		{B107C9D8-0F56-4923-BDDD-92653EC82E5A} = {703939C8-C325-4EF6-88F9-85F4E463D963}
 		{D87B59EB-39D2-4620-9940-26EE4EC907A4} = {9642FAB5-5A0E-43D1-B212-D3EBA2940FB2}
+		{29D0DFD2-D0D5-42B5-B55C-D483803A51F2} = {7426ECC1-F6B4-4C5C-82BB-60C93EEFE722}
 	EndGlobalSection
 EndGlobal
