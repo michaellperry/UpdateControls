@@ -108,7 +108,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\Portable\UpdateControls.Test\UpdateControls.Test.csproj">
+    <ProjectReference Include="..\..\Universal\UpdateControls.Test\UpdateControls.Test.csproj">
       <Project>{b107c9d8-0f56-4923-bddd-92653ec82e5a}</Project>
       <Name>UpdateControls.Test</Name>
     </ProjectReference>
