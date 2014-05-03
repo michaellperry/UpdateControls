@@ -112,13 +112,13 @@
       <Project>{b107c9d8-0f56-4923-bddd-92653ec82e5a}</Project>
       <Name>UpdateControls.Test</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Portable\UpdateControls\UpdateControls.csproj">
-      <Project>{0f197cdb-cf38-438b-90ad-1b4f0976061e}</Project>
-      <Name>UpdateControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UpdateControls.XAML\UpdateControls.XAML.csproj">
+    <ProjectReference Include="..\..\Universal\UpdateControls.XAML\UpdateControls.XAML.csproj">
       <Project>{6d17230d-75e8-41d5-b26c-6ad517e769fb}</Project>
       <Name>UpdateControls.XAML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Universal\UpdateControls\UpdateControls.csproj">
+      <Project>{c5174d32-d236-45e6-b44f-be6a5f1639de}</Project>
+      <Name>UpdateControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
