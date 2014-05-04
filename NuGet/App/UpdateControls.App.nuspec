@@ -6,7 +6,7 @@
     <authors>Michael L Perry</authors>
     <owners>Michael L Perry</owners>
     <licenseUrl>http://updatecontrols.codeplex.com/license</licenseUrl>
-    <projectUrl>http://updatecontrols.codeplex.com/</projectUrl>
+    <projectUrl>http://updatecontrols.net/</projectUrl>
     <iconUrl>http://updatecontrols.net/images/logosmall.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Add a view model locator for use in an Update Controls application.</description>

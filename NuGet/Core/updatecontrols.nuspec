@@ -7,7 +7,7 @@
     <owners>Michael L Perry</owners>
     <description>Automatically discover view model dependencies and databind without INotifyPropertyChanged.</description>
     <licenseUrl>http://updatecontrols.codeplex.com/license</licenseUrl>
-    <projectUrl>http://updatecontrols.codeplex.com/</projectUrl>
+    <projectUrl>http://updatecontrols.net/</projectUrl>
     <iconUrl>http://updatecontrols.net/images/logosmall.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <language>en-US</language>
