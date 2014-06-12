@@ -31,10 +31,10 @@ namespace UpdateControls.XAML.Wrapper
             // Create a wrapper for each non-collection property.
             _classProperties = _wrappedType
                 .GetProperties()
-                .Select(p => new ClassMemberProperty(p, objectInstanceType))
+                .Select(p => ClassMemberIndependent.Intercept(new ClassMemberProperty(p, objectInstanceType)))
                 .Concat<ClassMember>(_wrappedType
                     .GetFields()
-                    .Select(f => new ClassMemberField(f, objectInstanceType)))
+                    .Select(f => ClassMemberIndependent.Intercept(new ClassMemberField(f, objectInstanceType))))
                 .ToList();
             _propertyDescriptors = new PropertyDescriptorCollection(_classProperties.ToArray());
 

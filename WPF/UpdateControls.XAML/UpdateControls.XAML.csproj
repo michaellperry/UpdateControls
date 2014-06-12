@@ -59,6 +59,7 @@
     <Compile Include="Wrapper\ClassMemberField.cs" />
     <Compile Include="Wrapper\ClassInstance.cs" />
     <Compile Include="Wrapper\ClassInstanceProvider.cs" />
+    <Compile Include="Wrapper\ClassMemberIndependent.cs" />
     <Compile Include="Wrapper\ClassMemberProperty.cs" />
     <Compile Include="Wrapper\CollectionItem.cs" />
     <Compile Include="Wrapper\IObjectInstance.cs" />
