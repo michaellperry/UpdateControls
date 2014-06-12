@@ -12,7 +12,7 @@ using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public abstract class ClassProperty : PropertyDescriptor
+    public abstract class ClassMember : PropertyDescriptor
     {
         private Type _objectInstanceType;
         private string _propertyName;
@@ -63,7 +63,7 @@ namespace UpdateControls.XAML.Wrapper
         public abstract object GetObjectValue(object wrappedObject);
         public abstract void SetObjectValue(object wrappedObject, object value);
 
-        protected ClassProperty(string propertyName, Type propertyType, Type objectInstanceType)
+        protected ClassMember(string propertyName, Type propertyType, Type objectInstanceType)
             : base(propertyName, null)
         {
             _objectInstanceType = objectInstanceType;

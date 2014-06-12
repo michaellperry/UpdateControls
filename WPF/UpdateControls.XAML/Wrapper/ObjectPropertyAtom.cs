@@ -20,7 +20,7 @@ namespace UpdateControls.XAML.Wrapper
         private object _value;
 		private bool _firePropertyChanged = false;
 
-		public ObjectPropertyAtom(IObjectInstance objectInstance, ClassProperty classProperty)
+		public ObjectPropertyAtom(IObjectInstance objectInstance, ClassMember classProperty)
 			: base(objectInstance, classProperty)
 		{
 			if (ClassProperty.CanRead)

@@ -16,7 +16,7 @@ namespace UpdateControls.XAML.Wrapper
 	class ObjectPropertyAtomNative : ObjectPropertyAtom
     {
 
-        public ObjectPropertyAtomNative(IObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectPropertyAtomNative(IObjectInstance objectInstance, ClassMember classProperty)
 			: base(objectInstance, classProperty)
 		{
         }

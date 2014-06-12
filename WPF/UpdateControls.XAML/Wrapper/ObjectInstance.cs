@@ -58,7 +58,7 @@ namespace UpdateControls.XAML.Wrapper
             get { return _dispatcher; }
         }
 
-        public ObjectProperty LookupProperty(ClassProperty classProperty)
+        public ObjectProperty LookupProperty(ClassMember classProperty)
         {
 			return _properties.Single(p => p.ClassProperty == classProperty);
 		}

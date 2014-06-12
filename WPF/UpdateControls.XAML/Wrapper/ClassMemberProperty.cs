@@ -24,11 +24,11 @@ using System.Windows.Markup;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public class ClassPropertyReal : ClassProperty
+    public class ClassMemberProperty : ClassMember
     {
         private PropertyInfo _propertyInfo;
 
-        public ClassPropertyReal(PropertyInfo property, Type objectInstanceType)
+        public ClassMemberProperty(PropertyInfo property, Type objectInstanceType)
             : base(property.Name, property.PropertyType, objectInstanceType)
         {
             _propertyInfo = property;

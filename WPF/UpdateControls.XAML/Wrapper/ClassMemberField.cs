@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public class ClassField : ClassProperty
+    public class ClassMemberField : ClassMember
     {
         private FieldInfo _fieldInfo;
 
-        public ClassField(FieldInfo field, Type objectInstanceType)
+        public ClassMemberField(FieldInfo field, Type objectInstanceType)
             : base(field.Name, field.FieldType, objectInstanceType)
         {
             _fieldInfo = field;

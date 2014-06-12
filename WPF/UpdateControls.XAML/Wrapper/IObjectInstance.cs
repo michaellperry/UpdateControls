@@ -19,7 +19,7 @@ namespace UpdateControls.XAML.Wrapper
         ClassInstance ClassInstance { get; }
         object WrappedObject { get; }
         Dispatcher Dispatcher { get; }
-        ObjectProperty LookupProperty(ClassProperty classProperty);
+        ObjectProperty LookupProperty(ClassMember classProperty);
         void FirePropertyChanged(string name);
     }
 }

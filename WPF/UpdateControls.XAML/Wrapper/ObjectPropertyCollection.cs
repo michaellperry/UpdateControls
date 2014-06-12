@@ -24,7 +24,7 @@ namespace UpdateControls.XAML.Wrapper
         private Dependent _depCollection;
         private Action _delay;
 
-        public ObjectPropertyCollection(IObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectPropertyCollection(IObjectInstance objectInstance, ClassMember classProperty)
 			: base(objectInstance, classProperty)
 		{
             if (ClassProperty.CanRead)
