@@ -95,7 +95,7 @@ namespace UpdateControls.XAML.Wrapper
 				// (which must be compatible with List<T>, e.g. IEnumerable<T> or IList)
 				if (_translateIncomingList == null)
 				{
-					Type propType = ClassProperty.PropertyInfo.PropertyType;
+					Type propType = ClassProperty.UnderlyingType;
 					Type elemType = (propType.GetInterfaces().Concat(new Type[] { propType })
 						.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>)) ?? typeof(IEnumerable<object>))
 						.GetGenericArguments()[0];

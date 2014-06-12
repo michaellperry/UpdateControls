@@ -1,31 +1,24 @@
-﻿/**********************************************************************
- * 
- * Update Controls .NET
- * Copyright 2010 Michael L Perry
- * MIT License
- * 
- * http://updatecontrols.net
- * http://updatecontrols.codeplex.com/
- * 
- **********************************************************************/
-
-using System;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
-using System.Windows;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Threading;
-using System.Windows.Media;
-using System.Windows.Media.Effects;
 using System.Windows.Markup;
+using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
 {
-    public class ClassProperty : PropertyDescriptor
+    public abstract class ClassProperty : PropertyDescriptor
     {
+        private Type _objectInstanceType;
+        private string _propertyName;
+        private Type _valueType;
+        private Func<IObjectInstance, ObjectProperty> _makeObjectProperty;
+
         private static readonly Type[] Primitives = new Type[]
         {
 			typeof(object),
@@ -46,21 +39,39 @@ namespace UpdateControls.XAML.Wrapper
             typeof(XmlLanguage)
         };
 
-        private PropertyInfo _propertyInfo;
-        private Type _objectInstanceType;
-		private Type _valueType;
-        private Func<IObjectInstance, ObjectProperty> _makeObjectProperty;
-
-        public ClassProperty(PropertyInfo property, Type objectInstanceType)
-            : base(property.Name, null)
+        public abstract Type UnderlyingType
         {
-            _propertyInfo = property;
+            get;
+        }
+
+        public abstract bool CanRead
+        {
+            get;
+        }
+
+        public override Type ComponentType
+        {
+            get { return _objectInstanceType; }
+        }
+
+        public override Type PropertyType
+        {
+            get { return _valueType; }
+        }
+
+
+        public abstract object GetObjectValue(object wrappedObject);
+        public abstract void SetObjectValue(object wrappedObject, object value);
+
+        protected ClassProperty(string propertyName, Type propertyType, Type objectInstanceType)
+            : base(propertyName, null)
+        {
             _objectInstanceType = objectInstanceType;
+            _propertyName = propertyName;
 
             // Determine which type of object property to create.
-            Type propertyType = property.PropertyType;
             Type valueType;
-			if (IsPrimitive(propertyType))
+            if (IsPrimitive(propertyType))
             {
                 _makeObjectProperty = objectInstance =>
                     new ObjectPropertyAtomNative(objectInstance, this);
@@ -91,7 +102,7 @@ namespace UpdateControls.XAML.Wrapper
                 valueType = typeof(IObjectInstance);
             }
 
-			_valueType = valueType;
+            _valueType = valueType;
         }
 
         public ObjectProperty MakeObjectProperty(IObjectInstance objectInstance)
@@ -99,60 +110,9 @@ namespace UpdateControls.XAML.Wrapper
             return _makeObjectProperty(objectInstance);
         }
 
-		public object GetObjectValue(object wrappedObject)
-		{
-			// Get the property from the wrapped object.
-			return _propertyInfo.GetValue(wrappedObject, null);
-		}
-
-		public void SetObjectValue(object wrappedObject, object value)
-		{
-            if (_propertyInfo.CanWrite)
-    			_propertyInfo.SetValue(wrappedObject, value, null);
-		}
-
-		public bool CanRead
-        {
-            get { return _propertyInfo.CanRead; }
-        }
-
-        public override Type PropertyType
-        {
-            get { return _valueType; }
-        }
-
-		public PropertyInfo PropertyInfo
-		{
-			get { return _propertyInfo; }
-		}
-
-        public override string ToString()
-        {
-            return String.Format("{0}.{1}", _propertyInfo.DeclaringType.Name, _propertyInfo.Name);
-        }
-
-        public override bool CanResetValue(object component)
-        {
-            return false;
-        }
-
-        public override Type ComponentType
-        {
-            get { return _objectInstanceType; }
-        }
-
         public override object GetValue(object component)
         {
             return GetObjectProperty(component).Value;
-        }
-
-        public override bool IsReadOnly
-        {
-            get { return !_propertyInfo.CanWrite; }
-        }
-
-        public override void ResetValue(object component)
-        {
         }
 
         public override void SetValue(object component, object value)
@@ -160,9 +120,23 @@ namespace UpdateControls.XAML.Wrapper
             GetObjectProperty(component).OnUserInput(value);
         }
 
+        public override bool CanResetValue(object component)
+        {
+            return false;
+        }
+
+        public override void ResetValue(object component)
+        {
+        }
+
         public override bool ShouldSerializeValue(object component)
         {
             return false;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0}.{1}", _objectInstanceType.Name, _propertyName);
         }
 
         private ObjectProperty GetObjectProperty(object component)
@@ -173,8 +147,8 @@ namespace UpdateControls.XAML.Wrapper
             return objectProperty;
         }
 
-		private static bool IsPrimitive(Type type)
-		{
+        private static bool IsPrimitive(Type type)
+        {
             return
                 type.IsValueType ||
                 type.IsPrimitive ||
@@ -182,6 +156,6 @@ namespace UpdateControls.XAML.Wrapper
                 Primitives.Contains(type) ||
                 // Don't wrap objects that are already bindable
                 Bindables.Any(b => b.IsAssignableFrom(type));
-		}
-	}
+        }
+    }
 }
