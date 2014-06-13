@@ -95,28 +95,25 @@ namespace UpdateControls.XAML.Wrapper
 
         public override void OnUserInput(object value)
 		{
-			if (NotificationGate.IsInbound)
+			// Use reflection to convert the collection to the ViewModel type
+			// (which must be compatible with List<T>, e.g. IEnumerable<T> or IList)
+			if (_translateIncomingList == null)
 			{
-				// Use reflection to convert the collection to the ViewModel type
-				// (which must be compatible with List<T>, e.g. IEnumerable<T> or IList)
-				if (_translateIncomingList == null)
-				{
-					Type propType = ClassProperty.UnderlyingType;
-					Type elemType = (propType.GetInterfaces().Concat(new Type[] { propType })
-						.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>)) ?? typeof(IEnumerable<object>))
-						.GetGenericArguments()[0];
-					MethodInfo mi = GetType().GetMethod("TranslateIncomingList").MakeGenericMethod(new Type[] { elemType });
-					_translateIncomingList = (Func<IEnumerable, IEnumerable>)Delegate.CreateDelegate(typeof(Func<IEnumerable, IEnumerable>), this, mi);
-				}
-				value = _translateIncomingList((IEnumerable)value);
-				ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
-
-				// If the UI object switches to a new collection, we can expect it to
-				// cancel its subscription to _collection.CollectionChanged and subscribe
-				// to the new collection instead. So let's adopt the collection as our
-				// own, if it happens to be ObservableCollection<object>.
-				_collection = value as ObservableCollection<object>;
+				Type propType = ClassProperty.UnderlyingType;
+				Type elemType = (propType.GetInterfaces().Concat(new Type[] { propType })
+					.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>)) ?? typeof(IEnumerable<object>))
+					.GetGenericArguments()[0];
+				MethodInfo mi = GetType().GetMethod("TranslateIncomingList").MakeGenericMethod(new Type[] { elemType });
+				_translateIncomingList = (Func<IEnumerable, IEnumerable>)Delegate.CreateDelegate(typeof(Func<IEnumerable, IEnumerable>), this, mi);
 			}
+			value = _translateIncomingList((IEnumerable)value);
+			ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+
+			// If the UI object switches to a new collection, we can expect it to
+			// cancel its subscription to _collection.CollectionChanged and subscribe
+			// to the new collection instead. So let's adopt the collection as our
+			// own, if it happens to be ObservableCollection<object>.
+			_collection = value as ObservableCollection<object>;
 		}
 
         public override object Value
@@ -142,16 +139,13 @@ namespace UpdateControls.XAML.Wrapper
 
         private void UpdateNow()
         {
-            using (NotificationGate.BeginOutbound())
+            _depCollection.OnGet();
+            if (_delay != null)
             {
-                _depCollection.OnGet();
-                if (_delay != null)
-                {
-                    // Update the observable collection outside of the update method
-                    // so we don't take a dependency on item template properties.
-                    _delay();
-                    _delay = null;
-                }
+                // Update the observable collection outside of the update method
+                // so we don't take a dependency on item template properties.
+                _delay();
+                _delay = null;
             }
         }
     }
