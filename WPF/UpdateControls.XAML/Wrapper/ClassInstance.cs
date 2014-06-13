@@ -36,6 +36,10 @@ namespace UpdateControls.XAML.Wrapper
                     .GetFields()
                     .Select(f => ClassMemberIndependent.Intercept(new ClassMemberField(f, objectInstanceType))))
                 .ToList();
+            _classProperties.AddRange(
+                (from method in _wrappedType.GetMethods()
+                 where method.GetParameters().Length == 0
+                 select new ClassMemberCommand(method, _classProperties.FirstOrDefault(p => p.Name == "Can" + method.Name), objectInstanceType)).ToList());
             _propertyDescriptors = new PropertyDescriptorCollection(_classProperties.ToArray());
 
             // Create a pass-through for each event.
