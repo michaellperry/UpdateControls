@@ -8,14 +8,11 @@ namespace UpdateControls.Timers
 {
     public class IndependentTimer : Independent
     {
-        DateTime _utc;
+        IndependentTimeZone _zone;
+        DateTime _time;
         bool _expired;
-        static Dictionary<DateTime, WeakReference> _cache = new Dictionary<DateTime, WeakReference>();
-        static int _cachePressure;
-        static SortedSet<IndependentTimer> _queue = new SortedSet<IndependentTimer>(
-            Comparer<IndependentTimer>.Create((l, r) => Comparer<DateTime>.Default.Compare(l._utc, r._utc)));
-        static DateTime? _next;
-        static DispatcherTimer _timer = new DispatcherTimer();
+
+        public DateTime ExpirationTime { get { return _time; } }
 
         public bool IsExpired
         {
@@ -23,10 +20,9 @@ namespace UpdateControls.Timers
             {
                 if (_expired)
                     return true;
-                else if (DateTime.UtcNow >= _utc)
+                else if (_zone.GetRawTime() >= _time)
                 {
-                    _expired = true;
-                    OnSet();
+                    Expire();
                     return true;
                 }
                 else
@@ -37,79 +33,38 @@ namespace UpdateControls.Timers
             }
         }
 
-        static IndependentTimer()
+        internal IndependentTimer(IndependentTimeZone zone, DateTime time)
         {
-            _timer.Tick += (s, args) => SelectNext();
+            _zone = zone;
+            _time = time;
+            _expired = _zone.GetRawTime() >= time;
         }
 
-        IndependentTimer(DateTime utc)
+        public static IndependentTimer Get(IndependentTimeZone zone, DateTime time)
         {
-            _utc = utc;
-            _expired = DateTime.UtcNow >= utc;
+            return zone.GetTimer(time);
         }
 
         public static IndependentTimer Get(DateTime utc)
         {
-            if (_cache.ContainsKey(utc))
-            {
-                var cached = _cache[utc].Target as IndependentTimer;
-                if (cached != null)
-                    return cached;
-            }
-            if (2 * _cachePressure >= _cache.Count)
-            {
-                foreach (var key in _cache.Keys.ToList())
-                    if (!_cache[key].IsAlive)
-                        _cache.Remove(key);
-                _cachePressure = 0;
-            }
-            var created = new IndependentTimer(utc);
-            _cache[utc] = new WeakReference(created);
-            ++_cachePressure;
-            return created;
-        }
-
-        public static bool HasExpired(DateTime utc)
-        {
-            return IndependentTimer.Get(utc).IsExpired;
+            return IndependentTimeZone.Utc.GetTimer(utc);
         }
 
         protected override void GainDependent()
         {
             if (!_expired)
-            {
-                _queue.Add(this);
-                SelectNext();
-            }
+                _zone.Enqueue(this);
         }
 
         protected override void LoseDependent()
         {
-            _queue.Remove(this);
-            SelectNext();
+            _zone.Dequeue(this);
         }
 
-        static void SelectNext()
+        internal void Expire()
         {
-            var now = DateTime.UtcNow;
-            while (_queue.Count > 0 && _queue.Min._utc <= now)
-            {
-                _queue.Min._expired = true;
-                _queue.Min.OnSet();
-                _queue.Remove(_queue.Min);
-            }
-            if (_next != null && _next.Value <= now || _queue.Count == 0)
-            {
-                _next = null;
-                _timer.Stop();
-            }
-            if (_queue.Count > 0 && _queue.Min._utc != _next)
-            {
-                _next = _queue.Min._utc;
-                _timer.Stop();
-                _timer.Interval = new TimeSpan(Math.Min(TimeSpan.FromDays(3).Ticks, Math.Max(TimeSpan.FromMilliseconds(20).Ticks, (_next.Value - now).Ticks)));
-                _timer.Start();
-            }
+            _expired = true;
+            OnSet();
         }
     }
 }
