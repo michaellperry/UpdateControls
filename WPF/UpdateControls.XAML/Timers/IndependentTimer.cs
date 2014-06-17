@@ -11,6 +11,8 @@ namespace UpdateControls.Timers
         IndependentTimeZone _zone;
         DateTime _time;
         bool _expired;
+        static Independent _exact = new Independent();
+        static bool _exactScheduled;
 
         public DateTime ExpirationTime { get { return _time; } }
 
@@ -20,6 +22,29 @@ namespace UpdateControls.Timers
             {
                 OnGet();
                 return _expired;
+            }
+        }
+
+        public bool IsExact
+        {
+            get
+            {
+                if (_zone.GetStableTime() == _time)
+                {
+                    _exact.OnGet();
+                    if (!_exactScheduled)
+                    {
+                        _exactScheduled = true;
+                        Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() =>
+                        {
+                            _exactScheduled = false;
+                            _exact.OnSet();
+                        }), DispatcherPriority.Input);
+                    }
+                    return true;
+                }
+                else
+                    return false;
             }
         }
 
