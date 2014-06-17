@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace UpdateControls.Timers
 {
@@ -12,12 +13,24 @@ namespace UpdateControls.Timers
         int _purgePressure;
         SortedSet<IndependentTimer> _queue = new SortedSet<IndependentTimer>(
             Comparer<IndependentTimer>.Create((l, r) => Comparer<DateTime>.Default.Compare(l.ExpirationTime, r.ExpirationTime)));
+        DateTime? _schedule;
+        DateTime? _stable;
 
         public static readonly IndependentTimeZone Utc = new UtcTimeZone();
 
         public abstract DateTime GetRawTime();
-        protected abstract void ScheduleTimer(DateTime time);
+        protected abstract void ScheduleTimer(TimeSpan delay);
         protected abstract void CancelTimer();
+
+        public DateTime GetStableTime()
+        {
+            if (_stable == null)
+            {
+                Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _stable = null), DispatcherPriority.Input);
+                _stable = GetRawTime();
+            }
+            return _stable.Value;
+        }
 
         protected void NotifyTimerExpired()
         {
@@ -59,16 +72,22 @@ namespace UpdateControls.Timers
 
         void ScheduleNext()
         {
-            var now = GetRawTime();
+            var now = GetStableTime();
             while (_queue.Count > 0 && _queue.Min.ExpirationTime <= now)
             {
                 _queue.Min.Expire();
                 _queue.Remove(_queue.Min);
             }
-            if (_queue.Count > 0)
-                ScheduleTimer(_queue.Min.ExpirationTime);
-            else
+            if (_queue.Count == 0)
+            {
+                _schedule = null;
                 CancelTimer();
+            }
+            else if (_queue.Min.ExpirationTime != _schedule)
+            {
+                _schedule = _queue.Min.ExpirationTime;
+                ScheduleTimer(_queue.Min.ExpirationTime - now);
+            }
         }
     }
 }

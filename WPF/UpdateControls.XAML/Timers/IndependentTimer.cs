@@ -20,11 +20,6 @@ namespace UpdateControls.Timers
             {
                 if (_expired)
                     return true;
-                else if (_zone.GetRawTime() >= _time)
-                {
-                    Expire();
-                    return true;
-                }
                 else
                 {
                     OnGet();
@@ -37,7 +32,7 @@ namespace UpdateControls.Timers
         {
             _zone = zone;
             _time = time;
-            _expired = _zone.GetRawTime() >= time;
+            _expired = _zone.GetStableTime() >= time;
         }
 
         public static IndependentTimer Get(IndependentTimeZone zone, DateTime time)
@@ -63,8 +58,11 @@ namespace UpdateControls.Timers
 
         internal void Expire()
         {
-            _expired = true;
-            OnSet();
+            if (!_expired)
+            {
+                _expired = true;
+                OnSet();
+            }
         }
     }
 }
