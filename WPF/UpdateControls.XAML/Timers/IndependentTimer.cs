@@ -56,11 +56,11 @@ namespace UpdateControls.Timers
             _zone.Dequeue(this);
         }
 
-        internal void Expire()
+        internal void Expire(bool expire)
         {
-            if (!_expired)
+            if (_expired != expire)
             {
-                _expired = true;
+                _expired = expire;
                 OnSet();
             }
         }

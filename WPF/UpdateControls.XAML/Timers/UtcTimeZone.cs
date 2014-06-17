@@ -18,7 +18,7 @@ namespace UpdateControls.Timers
         protected override void ScheduleTimer(TimeSpan delay)
         {
             _timer.Stop();
-            _timer.Interval = new TimeSpan(Math.Min(TimeSpan.FromDays(3).Ticks, Math.Max(TimeSpan.FromMilliseconds(20).Ticks, delay.Ticks)));
+            _timer.Interval = new TimeSpan(Math.Max(TimeSpan.FromMilliseconds(20).Ticks, delay.Ticks));
             _timer.Start();
         }
 

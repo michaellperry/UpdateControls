@@ -15,6 +15,7 @@ namespace UpdateControls.Timers
             Comparer<IndependentTimer>.Create((l, r) => Comparer<DateTime>.Default.Compare(l.ExpirationTime, r.ExpirationTime)));
         DateTime? _schedule;
         DateTime? _stable;
+        DateTime _skewMarker;
 
         public static readonly IndependentTimeZone Utc = new UtcTimeZone();
 
@@ -34,6 +35,7 @@ namespace UpdateControls.Timers
 
         protected void NotifyTimerExpired()
         {
+            _schedule = null;
             ScheduleNext();
         }
 
@@ -73,9 +75,22 @@ namespace UpdateControls.Timers
         void ScheduleNext()
         {
             var now = GetStableTime();
+            if (now < _skewMarker && _skewMarker - now > TimeSpan.FromSeconds(1))
+            {
+                foreach (var reference in _timers.Values)
+                {
+                    var timer = reference.Target as IndependentTimer;
+                    if (timer != null && now < timer.ExpirationTime)
+                    {
+                        timer.Expire(false);
+                        if (timer.HasDependents)
+                            _queue.Add(timer);
+                    }
+                }
+            }
             while (_queue.Count > 0 && _queue.Min.ExpirationTime <= now)
             {
-                _queue.Min.Expire();
+                _queue.Min.Expire(true);
                 _queue.Remove(_queue.Min);
             }
             if (_queue.Count == 0)
@@ -86,8 +101,9 @@ namespace UpdateControls.Timers
             else if (_queue.Min.ExpirationTime != _schedule)
             {
                 _schedule = _queue.Min.ExpirationTime;
-                ScheduleTimer(_queue.Min.ExpirationTime - now);
+                ScheduleTimer(new TimeSpan(Math.Min((_schedule.Value - now).Ticks, TimeSpan.FromSeconds(1).Ticks)));
             }
+            _skewMarker = now;
         }
     }
 }
