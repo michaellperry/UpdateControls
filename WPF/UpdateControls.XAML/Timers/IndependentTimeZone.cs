@@ -16,8 +16,16 @@ namespace UpdateControls.Timers
         DateTime? _schedule;
         DateTime? _stable;
         DateTime _skewMarker;
+        IndependentDateTime _now;
 
         public static readonly IndependentTimeZone Utc = new UtcTimeZone();
+
+        public IndependentDateTime Now { get { return _now; } }
+
+        public IndependentTimeZone()
+        {
+            _now = new IndependentDateTime(this);
+        }
 
         public abstract DateTime GetRawTime();
         protected abstract void ScheduleTimer(TimeSpan delay);
