@@ -18,13 +18,8 @@ namespace UpdateControls.Timers
         {
             get
             {
-                if (_expired)
-                    return true;
-                else
-                {
-                    OnGet();
-                    return false;
-                }
+                OnGet();
+                return _expired;
             }
         }
 
