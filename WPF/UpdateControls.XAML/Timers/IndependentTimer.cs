@@ -8,7 +8,7 @@ namespace UpdateControls.Timers
 {
     public class IndependentTimer : Independent
     {
-        IndependentTimeZone _zone;
+        FloatingTimeZone _zone;
         DateTime _time;
         bool _expired;
         static Independent _exact = new Independent();
@@ -48,21 +48,21 @@ namespace UpdateControls.Timers
             }
         }
 
-        internal IndependentTimer(IndependentTimeZone zone, DateTime time)
+        internal IndependentTimer(FloatingTimeZone zone, DateTime time)
         {
             _zone = zone;
             _time = time;
             _expired = _zone.GetStableTime() >= time;
         }
 
-        public static IndependentTimer Get(IndependentTimeZone zone, DateTime time)
+        public static IndependentTimer Get(FloatingTimeZone zone, DateTime time)
         {
             return zone.GetTimer(time);
         }
 
         public static IndependentTimer Get(DateTime utc)
         {
-            return IndependentTimeZone.Utc.GetTimer(utc);
+            return FloatingTimeZone.Utc.GetTimer(utc);
         }
 
         protected override void GainDependent()

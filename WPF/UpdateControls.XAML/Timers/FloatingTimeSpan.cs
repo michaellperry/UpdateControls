@@ -8,10 +8,10 @@ namespace UpdateControls.Timers
 {
     public abstract class FloatingTimeSpan
     {
-        protected readonly IndependentTimeZone _zone;
+        protected readonly FloatingTimeZone _zone;
         protected readonly DateTime _zero;
 
-        public IndependentTimeZone Zone { get { return _zone; } }
+        public FloatingTimeZone Zone { get { return _zone; } }
         public DateTime ZeroMoment { get { return _zero; } }
         public abstract TimeSpan Snapshot { get; }
         public int Days { get { return GetComponent(Snapshot.Days, new TimeSpan(Snapshot.Days, 0, 0, 0), TimeSpan.FromDays(1)); } }
@@ -21,7 +21,7 @@ namespace UpdateControls.Timers
 
         protected abstract int GetComponent(int component, TimeSpan cut, TimeSpan increment);
 
-        protected FloatingTimeSpan(IndependentTimeZone zone, DateTime zero)
+        protected FloatingTimeSpan(FloatingTimeZone zone, DateTime zero)
         {
             _zone = zone;
             _zero = zero;

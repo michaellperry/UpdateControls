@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace UpdateControls.Timers
 {
-    class UtcTimeZone : IndependentTimeZone
+    class UtcTimeZone : FloatingTimeZone
     {
         DispatcherTimer _timer = new DispatcherTimer();
 

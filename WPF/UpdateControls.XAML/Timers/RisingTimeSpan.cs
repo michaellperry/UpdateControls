@@ -10,7 +10,7 @@ namespace UpdateControls.Timers
     {
         public override TimeSpan Snapshot { get { return _zone.GetStableTime() - _zero; } }
 
-        internal RisingTimeSpan(IndependentTimeZone zone, DateTime zero) : base(zone, zero) { }
+        internal RisingTimeSpan(FloatingTimeZone zone, DateTime zero) : base(zone, zero) { }
 
         public RisingTimeSpan Add(TimeSpan timespan) { return new RisingTimeSpan(_zone, _zero - timespan); }
         public TimeSpan Add(DroppingTimeSpan other) { return other.ZeroMoment - _zero; }

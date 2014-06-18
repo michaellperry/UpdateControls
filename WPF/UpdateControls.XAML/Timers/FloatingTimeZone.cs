@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace UpdateControls.Timers
 {
-    public abstract class IndependentTimeZone
+    public abstract class FloatingTimeZone
     {
         Dictionary<DateTime, WeakReference> _timers = new Dictionary<DateTime, WeakReference>();
         int _purgePressure;
@@ -16,15 +16,15 @@ namespace UpdateControls.Timers
         DateTime? _schedule;
         DateTime? _stable;
         DateTime _skewMarker;
-        IndependentDateTime _now;
+        FloatingDateTime _now;
 
-        public static readonly IndependentTimeZone Utc = new UtcTimeZone();
+        public static readonly FloatingTimeZone Utc = new UtcTimeZone();
 
-        public IndependentDateTime Now { get { return _now; } }
+        public FloatingDateTime Now { get { return _now; } }
 
-        public IndependentTimeZone()
+        protected FloatingTimeZone()
         {
-            _now = new IndependentDateTime(this);
+            _now = new FloatingDateTime(this);
         }
 
         public abstract DateTime GetRawTime();
