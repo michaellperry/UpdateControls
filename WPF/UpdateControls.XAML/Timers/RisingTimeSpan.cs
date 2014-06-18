@@ -44,7 +44,7 @@ namespace UpdateControls.Timers
         public static bool operator >(TimeSpan left, RisingTimeSpan right) { return right < left; }
 
         public bool Equals(RisingTimeSpan other) { return _zone == other._zone && _zero == other._zero; }
-        public bool Equals(TimeSpan other) { return IndependentTimer.Get(_zone, _zero + other).IsExact; }
+        public bool Equals(TimeSpan other) { return GetTimer(other).IsExpired && !GetTimer1(other).IsExpired; }
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -64,8 +64,7 @@ namespace UpdateControls.Timers
         }
         public int CompareTo(TimeSpan other)
         {
-            var timer = GetTimer(other);
-            return timer.IsExact ? 0 : timer.IsExpired ? 1 : -1;
+            return !GetTimer(other).IsExpired ? -1 : GetTimer1(other).IsExpired ? 1 : 0;
         }
         public int CompareTo(object obj)
         {
@@ -77,6 +76,7 @@ namespace UpdateControls.Timers
         }
 
         IndependentTimer GetTimer(TimeSpan comparand) { return IndependentTimer.Get(_zone, _zero + comparand); }
+        IndependentTimer GetTimer1(TimeSpan comparand) { return GetTimer(comparand.Add(TimeSpan.FromTicks(1))); }
         protected override int GetComponent(int component, TimeSpan cut, TimeSpan increment)
         {
             var next = Snapshot >= TimeSpan.Zero ? cut + increment : (-cut) + TimeSpan.FromTicks(1);

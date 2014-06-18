@@ -91,7 +91,7 @@ namespace UpdateControls.Timers
         public static bool operator >(DateTime left, FloatingDateTime right) { return right < left; }
 
         public bool Equals(FloatingDateTime other) { return _zone == other._zone && _delta == other._delta; }
-        public bool Equals(DateTime other) { return GetTimer(other).IsExact; }
+        public bool Equals(DateTime other) { return GetTimer(other).IsExpired && !GetTimer1(other).IsExpired; }
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -111,8 +111,7 @@ namespace UpdateControls.Timers
         }
         public int CompareTo(DateTime other)
         {
-            var timer = GetTimer(other);
-            return timer.IsExact ? 0 : timer.IsExpired ? 1 : -1;
+            return !GetTimer(other).IsExpired ? -1 : GetTimer1(other).IsExpired ? 1 : 0;
         }
         public int CompareTo(object obj)
         {
@@ -126,6 +125,7 @@ namespace UpdateControls.Timers
         public override string ToString() { return Snapshot.ToString(); }
 
         IndependentTimer GetTimer(DateTime comparand) { return IndependentTimer.Get(_zone, comparand - _delta); }
+        IndependentTimer GetTimer1(DateTime comparand) { return GetTimer(comparand.AddTicks(1)); }
         void CheckZone(FloatingDateTime other)
         {
             if (_zone != other._zone)
