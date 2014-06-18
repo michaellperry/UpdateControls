@@ -53,8 +53,11 @@
     </Compile>
     <Compile Include="ForView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Timers\DroppingTimeSpan.cs" />
+    <Compile Include="Timers\FloatingTimeSpan.cs" />
     <Compile Include="Timers\IndependentDateTime.cs" />
     <Compile Include="Timers\IndependentTimer.cs" />
+    <Compile Include="Timers\RisingTimeSpan.cs" />
     <Compile Include="Timers\IndependentTimeZone.cs" />
     <Compile Include="Timers\UtcTimeZone.cs" />
     <Compile Include="ViewModelBase.cs" />

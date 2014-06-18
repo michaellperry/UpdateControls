@@ -12,6 +12,8 @@ namespace UpdateControls.Timers
         readonly TimeSpan _delta;
 
         public static IndependentDateTime UtcNow { get { return IndependentTimeZone.Utc.Now; } }
+        public IndependentTimeZone Zone { get { return _zone; } }
+        public TimeSpan FloatDelta { get { return _delta; } }
         public DateTime Snapshot { get { return _zone.GetStableTime() + _delta; } }
         public int Year { get { return GetComponent(Snapshot.Year, new DateTime(Snapshot.Year + 1, 0, 0)); } }
         public int Month { get { return GetComponent(Snapshot.Month, new DateTime(Snapshot.Year, Snapshot.Month, 0).AddMonths(1)); } }
@@ -35,6 +37,11 @@ namespace UpdateControls.Timers
         }
 
         public IndependentDateTime Add(TimeSpan timespan) { return new IndependentDateTime(_zone, _delta + timespan); }
+        public DateTime Add(DroppingTimeSpan timespan)
+        {
+            CheckZone(timespan);
+            return timespan.ZeroMoment + _delta;
+        }
         public IndependentDateTime AddDays(double days) { return Add(TimeSpan.FromDays(days)); }
         public IndependentDateTime AddHours(double hours) { return Add(TimeSpan.FromHours(hours)); }
         public IndependentDateTime AddMinutes(double minutes) { return Add(TimeSpan.FromMinutes(minutes)); }
@@ -42,16 +49,26 @@ namespace UpdateControls.Timers
         public IndependentDateTime AddMilliseconds(double milliseconds) { return Add(TimeSpan.FromMilliseconds(milliseconds)); }
         public IndependentDateTime AddTicks(long ticks) { return Add(TimeSpan.FromTicks(ticks)); }
         public IndependentDateTime Subtract(TimeSpan timespan) { return Add(-timespan); }
-
         public TimeSpan Subtract(IndependentDateTime other)
         {
             CheckZone(other);
             return _delta - other._delta;
         }
+        public RisingTimeSpan Subtract(DateTime other) { return new RisingTimeSpan(_zone, other - _delta); }
+        public DateTime Subtract(RisingTimeSpan timespan)
+        {
+            CheckZone(timespan);
+            return timespan.ZeroMoment + _delta;
+        }
 
         public static IndependentDateTime operator +(IndependentDateTime left, TimeSpan right) { return left.Add(right); }
+        public static DateTime operator +(IndependentDateTime left, DroppingTimeSpan right) { return left.Add(right); }
+        public static DateTime operator +(DroppingTimeSpan left, IndependentDateTime right) { return right.Add(left); }
         public static IndependentDateTime operator -(IndependentDateTime left, TimeSpan right) { return left.Subtract(right); }
         public static TimeSpan operator -(IndependentDateTime left, IndependentDateTime right) { return left.Subtract(right); }
+        public static RisingTimeSpan operator -(IndependentDateTime left, DateTime right) { return left.Subtract(right); }
+        public static DroppingTimeSpan operator -(DateTime left, IndependentDateTime right) { return new DroppingTimeSpan(right._zone, left - right._delta); }
+        public static DateTime operator -(IndependentDateTime left, RisingTimeSpan right) { return left.Subtract(right); }
 
         public static bool operator ==(IndependentDateTime left, IndependentDateTime right) { return left.Equals(right); }
         public static bool operator !=(IndependentDateTime left, IndependentDateTime right) { return !(left == right); }
@@ -112,11 +129,16 @@ namespace UpdateControls.Timers
         void CheckZone(IndependentDateTime other)
         {
             if (_zone != other._zone)
-                throw new ArgumentException("Cannot compare IndependentDateTime from two different time zones");
+                throw new ArgumentException("Cannot relate IndependentDateTime from two different time zones");
+        }
+        void CheckZone(FloatingTimeSpan timespan)
+        {
+            if (_zone != timespan.Zone)
+                throw new ArgumentException("Cannot relate IndependentDateTime to FloatingTimeSpan with different time zone");
         }
         T GetComponent<T>(T component, DateTime next)
         {
-            GetTimer(next).OnGet();
+            IndependentTimer.Get(_zone, next).OnGet();
             return component;
         }
     }
