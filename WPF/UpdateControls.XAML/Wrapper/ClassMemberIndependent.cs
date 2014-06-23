@@ -55,7 +55,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public static Type UnwrapType(Type independentType)
         {
-            for (Type ancestor = independentType; ancestor != typeof(object); ancestor = ancestor.BaseType)
+            for (Type ancestor = independentType; ancestor != typeof(object) && ancestor != null; ancestor = ancestor.BaseType)
                 if (ancestor.IsGenericType && ancestor.GetGenericTypeDefinition() == typeof(Independent<>))
                     return ancestor.GenericTypeArguments[0];
             return null;
