@@ -33,6 +33,13 @@ namespace UpdateControls.XAML.Wrapper
                 .GetProperties()
                 .Select(p => new ClassProperty(p, objectInstanceType))
                 .ToList();
+            _classProperties.AddRange(
+                (from method in _wrappedType.GetMethods()
+                 where method.ReturnType == typeof(void) && method.GetParameters().Length == 0
+                 let can = (from p in _classProperties
+                            where p.Name == "Can" + method.Name && p.PropertyType == typeof(bool)
+                            select p).FirstOrDefault()
+                 select new ClassMemberCommand(method, can, objectInstanceType)).ToList());
             _propertyDescriptors = new PropertyDescriptorCollection(_classProperties.ToArray());
 
             // Create a pass-through for each event.
