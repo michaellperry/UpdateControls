@@ -28,7 +28,6 @@ namespace UpdateControls.XAML.Wrapper
     {
         private static readonly Type[] Primitives = new Type[]
         {
-			typeof(object),
             typeof(string),
             typeof(Uri),
             typeof(Cursor)
