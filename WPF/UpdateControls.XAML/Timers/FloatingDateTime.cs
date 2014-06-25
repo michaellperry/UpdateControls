@@ -15,15 +15,15 @@ namespace UpdateControls.Timers
         public FloatingTimeZone Zone { get { return _zone; } }
         public TimeSpan FloatDelta { get { return _delta; } }
         public DateTime Snapshot { get { return _zone.GetStableTime() + _delta; } }
-        public int Year { get { return GetComponent(Snapshot.Year, new DateTime(Snapshot.Year + 1, 0, 0)); } }
-        public int Month { get { return GetComponent(Snapshot.Month, new DateTime(Snapshot.Year, Snapshot.Month, 0).AddMonths(1)); } }
-        public int Day { get { return GetComponent(Snapshot.Day, Snapshot.Date.AddDays(1)); } }
-        public int DayOfYear { get { return GetComponent(Snapshot.DayOfYear, Snapshot.Date.AddDays(1)); } }
-        public DayOfWeek DayOfWeek { get { return GetComponent(Snapshot.DayOfWeek, Snapshot.Date.AddDays(1)); } }
-        public int Hour { get { return GetComponent(Snapshot.Hour, new DateTime(Snapshot.Year, Snapshot.Month, Snapshot.Day, Snapshot.Hour, 0, 0).AddHours(1)); } }
-        public int Minute { get { return GetComponent(Snapshot.Minute, new DateTime(Snapshot.Year, Snapshot.Month, Snapshot.Day, Snapshot.Hour, Snapshot.Minute, 0).AddMinutes(1)); } }
-        public int Second { get { return GetComponent(Snapshot.Second, new DateTime(Snapshot.Year, Snapshot.Month, Snapshot.Day, Snapshot.Hour, Snapshot.Minute, Snapshot.Second).AddSeconds(1)); } }
-        public DateTime Date { get { return GetComponent(Snapshot.Date, Snapshot.Date.AddDays(1)); } }
+        public int Year { get { return GetComponent(Snapshot.Year, new DateTime(Snapshot.Year, 0, 0), new DateTime(Snapshot.Year + 1, 0, 0)); } }
+        public int Month { get { return GetComponent(Snapshot.Month, new DateTime(Snapshot.Year, Snapshot.Month, 0), new DateTime(Snapshot.Year, Snapshot.Month, 0).AddMonths(1)); } }
+        public int Day { get { return GetComponent(Snapshot.Day, Snapshot.Date, TimeSpan.FromDays(1)); } }
+        public int DayOfYear { get { return GetComponent(Snapshot.DayOfYear, Snapshot.Date, TimeSpan.FromDays(1)); } }
+        public DayOfWeek DayOfWeek { get { return GetComponent(Snapshot.DayOfWeek, Snapshot.Date, TimeSpan.FromDays(1)); } }
+        public int Hour { get { return GetComponent(Snapshot.Hour, new DateTime(Snapshot.Year, Snapshot.Month, Snapshot.Day, Snapshot.Hour, 0, 0), TimeSpan.FromHours(1)); } }
+        public int Minute { get { return GetComponent(Snapshot.Minute, new DateTime(Snapshot.Year, Snapshot.Month, Snapshot.Day, Snapshot.Hour, Snapshot.Minute, 0), TimeSpan.FromMinutes(1)); } }
+        public int Second { get { return GetComponent(Snapshot.Second, new DateTime(Snapshot.Year, Snapshot.Month, Snapshot.Day, Snapshot.Hour, Snapshot.Minute, Snapshot.Second), TimeSpan.FromSeconds(1)); } }
+        public DateTime Date { get { return GetComponent(Snapshot.Date, Snapshot.Date, TimeSpan.FromDays(1)); } }
 
         internal FloatingDateTime(FloatingTimeZone zone)
         {
@@ -136,8 +136,13 @@ namespace UpdateControls.Timers
             if (_zone != timespan.Zone)
                 throw new ArgumentException("Cannot relate IndependentDateTime to FloatingTimeSpan with different time zone");
         }
-        T GetComponent<T>(T component, DateTime next)
+        T GetComponent<T>(T component, DateTime prev, TimeSpan increment)
         {
+            return GetComponent(component, prev, prev + increment);
+        }
+        T GetComponent<T>(T component, DateTime prev, DateTime next)
+        {
+            IndependentTimer.Get(_zone, prev).OnGet();
             IndependentTimer.Get(_zone, next).OnGet();
             return component;
         }

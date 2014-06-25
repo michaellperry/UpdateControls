@@ -81,6 +81,7 @@ namespace UpdateControls.Timers
         {
             var next = Snapshot >= TimeSpan.Zero ? cut + increment : (-cut) + TimeSpan.FromTicks(1);
             IndependentTimer.Get(_zone, _zero + next).OnGet();
+            IndependentTimer.Get(_zone, _zero + next - increment).OnGet();
             return component;
         }
     }
