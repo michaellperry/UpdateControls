@@ -22,15 +22,25 @@ namespace UpdateControls.XAML.Wrapper
 
         public override object GetObjectValue(object wrappedObject)
         {
-            Action invocation = () => _method.Invoke(wrappedObject, new object[0]);
+            Action execute = () => BindingInterceptor.Current.Execute(wrappedObject, this);
             if (_condition != null)
-                return MakeCommand.When(() => (bool)_condition.GetObjectValue(wrappedObject)).Do(invocation);
+                return MakeCommand.When(() => BindingInterceptor.Current.CanExecute(wrappedObject, this)).Do(execute);
             else
-                return MakeCommand.Do(invocation);
+                return MakeCommand.Do(execute);
         }
 
         public override void SetObjectValue(object wrappedObject, object value)
         {
+        }
+
+        internal bool ContinueCanExecute(object wrappedObject)
+        {
+            return (bool)_condition.GetObjectValue(wrappedObject);
+        }
+
+        internal void ContinueExecute(object wrappedObject)
+        {
+            _method.Invoke(wrappedObject, new object[0]);
         }
 
         public override bool CanRead

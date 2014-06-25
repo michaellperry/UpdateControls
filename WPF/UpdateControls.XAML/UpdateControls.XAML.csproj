@@ -52,6 +52,7 @@
     <Compile Include="..\..\Common\CommonProperties.cs">
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
+    <Compile Include="BindingInterceptor.cs" />
     <Compile Include="ForView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timers\DroppingTimeSpan.cs" />

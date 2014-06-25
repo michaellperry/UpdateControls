@@ -25,8 +25,16 @@ namespace UpdateControls.XAML.Wrapper
 			ClassProperty = classProperty;
 		}
 
-		public abstract void OnUserInput(object value);
-        public abstract object Value { get; }
+        public void OnUserInput(object value) { BindingInterceptor.Current.SetValue(this, value); }
+        public object Value { get { return BindingInterceptor.Current.GetValue(this); } }
+
+        internal object ContinueGetValue() { return GetValue(); }
+        internal void ContinueSetValue(object value) { SetValue(value); }
+        internal void ContinueUpdateValue() { UpdateValue(); }
+
+        protected abstract object GetValue();
+        protected abstract void SetValue(object value);
+        protected abstract void UpdateValue();
 
         public static ObjectProperty From(IObjectInstance objectInstance, ClassMember classProperty)
         {
