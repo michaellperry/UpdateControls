@@ -41,6 +41,12 @@ namespace UpdateControls.XAML.Wrapper
         {
             // Get the source collection from the wrapped object.
             IEnumerable source = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
+            if (source == null)
+            {
+                _collection = null;
+                return;
+            }
+
             List<object> sourceCollection = source.OfType<object>().ToList();
 
             // Delay the update to the observable collection so that we don't record dependencies on
