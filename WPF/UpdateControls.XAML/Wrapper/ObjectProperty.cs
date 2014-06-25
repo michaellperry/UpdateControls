@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System;
+using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace UpdateControls.XAML.Wrapper
@@ -18,6 +19,8 @@ namespace UpdateControls.XAML.Wrapper
 	{
 		public IObjectInstance ObjectInstance { get; private set; }
 		public ClassMember ClassProperty { get; private set; }
+
+        public event EventHandler PropertyChanged;
 
         public ObjectProperty(IObjectInstance objectInstance, ClassMember classProperty)
 		{
@@ -53,5 +56,12 @@ namespace UpdateControls.XAML.Wrapper
 				.GetConstructor(new Type[] { typeof(object), typeof(Dispatcher) })
 				.Invoke(new object[] { value, ObjectInstance.Dispatcher });
 		}
+
+        protected void FirePropertyChanged()
+        {
+            ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+            if (PropertyChanged != null)
+                PropertyChanged(this, EventArgs.Empty);
+        }
 	}
 }

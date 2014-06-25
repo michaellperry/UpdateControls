@@ -70,7 +70,13 @@ namespace UpdateControls.XAML.Wrapper
 
             // Determine which type of object property to create.
             Type valueType;
-            if (IsPrimitive(propertyType))
+            if (propertyType == typeof(ObjectPropertyCommand))
+            {
+                _makeObjectProperty = objectInstance =>
+                    new ObjectPropertyCommand(objectInstance, (ClassMemberCommand)this);
+                valueType = propertyType;
+            }
+            else if (IsPrimitive(propertyType))
             {
                 _makeObjectProperty = objectInstance =>
                     new ObjectPropertyAtomNative(objectInstance, this);

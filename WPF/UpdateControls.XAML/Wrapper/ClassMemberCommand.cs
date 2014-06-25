@@ -10,38 +10,18 @@ namespace UpdateControls.XAML.Wrapper
 {
     public class ClassMemberCommand : ClassMember
     {
-        MethodInfo _method;
-        ClassMember _condition;
+        public MethodInfo ExecuteMethod { get; private set; }
+        public ClassMember CanExecuteProperty { get; private set; }
 
         public ClassMemberCommand(MethodInfo method, ClassMember condition, Type objectInstanceType)
-            : base(method.Name, typeof(ICommand), objectInstanceType)
+            : base(method.Name, typeof(ObjectPropertyCommand), objectInstanceType)
         {
-            _method = method;
-            _condition = condition;
+            ExecuteMethod = method;
+            CanExecuteProperty = condition;
         }
 
-        public override object GetObjectValue(object wrappedObject)
-        {
-            Action execute = () => BindingInterceptor.Current.Execute(wrappedObject, this);
-            if (_condition != null)
-                return MakeCommand.When(() => BindingInterceptor.Current.CanExecute(wrappedObject, this)).Do(execute);
-            else
-                return MakeCommand.Do(execute);
-        }
-
-        public override void SetObjectValue(object wrappedObject, object value)
-        {
-        }
-
-        internal bool ContinueCanExecute(object wrappedObject)
-        {
-            return (bool)_condition.GetObjectValue(wrappedObject);
-        }
-
-        internal void ContinueExecute(object wrappedObject)
-        {
-            _method.Invoke(wrappedObject, new object[0]);
-        }
+        public override object GetObjectValue(object wrappedObject) { return null; }
+        public override void SetObjectValue(object wrappedObject, object value) { }
 
         public override bool CanRead
         {
@@ -50,7 +30,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override Type UnderlyingType
         {
-            get { return typeof(ICommand); }
+            get { return typeof(ObjectPropertyCommand); }
         }
 
         public override bool IsReadOnly

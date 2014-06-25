@@ -68,7 +68,7 @@ namespace UpdateControls.XAML.Wrapper
             if (!Object.Equals(_value, value))
                 _value = value;
             if (_firePropertyChanged)
-                ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+                FirePropertyChanged();
             _firePropertyChanged = true;
         }
 

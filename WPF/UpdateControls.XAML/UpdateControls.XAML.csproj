@@ -73,6 +73,7 @@
     <Compile Include="Wrapper\ClassMemberProperty.cs" />
     <Compile Include="Wrapper\CollectionItem.cs" />
     <Compile Include="Wrapper\IObjectInstance.cs" />
+    <Compile Include="Wrapper\ObjectPropertyCommand.cs" />
     <Compile Include="Wrapper\ObjectInstance.cs" />
     <Compile Include="Wrapper\ObjectProperty.cs" />
     <Compile Include="Wrapper\ObjectPropertyAtom.cs" />

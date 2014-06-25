@@ -58,7 +58,7 @@ namespace UpdateControls.XAML.Wrapper
 				if (_collection == null)
 				{
 					_collection = new ObservableCollection<object>();
-					ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+                    FirePropertyChanged();
 				}
 
                 // Create a list of new items.

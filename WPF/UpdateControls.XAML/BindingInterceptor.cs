@@ -15,7 +15,6 @@ namespace UpdateControls.XAML
         public virtual object GetValue(ObjectProperty property) { return property.ContinueGetValue(); }
         public virtual void SetValue(ObjectProperty property, object value) { property.ContinueSetValue(value); }
         public virtual void UpdateValue(ObjectProperty property) { property.ContinueUpdateValue(); }
-        public virtual bool CanExecute(object wrappedObject, ClassMemberCommand command) { return command.ContinueCanExecute(wrappedObject); }
-        public virtual void Execute(object wrappedObject, ClassMemberCommand command) { command.ContinueExecute(wrappedObject); }
+        public virtual void Execute(ObjectPropertyCommand command) { command.ContinueExecute(); }
     }
 }
