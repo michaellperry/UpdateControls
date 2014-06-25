@@ -19,7 +19,7 @@ namespace UpdateControls.XAML.Wrapper
     public class ClassInstance : CustomTypeDescriptor
     {
         private Type _wrappedType;
-        private List<ClassProperty> _classProperties;
+        private List<ClassMember> _classProperties;
         private PropertyDescriptorCollection _propertyDescriptors;
         private List<ClassEvent> _classEvents;
         private EventDescriptorCollection _eventDescriptors;
@@ -31,7 +31,10 @@ namespace UpdateControls.XAML.Wrapper
             // Create a wrapper for each non-collection property.
             _classProperties = _wrappedType
                 .GetProperties()
-                .Select(p => new ClassProperty(p, objectInstanceType))
+                .Select(p => ClassMemberIndependent.Intercept(new ClassMemberProperty(p, objectInstanceType)))
+                .Concat<ClassMember>(_wrappedType
+                    .GetFields()
+                    .Select(f => ClassMemberIndependent.Intercept(new ClassMemberField(f, objectInstanceType))))
                 .ToList();
             _propertyDescriptors = new PropertyDescriptorCollection(_classProperties.ToArray());
 
@@ -43,7 +46,7 @@ namespace UpdateControls.XAML.Wrapper
             _eventDescriptors = new EventDescriptorCollection(_classEvents.ToArray());
         }
 
-        public IEnumerable<ClassProperty> ClassProperties
+        public IEnumerable<ClassMember> ClassProperties
         {
             get { return _classProperties; }
         }

@@ -17,9 +17,9 @@ namespace UpdateControls.XAML.Wrapper
     public abstract class ObjectProperty
 	{
 		public IObjectInstance ObjectInstance { get; private set; }
-		public ClassProperty ClassProperty { get; private set; }
+		public ClassMember ClassProperty { get; private set; }
 
-        public ObjectProperty(IObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectProperty(IObjectInstance objectInstance, ClassMember classProperty)
 		{
 			ObjectInstance = objectInstance;
 			ClassProperty = classProperty;
@@ -28,7 +28,7 @@ namespace UpdateControls.XAML.Wrapper
 		public abstract void OnUserInput(object value);
         public abstract object Value { get; }
 
-        public static ObjectProperty From(IObjectInstance objectInstance, ClassProperty classProperty)
+        public static ObjectProperty From(IObjectInstance objectInstance, ClassMember classProperty)
         {
             return classProperty.MakeObjectProperty(objectInstance);
         }

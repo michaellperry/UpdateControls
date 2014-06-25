@@ -56,9 +56,11 @@
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModelLocatorBase.cs" />
     <Compile Include="Wrapper\ClassEvent.cs" />
+    <Compile Include="Wrapper\ClassMemberField.cs" />
     <Compile Include="Wrapper\ClassInstance.cs" />
     <Compile Include="Wrapper\ClassInstanceProvider.cs" />
-    <Compile Include="Wrapper\ClassProperty.cs" />
+    <Compile Include="Wrapper\ClassMemberIndependent.cs" />
+    <Compile Include="Wrapper\ClassMemberProperty.cs" />
     <Compile Include="Wrapper\CollectionItem.cs" />
     <Compile Include="Wrapper\IObjectInstance.cs" />
     <Compile Include="Wrapper\NotificationGate.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Wrapper\ObjectPropertyCollection.cs" />
     <Compile Include="Wrapper\ObjectPropertyCollectionNative.cs" />
     <Compile Include="Wrapper\ObjectPropertyCollectionObject.cs" />
+    <Compile Include="Wrapper\ClassMember.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Portable\UpdateControls\UpdateControls.csproj">

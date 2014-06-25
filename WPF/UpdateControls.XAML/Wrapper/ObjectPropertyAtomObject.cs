@@ -15,7 +15,7 @@ namespace UpdateControls.XAML.Wrapper
 {
     class ObjectPropertyAtomObject : ObjectPropertyAtom
     {
-        public ObjectPropertyAtomObject(IObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectPropertyAtomObject(IObjectInstance objectInstance, ClassMember classProperty)
             : base(objectInstance, classProperty)
         {
         }

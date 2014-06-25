@@ -16,7 +16,7 @@ namespace UpdateControls.XAML.Wrapper
 {
 	internal class ObjectPropertyCollectionNative : ObjectPropertyCollection
 	{
-        public ObjectPropertyCollectionNative(IObjectInstance objectInstance, ClassProperty classProperty)
+        public ObjectPropertyCollectionNative(IObjectInstance objectInstance, ClassMember classProperty)
 			: base(objectInstance, classProperty)
 		{
 		}
