@@ -11,12 +11,12 @@ namespace UpdateControls.Timers
     {
         Dictionary<DateTime, WeakReference> _timers = new Dictionary<DateTime, WeakReference>();
         int _purgePressure;
-        SortedSet<IndependentTimer> _queue = new SortedSet<IndependentTimer>(
-            Comparer<IndependentTimer>.Create((l, r) => Comparer<DateTime>.Default.Compare(l.ExpirationTime, r.ExpirationTime)));
-        DateTime? _schedule;
+        SortedSet<IndependentTimer> _forth = new SortedSet<IndependentTimer>(_comparer);
+        SortedSet<IndependentTimer> _back = new SortedSet<IndependentTimer>(_comparer);
+        DateTime _schedule;
         DateTime? _stable;
-        DateTime _skewMarker;
         FloatingDateTime _now;
+        static Comparer<IndependentTimer> _comparer = Comparer<IndependentTimer>.Create((l, r) => Comparer<DateTime>.Default.Compare(l.ExpirationTime, r.ExpirationTime));
 
         public static readonly FloatingTimeZone Utc = new UtcTimeZone();
 
@@ -43,7 +43,7 @@ namespace UpdateControls.Timers
 
         protected void NotifyTimerExpired()
         {
-            _schedule = null;
+            _schedule = DateTime.MinValue;
             ScheduleNext();
         }
 
@@ -68,50 +68,56 @@ namespace UpdateControls.Timers
             return created;
         }
 
-        internal void Enqueue(IndependentTimer timer)
+        internal void Enqueue(IndependentTimer timer, bool expired)
         {
-            _queue.Add(timer);
+            (expired ? _back : _forth).Add(timer);
             ScheduleNext();
         }
 
         internal void Dequeue(IndependentTimer timer)
         {
-            _queue.Remove(timer);
-            ScheduleNext();
+            _forth.Remove(timer);
+            _back.Remove(timer);
         }
 
         void ScheduleNext()
         {
             var now = GetStableTime();
-            if (now < _skewMarker && _skewMarker - now > TimeSpan.FromSeconds(1))
+            while (_back.Count > 0 && _back.Max.ExpirationTime > now)
             {
-                foreach (var reference in _timers.Values)
+                var timer = _back.Min;
+                _back.Remove(timer);
+                _forth.Add(timer);
+                timer.Expire(false);
+            }
+            while (_forth.Count > 0 && _forth.Min.ExpirationTime <= now)
+            {
+                var timer = _forth.Min;
+                _forth.Remove(timer);
+                _back.Add(timer);
+                timer.Expire(true);
+            }
+            if (_forth.Count == 0 && _back.Count == 0)
+            {
+                if (_schedule != DateTime.MinValue)
                 {
-                    var timer = reference.Target as IndependentTimer;
-                    if (timer != null && now < timer.ExpirationTime)
-                    {
-                        timer.Expire(false);
-                        if (timer.HasDependents)
-                            _queue.Add(timer);
-                    }
+                    _schedule = DateTime.MinValue;
+                    CancelTimer();
                 }
             }
-            while (_queue.Count > 0 && _queue.Min.ExpirationTime <= now)
+            else if (_forth.Count == 0)
             {
-                _queue.Min.Expire(true);
-                _queue.Remove(_queue.Min);
+                if (_schedule != DateTime.MaxValue)
+                {
+                    _schedule = DateTime.MaxValue;
+                    ScheduleTimer(TimeSpan.FromSeconds(1));
+                }
             }
-            if (_queue.Count == 0)
+            else if (_forth.Min.ExpirationTime != _schedule)
             {
-                _schedule = null;
-                CancelTimer();
+                _schedule = _forth.Min.ExpirationTime;
+                ScheduleTimer(new TimeSpan(Math.Min((_schedule - now).Ticks, TimeSpan.FromSeconds(1).Ticks)));
             }
-            else if (_queue.Min.ExpirationTime != _schedule)
-            {
-                _schedule = _queue.Min.ExpirationTime;
-                ScheduleTimer(new TimeSpan(Math.Min((_schedule.Value - now).Ticks, TimeSpan.FromSeconds(1).Ticks)));
-            }
-            _skewMarker = now;
         }
     }
 }

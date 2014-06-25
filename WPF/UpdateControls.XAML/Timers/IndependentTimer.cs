@@ -42,8 +42,7 @@ namespace UpdateControls.Timers
 
         protected override void GainDependent()
         {
-            if (!_expired)
-                _zone.Enqueue(this);
+            _zone.Enqueue(this, _expired);
         }
 
         protected override void LoseDependent()
