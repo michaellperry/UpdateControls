@@ -46,25 +46,19 @@ namespace UpdateControls.XAML.Wrapper
 
 		public override void OnUserInput(object value)
 		{
-            if (NotificationGate.IsInbound)
-            {
-                var scheduler = UpdateScheduler.Begin();
+            var scheduler = UpdateScheduler.Begin();
 
-                try
+            try
+            {
+                value = TranslateIncommingValue(value);
+                ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
+            }
+            finally
+            {
+                if (scheduler != null)
                 {
-                    value = TranslateIncommingValue(value);
-                    ClassProperty.SetObjectValue(ObjectInstance.WrappedObject, value);
-                }
-                finally
-                {
-                    if (scheduler != null)
-                    {
-                        using (NotificationGate.BeginOutbound())
-                        {
-                            foreach (IUpdatable updatable in scheduler.End())
-                                updatable.UpdateNow();
-                        }
-                    }
+                    foreach (IUpdatable updatable in scheduler.End())
+                        updatable.UpdateNow();
                 }
             }
 		}
@@ -73,11 +67,8 @@ namespace UpdateControls.XAML.Wrapper
         {
             get
             {
-                using (NotificationGate.BeginOutbound())
-                {
-                    if (_depProperty.IsNotUpdating)
-                        _depProperty.OnGet();
-                }
+                if (_depProperty.IsNotUpdating)
+                    _depProperty.OnGet();
                 return _value;
             }
         }
@@ -87,10 +78,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public void UpdateNow()
         {
-            using (NotificationGate.BeginOutbound())
-            {
-                _depProperty.OnGet();
-            }
+            _depProperty.OnGet();
         }
     }
 }
