@@ -26,16 +26,7 @@ namespace UpdateControls.XAML.Wrapper
 			if (ClassProperty.CanRead)
 			{
 				// When the property is out of date, update it from the wrapped object.
-                _depProperty = new Dependent(delegate
-                {
-                    object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
-                    value = TranslateOutgoingValue(value);
-                    if (!Object.Equals(_value, value))
-                        _value = value;
-                    if (_firePropertyChanged)
-                        ObjectInstance.FirePropertyChanged(ClassProperty.Name);
-                    _firePropertyChanged = true;
-                });
+                _depProperty = new Dependent(() => BindingInterceptor.Current.UpdateValue(this));
 				// When the property becomes out of date, trigger an update.
 				// The update should have lower priority than user input & drawing,
 				// to ensure that the app doesn't lock up in case a large model is 
@@ -44,7 +35,7 @@ namespace UpdateControls.XAML.Wrapper
 			}
 		}
 
-		public override void OnUserInput(object value)
+		protected override void SetValue(object value)
 		{
             var scheduler = UpdateScheduler.Begin();
 
@@ -63,14 +54,22 @@ namespace UpdateControls.XAML.Wrapper
             }
 		}
 
-        public override object Value
+        protected override object GetValue()
         {
-            get
-            {
-                if (_depProperty.IsNotUpdating)
-                    _depProperty.OnGet();
-                return _value;
-            }
+            if (_depProperty.IsNotUpdating)
+                _depProperty.OnGet();
+            return _value;
+        }
+
+        protected override void UpdateValue()
+        {
+            object value = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject);
+            value = TranslateOutgoingValue(value);
+            if (!Object.Equals(_value, value))
+                _value = value;
+            if (_firePropertyChanged)
+                FirePropertyChanged();
+            _firePropertyChanged = true;
         }
 
         public abstract object TranslateIncommingValue(object value);

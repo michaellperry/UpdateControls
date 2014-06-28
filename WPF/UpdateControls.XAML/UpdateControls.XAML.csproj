@@ -52,6 +52,7 @@
     <Compile Include="..\..\Common\CommonProperties.cs">
       <Link>Properties\CommonProperties.cs</Link>
     </Compile>
+    <Compile Include="BindingInterceptor.cs" />
     <Compile Include="ForView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timers\DroppingTimeSpan.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Wrapper\ClassMemberProperty.cs" />
     <Compile Include="Wrapper\CollectionItem.cs" />
     <Compile Include="Wrapper\IObjectInstance.cs" />
+    <Compile Include="Wrapper\ObjectPropertyCommand.cs" />
     <Compile Include="Wrapper\ObjectInstance.cs" />
     <Compile Include="Wrapper\ObjectProperty.cs" />
     <Compile Include="Wrapper\ObjectPropertyAtom.cs" />

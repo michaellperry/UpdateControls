@@ -10,28 +10,18 @@ namespace UpdateControls.XAML.Wrapper
 {
     public class ClassMemberCommand : ClassMember
     {
-        MethodInfo _method;
-        ClassMember _condition;
+        public MethodInfo ExecuteMethod { get; private set; }
+        public ClassMember CanExecuteProperty { get; private set; }
 
         public ClassMemberCommand(MethodInfo method, ClassMember condition, Type objectInstanceType)
-            : base(method.Name, typeof(ICommand), objectInstanceType)
+            : base(method.Name, typeof(ObjectPropertyCommand), objectInstanceType)
         {
-            _method = method;
-            _condition = condition;
+            ExecuteMethod = method;
+            CanExecuteProperty = condition;
         }
 
-        public override object GetObjectValue(object wrappedObject)
-        {
-            Action invocation = () => _method.Invoke(wrappedObject, new object[0]);
-            if (_condition != null)
-                return MakeCommand.When(() => (bool)_condition.GetObjectValue(wrappedObject)).Do(invocation);
-            else
-                return MakeCommand.Do(invocation);
-        }
-
-        public override void SetObjectValue(object wrappedObject, object value)
-        {
-        }
+        public override object GetObjectValue(object wrappedObject) { return null; }
+        public override void SetObjectValue(object wrappedObject, object value) { }
 
         public override bool CanRead
         {
@@ -40,7 +30,7 @@ namespace UpdateControls.XAML.Wrapper
 
         public override Type UnderlyingType
         {
-            get { return typeof(ICommand); }
+            get { return typeof(ObjectPropertyCommand); }
         }
 
         public override bool IsReadOnly

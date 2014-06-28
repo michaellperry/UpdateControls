@@ -30,14 +30,14 @@ namespace UpdateControls.XAML.Wrapper
             if (ClassProperty.CanRead)
             {
                 // When the collection is out of date, update it from the wrapped object.
-                _depCollection = new Dependent(OnUpdateCollection);
+                _depCollection = new Dependent(() => BindingInterceptor.Current.UpdateValue(this));
 
                 // When the property becomes out of date, trigger an update.
                 _depCollection.Invalidated += TriggerUpdate;
             }
         }
 
-        private void OnUpdateCollection()
+        protected override void UpdateValue()
         {
             // Get the source collection from the wrapped object.
             IEnumerable source = ClassProperty.GetObjectValue(ObjectInstance.WrappedObject) as IEnumerable;
@@ -58,7 +58,7 @@ namespace UpdateControls.XAML.Wrapper
 				if (_collection == null)
 				{
 					_collection = new ObservableCollection<object>();
-					ObjectInstance.FirePropertyChanged(ClassProperty.Name);
+                    FirePropertyChanged();
 				}
 
                 // Create a list of new items.
@@ -93,7 +93,7 @@ namespace UpdateControls.XAML.Wrapper
             }), System.Windows.Threading.DispatcherPriority.Background);
         }
 
-        public override void OnUserInput(object value)
+        protected override void SetValue(object value)
 		{
 			// Use reflection to convert the collection to the ViewModel type
 			// (which must be compatible with List<T>, e.g. IEnumerable<T> or IList)
@@ -116,13 +116,10 @@ namespace UpdateControls.XAML.Wrapper
 			_collection = value as ObservableCollection<object>;
 		}
 
-        public override object Value
+        protected override object GetValue()
         {
-            get
-            {
-                UpdateNow();
-                return _collection;
-            }
+            UpdateNow();
+            return _collection;
         }
 
         public abstract object TranslateOutgoingValue(object value);
