@@ -10,6 +10,7 @@
  **********************************************************************/
 
 using System;
+using System.Collections;
 
 namespace UpdateControls.XAML.Wrapper
 {
@@ -22,12 +23,17 @@ namespace UpdateControls.XAML.Wrapper
 
         public override object TranslateIncommingValue(object value)
         {
-            return value == null ? null : ((IObjectInstance)value).WrappedObject;
+            var instance = value as IObjectInstance;
+            return instance != null ? instance.WrappedObject : value;
         }
 
         public override object TranslateOutgoingValue(object value)
         {
-            return value == null ? null : WrapObject(value);
+            if (value == null)
+                return null;
+            if (ClassProperty.UnderlyingType == typeof(object) && (ClassMember.IsPrimitive(value.GetType()) || typeof(IEnumerable).IsAssignableFrom(value.GetType())))
+                return value;
+            return WrapObject(value);
         }
     }
 }

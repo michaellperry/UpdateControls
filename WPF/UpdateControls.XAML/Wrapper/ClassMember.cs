@@ -152,7 +152,7 @@ namespace UpdateControls.XAML.Wrapper
             return objectProperty;
         }
 
-        private static bool IsPrimitive(Type type)
+        internal static bool IsPrimitive(Type type)
         {
             return
                 type.IsValueType ||
