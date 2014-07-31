@@ -19,11 +19,12 @@ using System.Diagnostics;
 namespace UpdateControls.XAML.Wrapper
 {
     [DebuggerDisplay("ForView.Wrap({_wrappedObject})")]
-    [TypeDescriptionProvider(typeof(ClassInstanceProvider))]
     public class ObjectInstance<TWrappedObjectType> : IObjectInstance, INotifyPropertyChanged, IDataErrorInfo, IEditableObject
     {
         // Wrap the class and all of its property definitions.
 		private static ClassInstance _classInstance = new ClassInstance(typeof(TWrappedObjectType), typeof(ObjectInstance<TWrappedObjectType>));
+
+        private static ClassInstanceProvider _classInstanceProvider = new ClassInstanceProvider();
 
         // Wrap the object instance.
         private object _wrappedObject;
@@ -41,6 +42,8 @@ namespace UpdateControls.XAML.Wrapper
 
             // Create a wrapper around each property.
             _properties = _classInstance.ClassProperties.Select(p => ObjectProperty.From(this, p)).ToList();
+
+            TypeDescriptor.AddProvider(_classInstanceProvider, this);
 		}
 
         public ClassInstance ClassInstance
