@@ -15,7 +15,7 @@ namespace UpdateControls.Collections
 {
 	public class IndependentList<T> : IList<T>
 	{
-        private IList<T> _list;
+        private List<T> _list;
 		private Independent _indList = new Independent();
 
         public IndependentList()
@@ -60,11 +60,17 @@ namespace UpdateControls.Collections
 			}
 		}
 
-		public void Add(T item)
-		{
-			_indList.OnSet();
-			_list.Add(item);
-		}
+        public void Add(T item)
+        {
+            _indList.OnSet();
+            _list.Add(item);
+        }
+
+        public void AddRange(IEnumerable<T> items)
+        {
+            _indList.OnSet();
+            _list.AddRange(items);
+        }
 
 		public void Clear()
 		{

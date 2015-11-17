@@ -12,6 +12,11 @@ namespace UpdateControls.UnitTest.ContactListData
             _contacts.Add(contact);
         }
 
+        public void AddContacts(IEnumerable<Contact> contacts)
+        {
+            _contacts.AddRange(contacts);
+        }
+
         public void DeleteContact(Contact contact)
         {
             _contacts.Remove(contact);
