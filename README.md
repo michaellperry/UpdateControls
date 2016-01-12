@@ -6,7 +6,7 @@ Dependency tracking MVVM framework
 
 Install-Package updatecontrols
 
-## Support for Winforms, WPF, Silverlight 3 4 and 5, and Windows Phone 7 and 7.1
+## Support for Winforms, WPF, Silverlight, Windows Phone, and UWP
 
 This project compiles for all current .NET client platforms.
 
