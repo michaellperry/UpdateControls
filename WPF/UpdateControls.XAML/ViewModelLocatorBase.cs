@@ -50,15 +50,12 @@ namespace UpdateControls.XAML
             get { return _designMode; }
         }
 
-        public object ViewModel(Func<object> constructor)
+        public object ViewModel(Func<object> constructor, [System.Runtime.CompilerServices.CallerMemberName] string memberName = "")
         {
             if (DesignMode)
                 return constructor();
 
-            string caller = new StackFrame(1).GetMethod().Name;
-            if (!caller.StartsWith("get_"))
-                throw new ArgumentException("Only call ViewModel from a property getter.");
-            string propertyName = caller.Substring(4);
+            string propertyName = memberName;
 
             ForView.Initialize();
             ViewModelContainer container;
