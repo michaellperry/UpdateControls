@@ -8,6 +8,7 @@ using UpdateControls.Fields;
 namespace UpdateControls.UnitTest
 {
     [TestClass]
+    [Ignore]
     public class MemoryLeakTest
     {
 #if SILVERLIGHT
@@ -24,7 +25,6 @@ namespace UpdateControls.UnitTest
 #endif
 
         [TestMethod]
-        //[Ignore]
         public void IndependentIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -46,7 +46,6 @@ namespace UpdateControls.UnitTest
         }
 
         [TestMethod]
-        //[Ignore]
         public void DependentIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -70,7 +69,6 @@ namespace UpdateControls.UnitTest
         }
 
         [TestMethod]
-        //[Ignore]
         public void SingleDependencyBeforeUpdateIsAsSmallAsPossible()
         {
             GC.Collect();
@@ -96,7 +94,6 @@ namespace UpdateControls.UnitTest
         }
 
         [TestMethod]
-        [Ignore]
         public void SingleDependencyAfterUpdateIsAsSmallAsPossible()
         {
             GC.Collect();
